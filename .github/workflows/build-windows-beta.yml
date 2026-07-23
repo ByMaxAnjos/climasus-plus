@@ -39,15 +39,37 @@ jobs:
       - name: Install R package closure (complete, explicit)
         shell: Rscript {0}
         run: |
+          # Windows R defaults to the wininet downloader, which intermittently reports
+          # "cannot open URL" for the INLA repo index (both PACKAGES files failed at once on the
+          # first run). Force libcurl + a generous timeout, and retry, before falling back to the
+          # binary .zip fetched directly (the repo has a Windows build for R 4.5).
+          options(timeout = 600, download.file.method = "libcurl")
           install.packages("pak", type = "binary")
           source("scripts/r-packages.R")
           # INLA lives in its own repo and pak's solver doesn't discover it via options(repos)
           # (the runner also forces a Posit PPM mirror on top). Install it the documented way,
-          # with base install.packages and the INLA repo passed explicitly, then hand the rest to
-          # pak. dep=TRUE pulls INLA's hard deps (Matrix, sp, fmesher) from CRAN/PPM.
-          install.packages("INLA",
-            repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/stable"),
-            dep = TRUE)
+          # with base install.packages and the INLA repo passed explicitly. dep=TRUE pulls INLA's
+          # hard deps (Matrix, sp, fmesher) from CRAN/PPM.
+          inla_repo <- "https://inla.r-inla-download.org/R/stable"
+          for (attempt in 1:3) {
+            try(install.packages("INLA", repos = c(getOption("repos"), INLA = inla_repo), dep = TRUE))
+            if ("INLA" %in% rownames(installed.packages())) break
+            message("INLA install attempt ", attempt, " failed; retrying in 10s...")
+            Sys.sleep(10)
+          }
+          if (!("INLA" %in% rownames(installed.packages()))) {
+            # last resort: install the binary .zip directly (bypasses the repo index resolution)
+            win <- sprintf("%s/bin/windows/contrib/%s.%s", inla_repo, R.version$major, strsplit(R.version$minor, ".", fixed = TRUE)[[1]][1])
+            idx <- read.dcf(url(file.path(win, "PACKAGES")))
+            rows <- idx[idx[, "Package"] == "INLA", , drop = FALSE]
+            ver <- tail(sort(rows[, "Version"]), 1)
+            zip <- file.path(tempdir(), sprintf("INLA_%s.zip", ver))
+            download.file(sprintf("%s/INLA_%s.zip", win, ver), zip, mode = "wb")
+            # deps first (from CRAN/PPM), then INLA from the local zip
+            install.packages(c("Matrix", "sp", "fmesher"))
+            install.packages(zip, repos = NULL, type = "win.binary")
+          }
+          if (!("INLA" %in% rownames(installed.packages()))) stop("INLA could not be installed from ", inla_repo)
           # Everything else via pak: GitHub-only packages by "owner/repo" ref, the rest by name.
           cran_pkgs <- setdiff(CLIMASUS_USED, c(CLIMASUS_BASE_PKGS, names(CLIMASUS_GITHUB_PKGS), "INLA"))
           pak::pak(c(unname(CLIMASUS_GITHUB_PKGS), cran_pkgs, "rmarkdown"))
