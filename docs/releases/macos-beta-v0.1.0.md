@@ -30,7 +30,7 @@ O app já está funcional para uso externo inicial, mas ainda não é uma distri
 
 ## Instruções de instalação
 
-Veja [macos-installation.md](https://github.com/ByMaxAnjos/climasus-plus/blob/main/docs/releases/macos-installation.md).
+Veja [macos-installation.md](./macos-installation.md).
 
 ## Feedback desejado nesta beta
 

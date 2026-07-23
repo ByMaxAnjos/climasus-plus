@@ -1,0 +1,101 @@
+name: build-windows-beta
+
+# DRAFT — Windows beta build for climasus+. Runs entirely on a windows-latest runner
+# (cross-building this from macOS is not possible; see docs/releases/github-release-publish.md).
+# Trigger manually from the Actions tab. Expect the R-install step to need iteration on the
+# first runs (INLA + a few heavy geospatial packages are the usual failure points).
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Also create a GitHub pre-release with the installer"
+        type: boolean
+        default: false
+      tag:
+        description: "Release tag (only used when publish=true)"
+        default: "v0.1.0-beta-windows"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # matches the R version the macOS bundle was built against (memory: R 4.5.1)
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "4.5.1"
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      # WebView2 ships with Windows Server 2022 runners; no extra install needed.
+
+      - name: Install R package closure (complete, explicit)
+        shell: Rscript {0}
+        run: |
+          # INLA is not on CRAN — add its own repo so pak resolves it like any other package.
+          options(repos = c(
+            CRAN = "https://cloud.r-project.org",
+            INLA = "https://inla.r-inla-download.org/R/stable"
+          ))
+          install.packages("pak", type = "binary")
+          # Install the EXACT closure the bundle step requires (shared source of truth), so
+          # bundle-r-windows.R never stops on a missing package. GitHub-only packages go in by
+          # "owner/repo" ref; everything else (incl INLA, from its repo above) by plain name.
+          source("scripts/r-packages.R")
+          cran_pkgs <- setdiff(CLIMASUS_USED, c(CLIMASUS_BASE_PKGS, names(CLIMASUS_GITHUB_PKGS)))
+          pak::pak(c(unname(CLIMASUS_GITHUB_PKGS), cran_pkgs, "rmarkdown"))
+          # fail early, in CI, if anything is still missing (mirrors bundle-r-windows.R's check)
+          need <- setdiff(CLIMASUS_USED, rownames(installed.packages()))
+          if (length(need)) stop("Missing after install: ", paste(need, collapse = ", "))
+          cat("All", length(CLIMASUS_USED), "required packages present.\n")
+
+      - name: Install JS deps
+        run: npm ci
+
+      # NOTE: beforeBuildCommand ("npm run build") runs `tsc -b` first. The 3 pre-existing
+      # errors in src/ui/result/ResultActions.tsx MUST be fixed or this step fails. See the
+      # project notes — they blocked `npm run build` before this workflow existed.
+      - name: Bundle R into resources/
+        shell: cmd
+        run: Rscript scripts/bundle-r-windows.R
+
+      - name: Tauri build (NSIS installer)
+        run: npx -y @tauri-apps/cli@^2 build --bundles nsis
+
+      - name: Compute checksum
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem src-tauri/target/release/bundle/nsis/*.exe | Select-Object -First 1
+          (Get-FileHash $exe.FullName -Algorithm SHA256).Hash.ToLower() + "  " + $exe.Name |
+            Out-File -Encoding ascii SHA256SUMS-windows.txt
+          Get-Content SHA256SUMS-windows.txt
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: climasus-plus-windows-nsis
+          path: |
+            src-tauri/target/release/bundle/nsis/*.exe
+            SHA256SUMS-windows.txt
+          if-no-files-found: error
+
+      - name: Publish pre-release
+        if: ${{ inputs.publish }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem src-tauri/target/release/bundle/nsis/*.exe | Select-Object -First 1
+          gh release create "${{ inputs.tag }}" `
+            --title "climasus+ ${{ inputs.tag }}" `
+            --prerelease `
+            --notes "Beta Windows do climasus+ (build de CI). Instalador NSIS gerado automaticamente. Assinatura ausente — o SmartScreen do Windows pode avisar na primeira execucao." `
+            "$($exe.FullName)#$($exe.Name)" `
+            "SHA256SUMS-windows.txt#SHA256SUMS-windows.txt"

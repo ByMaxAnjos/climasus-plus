@@ -1,0 +1,31 @@
+{
+  "name": "climasus-plus",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "engine": "Rscript engine/start.R 8787",
+    "build": "tsc -b && vite build",
+    "build:macos:debug": "node scripts/build-macos-bundle.mjs --debug",
+    "build:macos": "node scripts/build-macos-bundle.mjs",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/plugin-dialog": "^2.7.2",
+    "@tauri-apps/plugin-fs": "^2.5.1",
+    "@xyflow/react": "^12.11.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "playwright": "^1.61.1",
+    "typescript": "^5.6.3",
+    "vite": "^6.4.3"
+  }
+}

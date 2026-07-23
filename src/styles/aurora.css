@@ -1,0 +1,183 @@
+/* climaSUS Aurora design tokens — dark default, light via [data-theme="light"] */
+
+:root {
+  /* environmental teal/green */
+  --env-900: #052e2b;
+  --env-700: #0f5d54;
+  --env-500: #14b8a6;
+  --env-400: #2dd4bf;
+  --env-300: #5eead4;
+  --env-green: #22c55e;
+
+  /* alerts amber -> red */
+  --warn-400: #fbbf24;
+  --warn-500: #f59e0b;
+  --alert-500: #ef4444;
+  --alert-600: #dc2626;
+  --alert-700: #b91c1c;
+
+  /* health blues */
+  --health-500: #3b82f6;
+  --health-400: #60a5fa;
+  --health-cyan: #38bdf8;
+
+  /* stage colors (from sus_welcome) */
+  --stage-blue: #4c6ef5;
+  --stage-green: #2f9e44;
+  --stage-cyan: #0ca678;
+  --stage-magenta: #7950f2;
+  --stage-yellow: #f08c00;
+  --stage-slate: #64748b;
+
+  /* surfaces (dark) */
+  --bg-base: #0a0f14;
+  --bg-deep: #060b10;
+  --surface-1: #111820;
+  --surface-2: #161f2a;
+  --surface-glass: rgba(17, 24, 32, 0.72);
+  --border: rgba(148, 163, 184, 0.14);
+  --border-strong: rgba(148, 163, 184, 0.28);
+
+  --text-primary: #e6edf3;
+  --text-secondary: #9aa7b4;
+  --text-muted: #64748b;
+  --text-on-accent: #04211d;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --glow-teal: 0 0 24px rgba(45, 212, 191, 0.35);
+
+  --aurora: linear-gradient(120deg, #14b8a6 0%, #38bdf8 45%, #22c55e 100%);
+  --aurora-text: linear-gradient(90deg, #5eead4, #60a5fa, #22c55e);
+}
+
+[data-theme="light"] {
+  --bg-base: #f4f7f9;
+  --bg-deep: #e8eef2;
+  --surface-1: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-glass: rgba(255, 255, 255, 0.82);
+  --border: rgba(15, 23, 42, 0.10);
+  --border-strong: rgba(15, 23, 42, 0.22);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.16);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-base);
+  color: var(--text-primary);
+  overflow: hidden;
+  font-size: 14px;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* glass panel */
+.glass {
+  background: var(--surface-glass);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 160ms ease;
+}
+.btn:hover {
+  background: rgba(148, 163, 184, 0.1);
+}
+.btn-primary {
+  background: var(--env-500);
+  border-color: transparent;
+  color: var(--text-on-accent);
+  font-weight: 600;
+}
+.btn-primary:hover {
+  background: var(--env-400);
+  box-shadow: var(--glow-teal);
+}
+
+.input,
+select.input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  width: 100%;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--env-500);
+}
+
+.label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin: 12px 0 4px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,22 @@
+node_modules/
+dist/
+src-tauri/target/
+*.log
+.DS_Store
+
+# generated / heavy — not source (bundled R ~885MB, produced by scripts/bundle-r*.R)
+src-tauri/resources/r/
+src-tauri/resources/bundled-packages.txt
+src-tauri/gen/
+tsconfig.tsbuildinfo
+
+# installers / build artifacts
+*.dmg
+*.exe
+*.msi
+
+# local tooling
+.claude/
+
+# R runtime artifact
+Rplots.pdf
