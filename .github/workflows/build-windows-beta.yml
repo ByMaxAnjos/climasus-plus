@@ -39,17 +39,17 @@ jobs:
       - name: Install R package closure (complete, explicit)
         shell: Rscript {0}
         run: |
-          # INLA is not on CRAN — add its own repo so pak resolves it like any other package.
-          options(repos = c(
-            CRAN = "https://cloud.r-project.org",
-            INLA = "https://inla.r-inla-download.org/R/stable"
-          ))
           install.packages("pak", type = "binary")
-          # Install the EXACT closure the bundle step requires (shared source of truth), so
-          # bundle-r-windows.R never stops on a missing package. GitHub-only packages go in by
-          # "owner/repo" ref; everything else (incl INLA, from its repo above) by plain name.
           source("scripts/r-packages.R")
-          cran_pkgs <- setdiff(CLIMASUS_USED, c(CLIMASUS_BASE_PKGS, names(CLIMASUS_GITHUB_PKGS)))
+          # INLA lives in its own repo and pak's solver doesn't discover it via options(repos)
+          # (the runner also forces a Posit PPM mirror on top). Install it the documented way,
+          # with base install.packages and the INLA repo passed explicitly, then hand the rest to
+          # pak. dep=TRUE pulls INLA's hard deps (Matrix, sp, fmesher) from CRAN/PPM.
+          install.packages("INLA",
+            repos = c(getOption("repos"), INLA = "https://inla.r-inla-download.org/R/stable"),
+            dep = TRUE)
+          # Everything else via pak: GitHub-only packages by "owner/repo" ref, the rest by name.
+          cran_pkgs <- setdiff(CLIMASUS_USED, c(CLIMASUS_BASE_PKGS, names(CLIMASUS_GITHUB_PKGS), "INLA"))
           pak::pak(c(unname(CLIMASUS_GITHUB_PKGS), cran_pkgs, "rmarkdown"))
           # fail early, in CI, if anything is still missing (mirrors bundle-r-windows.R's check)
           need <- setdiff(CLIMASUS_USED, rownames(installed.packages()))
