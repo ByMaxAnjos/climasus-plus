@@ -39,10 +39,11 @@ jobs:
       - name: Install R package closure (complete, explicit)
         shell: Rscript {0}
         run: |
-          # Windows R defaults to the wininet downloader, which intermittently reports
-          # "cannot open URL" for the INLA repo index (both PACKAGES files failed at once on the
-          # first run). Force libcurl + a generous timeout, and retry, before falling back to the
-          # binary .zip fetched directly (the repo has a Windows build for R 4.5).
+          # Windows R + libcurl (schannel) fails the TLS certificate REVOCATION check for the
+          # INLA server (NTNU, no OCSP/CRL reachable from the runner) and reports it as the
+          # opaque "cannot open URL" — same symptom on both PACKAGES indexes. Disable best-effort
+          # revocation so the HTTPS fetch succeeds; force libcurl + a generous timeout too.
+          Sys.setenv(R_LIBCURL_SSL_REVOKE_BEST_EFFORT = "TRUE")
           options(timeout = 600, download.file.method = "libcurl")
           install.packages("pak", type = "binary")
           source("scripts/r-packages.R")
