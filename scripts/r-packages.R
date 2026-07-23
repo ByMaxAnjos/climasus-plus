@@ -8,10 +8,14 @@
 CLIMASUS_BASE_PKGS <- c("base", "compiler", "datasets", "grDevices", "graphics", "grid", "methods",
   "parallel", "splines", "stats", "stats4", "tools", "utils") # tcltk excluded
 
-# GitHub-only packages (not on CRAN) — installed by "owner/repo" ref, bundled by plain name.
+# GitHub-only packages (not on CRAN, or archived) — installed by "owner/repo" ref, bundled by
+# plain name. read.dbc was archived from CRAN; both climasus4r and microdatasus depend on it and
+# microdatasus pins the GitHub source danicat/read.dbc — request it the same way everywhere so
+# pak doesn't see a CRAN-vs-GitHub conflict (the failure that aborted the first CI run).
 CLIMASUS_GITHUB_PKGS <- c(
-  climasus4r  = "ByMaxAnjos/climasus4r",
-  microdatasus = "rfsaldanha/microdatasus"
+  climasus4r   = "ByMaxAnjos/climasus4r",
+  microdatasus = "rfsaldanha/microdatasus",
+  read.dbc     = "danicat/read.dbc"
 )
 
 # every package the engine or a catalogued sus_* function calls directly, plus base.
