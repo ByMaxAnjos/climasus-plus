@@ -92,6 +92,10 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str) -> Option<(u16, Chi
         .env("PATH", path)
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit());
+    // Linux R is dynamically linked against libR.so via the system loader path (unlike macOS,
+    // where bundle-r-relocate.sh rewrites Mach-O install names) — point it at the bundled lib.
+    #[cfg(target_os = "linux")]
+    cmd.env("LD_LIBRARY_PATH", resource_dir.join("r").join("lib"));
     // own process group so we can signal R's forked/future workers together on shutdown,
     // instead of leaving them as orphans holding the port after a kill() of just the parent
     #[cfg(unix)]

@@ -120,9 +120,18 @@ jobs:
         shell: pwsh
         run: |
           $exe = Get-ChildItem src-tauri/target/release/bundle/nsis/*.exe | Select-Object -First 1
-          gh release create "${{ inputs.tag }}" `
-            --title "climasus+ ${{ inputs.tag }}" `
-            --prerelease `
-            --notes "Beta Windows do climasus+ (build de CI). Instalador NSIS gerado automaticamente. Assinatura ausente — o SmartScreen do Windows pode avisar na primeira execucao." `
-            "$($exe.FullName)#$($exe.Name)" `
-            "SHA256SUMS-windows.txt#SHA256SUMS-windows.txt"
+          # re-running against an existing tag updates that release's assets instead of failing
+          $exists = gh release view "${{ inputs.tag }}" 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload "${{ inputs.tag }}" `
+              "$($exe.FullName)#$($exe.Name)" `
+              "SHA256SUMS-windows.txt#SHA256SUMS-windows.txt" `
+              --clobber
+          } else {
+            gh release create "${{ inputs.tag }}" `
+              --title "climasus+ ${{ inputs.tag }}" `
+              --prerelease `
+              --notes "Beta Windows do climasus+ (build de CI). Instalador NSIS gerado automaticamente. Assinatura ausente — o SmartScreen do Windows pode avisar na primeira execucao." `
+              "$($exe.FullName)#$($exe.Name)" `
+              "SHA256SUMS-windows.txt#SHA256SUMS-windows.txt"
+          }

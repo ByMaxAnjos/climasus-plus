@@ -8,6 +8,8 @@ Estúdio visual para montar e executar análises de saúde, clima e ambiente do 
 |---|---|
 | **macOS** (Apple Silicon) | [climasus-plus_0.1.0_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-macos/climasus-plus_0.1.0_aarch64.dmg) |
 | **Windows** (x64) | [climasus-plus_0.1.0_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-windows/climasus-plus_0.1.0_x64-setup.exe) |
+| **Linux** (x64, deb) | [climasus-plus_0.1.0_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-linux/climasus-plus_0.1.0_amd64.deb) |
+| **Linux** (x64, AppImage) | [climasus-plus_0.1.0_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-linux/climasus-plus_0.1.0_amd64.AppImage) |
 
 Todas as versões em [Releases](https://github.com/ByMaxAnjos/climasus-plus/releases).
 
@@ -17,3 +19,4 @@ Esta é uma **beta ainda não assinada**, então o sistema pode avisar na primei
 
 - **macOS**: botão direito no app → **Abrir** → confirmar em **Abrir**.
 - **Windows**: na tela do SmartScreen, **Mais informações** → **Executar assim mesmo**.
+- **Linux**: no AppImage, dar permissão de execução (`chmod +x`) antes de rodar.
