@@ -1,11 +1,12 @@
 import { useEffect } from 'react'
 import { usePipeline, type Lang } from '../store/pipeline'
 import { t } from '../i18n'
+import { RESPIRATORIO_SP } from '../tutorials/respiratorio'
 
 export default function TopBar() {
   const {
     lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
-    openHelp, saveProject, openProject, startFromDataFile,
+    openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
   } = usePipeline()
 
   useEffect(() => {
@@ -30,6 +31,9 @@ export default function TopBar() {
           <button className="btn btn-primary" disabled={!canRun} onClick={() => runPipeline()}>
             {engineStatus === 'busy' ? t('running', lang) : `▶ ${t('run', lang)}`}
           </button>
+          <button className="btn" onClick={() => startTutorial(RESPIRATORIO_SP)}>
+            {t('guidedTutorial', lang)}
+          </button>
           <button className="btn" onClick={openHelp}>{t('help', lang)}</button>
         </div>
         <div className="topbar-group">
@@ -38,6 +42,7 @@ export default function TopBar() {
         </div>
         <div className="topbar-group">
           <button className="btn" onClick={startFromDataFile} title={t('openDataHint', lang)}>{t('openData', lang)}</button>
+          <button className="btn" onClick={openAbout}>{t('about', lang)}</button>
           <button className="btn" onClick={clear}>{t('clearAll', lang)}</button>
         </div>
         <div className="topbar-group topbar-group-compact">

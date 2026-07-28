@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 6 — Fechamento: caso completo</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 6 de 6 · Fechamento</p>
+<h1>Fechamento: um caso completo, ponta a ponta</h1>
+
+<p>Esta lição não é para o público — é o seu roteiro de aula. Ela costura as quatro Etapas em
+uma única demonstração ao vivo, usando o Modelo <strong>ec-02 · Dengue, precipitação e
+temperatura (Nordeste)</strong> como fio condutor.</p>
+
+<div class="callout tip">
+<strong>Por que ec-02 e não ec-01/03?</strong> Dengue é o caso com apelo mais imediato para
+público brasileiro geral, usa dados em grade (CHIRPS) em vez de estação — o que já cobre as
+duas formas de trazer clima vistas na Lição 3 — e é o único dos quatro com agregação semanal,
+bom gancho para falar de granularidade temporal.
+</div>
+
+<h2>Roteiro sugerido (carregar o Modelo "caso" completo)</h2>
+<table>
+<tr><th>Etapa</th><th>Passo (Função)</th><th>O que dizer</th></tr>
+<tr><td rowspan="6">Preparação</td><td><code>sus_data_import</code> (SINAN-DENGUE, Nordeste, 2015–2019)</td><td>"Começamos baixando as notificações de dengue do sistema oficial."</td></tr>
+<tr><td><code>sus_data_clean_encoding</code></td><td>"Corrige texto antes de qualquer filtro."</td></tr>
+<tr><td><code>sus_data_standardize</code></td><td>"Uniformiza colunas."</td></tr>
+<tr><td><code>sus_data_filter_cid</code> (dengue)</td><td>"Garante que só ficam os casos de dengue."</td></tr>
+<tr><td><code>sus_data_create_variables</code></td><td>"Cria variáveis de calendário."</td></tr>
+<tr><td><code>sus_data_aggregate</code> (semana)</td><td>"Vira série semanal — dengue tem dinâmica mais rápida que mortalidade."</td></tr>
+<tr><td rowspan="2">Integração</td><td><code>sus_grid_chirps</code> (mensal, 2015–2019)</td><td>"Sem depender de estação: chuva em grade cobre todo o Nordeste."</td></tr>
+<tr><td><code>sus_grid_join</code></td><td>"Casa a grade de chuva com os municípios da série de dengue."</td></tr>
+<tr><td rowspan="2">Modelagem</td><td><code>sus_mod_dlnm</code> (outcome: n_dengue)</td><td>"Mesma lógica da Lição 4: efeito da chuva pode aparecer semanas depois — ciclo do mosquito."</td></tr>
+<tr><td><code>sus_mod_plot_dlnm</code></td><td>"O gráfico que fecha a história: risco de dengue por nível de chuva e por semanas de defasagem."</td></tr>
+</table>
+<p>RAP fica de fora do roteiro ao vivo — mencione em uma frase ao final ("dá pra exportar isso
+tudo para reproduzir depois") e siga para perguntas.</p>
+
+<h2>Perguntas que provavelmente vão aparecer</h2>
+<table>
+<tr><th>Pergunta do público</th><th>Resposta alinhada ao produto</th></tr>
+<tr><td>"Isso roda R?"</td><td>Não importa — o Motor cuida disso, você monta o Pipeline. (Lição 1)</td></tr>
+<tr><td>"Preciso saber programar?"</td><td>Não. Só na Etapa RAP, se você quiser reproduzir/compartilhar — e mesmo aí, opcional.</td></tr>
+<tr><td>"Por que precipitação e não temperatura para dengue?"</td><td>Porque o ciclo do vetor (mosquito) responde a água acumulada — a escolha da variável de exposição depende da doença, não é regra fixa.</td></tr>
+<tr><td>"Posso usar meu próprio município/período?"</td><td>Sim — troque os parâmetros de UF/ano no Passo de importação, o resto do Pipeline reaproveita.</td></tr>
+<tr><td>"Onde vejo todas as Funções disponíveis?"</td><td>Na Biblioteca, organizada pelas quatro Etapas (Lição 1 e Glossário).</td></tr>
+</table>
+
+<h2>Checklist antes da aula</h2>
+<ul>
+<li>Abrir o climasus+ e carregar o Modelo <code>ec-02-dengue-clima</code> pelo Centro de
+Pipelines com antecedência — confirmar que o Motor está disponível localmente (evita cair no
+modo de exportação de código durante a aula).</li>
+<li>Rodar o Pipeline uma vez antes da aula para ver os Resultados reais (tempo de execução,
+avisos de dados incompletos).</li>
+<li>Ter à mão o <a href="../reference/0001-glossario-climasus.html">Glossário</a> para
+responder rápido se um termo errado escapar.</li>
+<li>Decidir com antecedência se a Etapa RAP entra na agenda desta turma (ver Lição 5) — se o
+público for mais técnico, vale reservar 15 min extras para ela.</li>
+</ul>
+
+<h2>Revisão rápida das quatro Etapas</h2>
+<table>
+<tr><th>Etapa</th><th>Pergunta que resolve</th><th>Lição</th></tr>
+<tr><td>Preparação</td><td>"Como deixo os dados brutos do DATASUS prontos?"</td><td><a href="0002-etapa-preparacao.html">Lição 2</a></td></tr>
+<tr><td>Integração</td><td>"Como cruzo saúde com clima/ambiente?"</td><td><a href="0003-etapa-integracao.html">Lição 3</a></td></tr>
+<tr><td>Análise & Modelagem</td><td>"O que a exposição causa, e quanto?"</td><td><a href="0004-etapa-modelagem.html">Lição 4</a></td></tr>
+<tr><td>RAP</td><td>"Como reproduzo/compartilho isso depois?"</td><td><a href="0005-etapa-rap.html">Lição 5</a></td></tr>
+</table>
+
+<div class="callout ask">
+<strong>Depois da primeira turma:</strong> peça ao seu agente/professor para registrar um
+learning record com o que confundiu o público de verdade — isso ajusta as próximas lições
+melhor do que qualquer planejamento feito agora.
+</div>
+
+<nav class="lesson-nav">
+<a href="0005-etapa-rap.html">◂ Etapa RAP</a>
+<a href="../reference/0001-glossario-climasus.html">Glossário ▸</a>
+</nav>
+
+</body>
+</html>

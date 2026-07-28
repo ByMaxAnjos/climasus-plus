@@ -12,25 +12,25 @@ export interface TutorialDef {
   steps: TutorialStepDef[]
 }
 
-// 100% offline — uses the climasus4r package's own bundled sample data (Rondônia, 2022),
-// resolved via system.file() so it works regardless of where R is installed (dev machine or
-// the Tauri-embedded runtime). Mirrors the package's own "respiratory mortality" case study,
-// simplified to steps that are guaranteed to run without a network connection.
-export const RESPIRATORIO_RO: TutorialDef = {
-  id: 'respiratorio-ro',
+// 100% offline — uses a small Parquet bundled with climasus+ (São Paulo, 2014-2019),
+// resolved via CLIMASUS_RESOURCE_DIR so it works in dev and inside the Tauri app.
+// The file is pre-filtered to respiratory deaths to keep the bundle light, while the guided
+// pipeline still walks through cleaning, standardisation, age filtering, aggregation and plots.
+export const RESPIRATORIO_SP: TutorialDef = {
+  id: 'respiratorio-sp',
   title: {
-    pt: 'Mortalidade Respiratória — RO 2022',
-    en: 'Respiratory Mortality — RO 2022',
-    es: 'Mortalidad Respiratoria — RO 2022',
+    pt: 'Mortalidade Respiratória — SP 2014-2019',
+    en: 'Respiratory Mortality — SP 2014-2019',
+    es: 'Mortalidad Respiratoria — SP 2014-2019',
   },
   steps: [
     {
       fn: 'sus_data_read',
-      values: { path: 'system.file("testdata/sim/SIM_DO_RO_2022.parquet", package = "climasus4r")' },
+      values: { path: 'file.path(Sys.getenv("CLIMASUS_RESOURCE_DIR", "."), "engine", "testdata", "sim_do_sp_2014_2019_respiratory.parquet")' },
       explain: {
-        pt: 'Lemos os óbitos do SIM (Sistema de Informação sobre Mortalidade) de Rondônia em 2022 — um conjunto de teste que já vem junto com o climasus4r, então este tutorial roda sem precisar baixar nada do DATASUS.',
-        en: 'We read SIM (Mortality Information System) deaths for Rondônia, 2022 — a sample dataset shipped inside climasus4r itself, so this tutorial runs without downloading anything from DATASUS.',
-        es: 'Leemos los óbitos del SIM (Sistema de Información sobre Mortalidad) de Rondônia en 2022 — un conjunto de prueba que ya viene con climasus4r, así que este tutorial funciona sin descargar nada de DATASUS.',
+        pt: 'Lemos óbitos respiratórios do SIM (Sistema de Informação sobre Mortalidade) para São Paulo, 2014-2019. O arquivo é um Parquet leve incluído no climasus+, então o tutorial roda sem baixar dados durante a execução.',
+        en: 'We read respiratory deaths from SIM (Mortality Information System) for São Paulo, 2014-2019. The file is a lightweight Parquet bundled with climasus+, so the tutorial runs without downloading data during execution.',
+        es: 'Leemos óbitos respiratorios del SIM (Sistema de Información sobre Mortalidad) para São Paulo, 2014-2019. El archivo es un Parquet liviano incluido en climasus+, así que el tutorial funciona sin descargar datos durante la ejecución.',
       },
     },
     {
@@ -55,9 +55,9 @@ export const RESPIRATORIO_RO: TutorialDef = {
       fn: 'sus_data_filter_cid',
       values: { disease_group: 'respiratory' },
       explain: {
-        pt: 'Filtramos apenas óbitos por causas respiratórias (CID-10 capítulo J), o foco desta análise — mesmo critério usado no estudo de caso "mortalidade respiratória pediátrica" do pacote.',
-        en: 'We filter to respiratory-cause deaths only (ICD-10 chapter J), the focus of this analysis — the same criterion used in the package\'s "pediatric respiratory mortality" case study.',
-        es: 'Filtramos solo óbitos por causas respiratorias (CIE-10 capítulo J), el foco de este análisis — el mismo criterio usado en el estudio de caso "mortalidad respiratoria pediátrica" del paquete.',
+        pt: 'Garantimos o recorte de causas respiratórias (CID-10 capítulo J), o foco desta análise e do estudo de caso pediátrico.',
+        en: 'We ensure the respiratory-cause subset (ICD-10 chapter J), the focus of this analysis and of the pediatric case study.',
+        es: 'Garantizamos el recorte de causas respiratorias (CIE-10 capítulo J), el foco de este análisis y del estudio de caso pediátrico.',
       },
     },
     {
@@ -84,23 +84,32 @@ export const RESPIRATORIO_RO: TutorialDef = {
     },
     {
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'month' },
+      values: { time_unit: 'month', group_by: 'codigo_municipio_residencia' },
       explain: {
-        pt: 'Agregamos os óbitos filtrados em uma série mensal — a granularidade padrão para detectar sazonalidade em mortalidade respiratória.',
-        en: 'We aggregate the filtered deaths into a monthly series — the standard granularity for detecting seasonality in respiratory mortality.',
-        es: 'Agregamos los óbitos filtrados en una serie mensual — la granularidad estándar para detectar estacionalidad en la mortalidad respiratoria.',
+        pt: 'Agregamos os óbitos filtrados por mês e município de residência. Esse formato serve tanto para visualizar a série temporal quanto para mapear a distribuição municipal.',
+        en: 'We aggregate the filtered deaths by month and municipality of residence. This format supports both time-series visualization and municipal mapping.',
+        es: 'Agregamos los óbitos filtrados por mes y municipio de residencia. Este formato sirve tanto para visualizar la serie temporal como para mapear la distribución municipal.',
       },
     },
     {
       fn: 'sus_data_plot_aggregate_ts',
-      values: {},
+      values: { plot_type: 'heatmap', city: 'São Paulo' },
       explain: {
-        pt: 'Por fim, visualizamos a série temporal. Repare no padrão sazonal — mortalidade respiratória infantil tende a subir nos meses mais frios/secos do ano. Use o botão "Interativo" para explorar o gráfico.',
-        en: 'Finally, we visualize the time series. Notice the seasonal pattern — pediatric respiratory mortality tends to rise in the colder/drier months. Use the "Interactive" button to explore the chart.',
-        es: 'Por último, visualizamos la serie temporal. Note el patrón estacional — la mortalidad respiratoria infantil tiende a subir en los meses más fríos/secos del año. Use el botón "Interactivo" para explorar el gráfico.',
+        pt: 'Visualizamos a série temporal da capital em formato de mapa de calor. Repare como o recorte mensal ajuda a investigar sazonalidade e anos com maior concentração de eventos.',
+        en: 'We visualize the capital city time series as a heatmap. Notice how the monthly view helps investigate seasonality and years with higher event concentration.',
+        es: 'Visualizamos la serie temporal de la capital como mapa de calor. Observe cómo el recorte mensual ayuda a investigar estacionalidad y años con mayor concentración de eventos.',
+      },
+    },
+    {
+      fn: 'sus_data_plot_aggregate_map',
+      values: { map_type: 'bubble', top_n: '20', show_labels: 'FALSE' },
+      explain: {
+        pt: 'Também mapeamos os dados agregados por município. O mapa mostra onde os óbitos respiratórios pediátricos se concentram no estado de São Paulo ao longo de 2014-2019.',
+        en: 'We also map the aggregated data by municipality. The map shows where pediatric respiratory deaths concentrate across São Paulo state during 2014-2019.',
+        es: 'También mapeamos los datos agregados por municipio. El mapa muestra dónde se concentran los óbitos respiratorios pediátricos en el estado de São Paulo durante 2014-2019.',
       },
     },
   ],
 }
 
-export const TUTORIALS: TutorialDef[] = [RESPIRATORIO_RO]
+export const TUTORIALS: TutorialDef[] = [RESPIRATORIO_SP]

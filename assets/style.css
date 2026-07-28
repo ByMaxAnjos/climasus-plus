@@ -1,0 +1,143 @@
+/* Shared stylesheet for climasus+ minicurso lessons and reference docs. Tufte-ish: quiet, print-friendly, generous margins. */
+
+:root {
+  --ink: #1a1a1a;
+  --paper: #fdfcf9;
+  --rule: #d8d3c4;
+  --accent: #2f6f4f;      /* climasus+ green — Integração/clima */
+  --accent-soft: #eef3ee;
+  --muted: #6b6558;
+  --code-bg: #f3f1ea;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  max-width: 42em;
+  margin: 3rem auto 6rem;
+  padding: 0 1.5rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+h1, h2, h3 {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin-bottom: 0.2rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.4rem;
+}
+
+h2 { font-size: 1.3rem; margin-top: 2.4rem; }
+h3 { font-size: 1.05rem; color: var(--muted); }
+
+.kicker {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+p, li { max-width: 38em; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; }
+
+code, kbd {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  background: var(--code-bg);
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+blockquote {
+  margin: 1.2rem 0;
+  padding: 0.2rem 1rem;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-style: italic;
+}
+
+.term {
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  padding: 0.6rem 1rem;
+  margin: 0.8rem 0;
+  border-radius: 0 4px 4px 0;
+}
+.term dt {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-weight: 600;
+}
+.term dd { margin: 0.15rem 0 0; }
+
+.avoid {
+  color: #a44;
+  font-size: 0.9em;
+}
+
+.quiz {
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin: 1.4rem 0;
+  background: #fbfaf6;
+}
+.quiz .q { font-weight: 600; margin-bottom: 0.5rem; }
+.quiz label { display: block; margin: 0.35rem 0; cursor: pointer; }
+.quiz .feedback {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  display: none;
+}
+.quiz .feedback.show { display: block; }
+.quiz .feedback.correct { color: var(--accent); }
+.quiz .feedback.wrong { color: #a44; }
+
+.callout {
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 1.2rem 0;
+  font-size: 0.95rem;
+}
+.callout.tip { background: var(--accent-soft); border: 1px solid var(--accent); }
+.callout.ask { background: #f5f0e6; border: 1px solid var(--rule); }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-size: 0.92rem;
+}
+th, td { border-bottom: 1px solid var(--rule); padding: 0.4rem 0.6rem; text-align: left; }
+th { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--muted); }
+
+nav.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.85rem;
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+footer.source {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+@media print {
+  body { max-width: none; }
+  .quiz, .callout.ask { display: none; }
+}

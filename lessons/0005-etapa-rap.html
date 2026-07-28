@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 5 — Etapa RAP</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 5 de 6 · Etapa RAP</p>
+<h1>Etapa RAP (Reprodutibilidade)</h1>
+
+<p>Esta é a Etapa mais delicada de ensinar: é onde o climasus+ chega mais perto de "revelar"
+que existe código por baixo. Trate-a como recurso avançado e opcional — exatamente como o
+produto trata (<a href="../docs/adr/0001-motor-r-invisivel.md">ADR 0001</a>) — não como o
+próximo passo obrigatório depois de modelar.</p>
+
+<h2>Por que essa Etapa existe</h2>
+<p>Depois que o Pipeline funciona na interface, três necessidades comuns aparecem:</p>
+<ul>
+<li>Rodar exatamente a mesma análise de novo mais tarde, ou para outro período/UF.</li>
+<li>Compartilhar a análise com um(a) colega, sem que essa pessoa precise remontar tudo à mão.</li>
+<li>Garantir que a análise publicada é reproduzível — cada vez mais exigido por revistas e
+financiadores.</li>
+</ul>
+<p>RAP = "Pipeline Analítico Reprodutível" — a resposta do climasus+ a essas três necessidades.</p>
+
+<h2>Exercício guiado: Modelo "RAP: exportar, ler, inspecionar e executar"</h2>
+<table>
+<tr><th>Passo (Função)</th><th>O que faz</th></tr>
+<tr><td><code>sus_rap_export</code></td><td>Transforma o Pipeline montado na tela em um Artefato reprodutível e portátil.</td></tr>
+<tr><td><code>sus_rap_read</code></td><td>Recarrega esse Artefato — de um colega, ou de uma análise anterior sua.</td></tr>
+<tr><td><code>sus_rap_inspect</code></td><td>Mostra quais Passos o Artefato contém, sem precisar reabrir o grafo inteiro.</td></tr>
+<tr><td><code>sus_rap_run</code></td><td>Executa o Artefato — com os mesmos parâmetros, ou com parâmetros novos (ex: outro ano).</td></tr>
+</table>
+
+<div class="callout tip">
+<strong>Ao ensinar:</strong> compare com "salvar a receita de um bolo" — não é preciso entender
+os passos químicos da receita para reaproveitá-la ou mandar para alguém fazer o mesmo bolo.
+</div>
+
+<h2>Perguntas frequentes</h2>
+<p><strong>"Isso gera código em R?"</strong> — Tecnicamente sim, mas essa é a única resposta
+onde vale confirmar isso ao público — porque é justamente o recurso pensado para quem <em>vai</em>
+lidar com reprodutibilidade/código (revisor, colaborador técnico, repositório do artigo). Para
+o uso do dia a dia na aula, seguem valendo os mesmos termos: Passo, Pipeline, Executar.</p>
+<p><strong>"Preciso saber usar isso no minicurso introdutório?"</strong> — Não. Mencione que
+existe, mostre <code>sus_rap_export</code> uma vez, e siga. As Funções <code>sus_rap_targets</code>,
+<code>sus_rap_recipe</code>, <code>sus_rap_template</code> são para uma aula avançada
+separada, não para a introdução.</p>
+
+<h2>Fonte primária</h2>
+<p>Vinhetas: <code>rap-01-exportar-executar.html</code>, <code>rap-02-targets.html</code>,
+<code>rap-03-compartilhar.html</code> — ver <a href="../src/pipelines/templates.ts">templates.ts</a>.</p>
+
+<h2>Verifique se ficou</h2>
+
+<div class="quiz" id="q1">
+<p class="q">1. Qual a melhor forma de apresentar a Etapa RAP ao público introdutório?</p>
+<label><input type="radio" name="q1" value="a"> Como o passo final obrigatório de toda análise.</label>
+<label><input type="radio" name="q1" value="b"> Como recurso avançado/opcional, para reprodutibilidade e compartilhamento.</label>
+<label><input type="radio" name="q1" value="c"> Evitar mencionar, porque revela que existe R.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q2">
+<p class="q">2. Uma colega quer rodar a mesma análise que você fez, mas para outra UF. Qual
+sequência de Funções resolve isso?</p>
+<label><input type="radio" name="q2" value="a"> sus_rap_export → sus_rap_read → sus_rap_run com novos parâmetros.</label>
+<label><input type="radio" name="q2" value="b"> sus_mod_dlnm → sus_mod_af.</label>
+<label><input type="radio" name="q2" value="c"> sus_data_import → sus_data_clean_encoding.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="callout ask">
+<strong>Ficou alguma dúvida?</strong> Pergunte ao seu agente/professor — por exemplo, "como
+descrevo `sus_rap_targets` sem citar paralelismo/cache?" ou "vale a pena uma aula extra só de
+RAP para pesquisadores mais técnicos?".
+</div>
+
+<nav class="lesson-nav">
+<a href="0004-etapa-modelagem.html">◂ Etapa Análise & Modelagem</a>
+<a href="0006-fechamento-caso-completo.html">Próxima: Fechamento — caso completo ▸</a>
+</nav>
+
+<script>
+const ANSWERS = { q1: 'b', q2: 'a' };
+const EXPLAIN = {
+  q1: { b: 'Correto — trate RAP como recurso avançado/opcional, como o produto trata.',
+        wrong: 'RAP não é obrigatório nem precisa ser escondido — é opcional e voltado a reprodutibilidade/compartilhamento.' },
+  q2: { b: 'Correto — exportar, reler e rodar com novos parâmetros é exatamente o fluxo de reprodutibilidade.',
+        wrong: 'Modelagem (DLNM/AF) ou preparação de novo do zero não resolvem "reproduzir com outros parâmetros" — isso é o fluxo RAP.' },
+};
+for (const id of Object.keys(ANSWERS)) {
+  const box = document.getElementById(id);
+  const fb = box.querySelector('.feedback');
+  box.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', () => {
+      const correct = input.value === ANSWERS[id];
+      fb.textContent = correct ? EXPLAIN[id].b : EXPLAIN[id].wrong;
+      fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    });
+  });
+}
+</script>
+
+</body>
+</html>

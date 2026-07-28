@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Glossário climasus+ — referência rápida</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Referência rápida · climasus+</p>
+<h1>Glossário climasus+</h1>
+<p>Termos oficiais para usar no minicurso, exatamente como aparecem na interface. Fonte:
+<a href="../CONTEXT.md">CONTEXT.md</a>. Sempre que dois termos parecerem sinônimos, use o
+canônico — nunca os termos em <span class="avoid">vermelho</span>.</p>
+
+<h2>O pipeline e suas partes</h2>
+
+<dl class="term">
+<dt>Função</dt>
+<dd>A definição de uma operação <code>sus_*</code> do catálogo, exibida na Biblioteca. Existe
+uma só de cada — é o <em>tipo</em>. <span class="avoid">Evite: bloco, ferramenta, comando.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Passo</dt>
+<dd>Uma instância de uma Função dentro de um pipeline, com os parâmetros preenchidos — a
+<em>instância</em>. "Você adiciona uma Função e ela vira um Passo."
+<span class="avoid">Evite: bloco, card, node.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Nó</dt>
+<dd>A representação visual de um Passo no grafo. Um Passo aparece como exatamente um Nó.
+<span class="avoid">Evite: card, caixa.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Pipeline</dt>
+<dd>A sequência ordenada de Passos que o usuário monta e executa. Fica em inglês nos três
+idiomas. <span class="avoid">Evite: fluxo, grafo, canvas, workflow.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Projeto</dt>
+<dd>Um Pipeline salvo em disco (<code>.climasus.json</code>). Projeto e Pipeline são a mesma
+coisa — "Projeto" é o nome do arquivo. <span class="avoid">Evite: arquivo, workspace, sessão.</span></dd>
+</dl>
+
+<h2>Execução</h2>
+
+<dl class="term">
+<dt>Motor</dt>
+<dd>Executa o Pipeline e devolve Resultados. Detalhe interno — a UI <strong>nunca</strong>
+revela que ele roda R. Ver <a href="../docs/adr/0001-motor-r-invisivel.md">ADR 0001</a>.
+<span class="avoid">Evite: Motor R, engine, R, servidor.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Resultado</dt>
+<dd>A saída de um Passo executado (tabela, gráfico, mapa, texto). Termo canônico voltado ao
+usuário. <span class="avoid">Evite: saída, output.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Artefato</dt>
+<dd>O arquivo concreto de um Resultado (PNG, SVG, HTML interativo, CSV/XLSX). Sub-parte técnica
+— um Resultado-gráfico tem artefatos PNG, SVG e HTML. <span class="avoid">Evite: arquivo, download, asset.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Executar</dt>
+<dd>A ação de rodar o Pipeline no Motor e produzir Resultados.
+<span class="avoid">Evite: rodar, run, processar.</span></dd>
+</dl>
+
+<h2>Organização</h2>
+
+<dl class="term">
+<dt>Etapa</dt>
+<dd>Uma das quatro fases didáticas de uma Função — <strong>Preparação, Integração, Análise &
+Modelagem, RAP</strong>. Organiza e colore a Biblioteca. <span class="avoid">Evite: fase, categoria, stage.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Biblioteca</dt>
+<dd>O catálogo de Funções, agrupado por Etapa — de onde se arrasta uma Função para o Pipeline.
+<span class="avoid">Evite: catálogo, paleta, toolbox.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Modelo</dt>
+<dd>Um Pipeline pré-montado que serve de ponto de partida editável (no código: "template").
+Categorias: pipeline, clima, temático, caso. <span class="avoid">Evite: template, exemplo, receita, preset.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Tutorial</dt>
+<dd>Experiência guiada, passo a passo, que ensina construindo um Pipeline. Diferente de Modelo:
+Tutorial <em>conduz</em>, Modelo só <em>dá um ponto de partida</em>.
+<span class="avoid">Evite: guia, walkthrough, tour.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Centro de Pipelines</dt>
+<dd>O painel que lista os Modelos disponíveis e atalhos para Tutoriais.
+<span class="avoid">Evite: galeria, exemplos, templates.</span></dd>
+</dl>
+
+<h2>Edição</h2>
+
+<dl class="term">
+<dt>Parâmetro</dt>
+<dd>Cada entrada configurável de um Passo (ou Função) — o que o Inspetor edita. Mensagens de
+erro devem dizer "parâmetro", nunca "argumento". <span class="avoid">Evite: argumento, propriedade, opção.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>Inspetor</dt>
+<dd>O painel que edita os Parâmetros do Passo/Função selecionado.
+<span class="avoid">Evite: propriedades, config, editor.</span></dd>
+</dl>
+
+<dl class="term">
+<dt>climasus+</dt>
+<dd>Nome do produto (com <code>+</code>, minúsculo). "Pipeline Studio" descreve o que ele é, não
+o nome. <span class="avoid">Evite: climasus Studio, climasu, Climasus+.</span></dd>
+</dl>
+
+<h2>As quatro Etapas — visão geral</h2>
+<table>
+<tr><th>Etapa</th><th>O que faz</th><th>Exemplos de Função</th></tr>
+<tr><td>Preparação</td><td>Importar, limpar e padronizar dados do DATASUS</td>
+<td><code>sus_data_import</code>, <code>sus_data_clean_encoding</code>, <code>sus_data_filter_cid</code></td></tr>
+<tr><td>Integração</td><td>Cruzar saúde com clima, poluição, grades espaciais</td>
+<td><code>sus_climate_inmet</code>, <code>sus_grid_chirps</code>, <code>sus_climate_aggregate</code></td></tr>
+<tr><td>Análise & Modelagem</td><td>Modelos estatísticos/epidemiológicos e mapas</td>
+<td><code>sus_mod_dlnm</code>, <code>sus_mod_spatial_bayes</code>, <code>sus_mod_burden</code></td></tr>
+<tr><td>RAP</td><td>Reprodutibilidade — exportar/compartilhar o Pipeline como código</td>
+<td><code>sus_rap_export</code>, <code>sus_rap_targets</code></td></tr>
+</table>
+
+<footer class="source">Fonte: <a href="../CONTEXT.md">CONTEXT.md</a>,
+<a href="../docs/adr/0001-motor-r-invisivel.md">ADR 0001</a>,
+<a href="../src/catalog/functions.json">src/catalog/functions.json</a>.</footer>
+
+</body>
+</html>

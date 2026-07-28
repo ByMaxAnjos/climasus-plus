@@ -8,6 +8,7 @@ const isTauri = () => typeof window !== 'undefined' && '__TAURI__' in window
 
 const PROJECT_FILTER = [{ name: 'climasus+ project', extensions: ['climasus.json', 'json'] }]
 const DATA_FILTER = [{ name: 'Data', extensions: ['parquet', 'csv', 'xlsx', 'rds'] }]
+const R_SCRIPT_FILTER = [{ name: 'R script', extensions: ['R', 'r'] }]
 
 // Save the serialized project. Returns false only if the user cancelled the dialog.
 export async function saveProjectFile(json: string): Promise<boolean> {
@@ -19,6 +20,20 @@ export async function saveProjectFile(json: string): Promise<boolean> {
   }
   const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }))
   const a = Object.assign(document.createElement('a'), { href: url, download: 'projeto.climasus.json' })
+  a.click()
+  URL.revokeObjectURL(url)
+  return true
+}
+
+export async function saveTextFile(text: string, filename: string, filter = R_SCRIPT_FILTER): Promise<boolean> {
+  if (isTauri()) {
+    const path = await save({ defaultPath: filename, filters: filter })
+    if (!path) return false
+    await writeTextFile(path, text)
+    return true
+  }
+  const url = URL.createObjectURL(new Blob([text], { type: 'text/plain' }))
+  const a = Object.assign(document.createElement('a'), { href: url, download: filename })
   a.click()
   URL.revokeObjectURL(url)
   return true

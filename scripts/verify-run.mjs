@@ -2,10 +2,9 @@
 // Spawns the engine itself (Rscript engine/start.R) against inst/testdata (offline, no network),
 // then drives the app (needs `npm run dev` on :1420) with a real pipeline run.
 import { chromium } from 'playwright'
-import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { setTimeout as sleep } from 'node:timers/promises'
+import { makeChecker, waitForHealth, spawnEngine } from './_verify-helpers.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/climasus4r/inst/testdata'
@@ -14,36 +13,13 @@ const PORT = 8799 // dedicated port so this script never fights a dev engine on 
 const ENGINE = `http://127.0.0.1:${PORT}`
 const APP_URL = 'http://localhost:1420/'
 
-let passed = 0, failed = 0
-const check = (name, ok, extra = '') => {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${extra ? ' — ' + extra : ''}`)
-  ok ? passed++ : failed++
-}
-
-async function waitForHealth(timeoutMs) {
-  const deadline = Date.now() + timeoutMs
-  while (Date.now() < deadline) {
-    try {
-      const r = await fetch(`${ENGINE}/health`)
-      if (r.ok) return true
-    } catch { /* not up yet */ }
-    await sleep(500)
-  }
-  return false
-}
-
-const engineProc = spawn('Rscript', [join(ROOT, 'engine', 'start.R'), String(PORT)], {
-  cwd: ROOT,
-  stdio: 'pipe',
-})
-let engineLog = ''
-engineProc.stdout.on('data', (d) => (engineLog += d))
-engineProc.stderr.on('data', (d) => (engineLog += d))
+const { check, summary } = makeChecker()
+const { proc: engineProc, getLog } = spawnEngine(ROOT, PORT)
 
 try {
-  const up = await waitForHealth(60000)
+  const up = await waitForHealth(ENGINE, 60000)
   check('engine boots and /health responds', up)
-  if (!up) throw new Error('engine did not start:\n' + engineLog)
+  if (!up) throw new Error('engine did not start:\n' + getLog())
 
   // --- pure API checks against inst/testdata (no browser needed) -----------
   const steps = [
@@ -162,5 +138,4 @@ try {
   engineProc.kill()
 }
 
-console.log(`\n${passed}/${passed + failed} checks passed`)
-process.exit(failed ? 1 : 0)
+process.exit(summary())

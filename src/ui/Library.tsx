@@ -64,6 +64,7 @@ export default function Library() {
                 </span>
                 <button
                   className="fn-add"
+                  aria-label={t('addToPipeline', lang)}
                   title={t('addToPipeline', lang)}
                   onClick={(e) => { e.stopPropagation(); addStep(f.name) }}
                 >＋</button>

@@ -1,60 +1,24 @@
 // e2e verification of the node-graph canvas, inline results, plotly toggle, and guided tutorial.
-// Spawns its own engine (offline, real testdata) so it never collides with a dev engine's session
-// cache. Needs `npm run dev` on :1420.
+// Needs `npm run dev` on :1420 and a dev engine on :8787 (`npm run engine`) — the UI always talks
+// to 8787, so that's what this script drives too.
 import { chromium } from 'playwright'
-import { spawn } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { makeChecker } from './_verify-helpers.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/climasus4r/inst/testdata'
 const TESTDATA = join(TESTDATA_ROOT, 'sim/SIM_DO_RO_2022.parquet')
-const PORT = 8798
-const ENGINE = `http://127.0.0.1:${PORT}`
 const APP_URL = 'http://localhost:1420/'
 
-let passed = 0, failed = 0
-const check = (name, ok, extra = '') => {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${extra ? ' — ' + extra : ''}`)
-  ok ? passed++ : failed++
-}
+const { check, summary } = makeChecker()
 
-async function waitForHealth(timeoutMs) {
-  const deadline = Date.now() + timeoutMs
-  while (Date.now() < deadline) {
-    try {
-      const r = await fetch(`${ENGINE}/health`)
-      if (r.ok) return true
-    } catch { /* not up yet */ }
-    await new Promise((r) => setTimeout(r, 500))
-  }
-  return false
-}
-
-const engineProc = spawn('Rscript', [join(ROOT, 'engine', 'start.R'), String(PORT)], { cwd: ROOT, stdio: 'pipe' })
-let engineLog = ''
-engineProc.stdout.on('data', (d) => (engineLog += d))
-engineProc.stderr.on('data', (d) => (engineLog += d))
-
-// point the frontend's dev-mode client at our dedicated engine port via a query-param shim isn't
-// wired in the app, so instead we mimic the app's own default (127.0.0.1:8787) by requiring the
-// caller to NOT run another dev engine on 8787 during this script — simplest: just also serve on
-// 8787 if free, else skip UI checks. Try 8787 first for real UI coverage.
-async function findAppEnginePort() {
-  if (await fetch('http://127.0.0.1:8787/health').then((r) => r.ok).catch(() => false)) return 8787
-  return null
-}
-
-try {
-  const up = await waitForHealth(60000)
-  check('engine boots', up)
-  if (!up) throw new Error('engine did not start:\n' + engineLog)
-
-  const appEnginePort = await findAppEnginePort()
-  if (!appEnginePort) {
-    console.log('SKIP  UI checks — no engine on :8787 (run `npm run engine` first for full coverage)')
-  } else {
-    await fetch(`http://127.0.0.1:${appEnginePort}/reset`, { method: 'POST' })
+const engineUp = await fetch('http://127.0.0.1:8787/health').then((r) => r.ok).catch(() => false)
+check('engine reachable on :8787', engineUp)
+if (!engineUp) {
+  console.log('SKIP  UI checks — no engine on :8787 (run `npm run engine` first)')
+} else {
+  await fetch('http://127.0.0.1:8787/reset', { method: 'POST' })
     const browser = await chromium.launch()
     const page = await browser.newPage()
     const pageErrors = []
@@ -127,12 +91,8 @@ try {
     check('exiting the tutorial removes the overlay', await page.locator('.tutorial-overlay').count() === 0)
     check('exiting the tutorial keeps the built pipeline intact', await page.locator('.react-flow__node').count() === 8)
 
-    check('no page errors', pageErrors.length === 0, pageErrors[0] ?? '')
-    await browser.close()
-  }
-} finally {
-  engineProc.kill()
+  check('no page errors', pageErrors.length === 0, pageErrors[0] ?? '')
+  await browser.close()
 }
 
-console.log(`\n${passed}/${passed + failed} checks passed`)
-process.exit(failed ? 1 : 0)
+process.exit(summary())

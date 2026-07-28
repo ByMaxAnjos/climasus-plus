@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 3 — Etapa Integração</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 3 de 6 · Etapa Integração</p>
+<h1>Etapa Integração</h1>
+
+<p>É aqui que a saúde encontra o clima e o ambiente — o coração da proposta do climasus+.
+Com 28 Funções, é a maior Etapa do catálogo. Sua aula não precisa cobrir todas: precisa deixar
+claro <em>que decisão</em> cada família de Funções resolve.</p>
+
+<h2>Duas fontes de dados climáticos</h2>
+<table>
+<tr><th>Fonte</th><th>Quando usar</th><th>Funções</th></tr>
+<tr><td>Estações (INMET)</td><td>Município tem estação automática próxima; medição direta.</td>
+<td><code>sus_climate_inmet</code>, <code>sus_climate_normals</code></td></tr>
+<tr><td>Grade (satélite/reanálise)</td><td>Cobertura nacional, sem depender de estação — bom para região sem estação próxima.</td>
+<td><code>sus_grid_chirps</code> (chuva), <code>sus_grid_era5</code> (temp+chuva), <code>sus_grid_pollution_*</code> (poluição), <code>sus_grid_fires</code> (queimadas), <code>sus_grid_koppen</code>, <code>sus_grid_pdsi</code></td></tr>
+</table>
+<p>Regra prática para o público: <strong>"tem estação próxima e boa série? use estação. Não
+tem, ou quer o país todo? use grade."</strong></p>
+
+<h2>O Passo-chave: <code>sus_climate_aggregate</code></h2>
+<p>Depois de trazer o clima, alguém precisa "casar" a série de saúde (já agregada na Etapa
+Preparação) com a série de clima — inclusive decidindo <em>qual janela de tempo</em> conta como
+exposição. Essa decisão é o parâmetro <code>temporal_strategy</code>.</p>
+
+<h2>Exercício guiado: Modelo "Exposição saúde × clima"</h2>
+<table>
+<tr><th>Passo (Função)</th><th>O que faz</th></tr>
+<tr><td><code>sus_climate_inmet</code></td><td>Traz temperatura diária das estações de SP, 2015–2019.</td></tr>
+<tr><td><code>sus_data_read</code></td><td>Carrega a série de óbitos mensais já preparada (Etapa anterior).</td></tr>
+<tr><td><code>sus_climate_aggregate</code></td><td>Casa as duas séries usando <code>moving_window</code> de 7 dias — a exposição de cada mês passa a ser a média de temperatura da janela móvel de 7 dias.</td></tr>
+<tr><td><code>sus_climate_plot_aggregate</code></td><td>Gera o gráfico de série temporal combinada, para inspeção visual antes de modelar.</td></tr>
+</table>
+
+<div class="term">
+<dt>Janela móvel (<code>moving_window</code>)</dt>
+<dd>Em vez de olhar a temperatura de um único dia, olha a média dos últimos N dias antes do
+evento. Útil quando o efeito na saúde é cumulativo, não instantâneo — por isso é a estratégia
+<strong>recomendada</strong> para exposição cumulativa no catálogo.</dd>
+</div>
+
+<div class="callout tip">
+<strong>Ao ensinar:</strong> use a metáfora do termômetro de rua vs. previsão do tempo: estação
+é "o termômetro na sua rua"; grade é "o mapa nacional de previsão" — mais cobertura, menos
+precisão local.
+</div>
+
+<h2>Perguntas frequentes</h2>
+<p><strong>"Preciso escolher a janela certa sozinho(a)?"</strong> — Não na primeira aula: o
+Modelo já vem com um valor sensato (7 dias, temperatura). A escolha fina de janela/lag é
+conteúdo da Etapa Modelagem, não desta.</p>
+<p><strong>"E se meu município não tem estação nem está nas grades disponíveis?"</strong> — Vale
+mencionar como limite conhecido, sem entrar em detalhe técnico: nem toda combinação
+município×variável×período tem cobertura garantida.</p>
+
+<h2>Fonte primária</h2>
+<p>Vinhetas: clima de estações (<code>07-clima-estacoes.html</code>) e clima em grade
+(<code>08-clima-grade.html</code>) — ver <a href="../src/pipelines/templates.ts">templates.ts</a>.</p>
+
+<h2>Verifique se ficou</h2>
+
+<div class="quiz" id="q1">
+<p class="q">1. Um município não tem estação INMET próxima, mas você precisa de chuva mensal.
+Que família de Função usar?</p>
+<label><input type="radio" name="q1" value="a"> <code>sus_climate_inmet</code></label>
+<label><input type="radio" name="q1" value="b"> <code>sus_grid_chirps</code></label>
+<label><input type="radio" name="q1" value="c"> <code>sus_climate_normals</code></label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q2">
+<p class="q">2. O que a estratégia <code>moving_window</code> de 7 dias representa?</p>
+<label><input type="radio" name="q2" value="a"> A temperatura exata do dia do óbito, sem defasagem.</label>
+<label><input type="radio" name="q2" value="b"> A média da temperatura dos últimos 7 dias — exposição cumulativa.</label>
+<label><input type="radio" name="q2" value="c"> A normal climatológica de 30 anos.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="callout ask">
+<strong>Ficou alguma dúvida?</strong> Pergunte ao seu agente/professor — por exemplo, "quais
+`temporal_strategy` existem além de moving_window?" ou "como decidir entre CHIRPS e ERA5 para
+um caso de dengue?".
+</div>
+
+<nav class="lesson-nav">
+<a href="0002-etapa-preparacao.html">◂ Etapa Preparação</a>
+<a href="0004-etapa-modelagem.html">Próxima: Etapa Análise & Modelagem ▸</a>
+</nav>
+
+<script>
+const ANSWERS = { q1: 'b', q2: 'b' };
+const EXPLAIN = {
+  q1: { b: 'Correto — grades (CHIRPS/ERA5/...) têm cobertura nacional, sem depender de estação.',
+        wrong: 'Sem estação próxima, a família sus_grid_* (cobertura nacional por satélite/reanálise) é a escolha.' },
+  q2: { b: 'Correto — janela móvel = média de uma faixa de dias anteriores, para efeito cumulativo.',
+        wrong: 'moving_window olha uma faixa de dias anteriores, não o dia exato nem a normal de 30 anos.' },
+};
+for (const id of Object.keys(ANSWERS)) {
+  const box = document.getElementById(id);
+  const fb = box.querySelector('.feedback');
+  box.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', () => {
+      const correct = input.value === ANSWERS[id];
+      fb.textContent = correct ? EXPLAIN[id].b : EXPLAIN[id].wrong;
+      fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    });
+  });
+}
+</script>
+
+</body>
+</html>

@@ -53,9 +53,9 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
           {engineStatus === 'ready' && (
             <button title={t('runUpToHere', lang)} onClick={(e) => { e.stopPropagation(); runPipeline(step.id) }}>▶</button>
           )}
-          <button title="↑" onClick={(e) => { e.stopPropagation(); moveStep(step.id, -1) }}>↑</button>
-          <button title="↓" onClick={(e) => { e.stopPropagation(); moveStep(step.id, 1) }}>↓</button>
-          <button title="✕" onClick={(e) => { e.stopPropagation(); removeStep(step.id) }}>✕</button>
+          <button title={t('moveStepUp', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, -1) }}>↑</button>
+          <button title={t('moveStepDown', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, 1) }}>↓</button>
+          <button title={t('removeStep', lang)} onClick={(e) => { e.stopPropagation(); removeStep(step.id) }}>✕</button>
         </div>
       </div>
       {result && (

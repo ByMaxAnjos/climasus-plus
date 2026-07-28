@@ -10,31 +10,10 @@ OUT <- normalizePath(file.path(dirname(sub("--file=", "", grep("--file=", comman
 
 stopifnot("R.framework not found at expected path" = dir.exists(SRC_RESOURCES))
 
-# every package the engine or a catalogued sus_* function calls directly (via :: or
-# requireNamespace/library), found by: grep -ohE '\\b[a-zA-Z][a-zA-Z0-9._]*::' R/*.R
-# plus requireNamespace/library("...") calls, over the climasus4r package source.
-# base/recommended packages ship inside library/ on CRAN's mac build too, but aren't
-# declared as Imports by anything (R auto-attaches them) — must list them explicitly.
-BASE_PKGS <- c("base", "compiler", "datasets", "grDevices", "graphics", "grid", "methods",
-  "parallel", "splines", "stats", "stats4", "tools", "utils") # tcltk excluded: needs XQuartz
-
-USED <- c(
-  BASE_PKGS,
-  "climasus4r", "plumber", "jsonlite", "writexl", "nanoparquet", # engine itself
-  "arrow", "CARBayes", "censobr", "cli", "data.table", "DBI", "digest", "dlnm", "dplyr",
-  "duckdb", "exactextractr", "fs", "furrr", "future", "future.apply", "geobr", "geocodebr",
-  "ggplot2", "ggrepel", "ggsci", "glue", "gt", "htmltools", "htmlwidgets", "httr", "httr2",
-  "INLA", "knitr", "lubridate", "magrittr", "MASS", "microdatasus", "mvmeta",
-  "parallelly", "patchwork", "plotly", "purrr", "RColorBrewer", "read.dbc", "readxl",
-  "rlang", "rstudioapi", "scales", "sf", "sfarrow", "slider", "SpatialEpi", "spatialreg",
-  "spdep", "splines", "stringi", "stringr", "strucchange", "survival", "targets", "terra",
-  "tibble", "tidyr", "viridisLite",
-  # webshot2/chromote: optional PNG snapshot of htmlwidget (map) results — drives whatever
-  # Chrome/Chromium/Edge the user already has installed via chromote::find_chrome(); we
-  # never bundle a browser, so this silently does nothing when none is found (see api.R).
-  "webshot2", "chromote",
-  "xgboost", "yaml", "zoo"
-)
+# package closure comes from the shared source of truth (also used by the Windows bundler
+# and the CI install step) — see scripts/r-packages.R.
+source(file.path(dirname(sub("--file=", "", grep("--file=", commandArgs(), value = TRUE))), "r-packages.R"))
+USED <- CLIMASUS_USED
 
 db <- installed.packages(lib.loc = SRC_LIB)
 missing_root <- setdiff(USED, rownames(db))

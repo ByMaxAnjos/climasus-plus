@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 1 — O que é o climasus+</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 1 de N · Introdução</p>
+<h1>O que é o climasus+</h1>
+
+<p>Você vai abrir o minicurso com esta ideia. Ela precisa ficar sólida antes de qualquer outra
+coisa, porque toda a linguagem do produto foi desenhada em volta dela.</p>
+
+<h2>A ideia central</h2>
+<p>climasus+ é um estúdio visual para montar e rodar análises de saúde, clima e ambiente do
+DATASUS — encadeando as funções do pacote <code>climasus4r</code> como um pipeline,
+<strong>sem o participante precisar saber que existe R por baixo</strong>.</p>
+
+<blockquote>
+"O público-alvo são profissionais de saúde/pesquisa que não sabem — nem precisam saber —
+programar em R."
+<br>— <a href="../docs/adr/0001-motor-r-invisivel.md">ADR 0001 — O Motor R é invisível</a>
+</blockquote>
+
+<p>Essa é uma decisão deliberada, não uma limitação: se em algum momento da aula alguém
+perguntar "isso roda R?", a resposta correta não é explicar R — é reforçar que o participante
+nunca precisa saber disso. O detalhe técnico chama-se <strong>Motor</strong>, ponto.</p>
+
+<div class="callout tip">
+<strong>Ao ensinar:</strong> nunca diga "engine", "script" ou "R" olhando para a tela do
+participante. Se aparecer na UI ("Motor R offline" etc.), é dívida de texto conhecida — não
+repita o erro na fala.
+</div>
+
+<h2>O modelo mental: Função → Passo → Nó → Pipeline</h2>
+<p>Quatro palavras carregam a estrutura inteira do produto. Nessa ordem, cada uma nasce da
+anterior:</p>
+
+<dl class="term">
+<dt>1. Função</dt>
+<dd>Uma operação do catálogo (ex: "Importar dados do DATASUS"). Só existe uma definição de
+cada — é o <em>tipo</em>. Fica na Biblioteca, esperando ser usada.</dd>
+</dl>
+<dl class="term">
+<dt>2. Passo</dt>
+<dd>Quando o participante arrasta uma Função para o Pipeline e preenche seus parâmetros, ela
+vira um Passo — uma <em>instância</em> concreta daquela Função.</dd>
+</dl>
+<dl class="term">
+<dt>3. Nó</dt>
+<dd>Cada Passo aparece na tela como um Nó no grafo. Um Passo = um Nó, sempre.</dd>
+</dl>
+<dl class="term">
+<dt>4. Pipeline</dt>
+<dd>A sequência de Passos encadeados é o Pipeline — o que o participante efetivamente monta e
+executa.</dd>
+</dl>
+
+<p>Referência completa dos termos (incluindo Motor, Resultado, Etapa, Modelo...):
+<a href="../reference/0001-glossario-climasus.html">Glossário climasus+</a>.</p>
+
+<h2>Fonte primária</h2>
+<p>Antes de dar esta aula, releia o <a href="../CONTEXT.md">CONTEXT.md</a> do projeto — é o
+glossário oficial, curado pelo próprio Max, e a autoridade final sobre qualquer termo em caso
+de dúvida.</p>
+
+<h2>Verifique se ficou</h2>
+
+<div class="quiz" id="q1">
+<p class="q">1. Uma participante pergunta "isso está rodando R nos bastidores?". Qual é a
+resposta mais alinhada ao produto?</p>
+<label><input type="radio" name="q1" value="a"> "Sim, mas você não precisa se preocupar com a sintaxe."</label>
+<label><input type="radio" name="q1" value="b"> "Não importa — o Motor cuida disso, você só monta o Pipeline."</label>
+<label><input type="radio" name="q1" value="c"> "Sim, é o pacote climasus4r em R."</label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q2">
+<p class="q">2. O que vira um Nó no grafo?</p>
+<label><input type="radio" name="q2" value="a"> Uma Função da Biblioteca, antes de ser usada.</label>
+<label><input type="radio" name="q2" value="b"> Um Passo dentro do Pipeline.</label>
+<label><input type="radio" name="q2" value="c"> Um Artefato gerado por um Resultado.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q3">
+<p class="q">3. Qual a relação entre Função e Passo?</p>
+<label><input type="radio" name="q3" value="a"> São sinônimos, use o que for mais natural na fala.</label>
+<label><input type="radio" name="q3" value="b"> Função é o tipo; Passo é a instância com parâmetros preenchidos.</label>
+<label><input type="radio" name="q3" value="c"> Passo é o que aparece na Biblioteca; Função é o que roda.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="callout ask">
+<strong>Ficou alguma dúvida?</strong> Pergunte ao seu agente/professor agora — por exemplo,
+"por que 'Pipeline' fica em inglês nos três idiomas?" ou "me dá um exemplo de fala para abrir o
+minicurso usando esses quatro termos". É para isso que ele está aqui.
+</div>
+
+<nav class="lesson-nav">
+<span>◂ Início do curso</span>
+<a href="0002-etapa-preparacao.html">Próxima: Etapa Preparação ▸</a>
+</nav>
+
+<script>
+const ANSWERS = { q1: 'b', q2: 'b', q3: 'b' };
+const EXPLAIN = {
+  q1: { b: 'Correto — reforça a promessa central: o participante nunca precisa saber de R.',
+        wrong: 'Qualquer menção a R quebra a promessa de valor do produto (ver ADR 0001).' },
+  q2: { b: 'Correto — Passo é a instância dentro do Pipeline; isso é o que ganha um Nó visual.',
+        wrong: 'Uma Função na Biblioteca ainda não é um Nó — só passa a ser quando entra no Pipeline como Passo.' },
+  q3: { b: 'Correto — tipo vs. instância, igual classe e objeto.',
+        wrong: 'Função e Passo não são intercambiáveis: um é definição, o outro é uso concreto.' },
+};
+for (const id of Object.keys(ANSWERS)) {
+  const box = document.getElementById(id);
+  const fb = box.querySelector('.feedback');
+  box.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', () => {
+      const correct = input.value === ANSWERS[id];
+      fb.textContent = correct ? EXPLAIN[id].b : EXPLAIN[id].wrong;
+      fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    });
+  });
+}
+</script>
+
+</body>
+</html>

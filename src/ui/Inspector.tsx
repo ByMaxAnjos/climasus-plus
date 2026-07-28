@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { byName, pipeArg, stageColor, friendlyName, friendlyDescription, friendlyArgDoc, type ArgSpec, type FnSpec } from '../catalog'
 import { usePipeline, type Step } from '../store/pipeline'
-import { t } from '../i18n'
+import { t, tp } from '../i18n'
 
 function ArgHelp({ doc }: { doc: string }) {
   const [open, setOpen] = useState(false)
@@ -22,16 +22,19 @@ function ArgHelp({ doc }: { doc: string }) {
   )
 }
 
-function ArgField({ arg, fnName, value, onChange, lang }: {
+function ArgField({ arg, fnName, value, onChange, lang, issue }: {
   arg: ArgSpec
   fnName: string
   value: string
   onChange: (v: string) => void
   lang: 'pt' | 'en' | 'es'
+  issue?: string
 }) {
   const hint = arg.default != null ? `${t('defaultHint', lang)}: ${arg.default}` : ''
+  const missingRequired = arg.required && !value.trim()
+  const defaultActive = !value.trim() && arg.default != null
   return (
-    <div className="arg-field">
+    <div className={`arg-field ${missingRequired ? 'arg-field-missing' : ''} ${issue ? 'arg-field-issue' : ''}`}>
       <label className="label">
         {arg.name}
         {arg.required && <span className="req">*</span>}
@@ -56,6 +59,13 @@ function ArgField({ arg, fnName, value, onChange, lang }: {
           onChange={(e) => onChange(e.target.value)}
         />
       )}
+      {missingRequired ? (
+        <p className="arg-note arg-note-required">{issue || t('requiredMissingHint', lang)}</p>
+      ) : defaultActive ? (
+        <p className="arg-note">{tp('usingDefault', lang, { value: String(arg.default) })}</p>
+      ) : issue ? (
+        <p className="arg-note arg-note-required">{issue}</p>
+      ) : null}
     </div>
   )
 }
@@ -71,16 +81,17 @@ function AutoArgField({ name, lang }: { name: string; lang: 'pt' | 'en' | 'es' }
 
 function FnDoc({ fn, lang }: { fn: FnSpec; lang: 'pt' | 'en' | 'es' }) {
   return (
-    <>
+    <section className="insp-doc-block">
+      <div className="label insp-doc-label">{t('aboutFunction', lang)}</div>
       <h3 className="insp-title" style={{ color: stageColor(fn.stage) }}>{friendlyName(fn, lang)}</h3>
       <p className="insp-technical mono">{fn.name}()</p>
       <p className="insp-desc">{friendlyDescription(fn, lang)}</p>
-    </>
+    </section>
   )
 }
 
 export default function Inspector() {
-  const { steps, selectedStep, inspectFn, lang, addStep, setValue } = usePipeline()
+  const { steps, selectedStep, inspectFn, lang, addStep, setValue, validationIssues } = usePipeline()
   const stepIndex = steps.findIndex((s) => s.id === selectedStep)
   const step: Step | undefined = steps[stepIndex]
   const fn = step ? byName.get(step.fn) : inspectFn ? byName.get(inspectFn) : undefined
@@ -90,34 +101,57 @@ export default function Inspector() {
   // first arg is auto-supplied from the previous step's result whenever this step chains
   // (same rule the pipeline builder uses — see pipeArg/buildSteps in store/pipeline.ts)
   const autoArg = step && stepIndex > 0 && pipeArg(fn) ? fn.args[0].name : null
+  const visibleArgs = fn.args.filter((a, index) => a.name === autoArg || a.required || fn.args.length <= 5 || index < 4)
+  const advancedArgs = fn.args.filter((a) => !visibleArgs.includes(a))
+  const issueByArg = new Map(validationIssues.filter((issue) => issue.stepId === step?.id && issue.arg).map((issue) => [issue.arg!, issue.message]))
+  const renderArg = (a: ArgSpec) => (
+    a.name === autoArg ? (
+      <AutoArgField key={a.name} name={a.name} lang={lang} />
+    ) : (
+      <ArgField
+        key={a.name}
+        arg={a}
+        fnName={fn.name}
+        lang={lang}
+        value={step?.values[a.name] ?? ''}
+        issue={issueByArg.get(a.name)}
+        onChange={(v) => step && setValue(step.id, a.name, v)}
+      />
+    )
+  )
 
   return (
     <aside className="inspector glass">
       <div className="insp-scroll">
         <FnDoc fn={fn} lang={lang} />
+        {step && (
+          <p className="insp-step-position">
+            {tp('stepPosition', lang, { n: String(stepIndex + 1), total: String(steps.length) })}
+          </p>
+        )}
         {!step && (
           <button className="btn btn-primary insp-add" onClick={() => addStep(fn.name)}>
             {t('addToPipeline', lang)}
           </button>
         )}
         {step && (
-          <>
-            <div className="label insp-params">{t('params', lang)}</div>
-            {fn.args.map((a) =>
-              a.name === autoArg ? (
-                <AutoArgField key={a.name} name={a.name} lang={lang} />
-              ) : (
-                <ArgField
-                  key={a.name}
-                  arg={a}
-                  fnName={fn.name}
-                  lang={lang}
-                  value={step.values[a.name] ?? ''}
-                  onChange={(v) => setValue(step.id, a.name, v)}
-                />
-              ),
+          <section className="insp-param-block">
+            <div className="insp-param-head">
+              <div className="label insp-params">{t('params', lang)}</div>
+              <span className="required-legend"><span className="req">*</span> {t('requiredLegend', lang)}</span>
+            </div>
+            {visibleArgs.map(renderArg)}
+            {advancedArgs.length > 0 && (
+              <details className="advanced-params">
+                <summary>
+                  <span>{t('advancedParams', lang)}</span>
+                  <span className="advanced-count">{advancedArgs.length}</span>
+                </summary>
+                <p className="advanced-summary">{t('advancedSummary', lang)}</p>
+                {advancedArgs.map(renderArg)}
+              </details>
             )}
-          </>
+          </section>
         )}
       </div>
     </aside>

@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { usePipeline, generateR } from '../store/pipeline'
 import { t, tp } from '../i18n'
+import { saveTextFile } from '../project/io'
 
 export default function CodePanel() {
   const { steps, lang, engineStatus, engineIssue } = usePipeline()
   const [copied, setCopied] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const code = generateR(steps)
 
   const copy = async () => {
@@ -13,11 +15,13 @@ export default function CodePanel() {
     setTimeout(() => setCopied(false), 1500)
   }
 
-  const download = () => {
-    const url = URL.createObjectURL(new Blob([code], { type: 'text/plain' }))
-    const a = Object.assign(document.createElement('a'), { href: url, download: 'pipeline_climasus4r.R' })
-    a.click()
-    URL.revokeObjectURL(url)
+  const download = async () => {
+    setSaveError(null)
+    try {
+      await saveTextFile(code, 'pipeline_climasus4r.R')
+    } catch (e) {
+      setSaveError(String(e))
+    }
   }
 
   return (
@@ -34,6 +38,7 @@ export default function CodePanel() {
           {tp('offlineDetails', lang, { message: engineIssue })}
         </div>
       )}
+      {saveError && <div className="panel-note" role="alert">{saveError}</div>}
       <pre className="code mono" data-testid="r-code">{code}</pre>
     </section>
   )

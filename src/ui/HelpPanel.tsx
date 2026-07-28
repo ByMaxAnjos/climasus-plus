@@ -1,6 +1,5 @@
 import { usePipeline } from '../store/pipeline'
 import { TEMPLATES, type PipelineTemplate, type TemplateCategory } from '../pipelines/templates'
-import { RESPIRATORIO_RO } from '../tutorials/respiratorio'
 import { t } from '../i18n'
 
 // section order + label key per category
@@ -15,31 +14,31 @@ const SECTIONS: { cat: TemplateCategory; labelKey: 'helpPipeline' | 'helpClima' 
 
 function TemplateCard({ tpl }: { tpl: PipelineTemplate }) {
   const { lang, loadTemplate } = usePipeline()
+  const requiresDataFile = tpl.steps.some((s) => s.fn === 'sus_data_read')
   return (
     <div className="help-card glass">
       <div className="help-card-head">
-        <strong>{tpl.title[lang]}</strong>
+        <div className="help-card-title">
+          <strong>{tpl.title[lang]}</strong>
+          {requiresDataFile && <span className="help-card-badge">{t('requiresPreparedData', lang)}</span>}
+        </div>
         <button className="btn btn-sm btn-primary" onClick={() => loadTemplate(tpl)}>
           {t('helpLoadTemplate', lang)}
         </button>
       </div>
       <p className="help-card-desc">{tpl.description[lang]}</p>
+      {requiresDataFile && <p className="help-card-note">{t('requiresPreparedDataHint', lang)}</p>}
       <div className="help-chips">
         {tpl.steps.map((s, i) => (
           <span key={i} className="help-chip mono">{s.fn}</span>
         ))}
       </div>
-      {tpl.vignetteUrl && (
-        <a className="help-link" href={tpl.vignetteUrl} target="_blank" rel="noreferrer">
-          {t('helpViewTutorial', lang)}
-        </a>
-      )}
     </div>
   )
 }
 
 export default function HelpPanel() {
-  const { helpOpen, closeHelp, lang, startTutorial } = usePipeline()
+  const { helpOpen, closeHelp, lang } = usePipeline()
   if (!helpOpen) return null
 
   return (
@@ -50,10 +49,6 @@ export default function HelpPanel() {
           <button className="tutorial-close" title={t('close', lang)} onClick={closeHelp}>✕</button>
         </div>
         <p className="help-intro">{t('helpIntro', lang)}</p>
-
-        <button className="btn btn-primary help-tutorial-btn" onClick={() => { closeHelp(); startTutorial(RESPIRATORIO_RO) }}>
-          {t('guidedTutorial', lang)}
-        </button>
 
         {SECTIONS.map(({ cat, labelKey }) => {
           const list = TEMPLATES.filter((tpl) => tpl.category === cat)

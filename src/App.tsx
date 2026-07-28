@@ -6,6 +6,7 @@ import Inspector from './ui/Inspector'
 import CodePanel from './ui/CodePanel'
 import ResultsPanel from './ui/ResultsPanel'
 import HelpPanel from './ui/HelpPanel'
+import AboutPanel from './ui/AboutPanel'
 import { usePipeline } from './store/pipeline'
 import { t } from './i18n'
 
@@ -65,6 +66,7 @@ export default function App() {
         <Inspector />
       </main>
       <HelpPanel />
+      <AboutPanel />
     </div>
   )
 }

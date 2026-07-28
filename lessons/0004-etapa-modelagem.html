@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 4 — Etapa Análise & Modelagem</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 4 de 6 · Etapa Análise & Modelagem</p>
+<h1>Etapa Análise & Modelagem</h1>
+
+<p>Com saúde e clima já casados (Etapa Integração), esta Etapa responde a pergunta de pesquisa
+propriamente dita. É a maior Etapa (32 Funções) e a mais heterogênea — mas os quatro casos de
+estudo do catálogo giram sobretudo em torno de <strong>DLNM</strong> e <strong>fração
+atribuível</strong>, então é aí que vale concentrar a aula introdutória.</p>
+
+<h2>O modelo mais comum: DLNM + fração atribuível</h2>
+<div class="term">
+<dt>DLNM (modelo não linear distribuído no tempo)</dt>
+<dd>Estima como o risco de um desfecho de saúde varia com o nível de exposição (ex:
+temperatura) <em>e</em> com quanto tempo depois da exposição (o efeito pode aparecer dias
+depois, não só no mesmo dia). Função: <code>sus_mod_dlnm</code>.</dd>
+</div>
+<div class="term">
+<dt>Fração atribuível (AF)</dt>
+<dd>Traduz a curva do DLNM em uma pergunta prática: "que fração dos óbitos/casos observados é
+atribuível a essa exposição?" Função: <code>sus_mod_af</code>.</dd>
+</div>
+
+<h2>Exercício guiado: Modelo "Modelagem DLNM a partir de dados preparados"</h2>
+<table>
+<tr><th>Passo (Função)</th><th>O que faz</th></tr>
+<tr><td><code>sus_data_read</code></td><td>Carrega a tabela já preparada e integrada (saída das duas Etapas anteriores).</td></tr>
+<tr><td><code>sus_mod_dlnm</code></td><td>Ajusta o modelo exposição-resposta-defasagem sobre a coluna de desfecho (aqui: <code>n_obitos</code>).</td></tr>
+<tr><td><code>sus_mod_plot_dlnm</code></td><td>Gera o gráfico 3D/curvas exposição-resposta — o Resultado visual que o público reconhece de artigos.</td></tr>
+<tr><td><code>sus_mod_af</code></td><td>Calcula a fração atribuível a partir do modelo ajustado.</td></tr>
+<tr><td><code>sus_mod_plot_af</code></td><td>Visualiza a fração atribuível (ex: por faixa de temperatura ou período).</td></tr>
+</table>
+
+<div class="callout tip">
+<strong>Ao ensinar:</strong> mostre o gráfico do <code>sus_mod_plot_dlnm</code> antes de
+explicar a Função — pergunte "o que essa curva está dizendo?" e deixe o público (que já tem
+formação em epidemiologia) chegar à ideia de risco relativo por conta própria.
+</div>
+
+<h2>Outras famílias — visão de mapa, não de detalhe</h2>
+<table>
+<tr><th>Família</th><th>Quando citar</th></tr>
+<tr><td><code>sus_mod_casecrossover</code>, <code>sus_mod_its</code></td><td>Desenhos quase-experimentais — alternativa ao DLNM quando o interesse é exposição aguda ou avaliar um evento/intervenção pontual (ver caso Sul, ondas de frio).</td></tr>
+<tr><td><code>sus_mod_spatial_bayes</code>, <code>sus_mod_spatial_moran</code>, <code>sus_mod_spatial_scan</code></td><td>Quando a pergunta é sobre padrão espacial entre municípios, não série temporal.</td></tr>
+<tr><td><code>sus_mod_ml</code></td><td>Predição (não explicação causal) a partir de várias variáveis climáticas/ambientais/socioeconômicas.</td></tr>
+<tr><td><code>sus_mod_burden</code>, <code>sus_mod_vulnerability_index</code></td><td>Tradução de resultados para carga de doença e índices de vulnerabilidade — bom para a "mensagem final" de um estudo.</td></tr>
+</table>
+<p>Não é preciso demonstrar essas ao vivo na aula introdutória — basta o público saber que
+existem e para qual tipo de pergunta cada uma serve.</p>
+
+<h2>Ligando com os casos completos</h2>
+<p>Os quatro Modelos de "caso" (categoria <code>caso</code>) fecham o pipeline inteiro
+Preparação→Integração→Modelagem com um desenho diferente cada:</p>
+<table>
+<tr><th>Caso</th><th>Desenho</th></tr>
+<tr><td>ec-01 · respiratório pediátrico × temperatura</td><td>DLNM + fração atribuível</td></tr>
+<tr><td>ec-02 · dengue × precipitação (CHIRPS)</td><td>DLNM sobre série semanal</td></tr>
+<tr><td>ec-03 · cardiovascular idosos × ondas de calor</td><td>DLNM + fração atribuível, com detecção de onda de calor antes</td></tr>
+<tr><td>ec-04 · hospitalizações respiratórias × ondas de frio</td><td>Série temporal interrompida (ITS)</td></tr>
+</table>
+
+<h2>Fonte primária</h2>
+<p>Vinhetas: <code>mod-01-dlnm.html</code>, <code>mod-03-crossover-its.html</code>,
+<code>mod-05-ml.html</code>, <code>mod-07-bayes.html</code> — ver
+<a href="../src/pipelines/templates.ts">templates.ts</a>.</p>
+
+<h2>Verifique se ficou</h2>
+
+<div class="quiz" id="q1">
+<p class="q">1. Por que usar DLNM em vez de olhar só a temperatura do mesmo dia do óbito?</p>
+<label><input type="radio" name="q1" value="a"> Porque DLNM é mais rápido de calcular.</label>
+<label><input type="radio" name="q1" value="b"> Porque o efeito da exposição pode aparecer com defasagem (dias depois), e DLNM modela isso.</label>
+<label><input type="radio" name="q1" value="c"> Porque DLNM não precisa de dados de clima.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q2">
+<p class="q">2. O caso ec-04 (hospitalizações × ondas de frio, Sul) usa qual desenho?</p>
+<label><input type="radio" name="q2" value="a"> DLNM + fração atribuível.</label>
+<label><input type="radio" name="q2" value="b"> Série temporal interrompida (ITS).</label>
+<label><input type="radio" name="q2" value="c"> Modelo Bayesiano espacial (BYM).</label>
+<div class="feedback"></div>
+</div>
+
+<div class="callout ask">
+<strong>Ficou alguma dúvida?</strong> Pergunte ao seu agente/professor — por exemplo, "como eu
+explico fração atribuível sem citar risco relativo?" ou "quando usar case-crossover em vez de
+DLNM?".
+</div>
+
+<nav class="lesson-nav">
+<a href="0003-etapa-integracao.html">◂ Etapa Integração</a>
+<a href="0005-etapa-rap.html">Próxima: Etapa RAP ▸</a>
+</nav>
+
+<script>
+const ANSWERS = { q1: 'b', q2: 'b' };
+const EXPLAIN = {
+  q1: { b: 'Correto — DLNM captura efeito defasado (lag), não só o efeito imediato.',
+        wrong: 'A razão de usar DLNM é modelar a defasagem do efeito, não velocidade ou dispensar dados de clima.' },
+  q2: { b: 'Correto — ec-04 usa sus_mod_its, avaliando o efeito de um evento/intervenção pontual.',
+        wrong: 'ec-04 é o único dos quatro casos que usa ITS, não DLNM nem modelo espacial Bayesiano.' },
+};
+for (const id of Object.keys(ANSWERS)) {
+  const box = document.getElementById(id);
+  const fb = box.querySelector('.feedback');
+  box.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', () => {
+      const correct = input.value === ANSWERS[id];
+      fb.textContent = correct ? EXPLAIN[id].b : EXPLAIN[id].wrong;
+      fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    });
+  });
+}
+</script>
+
+</body>
+</html>

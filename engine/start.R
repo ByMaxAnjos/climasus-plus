@@ -13,6 +13,8 @@ if (!nzchar(Sys.getenv("CLIMASUS_BUNDLED"))) {
 }
 
 api_file <- file.path(dirname(sub("--file=", "", grep("--file=", commandArgs(), value = TRUE))), "api.R")
+resource_dir <- normalizePath(file.path(dirname(api_file), ".."), mustWork = FALSE)
+Sys.setenv(CLIMASUS_RESOURCE_DIR = resource_dir)
 pr <- plumber::plumb(api_file)
 # serve artifact files (plots, widgets, report)
 pr$mount("/artifact", plumber::PlumberStatic$new(file.path(tempdir(), "climasus-artifacts")))

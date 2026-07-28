@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lição 2 — Etapa Preparação</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<p class="kicker">Lição 2 de 6 · Etapa Preparação</p>
+<h1>Etapa Preparação</h1>
+
+<p>Toda análise no climasus+ começa aqui: pegar dados brutos do DATASUS e deixá-los prontos
+para cruzar com clima e alimentar um modelo. É a Etapa com mais Funções conhecidas do público
+(óbitos, internações, notificações), então é onde as perguntas mais básicas aparecem.</p>
+
+<h2>O que essa Etapa resolve</h2>
+<p>Arquivos do DATASUS chegam com problemas comuns: codificação de texto (acentos quebrados),
+nomes de coluna inconsistentes entre anos, e muito mais linhas do que o necessário para a
+pergunta de pesquisa. A Etapa Preparação existe para resolver isso <em>antes</em> de qualquer
+cruzamento com clima.</p>
+
+<h2>Exercício guiado: Modelo "Etapas 2-4: limpar, filtrar e agregar"</h2>
+<p>Peça para o público abrir o <strong>Centro de Pipelines</strong> e carregar esse Modelo. Ele
+já vem com seis Passos na ordem certa — percorra um a um:</p>
+
+<table>
+<tr><th>Passo (Função)</th><th>O que faz, em uma frase</th></tr>
+<tr><td><code>sus_data_import</code></td><td>Baixa os dados brutos do DATASUS para o sistema, UF e período escolhidos (aqui: óbitos SIM-DO, SP, 2020–2022).</td></tr>
+<tr><td><code>sus_data_clean_encoding</code></td><td>Corrige a codificação de texto — sem isso, "São Paulo" pode virar algo ilegível.</td></tr>
+<tr><td><code>sus_data_standardize</code></td><td>Uniformiza nomes e tipos de coluna, para que os Passos seguintes sempre encontrem o que esperam.</td></tr>
+<tr><td><code>sus_data_filter_cid</code></td><td>Mantém só os registros de um grupo de doença (aqui: "respiratory") — reduz o volume e foca na pergunta.</td></tr>
+<tr><td><code>sus_data_create_variables</code></td><td>Cria colunas derivadas úteis, como variáveis de calendário (dia da semana, mês).</td></tr>
+<tr><td><code>sus_data_aggregate</code></td><td>Soma os registros por unidade de tempo (aqui: mês) — de linha-por-óbito para série temporal.</td></tr>
+</table>
+
+<div class="callout tip">
+<strong>Ao ensinar:</strong> peça para alguém do público tentar adivinhar, antes de você
+revelar, o que cada Passo faz só pelo nome da Função. Funciona bem como aquecimento — os nomes
+<code>sus_*</code> são descritivos de propósito.
+</div>
+
+<h2>Perguntas frequentes</h2>
+<p><strong>"Por que preciso limpar encoding antes de filtrar?"</strong> — Porque o filtro
+(<code>sus_data_filter_cid</code>) compara texto (nomes de doença, categorias); se o texto
+estiver corrompido, o filtro pode não encontrar nada ou encontrar errado. A ordem dos Passos
+importa.</p>
+<p><strong>"Preciso rodar todos os Passos sempre?"</strong> — Não. Cada caso de estudo (próxima
+lição de Modelagem) usa uma combinação diferente — ex: <code>sus_data_filter_demographics</code>
+para restringir faixa de idade. O importante é o padrão: importar → limpar → padronizar →
+filtrar/derivar → agregar.</p>
+
+<h2>Fonte primária</h2>
+<p>Vinhetas oficiais do <code>climasus4r</code> para esta Etapa: importação
+(<code>01-importacao.html</code>) e criação de variáveis/agregação
+(<code>04-variaveis-agregacao.html</code>) — ver <a href="../src/pipelines/templates.ts">templates.ts</a>
+para os links completos (`vignetteUrl` de cada Modelo).</p>
+
+<h2>Verifique se ficou</h2>
+
+<div class="quiz" id="q1">
+<p class="q">1. Por que <code>sus_data_clean_encoding</code> vem antes de
+<code>sus_data_filter_cid</code>?</p>
+<label><input type="radio" name="q1" value="a"> Porque a ordem dos Passos não importa, é só convenção.</label>
+<label><input type="radio" name="q1" value="b"> Porque o filtro compara texto, e texto corrompido faz o filtro falhar.</label>
+<label><input type="radio" name="q1" value="c"> Porque limpar encoding exige que os dados já estejam agregados.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="quiz" id="q2">
+<p class="q">2. O que <code>sus_data_aggregate</code> muda na estrutura dos dados?</p>
+<label><input type="radio" name="q2" value="a"> Corrige acentos e caracteres especiais.</label>
+<label><input type="radio" name="q2" value="b"> Transforma linha-por-óbito em série temporal por unidade de tempo.</label>
+<label><input type="radio" name="q2" value="c"> Cruza os dados de saúde com clima.</label>
+<div class="feedback"></div>
+</div>
+
+<div class="callout ask">
+<strong>Ficou alguma dúvida?</strong> Pergunte ao seu agente/professor — por exemplo, "que
+outros `disease_group` existem em `sus_data_filter_cid`?" ou "como eu explico
+`sus_data_create_variables` sem citar 'variável dummy'?".
+</div>
+
+<nav class="lesson-nav">
+<a href="0001-o-que-e-climasus.html">◂ O que é o climasus+</a>
+<a href="0003-etapa-integracao.html">Próxima: Etapa Integração ▸</a>
+</nav>
+
+<script>
+const ANSWERS = { q1: 'b', q2: 'b' };
+const EXPLAIN = {
+  q1: { b: 'Correto — filtrar por texto corrompido dá resultado errado ou vazio.',
+        wrong: 'A ordem importa exatamente porque Passos seguintes dependem do texto já estar limpo.' },
+  q2: { b: 'Correto — de registro individual para contagem por período (dia/semana/mês...).',
+        wrong: 'Agregação é sobre unidade de tempo/contagem, não sobre encoding nem cruzamento com clima.' },
+};
+for (const id of Object.keys(ANSWERS)) {
+  const box = document.getElementById(id);
+  const fb = box.querySelector('.feedback');
+  box.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', () => {
+      const correct = input.value === ANSWERS[id];
+      fb.textContent = correct ? EXPLAIN[id].b : EXPLAIN[id].wrong;
+      fb.className = 'feedback show ' + (correct ? 'correct' : 'wrong');
+    });
+  });
+}
+</script>
+
+</body>
+</html>

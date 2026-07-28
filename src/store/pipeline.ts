@@ -44,6 +44,7 @@ interface PipelineState {
   tutorialFocusId: string | null // step id currently spotlighted by the tutorial overlay
   activeTutorialId: string | null // which TutorialDef.id is active, for the overlay to look up explain text
   helpOpen: boolean // Help / Pipelines panel visibility
+  aboutOpen: boolean // About / institutional panel visibility
   addStep: (fn: string) => void
   removeStep: (id: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
@@ -64,6 +65,8 @@ interface PipelineState {
   endTutorial: () => void
   openHelp: () => void
   closeHelp: () => void
+  openAbout: () => void
+  closeAbout: () => void
   loadTemplate: (tpl: PipelineTemplate) => void
   saveProject: () => Promise<void>
   openProject: () => Promise<void>
@@ -144,6 +147,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   tutorialFocusId: null,
   activeTutorialId: null,
   helpOpen: false,
+  aboutOpen: false,
   addStep: (fn) => {
     const step: Step = { id: uid(), fn, values: {} }
     set((s) => ({ steps: [...s.steps, step], selectedStep: step.id, inspectFn: null }))
@@ -294,6 +298,8 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   endTutorial: () => set({ tutorialStep: null, tutorialFocusId: null, activeTutorialId: null }),
   openHelp: () => set({ helpOpen: true }),
   closeHelp: () => set({ helpOpen: false }),
+  openAbout: () => set({ aboutOpen: true }),
+  closeAbout: () => set({ aboutOpen: false }),
   loadTemplate: (tpl) => {
     const steps: Step[] = tpl.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
     set({ ...freshRun, steps, selectedStep: steps[0]?.id ?? null })
@@ -359,7 +365,7 @@ const freshRun = {
   selectedStep: null as string | null, inspectFn: null as string | null,
   stepRun: {}, stepResults: {}, runError: null, validationIssues: [],
   engineIssue: null as string | null,
-  tutorialStep: null, tutorialFocusId: null, activeTutorialId: null, helpOpen: false,
+  tutorialStep: null, tutorialFocusId: null, activeTutorialId: null, helpOpen: false, aboutOpen: false,
 }
 
 // ---- R code generation ----------------------------------------------------

@@ -1,13 +1,9 @@
 // e2e verification of the climasus+ Pipeline Studio (needs `npm run dev` on :1420)
 import { chromium } from 'playwright'
+import { makeChecker } from './_verify-helpers.mjs'
 
 const URL = process.env.CLIMASUS_VERIFY_URL ?? 'http://localhost:1420/'
-let passed = 0
-let failed = 0
-const check = (name, ok, extra = '') => {
-  console.log(`${ok ? 'PASS' : 'FAIL'}  ${name}${extra ? ' — ' + extra : ''}`)
-  ok ? passed++ : failed++
-}
+const { check, summary } = makeChecker()
 
 const browser = await chromium.launch()
 const page = await browser.newPage()
@@ -113,5 +109,4 @@ check('project payload matches loaded pipeline',
 check('no page errors', pageErrors.length === 0, pageErrors[0] ?? '')
 
 await browser.close()
-console.log(`\n${passed}/${passed + failed} checks passed`)
-process.exit(failed ? 1 : 0)
+process.exit(summary())

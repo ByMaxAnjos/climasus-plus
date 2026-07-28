@@ -22,9 +22,14 @@ function GraphInner() {
   // refit when steps are added/removed (deliberate edits) — but not on every result arriving
   // mid-run, which would distractingly rezoom while the user is watching a run complete
   useEffect(() => {
-    const id = requestAnimationFrame(() => fitView({ padding: 0.25, duration: 200 }))
-    return () => cancelAnimationFrame(id)
-  }, [steps.length, fitView])
+    let raf = 0
+    const timeout = window.setTimeout(() => fitView({ padding: 0.32, duration: 180, maxZoom: 1 }), 80)
+    raf = requestAnimationFrame(() => fitView({ padding: 0.32, duration: 180, maxZoom: 1 }))
+    return () => {
+      cancelAnimationFrame(raf)
+      window.clearTimeout(timeout)
+    }
+  }, [nodes, fitView])
 
   // tutorial mode: pan the focused step into view as the user advances
   useEffect(() => {
@@ -45,7 +50,19 @@ function GraphInner() {
     prevResults.current = stepResults
   }, [stepResults, updateNodeInternals])
 
-  if (!steps.length) return <p className="empty-hint">{t('emptyPipeline', lang)}</p>
+  if (!steps.length) {
+    return (
+      <div className="pipeline-empty">
+        <p className="empty-hint">{t('emptyPipeline', lang)}</p>
+        <ol className="pipeline-empty-steps">
+          <li>{t('emptyPipelinePick', lang)}</li>
+          <li>{t('emptyPipelineTune', lang)}</li>
+          <li>{t('emptyPipelineRun', lang)}</li>
+        </ol>
+        <p className="pipeline-empty-note">{t('emptyPipelineTutorial', lang)}</p>
+      </div>
+    )
+  }
 
   return (
     <ReactFlow

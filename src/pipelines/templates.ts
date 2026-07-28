@@ -77,7 +77,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/09-modelagem.html`,
     steps: [
-      { fn: 'sus_data_read', values: { path: 'dados_agregados.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_data_ts_quality', values: {} },
       { fn: 'sus_data_plot_aggregate_ts', values: {} },
       { fn: 'sus_data_plot_aggregate_map', values: {} },
@@ -208,7 +208,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     vignetteUrl: `${PKGDOWN}/07-clima-estacoes.html`,
     steps: [
       { fn: 'sus_climate_inmet', values: { years: '2015:2019', uf: '"SP"' } },
-      { fn: 'sus_data_read', values: { path: 'obitos_mensais.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_climate_aggregate', values: { climate_data: 'clima', climate_var: 'tair_dry_bulb_c', time_unit: 'month', temporal_strategy: 'moving_window', window_days: '7' } },
       { fn: 'sus_climate_plot_aggregate', values: { plot_type: 'timeseries' } },
     ],
@@ -402,7 +402,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/mod-01-dlnm.html`,
     steps: [
-      { fn: 'sus_data_read', values: { path: 'dados_preparados.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_mod_dlnm', values: { outcome_col: 'n_obitos' } },
       { fn: 'sus_mod_plot_dlnm', values: {} },
       { fn: 'sus_mod_af', values: {} },
@@ -424,7 +424,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/mod-07-bayes.html`,
     steps: [
-      { fn: 'sus_data_read', values: { path: 'contagens_municipio.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_mod_spatial_weights', values: {} },
       { fn: 'sus_mod_spatial_bayes', values: {} },
       { fn: 'sus_mod_plot_spatial_bayes', values: {} },
@@ -445,7 +445,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/mod-03-crossover-its.html`,
     steps: [
-      { fn: 'sus_data_read', values: { path: 'serie_clima_saude.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_mod_casecrossover', values: {} },
       { fn: 'sus_mod_its', values: {} },
     ],
@@ -465,7 +465,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/mod-05-ml.html`,
     steps: [
-      { fn: 'sus_data_read', values: { path: 'features_modelagem.parquet' } },
+      { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_mod_ml', values: {} },
       { fn: 'sus_mod_plot_ml', values: {} },
     ],

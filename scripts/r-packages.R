@@ -1,7 +1,7 @@
 # Single source of truth for the R package closure the climasus+ engine needs.
-# Sourced by scripts/bundle-r-windows.R and by .github/workflows/build-windows-beta.yml so
-# the CI installs EXACTLY what the bundle step requires — no "missing package" errors.
-# (scripts/bundle-r.R for macOS keeps its own inline copy; keep the two in sync.)
+# Sourced by scripts/bundle-r.R, scripts/bundle-r-windows.R, and by
+# .github/workflows/build-windows-beta.yml so every platform and CI installs EXACTLY what
+# the bundle step requires — no "missing package" errors.
 
 # base/recommended packages ship inside R's library/ but aren't declared as Imports by anything
 # (R auto-attaches them) — listed explicitly so the bundle copies them, never installed via CRAN.
