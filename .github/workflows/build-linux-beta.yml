@@ -94,7 +94,7 @@ jobs:
         # instead of fighting the libfuse2/libfuse2t64 rename across Ubuntu versions.
         env:
           APPIMAGE_EXTRACT_AND_RUN: "1"
-        run: npx -y @tauri-apps/cli@^2 build --bundles deb,appimage
+        run: npx -y @tauri-apps/cli@^2 build --bundles deb,appimage --verbose
 
       - name: Compute checksums
         run: |
