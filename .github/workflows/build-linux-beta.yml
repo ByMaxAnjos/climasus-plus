@@ -46,7 +46,7 @@ jobs:
             libssl-dev libayatana-appindicator3-dev librsvg2-dev \
             libcurl4-openssl-dev libxml2-dev libgdal-dev libgeos-dev libproj-dev \
             libudunits2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
-            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgsl-dev
+            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgsl-dev r-mathlib
 
       - name: Install R package closure (complete, explicit)
         shell: Rscript {0}
@@ -81,6 +81,8 @@ jobs:
         run: |
           Rscript scripts/bundle-r-linux.R
           bash scripts/bundle-r-relocate-linux.sh
+          echo "--- bundled r/lib contents ---"
+          ls -la src-tauri/resources/r/lib
 
       - name: Allow unprivileged user namespaces (AppImage runtime needs this on 24.04)
         # Ubuntu 24.04 restricts unprivileged user namespaces via AppArmor by default, which
