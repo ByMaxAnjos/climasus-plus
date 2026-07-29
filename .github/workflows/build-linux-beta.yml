@@ -92,8 +92,15 @@ jobs:
         # linuxdeploy/linuxdeploy-plugin-appimage are themselves AppImages, which need FUSE to
         # mount — ubuntu-latest (24.04) doesn't ship libfuse2 by default. Force extract-and-run
         # instead of fighting the libfuse2/libfuse2t64 rename across Ubuntu versions.
+        #
+        # linuxdeploy also walks every ELF file under the AppDir (including our bundled R
+        # package .so's) resolving shared-library deps to bundle them — it failed with
+        # "Could not find dependency: libR.so" because the bundled r/lib isn't on any search
+        # path at build time. Same fix as the runtime spawn in src-tauri/src/lib.rs: point
+        # LD_LIBRARY_PATH at it.
         env:
           APPIMAGE_EXTRACT_AND_RUN: "1"
+          LD_LIBRARY_PATH: ${{ github.workspace }}/src-tauri/resources/r/lib
         run: npx -y @tauri-apps/cli@^2 build --bundles deb,appimage --verbose
 
       - name: Compute checksums
