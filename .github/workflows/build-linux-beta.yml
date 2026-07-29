@@ -46,7 +46,7 @@ jobs:
             libssl-dev libayatana-appindicator3-dev librsvg2-dev \
             libcurl4-openssl-dev libxml2-dev libgdal-dev libgeos-dev libproj-dev \
             libudunits2-dev libfontconfig1-dev libharfbuzz-dev libfribidi-dev \
-            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev
+            libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev libgsl-dev
 
       - name: Install R package closure (complete, explicit)
         shell: Rscript {0}
