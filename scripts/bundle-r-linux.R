@@ -44,6 +44,19 @@ for (p in present) {
   file.copy(file.path(lib_of(p), p), file.path(OUT, "library"), recursive = TRUE, copy.date = TRUE)
 }
 
+# ponytail: INLA ships its own precompiled Linux binary + private libgsl/libgslcblas copies
+# under library/INLA/bin/linux/64bit/, built against a GSL soname (28) newer than what
+# Ubuntu 24.04 ships (27). They rely on a local RPATH at runtime, but linuxdeploy's dependency
+# scanner doesn't honor that and aborts the whole AppImage build looking for a system-wide
+# libgsl.so.28 that doesn't exist. Drop them so the bundle builds; INLA-based modelling
+# (DLNM/CARBayes paths that route through it) is unavailable in this Linux beta until a
+# GSL-compatible INLA binary is sorted out.
+inla_bin <- file.path(OUT, "library", "INLA", "bin", "linux")
+if (dir.exists(inla_bin)) {
+  unlink(inla_bin, recursive = TRUE)
+  message("Dropped ", inla_bin, " (GSL soname mismatch with Ubuntu 24.04 — see comment above)")
+}
+
 writeLines(present, file.path(OUT, "..", "bundled-packages.txt"))
 cat("Bundled to", OUT, "\n")
 cat("Next: bash scripts/bundle-r-relocate-linux.sh, then npx @tauri-apps/cli build --bundles deb,appimage\n")
