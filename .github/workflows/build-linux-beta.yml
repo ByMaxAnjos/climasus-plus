@@ -82,6 +82,12 @@ jobs:
           Rscript scripts/bundle-r-linux.R
           bash scripts/bundle-r-relocate-linux.sh
 
+      - name: Allow unprivileged user namespaces (AppImage runtime needs this on 24.04)
+        # Ubuntu 24.04 restricts unprivileged user namespaces via AppArmor by default, which
+        # breaks the sandboxed extraction linuxdeploy's bundled AppImage runtime uses even in
+        # extract-and-run mode — it fails silently ("failed to run linuxdeploy", no detail).
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
       - name: Tauri build (deb + AppImage)
         # linuxdeploy/linuxdeploy-plugin-appimage are themselves AppImages, which need FUSE to
         # mount — ubuntu-latest (24.04) doesn't ship libfuse2 by default. Force extract-and-run
