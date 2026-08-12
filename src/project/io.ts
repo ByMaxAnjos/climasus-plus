@@ -6,7 +6,7 @@ import { readTextFile, writeFile, writeTextFile } from '@tauri-apps/plugin-fs'
 
 const isTauri = () => typeof window !== 'undefined' && '__TAURI__' in window
 
-const PROJECT_FILTER = [{ name: 'climasus+ project', extensions: ['climasus.json', 'json'] }]
+const PROJECT_FILTER = [{ name: 'climasus+ Studio project', extensions: ['climasus.json', 'json'] }]
 const DATA_FILTER = [{ name: 'Data', extensions: ['parquet', 'csv', 'xlsx', 'rds'] }]
 const R_SCRIPT_FILTER = [{ name: 'R script', extensions: ['R', 'r'] }]
 

@@ -7,7 +7,7 @@ export default function CodePanel() {
   const { steps, lang, engineStatus, engineIssue } = usePipeline()
   const [copied, setCopied] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
-  const code = generateR(steps)
+  const code = generateR(steps, lang)
 
   const copy = async () => {
     await navigator.clipboard.writeText(code)

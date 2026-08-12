@@ -22,21 +22,21 @@ type TeamMember = {
 const sections: AboutSection[] = [
   {
     title: {
-      pt: 'O que é o climasus+',
-      en: 'What climasus+ is',
-      es: 'Qué es climasus+',
+      pt: 'O que é o climasus+ Studio',
+      en: 'What climasus+ Studio is',
+      es: 'Qué es climasus+ Studio',
     },
     body: {
       pt: [
-        'O climasus+ é o estúdio desktop do ecossistema climaSUS para construir análises reprodutíveis em saúde, clima e ambiente sem começar pelo código.',
+        'O climasus+ Studio é o estúdio desktop do ecossistema climaSUS para construir análises reprodutíveis em saúde, clima e ambiente sem começar pelo código.',
         'A interface organiza funções do climasus4r em pipelines visuais: o usuário importa dados do DATASUS, integra exposições climáticas e ambientais, executa modelos, visualiza resultados e exporta scripts em R para auditoria e reprodução.',
       ],
       en: [
-        'climasus+ is the desktop studio in the climaSUS ecosystem for building reproducible health, climate and environmental analyses without starting from code.',
+        'climasus+ Studio is the desktop studio in the climaSUS ecosystem for building reproducible health, climate and environmental analyses without starting from code.',
         'The interface organizes climasus4r functions into visual pipelines: users import DATASUS data, integrate climate and environmental exposures, run models, view results and export R scripts for audit and reproduction.',
       ],
       es: [
-        'climasus+ es el estudio de escritorio del ecosistema climaSUS para construir análisis reproducibles de salud, clima y ambiente sin comenzar por el código.',
+        'climasus+ Studio es el estudio de escritorio del ecosistema climaSUS para construir análisis reproducibles de salud, clima y ambiente sin comenzar por el código.',
         'La interfaz organiza funciones de climasus4r en pipelines visuales: el usuario importa datos de DATASUS, integra exposiciones climáticas y ambientales, ejecuta modelos, visualiza resultados y exporta scripts en R para auditoría y reproducción.',
       ],
     },
@@ -50,15 +50,15 @@ const sections: AboutSection[] = [
     body: {
       pt: [
         'O app combina uma camada visual em React/Tauri, um motor R local e o pacote climasus4r. Essa arquitetura mantém os dados e execuções no computador do usuário, favorecendo transparência, reprodutibilidade e uso em oficinas ou ambientes com conectividade limitada.',
-        'O climasus+ se conecta aos demais produtos do climaSUS: o climasus4r fornece as funções analíticas e o climasusDB organiza datasets publicados para exploração, documentação e reuso.',
+        'O climasus+ Studio se conecta aos demais produtos do climaSUS: o climasus4r fornece as funções analíticas e o climasusDB organiza datasets publicados para exploração, documentação e reuso.',
       ],
       en: [
         'The app combines a React/Tauri visual layer, a local R engine and the climasus4r package. This architecture keeps data and execution on the user machine, supporting transparency, reproducibility and use in workshops or limited-connectivity settings.',
-        'climasus+ connects to the wider climaSUS ecosystem: climasus4r provides the analytical functions and climasusDB organizes published datasets for exploration, documentation and reuse.',
+        'climasus+ Studio connects to the wider climaSUS ecosystem: climasus4r provides the analytical functions and climasusDB organizes published datasets for exploration, documentation and reuse.',
       ],
       es: [
         'La aplicación combina una capa visual en React/Tauri, un motor R local y el paquete climasus4r. Esta arquitectura mantiene los datos y la ejecución en la computadora del usuario, favoreciendo transparencia, reproducibilidad y uso en talleres o contextos con conectividad limitada.',
-        'climasus+ se conecta con los demás productos de climaSUS: climasus4r provee las funciones analíticas y climasusDB organiza datasets publicados para exploración, documentación y reutilización.',
+        'climasus+ Studio se conecta con los demás productos de climaSUS: climasus4r provee las funciones analíticas y climasusDB organiza datasets publicados para exploración, documentación y reutilización.',
       ],
     },
   },
@@ -70,15 +70,15 @@ const sections: AboutSection[] = [
     },
     body: {
       pt: [
-        'O climasus+ é parte do climaSUS e do Centro de Clima de Saúde de Rondônia, com desenvolvimento articulado à Fiocruz Rondônia e ao INCT-Conexão.',
+        'O climasus+ Studio é parte do climaSUS e do Centro de Clima de Saúde de Rondônia, com desenvolvimento articulado à Fiocruz Rondônia e ao INCT-Conexão.',
         'O desenvolvimento é financiado pelo INCT-Conexão e aberto a colaborações de pesquisadores, gestores, desenvolvedores e comunicadores científicos que atuam na interface entre clima, ambiente e saúde.',
       ],
       en: [
-        'climasus+ is part of climaSUS and the Rondônia Health Climate Center, with development connected to Fiocruz Rondônia and INCT-Conexão.',
+        'climasus+ Studio is part of climaSUS and the Rondônia Health Climate Center, with development connected to Fiocruz Rondônia and INCT-Conexão.',
         'Development is funded by INCT-Conexão and open to collaboration with researchers, public managers, developers and science communicators working at the climate, environment and health interface.',
       ],
       es: [
-        'climasus+ forma parte de climaSUS y del Centro de Clima de Salud de Rondônia, con desarrollo articulado con Fiocruz Rondônia e INCT-Conexão.',
+        'climasus+ Studio forma parte de climaSUS y del Centro de Clima de Salud de Rondônia, con desarrollo articulado con Fiocruz Rondônia e INCT-Conexão.',
         'El desarrollo es financiado por INCT-Conexão y está abierto a colaboraciones de investigadores, gestores, desarrolladores y comunicadores científicos que trabajan en la interfaz entre clima, ambiente y salud.',
       ],
     },
@@ -158,7 +158,7 @@ const labels: Record<Lang, {
 }> = {
   pt: {
     eyebrow: 'Centro de Clima de Saúde de Rondônia · INCT-Conexão',
-    title: 'Sobre o climasus+',
+    title: 'Sobre o climasus+ Studio',
     lede: 'Um ambiente local e visual para montar, executar e compartilhar análises reprodutíveis na interface entre clima, ambiente e saúde pública.',
     teamTitle: 'Equipe do núcleo',
     teamBody: 'Pesquisadores, desenvolvedores e comunicadores científicos envolvidos no desenvolvimento do ecossistema climaSUS.',
@@ -166,7 +166,7 @@ const labels: Record<Lang, {
   },
   en: {
     eyebrow: 'Rondônia Health Climate Center · INCT-Conexão',
-    title: 'About climasus+',
+    title: 'About climasus+ Studio',
     lede: 'A local, visual environment for building, running and sharing reproducible analyses at the climate, environment and public health interface.',
     teamTitle: 'Core team',
     teamBody: 'Researchers, developers and science communicators involved in the development of the climaSUS ecosystem.',
@@ -174,7 +174,7 @@ const labels: Record<Lang, {
   },
   es: {
     eyebrow: 'Centro de Clima de Salud de Rondônia · INCT-Conexão',
-    title: 'Acerca de climasus+',
+    title: 'Acerca de climasus+ Studio',
     lede: 'Un ambiente local y visual para montar, ejecutar y compartir análisis reproducibles en la interfaz entre clima, ambiente y salud pública.',
     teamTitle: 'Equipo central',
     teamBody: 'Investigadores, desarrolladores y comunicadores científicos involucrados en el desarrollo del ecosistema climaSUS.',

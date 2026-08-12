@@ -5,8 +5,8 @@ import { RESPIRATORIO_SP } from '../tutorials/respiratorio'
 
 export default function TopBar() {
   const {
-    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
-    openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
+    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, stepResults, runPipeline,
+    openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial, exportReport,
   } = usePipeline()
 
   useEffect(() => {
@@ -14,12 +14,19 @@ export default function TopBar() {
   }, [theme])
 
   const canRun = engineStatus === 'ready' && steps.length > 0
+  const canExportReport = engineStatus === 'ready' && Object.keys(stepResults).length > 0
   return (
     <header className="topbar">
       <div className="brand-block">
         <div className="brand">
-          <span className="brand-name">climasus<span className="brand-plus">+</span></span>
+          <span className="brand-name">climasus<span className="brand-plus">+</span> Studio</span>
           <span className="brand-sub">{t('subtitle', lang)}</span>
+        </div>
+        <div className="brand-logos" title="INCT-CONEXAO · Fiocruz Rondônia · UFJF · CNPq">
+          <img src="/logos/inct-conexao-logo6-small.png" alt="INCT-CONEXAO" />
+          <img src="/logos/fiocruz-rondonia.png" alt="Fiocruz Rondônia" />
+          <img src="/logos/ufjf.png" alt="UFJF" />
+          <img src="/logos/cnpq-branca.png" alt="CNPq" className="logo-invert" />
         </div>
       </div>
       <div className="topbar-actions">
@@ -39,6 +46,7 @@ export default function TopBar() {
         <div className="topbar-group">
           <button className="btn" onClick={saveProject} title={t('saveProjectHint', lang)}>{t('saveProject', lang)}</button>
           <button className="btn" onClick={openProject} title={t('openProjectHint', lang)}>{t('openProject', lang)}</button>
+          <button className="btn" disabled={!canExportReport} onClick={exportReport} title={t('reportHint', lang)}>{t('report', lang)}</button>
         </div>
         <div className="topbar-group">
           <button className="btn" onClick={startFromDataFile} title={t('openDataHint', lang)}>{t('openData', lang)}</button>

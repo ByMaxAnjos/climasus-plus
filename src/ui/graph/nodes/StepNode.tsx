@@ -44,7 +44,10 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
       <div className="node-header">
         <StatusDot state={run} />
         <div className="step-body">
-          <span className="fn-name-friendly">{friendlyName(fn, lang)}</span>
+          <span className="fn-name-friendly">
+            <span className="fn-name-text">{friendlyName(fn, lang)}</span>
+            {run === 'running' && <span className="step-running-label">{t('running', lang)}</span>}
+          </span>
           <span className="step-args mono">
             {setArgs.length ? setArgs.map((a) => `${a.name}=${step.values[a.name]}`).join(', ') : `${fn.name}()`}
           </span>

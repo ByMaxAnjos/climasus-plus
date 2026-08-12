@@ -256,7 +256,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   },
   exportReport: async () => {
     try {
-      const url = await engine.generateReport('Relatorio climasus+')
+      const url = await engine.generateReport('Relatorio climasus+ Studio')
       await saveRemoteFile(url, 'relatorio-climasus.html')
     } catch (e) {
       set({ runError: String(e), centerTab: 'results' })
@@ -477,9 +477,9 @@ export function buildSteps(steps: Step[]): BuiltStep[] {
   return out
 }
 
-export function generateR(steps: Step[]): string {
+export function generateR(steps: Step[], lang: Lang = 'pt'): string {
   const built = buildSteps(steps)
-  if (!built.length) return '# Monte seu pipeline adicionando funções à esquerda\nlibrary(climasus4r)\n'
+  if (!built.length) return `${t('emptyCodeComment', lang)}\nlibrary(climasus4r)\n`
   const lines: string[] = ['library(climasus4r)', '']
   built.forEach((b, idx) => {
     // non-chained step with input passes it as first argument: fig <- sus_x_plot(dados, ...)

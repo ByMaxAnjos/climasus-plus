@@ -1,4 +1,4 @@
-# climasus+ Pipeline Studio
+# climasus+ Studio
 
 Aplicativo desktop que deixa profissionais de saúde/pesquisa montar e rodar análises do DATASUS visualmente — encadeando funções do pacote R `climasus4r` como um pipeline — **sem precisar saber que existe R por baixo**. A web é a mesma GUI degradada para exportar código quando não há motor local.
 
@@ -76,7 +76,6 @@ _Avoid_: propriedades, config, editor
 A ação de rodar o Pipeline no Motor e produzir Resultados.
 _Avoid_: rodar, run, processar
 
-**climasus+**:
-O nome do produto (com `+`, minúsculo). "Pipeline Studio" é o descritor do que ele é, não o nome.
+**climasus+ Studio**:
+O nome do produto (com `+`, minúsculo, e `Studio` como descritor de ambiente visual). O app usa o pacote `climasus4r` como motor analítico.
 _Avoid_: climasus Studio, climasu, Climasus+
-

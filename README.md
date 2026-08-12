@@ -1,4 +1,4 @@
-# climasus+
+# climasus+ Studio
 
 Estúdio visual para montar e executar análises de saúde, clima e ambiente do DATASUS — encadeando as funções do pacote [climasus4r](https://github.com/ByMaxAnjos/climasus4r) como um pipeline, **sem precisar saber R**. O motor de análise já vem embutido no aplicativo.
 

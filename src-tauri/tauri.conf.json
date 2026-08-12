@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "climasus-plus",
+  "productName": "climasus+ Studio",
   "version": "0.1.0",
   "identifier": "br.ufrn.climasusplus",
   "build": {
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "climasus+",
+        "title": "climasus+ Studio",
         "width": 1400,
         "height": 900,
         "resizable": true,

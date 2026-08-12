@@ -5,11 +5,16 @@ type Dict = Record<string, { pt: string; en: string; es: string }>
 
 const dict: Dict = {
   subtitle: {
-    pt: 'Estúdio de análises em saúde e clima',
-    en: 'Health & climate analytics studio',
-    es: 'Estudio de análisis en salud y clima',
+    pt: 'Módulo Studio do ecossistema climaSUS',
+    en: 'Studio module of the climaSUS ecosystem',
+    es: 'Módulo Studio del ecosistema climaSUS',
   },
   search: { pt: 'Buscar função…', en: 'Search function…', es: 'Buscar función…' },
+  emptyCodeComment: {
+    pt: '# Monte seu pipeline adicionando funções à esquerda',
+    en: '# Build your pipeline by adding functions on the left',
+    es: '# Arme su pipeline agregando funciones a la izquierda',
+  },
   pipeline: { pt: 'Pipeline', en: 'Pipeline', es: 'Pipeline' },
   emptyPipeline: {
     pt: 'Pipeline vazio. Escolha uma função à esquerda — a base recomendada é: Importar dados do DATASUS + Corrigir acentuação e caracteres + Padronizar nomes e valores.',
