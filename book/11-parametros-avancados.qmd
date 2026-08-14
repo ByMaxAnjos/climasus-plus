@@ -1,0 +1,81 @@
+---
+title: "Referência rápida de Parâmetros"
+---
+
+Este capítulo é uma consulta rápida para quem já entendeu a lógica geral do Studio e quer
+ajustar um Pipeline com mais controle. Ele não substitui o Inspetor: a interface continua
+sendo o lugar certo para ver todos os Parâmetros disponíveis de cada Função. A proposta
+aqui é mais objetiva: destacar os Parâmetros que costumam mudar a pergunta científica, a
+interpretação do Resultado ou a reprodutibilidade da análise.
+
+Use esta referência em três situações:
+
+- quando for adaptar um Modelo para outro território, período ou desfecho;
+- quando o Resultado parecer correto tecnicamente, mas não responder à pergunta
+  de gestão ou pesquisa;
+- quando for revisar um Pipeline antes de exportar, publicar ou compartilhar.
+
+::: {.callout-note}
+## Como ler as tabelas
+O nome amigável da Função aparece primeiro. O identificador técnico fica entre parênteses
+para facilitar a conferência no pacote e no código. A coluna "Quando ajustar" indica em
+que momento vale sair do padrão.
+:::
+
+## Preparação
+
+| Função | Parâmetros principais | O que controlam | Quando ajustar |
+|---|---|---|---|
+| **Importar dados do DATASUS** (`sus_data_import`) | `system`, `uf`, `year`, `month` | Sistema de origem, território e período dos dados de saúde. | Sempre que mudar sistema, estado, ano ou recorte temporal. |
+| **Ler dados exportados** (`sus_data_read`) | `path` | Arquivo ou pasta com dados já processados. | Quando a análise começa de uma base salva, não de nova importação. |
+| **Filtrar por CID-10 ou grupo de doença** (`sus_data_filter_cid`) | `disease_group`, `icd_codes`, `icd_column`, `match_type` | Qual desfecho de saúde entra na análise. | Sempre que a pergunta envolver outro grupo de doença, capítulo ou conjunto de códigos CID. |
+| **Filtrar por características demográficas** (`sus_data_filter_demographics`) | `age_range`, `sex`, `race`, `region`, `municipality_code` | Quem entra no recorte populacional. | Quando a análise for por idade, sexo, raça/cor, região ou município. |
+| **Criar variáveis derivadas** (`sus_data_create_variables`) | `create_age_groups`, `age_breaks`, `create_calendar_vars` | Faixas etárias e variáveis de calendário usadas depois. | Quando precisar comparar grupos etários ou criar séries por mês, semana ou estação. |
+| **Agregar dados em série temporal** (`sus_data_aggregate`) | `time_unit`, `group_by`, `date_col` | Escala temporal e grupos da série final. | Sempre que a pergunta exigir dia, semana, mês ou estratos territoriais/demográficos. |
+| **Gerar relatório de qualidade dos dados** (`sus_data_quality_report`) | Parâmetros de entrada do histórico do Pipeline | Resumo de completude, consistência e alertas. | Antes de seguir para Integração, especialmente em séries raras ou longas. |
+
+## Integração
+
+| Função | Parâmetros principais | O que controlam | Quando ajustar |
+|---|---|---|---|
+| **Importar dados das estações do INMET** (`sus_climate_inmet`) | `years`, `uf`, `station_code` | Período, estado e estações meteorológicas. | Quando houver estação conhecida ou necessidade de restringir a área de estudo. |
+| **Importar chuva por satélite (CHIRPS)** (`sus_grid_chirps`) | `resolution`, `years`, `months`, `municipalities`, `agg_fun`, `use_cache` | Chuva em grade por período, resolução, território e forma de agregação. | Quando a área tem baixa cobertura de estações ou muitos municípios. |
+| **Importar focos de queimadas** (`sus_grid_fires`) | `years`, `months`, `uf`, `bbox`, `source`, `municipalities`, `biome` | Período, território, fonte e recorte ambiental dos focos de calor. | Em estudos de fumaça, queimadas ou exposição ambiental aguda. |
+| **Importar poluição do ar** (`sus_grid_pollution_cams`, `sus_grid_pollution_ghap`, `sus_grid_pollution_merra2`) | `pollutants`, `metric`, `years`, `use_cache` | Poluente, métrica de resumo, período e cache da exposição. | Quando o desfecho pode responder à qualidade do ar, não só ao clima. |
+| **Juntar dados ambientais por município** (`sus_grid_join`) | `by`, `type_out` | Chaves usadas para unir ambiente e saúde. | Quando os dados ambientais têm escala anual, mensal ou diária diferente da saúde. |
+| **Calcular indicadores socioeconômicos e de saúde** (`sus_socio_compute_indicators`) | `indicators`, `col_mapping`, `confidence_level`, `add_ci` | Quais indicadores de território entram na análise e se terão intervalos de incerteza. | Quando vulnerabilidade, saneamento, renda ou estrutura demográfica podem confundir o efeito climático. |
+| **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) | `climate_var`, `time_unit`, `temporal_strategy`, `lag_days`, `window_days` | Exposição climática, escala temporal e defasagem. | Sempre que a pergunta envolver exposição acumulada, efeito atrasado ou comparação entre estratégias temporais. |
+
+## Análise & Modelagem
+
+| Função | Parâmetros principais | O que controlam | Quando ajustar |
+|---|---|---|---|
+| **Modelar risco com DLNM** (`sus_mod_dlnm`) | `outcome_col`, `climate_col`, `lag_max`, `covariates`, `argvar`, `arglag`, `family` | Desfecho, exposição e forma da relação exposição-defasagem. | Em estudos de temperatura, chuva ou poluição com efeito distribuído no tempo. |
+| **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) | `type`, `output_type`, `exposure_at`, `lags_at`, `interactive` | Qual parte do modelo será mostrada e em que formato. | Quando a comunicação precisar destacar curva geral, defasagem ou superfície 3D. |
+| **Calcular fração atribuível** (`sus_mod_af`) | `threshold`, `range`, `pred_at`, `by`, `nsim`, `alpha` | Faixa de exposição atribuída, estratificação e incerteza da estimativa. | Quando a pergunta for "quanto da carga pode ser atribuída ao clima?". |
+| **Estimar excesso de óbitos** (`sus_mod_excess`) | `method`, `control_period`, `study_period`, `date_col`, `outcome_col` | Linha de base esperada, período de comparação e excesso observado. | Em eventos extremos, surtos ou períodos de crise. |
+| **Combinar DLNM entre cidades** (`sus_mod_pool`) | `fits`, `method`, `city_labels` | Como estimativas locais viram estimativa combinada. | Quando o estudo inclui vários municípios ou estratos. |
+| **Explicar diferenças entre cidades** (`sus_mod_metaregression`) | `covariates`, `fits`, `standardize` | Quais características territoriais explicam heterogeneidade. | Quando o efeito varia muito entre cidades. |
+| **Comparar sensibilidade entre grupos** (`sus_mod_sensitivity`) | `fits`, `hot_percentile`, `cold_percentile`, `stratum_labels`, `alpha` | Cenários alternativos de limiar e estratos. | Sempre que a conclusão depender de limiar, grupo etário ou método. |
+| **Avaliar impacto com série interrompida** (`sus_mod_its`) | `interruption_dates`, `outcome_col`, `date_col`, `harmonics`, `family`, `covariates` | Evento/intervenção e estrutura temporal do modelo. | Em avaliação de alerta, política pública, pandemia ou evento definido no tempo. |
+| **Analisar com case-crossover** (`sus_mod_casecrossover`) | `outcome_col`, `exposure_col`, `covariates`, `stratum`, `lag`, `method`, `family` | Como cada caso é comparado com seus períodos de controle. | Em exposições agudas com séries mais curtas. |
+| **Modelar risco espacial ou espaço-temporal** | `neighbors`, `time_col`, `covariates`, `family` | Dependência entre municípios, tempo e covariáveis. | Quando a pergunta inclui onde o risco se concentra ou como muda no espaço-tempo. |
+
+## RAP
+
+| Função | Parâmetros principais | O que controlam | Quando ajustar |
+|---|---|---|---|
+| **Salvar pipeline para reutilizar** (`sus_rap_export`) | `pipeline`, `file_path`, `format`, `include_metadata`, `include_validation` | Arquivo exportado, formato e metadados do Pipeline. | Ao encerrar uma análise validada ou preparar auditoria. |
+| **Abrir arquivo de pipeline salvo** (`sus_rap_read`) | `file_path`, `validate` | Artefato RAP que será reaberto e validação inicial. | Quando for revisar, reproduzir ou continuar análise anterior. |
+| **Conferir ou comparar pipelines** (`sus_rap_inspect`) | `rap`, `rap2`, `verbose` | Passos preservados e diferenças entre versões. | Antes de publicar ou quando houver duas versões do mesmo Pipeline. |
+| **Atualizar parâmetros do pipeline salvo** (`sus_rap_update`) | `rap`, `backup` | Atualização controlada em um Pipeline exportado. | Quando a análise é a mesma, mas muda estado, ano, desfecho ou limiar. |
+| **Executar pipeline salvo** (`sus_rap_run`) | `rap`, `envir`, `dry_run` | Reexecução, ambiente de execução e teste sem rodar. | Para reproduzir a análise fora da sessão visual do Studio. |
+| **Gerar pipeline automatizado** (`sus_rap_targets`) | `pipeline`, `file_path`, `branching`, `workers`, `include_qc` | Estrutura de automação, paralelismo e controle de qualidade. | Quando a análise fica longa, repetida ou executada em muitos territórios. |
+| **Salvar pipeline como receita simples** (`sus_rap_recipe`) | `rap`, `file_path`, `include_data_hash` | Receita YAML compacta do Pipeline. | Para compartilhar uma análise em formato fácil de revisar e versionar. |
+
+## Regra prática
+
+Se um Parâmetro muda **quem** entra na análise, **onde**, **quando**, **qual exposição**,
+**qual desfecho** ou **qual defasagem**, ele deve aparecer no texto, no relatório ou na
+documentação do Pipeline. Se ele só muda desempenho, cache, formato de saída ou detalhe de
+interface, pode ficar como informação avançada no Inspetor ou neste capítulo.

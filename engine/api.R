@@ -100,7 +100,7 @@ classify <- function(obj, var, idx) {
     svg_rel <- sprintf("step%d_%s.svg", idx, var)
     ok <- tryCatch({
       suppressMessages({
-        ggplot2::ggsave(file.path(ARTIFACT_DIR, png_rel), obj, width = 9, height = 5.5, dpi = 150, bg = "white")
+        ggplot2::ggsave(file.path(ARTIFACT_DIR, png_rel), obj, width = 9, height = 5.5, dpi = 300, bg = "white")
         ggplot2::ggsave(file.path(ARTIFACT_DIR, svg_rel), obj, width = 9, height = 5.5, bg = "white")
       })
       TRUE
@@ -146,7 +146,7 @@ classify <- function(obj, var, idx) {
       png_rel <- sprintf("step%d_%s.png", idx, var)
       snap_ok <- tryCatch({
         webshot2::webshot(html_path, file.path(ARTIFACT_DIR, png_rel),
-                           vwidth = 1000, vheight = 700, delay = 0.5, quiet = TRUE)
+                           vwidth = 1000, vheight = 700, zoom = 2, delay = 0.5, quiet = TRUE)
         TRUE
       }, error = function(e) FALSE)
       if (snap_ok) artifacts$png <- png_rel

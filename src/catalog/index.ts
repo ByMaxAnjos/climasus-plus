@@ -3,7 +3,7 @@ import { FRIENDLY } from './friendly'
 import { ARG_DOCS } from './arg-docs'
 import type { Lang } from '../store/pipeline'
 
-export type StageId = 'preparacao' | 'integracao' | 'modelagem' | 'rap'
+export type StageId = 'preparacao' | 'integracao' | 'modelagem'
 
 export interface ArgSpec {
   name: string
@@ -44,11 +44,10 @@ export const searchFn = (query: string) => {
   })
 }
 
-export const STAGES: { id: StageId; color: string; icon: string }[] = [
-  { id: 'preparacao', color: 'var(--stage-blue)', icon: '⚕' },
-  { id: 'integracao', color: 'var(--stage-cyan)', icon: '🌍' },
-  { id: 'modelagem', color: 'var(--stage-magenta)', icon: '📈' },
-  { id: 'rap', color: 'var(--stage-yellow)', icon: '📦' },
+export const STAGES: { id: StageId; color: string }[] = [
+  { id: 'preparacao', color: 'var(--stage-blue)' },
+  { id: 'integracao', color: 'var(--stage-cyan)' },
+  { id: 'modelagem', color: 'var(--stage-magenta)' },
 ]
 
 export const stageColor = (id: StageId) => STAGES.find((s) => s.id === id)!.color
@@ -68,7 +67,7 @@ export const friendlyArgDoc = (fnName: string, arg: ArgSpec, lang: Lang): string
 // first-arg names that receive piped data — such steps chain with |>
 const PIPE_ARGS = new Set([
   'df', 'data', 'x', 'health_data', 'observed', 'fit', 'fits', 'cw_result',
-  'df_filled', 'hw_result', 'exposure_df', 'vulnerability', 'pipeline', 'rap',
+  'df_filled', 'hw_result', 'exposure_df', 'vulnerability', 'pipeline',
   'municipalities',
 ])
 
@@ -83,6 +82,5 @@ export function blockVar(f: FnSpec): string {
   if (f.family === 'grid') return 'ambiente'
   if (f.family === 'censo') return 'censo'
   if (f.stage === 'modelagem') return 'modelo'
-  if (f.stage === 'rap') return 'rap'
   return 'dados'
 }

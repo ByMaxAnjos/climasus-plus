@@ -18,8 +18,8 @@ await page.waitForSelector('.stage-tab')
 // 1. no welcome screen — studio renders directly
 check('studio renders, no welcome', await page.locator('.workspace').count() === 1)
 
-// 2. four stage tracks
-check('4 stage tracks', await page.locator('.stage-tab').count() === 4)
+// 2. three stage tracks
+check('3 stage tracks', await page.locator('.stage-tab').count() === 3)
 
 // 3. library lists sus_data_import under Preparação
 check('sus_data_import in library', await page.locator('.fn-item', { hasText: 'sus_data_import' }).count() === 1)
@@ -59,30 +59,26 @@ check('sus_mod_dlnm in modelagem', await page.locator('.fn-item', { hasText: 'su
 await page.locator('.stage-tab[data-stage="integracao"]').click()
 check('sus_grid_era5 in integração', await page.locator('.fn-item', { hasText: 'sus_grid_era5' }).count() === 1)
 
-// 10. RAP stage
-await page.locator('.stage-tab[data-stage="rap"]').click()
-check('sus_rap_export in RAP', await page.locator('.fn-item', { hasText: 'sus_rap_export' }).count() === 1)
-
-// 11. search
+// 10. search
 await page.locator('.search').fill('dlnm')
 check('search finds dlnm fns', await page.locator('.fn-item').count() >= 2)
 await page.locator('.search').fill('')
 
-// 12. persistence across reload
+// 11. persistence across reload
 await page.reload()
 await page.waitForSelector('.step-card')
 check('pipeline persists reload', await page.locator('.step-card').count() === 2)
 
-// 13. language switch
+// 12. language switch
 await page.locator('.lang-select').selectOption('en')
 const sub = await page.locator('.brand-sub').textContent()
 check('EN subtitle', sub === 'Health & climate analytics studio', sub ?? '')
 
-// 14. theme toggle
+// 13. theme toggle
 await page.locator('.theme-toggle').click()
 check('light theme attr', await page.evaluate(() => document.documentElement.dataset.theme) === 'light')
 
-// 15. Pipeline center opens and loads a template into the graph
+// 14. Pipeline center opens and loads a template into the graph
 await page.locator('.topbar-actions .btn', { hasText: 'Pipelines' }).click()
 await page.waitForSelector('.help-panel')
 check('pipeline center opens', await page.locator('.help-panel').count() === 1)
@@ -93,7 +89,7 @@ await page.locator('.help-card', { hasText: 'Pediatric respiratory mortality' })
 await page.waitForSelector('.help-panel', { state: 'detached' })
 check('template loads steps + closes panel', (await page.locator('.step-card').count()) >= 5)
 
-// 16. project serialize/deserialize round-trip (the file-save/open payload) via the store
+// 15. project serialize/deserialize round-trip (the file-save/open payload) via the store
 const roundTrip = await page.evaluate(() => {
   const store = window.__store
   const before = store.getState().steps.map((s) => s.fn)
@@ -105,7 +101,7 @@ check('project payload matches loaded pipeline',
   JSON.stringify(roundTrip.before) === JSON.stringify(roundTrip.parsedFns) && roundTrip.version === 4,
   `v${roundTrip.version}`)
 
-// 17. no page errors
+// 16. no page errors
 check('no page errors', pageErrors.length === 0, pageErrors[0] ?? '')
 
 await browser.close()

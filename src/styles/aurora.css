@@ -138,6 +138,8 @@ button {
   background: var(--env-400);
   box-shadow: var(--glow-teal);
 }
+.btn-icon { display: inline-flex; flex-shrink: 0; }
+.btn-icon svg { width: 15px; height: 15px; display: block; }
 
 .input,
 select.input {

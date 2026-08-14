@@ -372,66 +372,6 @@ export const FRIENDLY: Record<string, FriendlyEntry> = {
     en: { name: "Calculate vulnerability index (IPCC)", description: "Builds a city-level composite vulnerability index following the IPCC (AR6) framework: Vulnerability = Exposure + Sensitivity − Adaptive Capacity, based on user-supplied numeric indicators." },
     es: { name: "Calcular índice de vulnerabilidad (IPCC)", description: "Construye un índice compuesto de vulnerabilidad por ciudad siguiendo el marco del IPCC (AR6): Vulnerabilidad = Exposición + Sensibilidad − Capacidad Adaptativa, a partir de indicadores numéricos proporcionados por el usuario." },
   },
-  "sus_rap_addin_export": {
-    pt: { name: "Exportar pipeline selecionado", description: "Pega o pipeline que você selecionou no editor de código e salva como um arquivo pronto para compartilhar ou executar novamente depois." },
-    en: { name: "Export selected pipeline", description: "Takes the pipeline you selected in the code editor and saves it as a file ready to share or run again later." },
-    es: { name: "Exportar pipeline seleccionado", description: "Toma el pipeline que seleccionaste en el editor de código y lo guarda como un archivo listo para compartir o volver a ejecutar más adelante." },
-  },
-  "sus_rap_export": {
-    pt: { name: "Salvar pipeline para reutilizar", description: "Transforma seu pipeline montado em um arquivo independente (script, relatório ou documento) que guarda tudo o que é preciso para repetir a análise depois, inclusive em outro computador." },
-    en: { name: "Save pipeline for reuse", description: "Turns your assembled pipeline into a stand-alone file (script, report, or document) that keeps everything needed to repeat the analysis later, even on another computer." },
-    es: { name: "Guardar pipeline para reutilizar", description: "Convierte tu pipeline armado en un archivo independiente (script, informe o documento) que guarda todo lo necesario para repetir el análisis después, incluso en otra computadora." },
-  },
-  "sus_rap_from_recipe": {
-    pt: { name: "Importar pipeline salvo", description: "Carrega um pipeline que foi salvo antes como uma receita compacta, permitindo ajustar parâmetros e, se quiser, já executar a análise na hora." },
-    en: { name: "Import saved pipeline", description: "Loads a pipeline that was previously saved as a compact recipe, letting you tweak parameters and optionally run the analysis right away." },
-    es: { name: "Importar pipeline guardado", description: "Carga un pipeline que se guardó antes como una receta compacta, permitiendo ajustar parámetros y, si quieres, ejecutar el análisis de inmediato." },
-  },
-  "sus_rap_gui": {
-    pt: { name: "Abrir painel visual do pipeline", description: "Abre uma tela interativa para configurar estado, anos, sistema e nível de agregação, ver o código gerado e executar ou exportar a análise sem escrever código." },
-    en: { name: "Open pipeline visual panel", description: "Opens an interactive screen to set state, years, system, and aggregation level, preview the generated code, and run or export the analysis without writing code." },
-    es: { name: "Abrir panel visual del pipeline", description: "Abre una pantalla interactiva para configurar estado, años, sistema y nivel de agregación, ver el código generado y ejecutar o exportar el análisis sin escribir código." },
-  },
-  "sus_rap_inspect": {
-    pt: { name: "Conferir ou comparar pipelines", description: "Mostra um resumo organizado de um pipeline salvo. Se você indicar dois, compara lado a lado o que mudou nos parâmetros e nas etapas." },
-    en: { name: "Review or compare pipelines", description: "Shows an organized summary of a saved pipeline. If you give it two, it compares them side by side, highlighting what changed in parameters and steps." },
-    es: { name: "Revisar o comparar pipelines", description: "Muestra un resumen organizado de un pipeline guardado. Si indicas dos, los compara lado a lado, mostrando qué cambió en los parámetros y las etapas." },
-  },
-  "sus_rap_make": {
-    pt: { name: "Executar pipeline automatizado", description: "Roda o pipeline automatizado gerado anteriormente, podendo processar várias partes ao mesmo tempo para agilizar a análise." },
-    en: { name: "Run automated pipeline", description: "Runs the automated pipeline generated earlier, optionally processing several parts at once to speed up the analysis." },
-    es: { name: "Ejecutar pipeline automatizado", description: "Ejecuta el pipeline automatizado generado antes, pudiendo procesar varias partes a la vez para agilizar el análisis." },
-  },
-  "sus_rap_read": {
-    pt: { name: "Abrir arquivo de pipeline salvo", description: "Abre um arquivo de pipeline exportado anteriormente, recuperando os parâmetros e as etapas para que você possa conferir, executar de novo ou editar." },
-    en: { name: "Open saved pipeline file", description: "Opens a previously exported pipeline file, recovering its parameters and steps so you can review it, run it again, or edit it." },
-    es: { name: "Abrir archivo de pipeline guardado", description: "Abre un archivo de pipeline exportado anteriormente, recuperando sus parámetros y etapas para que puedas revisarlo, volver a ejecutarlo o editarlo." },
-  },
-  "sus_rap_recipe": {
-    pt: { name: "Salvar pipeline como receita simples", description: "Guarda os parâmetros e as etapas do seu pipeline em um arquivo pequeno e fácil de ler, ideal para compartilhar com colegas e importar depois." },
-    en: { name: "Save pipeline as simple recipe", description: "Saves your pipeline's parameters and steps into a small, easy-to-read file, ideal for sharing with colleagues and importing again later." },
-    es: { name: "Guardar pipeline como receta simple", description: "Guarda los parámetros y las etapas de tu pipeline en un archivo pequeño y fácil de leer, ideal para compartir con colegas e importar de nuevo después." },
-  },
-  "sus_rap_run": {
-    pt: { name: "Executar pipeline salvo", description: "Roda de novo a análise guardada em um pipeline salvo. Você pode trocar parâmetros, como estado ou período, antes de executar." },
-    en: { name: "Run saved pipeline", description: "Re-runs the analysis stored in a saved pipeline. You can swap parameters, like the state or time period, before running it." },
-    es: { name: "Ejecutar pipeline guardado", description: "Vuelve a ejecutar el análisis guardado en un pipeline. Puedes cambiar parámetros, como el estado o el período, antes de ejecutarlo." },
-  },
-  "sus_rap_targets": {
-    pt: { name: "Gerar pipeline automatizado", description: "Cria um arquivo de automação pronto para rodar seu pipeline sozinho, podendo dividir o processamento por estado, ano ou ambos." },
-    en: { name: "Generate automated pipeline", description: "Creates an automation file ready to run your pipeline on its own, optionally splitting the processing by state, year, or both." },
-    es: { name: "Generar pipeline automatizado", description: "Crea un archivo de automatización listo para ejecutar tu pipeline por sí solo, pudiendo dividir el procesamiento por estado, año o ambos." },
-  },
-  "sus_rap_template": {
-    pt: { name: "Criar novo projeto de análise", description: "Monta uma pasta de projeto pronta para usar, com pipeline automatizado, relatório configurável e, se quiser, controle de versões de pacotes e integração automática no GitHub." },
-    en: { name: "Create new analysis project", description: "Sets up a ready-to-use project folder with an automated pipeline, a configurable report, and optionally package version tracking and automatic GitHub integration." },
-    es: { name: "Crear nuevo proyecto de análisis", description: "Arma una carpeta de proyecto lista para usar, con pipeline automatizado, informe configurable y, si quieres, control de versiones de paquetes e integración automática con GitHub." },
-  },
-  "sus_rap_update": {
-    pt: { name: "Atualizar parâmetros do pipeline salvo", description: "Altera valores específicos (como estado ou anos) num arquivo de pipeline já exportado, sem precisar refazer tudo do zero. Uma cópia de segurança é criada antes da mudança." },
-    en: { name: "Update saved pipeline parameters", description: "Changes specific values (like state or years) in an already exported pipeline file, without having to redo everything from scratch. A backup copy is created before the change." },
-    es: { name: "Actualizar parámetros del pipeline guardado", description: "Cambia valores específicos (como estado o años) en un archivo de pipeline ya exportado, sin tener que rehacer todo desde cero. Se crea una copia de seguridad antes del cambio." },
-  },
   "sus_socio_compute_indicators": {
     pt: { name: "Calcular indicadores socioeconômicos e de saúde", description: "Calcula indicadores padronizados a partir das colunas do censo já ligadas aos dados de saúde, cobrindo demografia, vulnerabilidade socioeconômica, mortalidade, morbidade, saúde materno-infantil e disponibilidade de serviços de saúde." },
     en: { name: "Calculate socioeconomic and health indicators", description: "Calculates standardized indicators from the census columns already linked to the health data, covering demographics, socioeconomic vulnerability, mortality, morbidity, maternal-child health and health-resource availability." },

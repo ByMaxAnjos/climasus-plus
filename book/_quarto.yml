@@ -1,0 +1,31 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "climasus+ Studio: da mudança climática ao cuidado em saúde"
+  subtitle: "Um curso para gestores públicos, acadêmicos e comunidade"
+  author: "Max Anjos"
+  language: pt
+  chapters:
+    - index.qmd
+    - 00-clima-saude.qmd
+    - 01-conhecendo-o-studio.qmd
+    - 02-etapa-preparacao.qmd
+    - 03-etapa-integracao.qmd
+    - 04-etapa-analise-modelagem.qmd
+    - 05-etapa-rap.qmd
+    - 06-caso-respiratorio-pediatrico.qmd
+    - 07-caso-dengue-clima.qmd
+    - 08-caso-cardio-idosos-calor.qmd
+    - 09-caso-hospitalizacoes-frio.qmd
+    - 10-glossario.qmd
+    - 11-parametros-avancados.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    toc: true
+    number-sections: true

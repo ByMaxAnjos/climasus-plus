@@ -1,0 +1,62 @@
+---
+title: "Bem-vindo(a)"
+---
+
+## Para quem é este guia
+
+Este guia é um curso de formação sobre **clima e saúde** e sobre o **climasus+
+Studio**, o estúdio visual que permite montar e executar análises que cruzam dados
+de saúde, clima e território — sem precisar programar. Ele foi escrito para
+três públicos ao mesmo tempo:
+
+- **Gestores públicos**, que precisam decidir políticas de saúde informadas por
+  risco climático e querem autonomia para consultar dados sem depender de um
+  analista para cada pergunta.
+- **Acadêmicos e pesquisadores**, que precisam de rigor metodológico e
+  reprodutibilidade nas análises que produzem.
+- **Comunidade em geral**, que quer entender — e poder explicar a outras
+  pessoas — por que mudanças climáticas afetam a saúde no território onde
+  vivem.
+
+Se você não sabe programar, não se preocupe: o Studio foi desenhado para que
+isso nunca seja necessário. Cada capítulo assume que este é o único material
+de apoio que você tem à mão.
+
+## Como o guia está organizado
+
+O curso completo do climasus+ Studio cobre as 87 Funções do catálogo nas suas
+quatro Etapas, mais os conceitos de clima e saúde que sustentam as análises e os arcos de
+estudo de caso completos que fecham cada recorte aberto no Capítulo 0.
+
+1. **[Por que isso importa: clima, saúde e o que os dados escondem](00-clima-saude.qmd)**
+   — conceitos de clima e saúde: por que eventos climáticos se transformam em
+   problemas de saúde pública, com atraso e de forma desigual.
+2. **[Conhecendo o climasus+ Studio: como a análise se organiza](01-conhecendo-o-studio.qmd)**
+   — o modelo mental do Studio: Função, Passo, Nó e Pipeline.
+3. **[Etapa Preparação: dados de saúde prontos antes de tudo](02-etapa-preparacao.qmd)**
+   — a primeira Etapa do Pipeline, com um exercício guiado completo.
+4. **[Etapa Integração: clima, saúde e território na mesma análise](03-etapa-integracao.qmd)**
+   — como juntar dados de saúde já preparados com clima e indicadores
+   socioeconômicos.
+5. **[Etapa Análise & Modelagem: isso é real ou é ruído?](04-etapa-analise-modelagem.qmd)**
+   — os 6 grupos de Funções que transformam a série integrada em evidência
+   estatística, do DLNM à fração atribuível.
+6. **[Etapa RAP: tirar a análise do Studio sem perder a reprodutibilidade](05-etapa-rap.qmd)**
+   — como exportar, automatizar e compartilhar um Pipeline validado.
+7. **[Estudo de caso: mortalidade respiratória pediátrica e temperatura](06-caso-respiratorio-pediatrico.qmd)**
+   — o arco "ar" do Capítulo 0 em sequência completa.
+8. **[Estudo de caso: dengue, precipitação e temperatura](07-caso-dengue-clima.qmd)**
+   — o arco "chuva", com modelagem e interpretação para gestão de vetores.
+9. **[Estudo de caso: mortalidade cardiovascular em idosos e ondas de calor](08-caso-cardio-idosos-calor.qmd)**
+   — o arco "calor", incluindo detecção de onda de calor e carga atribuível.
+10. **[Estudo de caso: hospitalizações respiratórias e frio extremo](09-caso-hospitalizacoes-frio.qmd)**
+    — o arco "frio", com um desenho quase-experimental (ITS) em vez de DLNM.
+11. **[Glossário formal do curso](10-glossario.qmd)**
+    — versão em prosa contínua do vocabulário oficial do Studio, com
+    exemplos de uso correto e incorreto de cada termo.
+
+::: {.callout-tip}
+Este guia nunca usa a palavra "R" ou "engine" para descrever o que roda por
+baixo do climasus+ Studio — isso é intencional. Veja o Capítulo 1 para saber
+por quê.
+:::

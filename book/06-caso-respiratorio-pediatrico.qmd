@@ -1,0 +1,110 @@
+---
+title: "Estudo de caso: mortalidade respiratória pediátrica e temperatura"
+---
+
+No recorte "ar" do Capítulo 0, apresentamos a ideia de que fumaça de queimada e má
+qualidade do ar podem se transformar em crise respiratória — com crianças pequenas entre
+os grupos mais vulneráveis. Este capítulo retoma esse recorte em uma sequência completa:
+do dado bruto do SIM-DO à fração atribuível, pelas quatro Etapas
+percorridas nos Capítulos 2 a 5. Público principal: acadêmico e gestor técnico que já
+percorreram o piloto e querem ver um Pipeline inteiro montado, sem interrupção entre
+Etapas.
+
+## O pipeline completo, etapa por etapa
+
+Recorte: óbitos por causas respiratórias (CID-10, capítulo J) em crianças menores de 5
+anos, no Sudeste (SP, RJ, MG, ES), 2015-2019, contra a temperatura do ar registrada pelas
+estações do INMET. O Modelo de catálogo `ec-01-respiratorio-pediatrico` traz este
+Pipeline pronto para carregar no Centro de Pipelines.
+
+![](images/arco-ec01.svg)
+
+**Preparação**
+
+1. **Importar dados do DATASUS** (`sus_data_import`) — importa óbitos do sistema `SIM-DO`, UFs `SP`, `RJ`, `MG`, `ES`,
+   anos de 2015 a 2019.
+2. **Corrigir acentuação e caracteres** (`sus_data_clean_encoding`) — corrige encoding, herança comum de arquivos DATASUS
+   antigos.
+3. **Padronizar nomes e valores** (`sus_data_standardize`) — padroniza nomes de coluna e tipos.
+4. **Filtrar por CID-10 ou grupo de doença** (`sus_data_filter_cid`) — filtra pelo grupo de doença respiratório.
+5. **Criar variáveis derivadas** (`sus_data_create_variables`) — cria faixas etárias (`c(0, 5, 15, 60, Inf)`) e
+   variáveis de calendário.
+6. **Filtrar por características demográficas** (`sus_data_filter_demographics`) — recorta para a faixa etária `c(0, 5)`, isolando a
+   população pediátrica.
+7. **Agregar dados em série temporal** (`sus_data_aggregate`) — agrega a série por mês.
+
+**Integração**
+
+8. **Importar dados das estações do INMET** (`sus_climate_inmet`) — traz temperatura das estações INMET das mesmas UFs e anos.
+9. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cruza saúde e clima, agregados por mês.
+
+**Análise & Modelagem**
+
+10. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série integrada, com `outcome_col`
+    apontando para a contagem de óbitos.
+11. **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) — Resultado gráfico da curva exposição-defasagem-risco.
+12. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração atribuível.
+
+## Interpretando o resultado
+
+O Resultado de **Calcular fração atribuível** (`sus_mod_af`) responde à pergunta de gestão: que proporção dos
+óbitos respiratórios pediátricos do período é atribuível a dias de temperatura fora da
+faixa segura (tipicamente calor extremo combinado a pior qualidade do ar, ou frio nas
+regiões mais ao sul do recorte)? Diferente de uma correlação simples, a fração
+atribuível já incorpora a estrutura de defasagem ajustada pelo DLNM — não assume que o
+efeito aparece no mesmo dia da exposição.
+
+Vale lembrar que esse Resultado, como o de todos os quatro estudos de caso deste guia, é
+calculado sobre dados agregados por município e por período — não por criança
+individual. A fração atribuível descreve o padrão da população estudada; não garante que
+uma criança específica tenha adoecido "por causa" daquele dia de temperatura fora da
+faixa segura (ver **análise em nível agregado** no Glossário, Capítulo 10).
+
+Para aprofundar este mesmo recorte, o Pipeline pode ser estendido com dados de
+queimada ou poluição em grade — **Importar focos de queimadas** (`sus_grid_fires`) ou
+**Importar poluição do ar (CAMS)** (`sus_grid_pollution_cams`) — no lugar ou ao lado da
+temperatura de estação. A função **Cruzar dados de saúde e clima**
+(`sus_climate_aggregate`), apresentada no Capítulo 3, aceita qualquer série
+climática/ambiental já unida aos dados de saúde por **Juntar dados ambientais por
+município** (`sus_grid_join`).
+
+## O que isso significa para ação
+
+Uma fração atribuível alta, acompanhada de incerteza e revisão dos pressupostos do
+modelo, pode sustentar, por exemplo, um protocolo de alerta
+precoce para famílias com crianças pequenas em dias de pico de poluição, ou a priorização
+de recursos de saúde infantil em municípios que concentram tanto exposição climática
+alta quanto vulnerabilidade social.
+
+Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
+automatizada mensal com dados atualizados — ver Capítulo 5 (Etapa RAP).
+
+::: {.callout-note collapse="true"}
+## Verifique se ficou
+
+**1. Por que este Pipeline usa a função Filtrar por características demográficas
+(`sus_data_filter_demographics`) com `age_range = c(0, 5)` depois de já ter criado faixas
+etárias mais largas com Criar variáveis derivadas (`sus_data_create_variables`)?**
+
+**Criar variáveis derivadas** (`sus_data_create_variables`) cria a variável de faixa etária para toda a base (adequado se o
+Pipeline quisesse comparar faixas depois); **Filtrar por características demográficas** (`sus_data_filter_demographics`) é o Passo que
+efetivamente recorta a população de interesse (menores de 5 anos) para a análise deste
+capítulo.
+
+**2. O que o Resultado de Calcular fração atribuível (`sus_mod_af`) acrescenta que a
+curva de Visualizar resultados do DLNM (`sus_mod_plot_dlnm`), isoladamente, não mostra?**
+
+A curva DLNM mostra a forma da relação exposição-resposta e da defasagem; a fração
+atribuível traduz essa curva em uma proporção (e um número absoluto) de casos que podem
+ser atribuídos à exposição — o dado que efetivamente entra num argumento de política
+pública.
+
+**3. Se o gestor público quiser incluir queimadas na análise, além de temperatura, que
+Função do catálogo ele adicionaria ao Pipeline, e em qual Etapa?**
+
+**Importar focos de queimadas** (`sus_grid_fires`), ou uma função de poluição como
+**Importar poluição do ar (CAMS)** (`sus_grid_pollution_cams`) ou **Importar poluição do
+ar de alta resolução (GHAP)** (`sus_grid_pollution_ghap`), na Etapa Integração. Depois,
+esses dados entram junto à série de saúde por **Juntar dados ambientais por município**
+(`sus_grid_join`), antes de seguir para a Etapa Análise & Modelagem.
+:::

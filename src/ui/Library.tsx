@@ -5,6 +5,28 @@ import { t, STAGE_LABELS, FAMILY_LABELS } from '../i18n'
 
 const FAMILY_ORDER = ['core', 'spatial', 'censo', 'climate', 'grid', 'plot']
 
+// stage tab icons — chosen from the icon-review artifact (Preparação C, Integração A, Modelagem A)
+const STAGE_ICONS: Record<StageId, JSX.Element> = {
+  preparacao: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+      <line x1="5" y1="4" x2="5" y2="20" /><circle cx="5" cy="10" r="1.8" />
+      <line x1="12" y1="4" x2="12" y2="20" /><circle cx="12" cy="15" r="1.8" />
+      <line x1="19" y1="4" x2="19" y2="20" /><circle cx="19" cy="7" r="1.8" />
+    </svg>
+  ),
+  integracao: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="9.5" cy="12" r="6" /><circle cx="14.5" cy="12" r="6" />
+    </svg>
+  ),
+  modelagem: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+      <path d="M3 18.5c3-1 3-9.5 6-9.5s3 8.5 6 8.5 3-6.5 6-6.5" />
+      <line x1="3" y1="20.5" x2="21" y2="20.5" strokeWidth="1.3" opacity="0.5" />
+    </svg>
+  ),
+}
+
 export default function Library() {
   const { lang, inspectFn, inspect, addStep } = usePipeline()
   const [stage, setStage] = useState<StageId>('preparacao')
@@ -33,7 +55,7 @@ export default function Library() {
             onClick={() => { setStage(s.id); setQuery('') }}
             data-stage={s.id}
           >
-            <span className="stage-icon">{s.icon}</span>
+            <span className="stage-icon">{STAGE_ICONS[s.id]}</span>
             <span>{STAGE_LABELS[s.id][lang]}</span>
             <span className="stage-count">{CATALOG.filter((f) => f.stage === s.id).length}</span>
           </button>

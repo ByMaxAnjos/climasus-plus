@@ -1,0 +1,77 @@
+<svg viewBox="0 0 1200 430" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Pipeline de Preparação: da importação ao relatório de qualidade</title>
+  <desc id="desc">Diagrama didático do livro ClimaSUS+ Studio.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrow-indigo" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4338ca"/>
+    </marker>
+    <marker id="arrow-ink" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f172a"/>
+    </marker>
+    <style>
+      .title{font-size:26px;font-weight:800;fill:#0f172a}
+      .subtitle{font-size:15px;fill:#475569}
+      .section{font-size:17px;font-weight:800;fill:#0f172a}
+      .label{font-size:15px;font-weight:750;fill:#0f172a}
+      .small{font-size:13px;fill:#475569}
+      .tiny{font-size:11px;fill:#475569}
+      .mono{font-size:11px;fill:#4338ca;font-family:"IBM Plex Mono","SF Mono",monospace}
+      .card{fill:#ffffff;stroke:#e2e8f0;stroke-width:1.5;filter:url(#shadow)}
+      .note{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1200" height="430" rx="18" fill="#f8fafc"/>
+<text x="32" y="42" class="title" >Etapa Preparação: dados de saúde prontos para análise</text>
+  <text x="32" y="68" class="subtitle" >Da importação DATASUS ao relatório de qualidade, cada Passo documenta uma decisão.</text>
+  <rect x="32" y="104" width="1136" height="178" rx="20" fill="#0f766e" fill-opacity="0.09" stroke="#99f6e4"/>
+  <rect x="58" y="142" width="150" height="92" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="78" cy="162" r="13" fill="#0f766e"/>
+  <text x="78" y="167" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">1</text>
+  <text x="133" y="170" class="label" text-anchor="middle">Importar</text>
+  <text x="133" y="194" class="small" text-anchor="middle">DATASUS</text>
+  <text x="133" y="211" class="small" text-anchor="middle">SIM/SINAN/SIH</text>
+  <rect x="245" y="142" width="160" height="92" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="265" cy="162" r="13" fill="#0f766e"/>
+  <text x="265" y="167" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">2</text>
+  <text x="325" y="170" class="label" text-anchor="middle">Padronizar</text>
+  <text x="325" y="194" class="small" text-anchor="middle">encoding</text>
+  <text x="325" y="211" class="small" text-anchor="middle">nomes e valores</text>
+  <rect x="442" y="142" width="160" height="92" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="462" cy="162" r="13" fill="#0f766e"/>
+  <text x="462" y="167" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">3</text>
+  <text x="522" y="170" class="label" text-anchor="middle">Filtrar CID</text>
+  <text x="522" y="194" class="small" text-anchor="middle">grupo de doença</text>
+  <text x="522" y="211" class="small" text-anchor="middle">ex.: respiratório</text>
+  <rect x="639" y="142" width="170" height="92" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="659" cy="162" r="13" fill="#0f766e"/>
+  <text x="659" y="167" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">4</text>
+  <text x="724" y="170" class="label" text-anchor="middle">Filtrar perfil</text>
+  <text x="724" y="194" class="small" text-anchor="middle">idade, sexo</text>
+  <text x="724" y="211" class="small" text-anchor="middle">território</text>
+  <rect x="848" y="142" width="165" height="92" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="868" cy="162" r="13" fill="#0f766e"/>
+  <text x="868" y="167" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">5</text>
+  <text x="930.5" y="170" class="label" text-anchor="middle">Agregar</text>
+  <text x="930.5" y="194" class="small" text-anchor="middle">variáveis</text>
+  <text x="930.5" y="211" class="small" text-anchor="middle">série temporal</text>
+  <rect x="1045" y="127" width="105" height="122" rx="14" fill="#ffffff" stroke="#0f4c47" stroke-width="2" filter="url(#shadow)"/>
+  
+  <text x="1097.5" y="155" class="label" text-anchor="middle">Qualidade</text>
+  <text x="1097.5" y="179" class="small" text-anchor="middle">completude</text>
+  <text x="1097.5" y="196" class="small" text-anchor="middle">consistência</text>
+  <text x="1097.5" y="213" class="small" text-anchor="middle">relatório</text>
+  <path d="M208,188 L242,188" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M405,188 L439,188" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M602,188 L636,188" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M809,188 L845,188" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M1013,188 L1042,188" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <text x="60" y="315" class="section" >Leitura científica:</text>
+  <text x="60" y="343" class="small" >a preparação reduz erro de codificação, explicita o recorte epidemiológico e registra a qualidade da série antes da integração com clima.</text>
+  <text x="60" y="370" class="small" >Resultado esperado: série de saúde limpa, recortada e agregada, pronta para cruzamento temporal e espacial.</text>
+</svg>

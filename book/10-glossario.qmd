@@ -1,0 +1,321 @@
+---
+title: "Glossário formal do curso"
+---
+
+Este glossário reúne, em prosa contínua e com exemplos de uso correto e incorreto, o
+vocabulário oficial do climasus+ Studio apresentado ao longo dos capítulos anteriores. Ele
+não substitui o `CONTEXT.md` como fonte de autoridade — é uma adaptação didática,
+preparada para consulta rápida enquanto você lê ou revisa qualquer capítulo
+deste guia. Os primeiros termos seguem a organização do Capítulo 1: o pipeline e suas
+partes, execução, organização e edição. Em seguida, o glossário amplia os conceitos de
+clima e saúde usados nos capítulos de Preparação, Integração, Análise & Modelagem e nos
+estudos de caso.
+
+## O pipeline e suas partes
+
+Uma **Função** é a definição de uma operação do catálogo — por exemplo,
+**Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — exibida na Biblioteca.
+Existe uma só de cada Função: ela é imutável, é o *tipo*. Diga "adicione a Função de
+agregação climática ao Pipeline"; evite
+chamá-la de "bloco", "ferramenta" ou "comando" — esses termos não existem no vocabulário
+do Studio.
+
+Um **Passo** é uma Função em uso dentro de um Pipeline, com seus Parâmetros já
+preenchidos — é a *instância*. Como o Capítulo 1 explicou: "você adiciona uma Função e
+ela vira um Passo". Diga "o terceiro Passo do Pipeline filtra por CID"; evite "o
+terceiro bloco" ou "o terceiro card".
+
+Um **Nó** é a representação visual de um Passo no grafo do Pipeline. Um Passo aparece
+como um Nó — os dois termos não são sinônimos, um é o conceito, o outro é a
+forma na tela. Diga "clique no Nó para abrir o Inspetor"; evite "clique no card" ou
+"clique na caixa".
+
+Um **Pipeline** é a sequência ordenada de Passos que você monta e executa — do início
+(normalmente uma Função de importação) até o fim. O termo é mantido em inglês nos três
+idiomas da interface (PT, EN, ES). Diga "monte o Pipeline com estes cinco Passos"; evite
+"fluxo", "grafo", "canvas" ou "workflow".
+
+Um **Projeto** é um Pipeline serializado em disco (arquivo `.climasus.json`, com Funções
+e Parâmetros). Projeto e Pipeline são a mesma coisa — "Projeto" é só o nome que se dá ao
+arquivo salvo. Diga "salve o Projeto antes de fechar o Studio"; evite "salve o
+workspace" ou "salve a sessão".
+
+## Execução
+
+O **Motor** é o componente que executa o Pipeline e devolve Resultados. É deliberadamente
+um detalhe interno: a UI nunca revela que ele roda R — nunca diga "Motor R", "engine",
+"R" ou "servidor" olhando para o leitor ou usuário. Essa é a orientação da ADR 0001,
+já apresentada no Capítulo 1: "isso roda R?" é uma pergunta legítima de curiosidade
+técnica, mas a resposta correta reforça que o usuário não precisa saber — nunca
+formaliza ou nomeia R. Diga "o Motor está processando o Pipeline"; evite "o R está
+rodando" ou "o engine travou". Quando o Motor está indisponível, a UI degrada para
+exportar código — isso é um recurso avançado, não o discurso padrão do Studio.
+
+Um **Resultado** é a saída de um Passo executado, com um tipo (tabela, gráfico, mapa,
+texto) — é o termo canônico, voltado ao usuário, para o que aparece no Nó e no painel de
+resultados. Diga "o Resultado deste Passo é um gráfico de série temporal"; evite "a
+saída" ou "o output".
+
+Um **Artefato** é o arquivo concreto gerado por um Resultado — PNG, SVG, HTML
+interativo, CSV/XLSX baixável. É uma sub-parte técnica do Resultado: um
+Resultado-gráfico, por exemplo, tem Artefatos em PNG, SVG e HTML ao mesmo tempo. Diga
+"baixe o Artefato PNG deste Resultado"; evite "baixe o arquivo" ou "baixe o asset".
+
+**Executar** é a ação de rodar o Pipeline no Motor e produzir Resultados. Diga "clique
+em Executar para rodar o Pipeline"; evite "rodar", "run" ou "processar" como verbo
+principal da ação na UI.
+
+## Organização
+
+Uma **Etapa** é uma das quatro fases didáticas a que uma Função pertence: Preparação,
+Integração, Análise & Modelagem ou RAP (Reprodutibilidade, Automação, Publicação) —
+a estrutura que organizou os Capítulos 2 a 5 deste guia. Ela organiza e colore
+a Biblioteca (no código,
+`StageId`: `preparacao`/`integracao`/`modelagem`/`rap`). Diga "esta Função pertence à
+Etapa Integração"; evite "fase", "categoria", "grupo" ou "stage" ao falar com o usuário.
+
+A **Biblioteca** é o catálogo das Funções individuais, agrupadas por Etapa — de onde o
+usuário tira uma Função para adicioná-la ao Pipeline. Diga "procure a Função na
+Biblioteca"; evite "catálogo", "paleta" ou "toolbox" na interface.
+
+Um **Modelo** é um Pipeline pré-montado que o usuário carrega como ponto de partida
+editável (no código, "template"). O catálogo tem quatro categorias de Modelo: pipeline,
+clima, temático e caso — as mesmas categorias usadas para nomear os Modelos citados nos
+Capítulos 2 a 9 (`pipeline-preparacao-basica`, `clima-aggregate-exposicao`,
+`tematico-ondas-calor`, `ec-01-respiratorio-pediatrico`, entre outros). Diga "carregue o
+Modelo `mod-dlnm` para ver este exercício pronto"; evite "template", "exemplo",
+"receita" ou "preset".
+
+Um **Tutorial** é uma experiência guiada, conduzida Passo a Passo com sobreposição e
+explicações, que ensina a montar um Pipeline. A diferença em relação a um Modelo,
+já explicada no Capítulo 1: o Tutorial *conduz*; o Modelo apenas *dá um ponto de
+partida*. Diga "siga o Tutorial guiado para montar seu primeiro Pipeline"; evite "guia",
+"walkthrough" ou "tour".
+
+O **Centro de Pipelines** é o painel que lista os Modelos disponíveis, com atalhos para
+Tutoriais. Diga "abra o Centro de Pipelines para escolher um Modelo"; evite "galeria",
+"exemplos" ou "templates" como nome da tela.
+
+## Edição
+
+Um **Parâmetro** é cada entrada configurável de um Passo (ou de uma Função) — é o que o
+Inspetor edita (no código, `args`). Mensagens de erro voltadas ao usuário devem sempre
+dizer "parâmetro", nunca "argumento". Diga "preencha o Parâmetro `climate_var`"; evite
+"preencha o argumento" ou "a propriedade".
+
+O **Inspetor** é o painel que edita os Parâmetros do Passo (ou Função) selecionado.
+Diga "abra o Inspetor para ajustar a `temporal_strategy`"; evite "propriedades",
+"config" ou "editor".
+
+## Clima, ambiente e território
+
+**Tempo** é a condição atmosférica observada em um momento específico: chuva hoje,
+temperatura máxima de ontem, umidade desta semana. **Clima** é o padrão dessas condições
+ao longo de muitos anos. Para análise de saúde, essa diferença importa: um surto pode ser
+investigado com dados de tempo recente, mas a interpretação de calor extremo ou chuva
+acima do padrão depende de uma referência climática.
+
+Uma **normal climatológica** é uma média de referência calculada para um período longo,
+geralmente 30 anos. Ela permite dizer se um mês foi mais quente, mais seco ou mais
+chuvoso que o esperado para aquele lugar. Diga "compare a temperatura observada com a
+normal climatológica"; evite tratar a normal como previsão.
+
+Uma **anomalia climática** é a diferença entre o valor observado e a referência histórica.
+Temperatura 2 °C acima da normal, chuva 40% abaixo do esperado ou umidade muito inferior
+ao padrão são exemplos. Anomalia não significa erro no dado: significa desvio em relação
+ao comportamento climático habitual.
+
+Uma **exposição climática** é a condição ambiental à qual uma população esteve exposta:
+temperatura, chuva, umidade, seca, fumaça, poluição ou combinação desses fatores. No
+Pipeline, exposição é o lado climático/ambiental que será comparado ao desfecho de saúde.
+
+Um **evento extremo** é uma condição rara, intensa ou persistente o suficiente para
+ameaçar sistemas humanos, ambientais ou de saúde. O termo inclui ondas de calor, ondas de
+frio, chuva extrema, seca prolongada, queimadas intensas e episódios de poluição. O
+critério exato deve ser documentado, porque muda a interpretação do Resultado.
+
+Uma **onda de calor** é um período de temperaturas anormalmente altas por vários dias,
+definido por uma metodologia explícita: percentis locais, recomendações da OMS, OMM,
+INMET ou outros critérios. Não é apenas "um dia quente"; envolve intensidade, duração e
+referência local.
+
+Uma **onda de frio** é o equivalente para temperaturas anormalmente baixas. O limiar
+costuma ser definido por percentis baixos da distribuição histórica local, como o
+percentil 10. Isso permite comparar regiões com climas diferentes sem impor o mesmo valor
+absoluto de temperatura para todas.
+
+**Precipitação** é a chuva ou outra forma de água que cai da atmosfera. Em saúde, ela
+pode atuar de formas diferentes: chuva acumulada pode favorecer criadouros de mosquito,
+chuva extrema pode provocar enchentes, e ausência de chuva pode indicar seca e afetar
+abastecimento, qualidade da água e segurança alimentar.
+
+**Seca** é uma condição de déficit hídrico em relação ao esperado para uma região e um
+período. Pode ser meteorológica (falta de chuva), agrícola (umidade do solo insuficiente),
+hidrológica (rios e reservatórios baixos) ou socioeconômica (impacto sobre abastecimento,
+produção e serviços). O indicador escolhido define qual dimensão da seca está sendo
+medida.
+
+**Queimada** ou **foco de calor** é um registro de anomalia térmica detectada por satélite,
+frequentemente usado como aproximação para fogo em vegetação ou material combustível. Em
+saúde, esse dado costuma entrar como marcador de fumaça e material particulado, mas deve
+ser interpretado com cuidado: foco detectado não mede sozinho a concentração respirada por
+cada pessoa.
+
+**Poluição do ar** é a presença de contaminantes atmosféricos em níveis potencialmente
+prejudiciais à saúde, como material particulado fino (PM2.5), ozônio, dióxido de nitrogênio
+e outros poluentes. Em clima e saúde, a poluição pode ser exposição principal ou mediadora
+entre evento ambiental e desfecho, por exemplo entre queimadas e internações respiratórias.
+
+Uma **estação meteorológica** mede variáveis climáticas em um ponto específico do
+território. Ela é valiosa quando está bem localizada em relação à população estudada, mas
+pode representar mal municípios distantes, áreas de relevo diferente ou regiões com pouca
+cobertura de estações.
+
+Um dado **em grade** representa o território em células regulares, geralmente produzido
+por satélite, reanálise ou modelos ambientais. Ele ajuda quando a área de estudo é grande
+ou quando não há estação próxima, mas sua resolução espacial e temporal precisa ser
+compatível com a pergunta de saúde.
+
+**Reanálise** é um produto que combina observações e modelos físicos para reconstruir o
+estado da atmosfera no passado. Cobre regiões sem medição direta contínua,
+mas não deve ser tratada como observação pura; é uma estimativa modelada.
+
+**Território** é mais que localização geográfica. No guia, o termo inclui infraestrutura,
+renda, saneamento, acesso a serviços, composição etária e outras características que
+modificam o efeito do clima sobre a saúde. Dois municípios podem ter a mesma exposição
+climática e riscos muito diferentes por causa do território.
+
+## Saúde pública e epidemiologia
+
+Um **desfecho de saúde** é o evento que a análise quer explicar ou monitorar: óbito,
+internação, atendimento, caso notificado, nascimento, procedimento ou outro registro de
+interesse. Diga "desfecho respiratório" ou "desfecho cardiovascular"; evite confundir
+desfecho com exposição.
+
+**Morbidade** se refere ao adoecimento: casos, internações, atendimentos, sintomas ou
+diagnósticos. **Mortalidade** se refere a óbitos. A escolha entre morbidade e mortalidade
+muda a pergunta, a fonte de dados e o tipo de viés a considerar — mortalidade tende a ser
+mais completa e comparável entre territórios, enquanto morbidade capta um espectro maior
+de agravos, mas com maior variação no acesso ao serviço que gerou o registro.
+
+**Incidência** é a ocorrência de novos casos em uma população durante um período. Quando
+dividida pela população sob risco, vira uma taxa. Contagem absoluta mostra volume; taxa
+permite comparar territórios ou grupos populacionais de tamanhos diferentes.
+
+Uma **taxa** relaciona um número de eventos ao tamanho da população ou ao tempo de
+exposição. Por exemplo, óbitos por 100 mil habitantes. Em gestão pública, taxas ajudam a
+comparar lugares; contagens ajudam a dimensionar serviço, leito, equipe e orçamento.
+
+**CID-10** é a Classificação Internacional de Doenças usada para codificar causas e
+diagnósticos. No Studio, filtros por CID ajudam a transformar uma base ampla em um recorte
+analítico claro, como doenças respiratórias, cardiovasculares, dengue ou pneumonias.
+
+**DATASUS** é o conjunto de sistemas públicos brasileiros que registram eventos de saúde,
+como óbitos, internações, notificações, nascimentos, produção ambulatorial e
+estabelecimentos. Ele é uma fonte ampla, mas exige preparação: padronização, filtros,
+checagem de qualidade e interpretação das regras de cada sistema.
+
+**Vulnerabilidade** é a maior propensão de uma população ou território sofrer dano diante
+de uma exposição. No contexto clima-saúde, combina exposição, sensibilidade e capacidade
+de adaptação. Idade avançada, baixa renda, saneamento precário e acesso limitado a
+serviços podem aumentar vulnerabilidade.
+
+**Sensibilidade** é a predisposição biológica ou social a sofrer efeito quando exposto.
+Crianças pequenas, idosos, pessoas com doenças crônicas e populações em moradias precárias
+podem ser mais sensíveis a calor, frio, fumaça ou enchentes.
+
+**Capacidade adaptativa** é a condição de responder, reduzir dano ou se recuperar após uma
+exposição. Inclui atenção primária, vigilância, alertas, infraestrutura urbana, renda,
+transporte, acesso à água, energia e informação.
+
+**Risco** é a probabilidade ou intensidade esperada de um desfecho sob determinada
+exposição e contexto. No guia, risco não é só clima: resulta da combinação entre ameaça
+ambiental, população exposta, vulnerabilidade e proteção disponível.
+
+**Vigilância em saúde** é o acompanhamento sistemático de dados para detectar mudanças,
+orientar resposta e avaliar ações. Em clima e saúde, a vigilância conecta dados
+ambientais, registros de saúde e decisões operacionais, como alerta, busca ativa,
+comunicação de risco e preparação de serviços.
+
+## Tempo analítico, causalidade e modelagem
+
+Uma **série temporal** é uma sequência de observações ordenadas no tempo: casos por dia,
+óbitos por mês, chuva por semana. Ela permite estudar tendência, sazonalidade, rupturas,
+picos e defasagens.
+
+**Sazonalidade** é um padrão que se repete em períodos do ano, como aumento de dengue na
+estação chuvosa ou de doenças respiratórias em meses frios. Ignorar sazonalidade pode
+produzir uma associação enganosa entre clima e saúde.
+
+**Defasagem** ou **lag** é o intervalo entre a exposição e o desfecho. O calor pode afetar
+óbitos cardiovasculares no mesmo dia ou poucos dias depois; chuva pode afetar dengue
+semanas depois. Definir a defasagem é uma decisão epidemiológica, não apenas técnica.
+
+Uma **janela móvel** resume a exposição acumulada em um período anterior ao desfecho, como
+chuva dos últimos 7 dias ou temperatura média dos últimos 14 dias. Ela é adequada quando o
+efeito depende de acúmulo, não de um único dia.
+
+**Correlação** é a variação conjunta de duas séries. Ela ajuda a levantar hipóteses, mas
+não prova causa. **Causalidade** exige desenho analítico, controle de confundimento,
+coerência temporal, plausibilidade biológica e medida de incerteza.
+
+Um **fator de confusão** é uma variável associada à exposição e ao desfecho que pode
+produzir uma associação aparente. Sazonalidade, tendência temporal, idade, renda,
+saneamento e acesso a serviço podem confundir relações entre clima e saúde se não forem
+considerados.
+
+Um **DLNM** (Modelo de Defasagem Não Linear Distribuída) estima como uma exposição afeta
+um desfecho em diferentes níveis e ao longo de vários dias de defasagem. É muito usado em
+estudos de temperatura e saúde porque o efeito pode ser não linear e distribuído no tempo.
+
+**Fração atribuível** é a proporção de casos que pode ser atribuída a uma exposição dentro
+de um modelo e cenário definidos. Ela traduz uma curva estatística em uma pergunta de
+gestão: "quanto da carga observada está associado a esse fator?".
+
+**Excesso de casos** ou **excesso de óbitos** é a diferença entre o observado e o esperado
+em uma linha de base. Ajuda a estimar impacto durante eventos extremos, surtos ou períodos
+de crise, desde que a linha de base seja bem definida.
+
+Um **intervalo de confiança** expressa a precisão de uma estimativa obtida por métodos
+frequentistas (como muitos DLNMs); em modelos bayesianos, como os do grupo espaço-tempo
+bayesiano do Studio, a medida equivalente é o **intervalo de credibilidade**, calculado a
+partir da distribuição posterior. **Intervalo de incerteza** é o termo genérico que cobre
+os dois. Um único número raramente basta; para decisão pública, é importante saber se a
+estimativa é estável, imprecisa ou compatível com ausência de efeito. Diga "intervalo de
+confiança" para um método frequentista e "intervalo de credibilidade" para um método
+bayesiano; evite tratá-los como sinônimos exatos.
+
+**Análise de sensibilidade** repete a análise com escolhas alternativas — outro limiar de
+onda de calor, outra janela temporal, outro grupo etário, outro método — para verificar se
+a conclusão se mantém. Ela faz parte da documentação científica do Resultado.
+
+**Autocorrelação espacial** ocorre quando municípios próximos tendem a ter valores
+parecidos. Em saúde pública, isso pode revelar processos territoriais reais, mas também
+viola a suposição de independência usada por modelos simples.
+
+Um **cluster espacial** é uma concentração de valores altos ou baixos em uma área. Pode
+indicar risco localizado, acesso desigual, sub-registro, fonte ambiental ou padrão
+territorial que merece investigação. Cluster não é prova automática de causa.
+
+Uma **análise em nível agregado** (ou análise ecológica) usa dados agrupados por
+território e período — casos por município e mês, por exemplo — em vez de dados por
+pessoa. É o nível de trabalho padrão de série temporal, DLNM, cluster espacial e Bayes
+espacial no Studio. O **erro de interpretação ecológica** é assumir que um padrão encontrado
+nesse nível vale automaticamente para cada indivíduo ou cada evento: uma associação entre
+calor médio e mortalidade por município descreve o comportamento da população, não
+garante que a mesma relação apareça em cada pessoa exposta. Diga "esta associação foi
+observada em nível agregado, por município e mês"; evite generalizar a associação para o
+nível individual sem essa ressalva.
+
+**Adaptação** é o conjunto de ações para reduzir danos de riscos climáticos já presentes
+ou esperados, como planos de calor, alerta de enchentes, vigilância de arboviroses e
+reforço da atenção primária. **Mitigação** reduz emissões ou causas do aquecimento global.
+As duas agendas se complementam, mas respondem a perguntas diferentes.
+
+::: {.callout-tip}
+## O nome oficial
+O nome oficial é **climasus+ Studio** — com `+`, em minúsculo, e "Studio" como descritor
+de ambiente visual. O Studio usa o pacote `climasus4r` como Motor analítico, mas isso é
+detalhe interno (ver Motor, acima). Evite "climasus Studio" (sem o `+`), "climasu"
+(faltando letras) ou "Climasus+" (maiúsculo indevido).
+:::

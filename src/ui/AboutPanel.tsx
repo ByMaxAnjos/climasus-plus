@@ -70,16 +70,16 @@ const sections: AboutSection[] = [
     },
     body: {
       pt: [
-        'O climasus+ Studio é parte do climaSUS e do Centro de Clima de Saúde de Rondônia, com desenvolvimento articulado à Fiocruz Rondônia e ao INCT-Conexão.',
-        'O desenvolvimento é financiado pelo INCT-Conexão e aberto a colaborações de pesquisadores, gestores, desenvolvedores e comunicadores científicos que atuam na interface entre clima, ambiente e saúde.',
+        'O climasus+ Studio é parte do climaSUS e do Centro de Clima de Saúde de Rondônia, com desenvolvimento articulado à Fiocruz Rondônia e ao INCT-CONEXAO.',
+        'O desenvolvimento é financiado pelo INCT-CONEXAO e aberto a colaborações de pesquisadores, gestores, desenvolvedores e comunicadores científicos que atuam na interface entre clima, ambiente e saúde.',
       ],
       en: [
-        'climasus+ Studio is part of climaSUS and the Rondônia Health Climate Center, with development connected to Fiocruz Rondônia and INCT-Conexão.',
-        'Development is funded by INCT-Conexão and open to collaboration with researchers, public managers, developers and science communicators working at the climate, environment and health interface.',
+        'climasus+ Studio is part of climaSUS and the Rondônia Health Climate Center, with development connected to Fiocruz Rondônia and INCT-CONEXAO.',
+        'Development is funded by INCT-CONEXAO and open to collaboration with researchers, public managers, developers and science communicators working at the climate, environment and health interface.',
       ],
       es: [
-        'climasus+ Studio forma parte de climaSUS y del Centro de Clima de Salud de Rondônia, con desarrollo articulado con Fiocruz Rondônia e INCT-Conexão.',
-        'El desarrollo es financiado por INCT-Conexão y está abierto a colaboraciones de investigadores, gestores, desarrolladores y comunicadores científicos que trabajan en la interfaz entre clima, ambiente y salud.',
+        'climasus+ Studio forma parte de climaSUS y del Centro de Clima de Salud de Rondônia, con desarrollo articulado con Fiocruz Rondônia e INCT-CONEXAO.',
+        'El desarrollo es financiado por INCT-CONEXAO y está abierto a colaboraciones de investigadores, gestores, desarrolladores y comunicadores científicos que trabajan en la interfaz entre clima, ambiente y salud.',
       ],
     },
   },
@@ -93,7 +93,7 @@ const team: TeamMember[] = [
       en: 'Coordination · Maintainer',
       es: 'Coordinación · Mantenedor',
     },
-    institution: 'UFJF · Fiocruz-RO (CCSRO) · INCT-Conexão',
+    institution: 'UFJF · Fiocruz-RO (CCSRO) · INCT-CONEXAO',
     email: 'max.anjos@campus.ul.pt',
     photo: '/team/max-anjos.jpg',
     github: 'https://github.com/ByMaxAnjos',
@@ -157,7 +157,7 @@ const labels: Record<Lang, {
   links: string
 }> = {
   pt: {
-    eyebrow: 'Centro de Clima de Saúde de Rondônia · INCT-Conexão',
+    eyebrow: 'Centro de Clima de Saúde de Rondônia · INCT-CONEXAO',
     title: 'Sobre o climasus+ Studio',
     lede: 'Um ambiente local e visual para montar, executar e compartilhar análises reprodutíveis na interface entre clima, ambiente e saúde pública.',
     teamTitle: 'Equipe do núcleo',
@@ -165,7 +165,7 @@ const labels: Record<Lang, {
     links: 'Contatos e perfis',
   },
   en: {
-    eyebrow: 'Rondônia Health Climate Center · INCT-Conexão',
+    eyebrow: 'Rondônia Health Climate Center · INCT-CONEXAO',
     title: 'About climasus+ Studio',
     lede: 'A local, visual environment for building, running and sharing reproducible analyses at the climate, environment and public health interface.',
     teamTitle: 'Core team',
@@ -173,7 +173,7 @@ const labels: Record<Lang, {
     links: 'Contacts and profiles',
   },
   es: {
-    eyebrow: 'Centro de Clima de Salud de Rondônia · INCT-Conexão',
+    eyebrow: 'Centro de Clima de Salud de Rondônia · INCT-CONEXAO',
     title: 'Acerca de climasus+ Studio',
     lede: 'Un ambiente local y visual para montar, ejecutar y compartir análisis reproducibles en la interfaz entre clima, ambiente y salud pública.',
     teamTitle: 'Equipo central',
@@ -216,6 +216,13 @@ export default function AboutPanel() {
   return (
     <div className="about-backdrop" onClick={closeAbout}>
       <div className="about-panel glass" role="dialog" aria-modal="true" aria-labelledby="about-title" onClick={(e) => e.stopPropagation()}>
+        <div className="about-logos" title="INCT-CONEXAO · CNPq · Fiocruz Rondônia · UFJF">
+          <img className="about-logo-lg" src="/logos/inct-conexao.png" alt="INCT-CONEXAO" />
+          <img src="/logos/cnpq.png" alt="CNPq" />
+          <img src="/logos/fiocruz-rondonia.png" alt="Fiocruz Rondônia" />
+          <img className="about-logo-lg" src="/logos/ufjf.png" alt="UFJF" />
+        </div>
+
         <div className="about-head">
           <div>
             <p className="about-eyebrow">{copy.eyebrow}</p>

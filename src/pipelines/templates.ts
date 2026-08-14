@@ -6,7 +6,7 @@ import { byName } from '../catalog'
 // guaranteed to run offline — the case studies below start from sus_data_import() (live DATASUS),
 // so the user is expected to adjust args (uf/year/…) before running. Mirrors the climasus4r
 // vignettes (vignettes-pt/ec-*.Rmd). All `fn` names are validated against the catalog at load.
-export type TemplateCategory = 'pipeline' | 'clima' | 'tematico' | 'caso' | 'modelagem' | 'rap'
+export type TemplateCategory = 'pipeline' | 'clima' | 'tematico' | 'caso' | 'modelagem'
 
 export interface PipelineTemplate {
   id: string
@@ -468,67 +468,6 @@ export const TEMPLATES: PipelineTemplate[] = [
       { fn: 'sus_data_read', values: { path: '' } },
       { fn: 'sus_mod_ml', values: {} },
       { fn: 'sus_mod_plot_ml', values: {} },
-    ],
-  },
-  {
-    id: 'rap-exportar-executar',
-    category: 'rap',
-    title: {
-      pt: 'RAP: exportar, ler, inspecionar e executar',
-      en: 'RAP: export, read, inspect and run',
-      es: 'RAP: exportar, leer, inspeccionar y ejecutar',
-    },
-    description: {
-      pt: 'Transforma um pipeline em artefato reprodutível, recarrega o objeto RAP, inspeciona etapas e executa com parâmetros novos.',
-      en: 'Turns a pipeline into a reproducible artifact, reloads the RAP object, inspects steps and runs it with new parameters.',
-      es: 'Convierte un pipeline en artefacto reproducible, recarga el objeto RAP, inspecciona etapas y lo ejecuta con parámetros nuevos.',
-    },
-    vignetteUrl: `${PKGDOWN}/rap-01-exportar-executar.html`,
-    steps: [
-      { fn: 'sus_rap_export', values: {} },
-      { fn: 'sus_rap_read', values: { path: 'analise_respiratoria_sp.R' } },
-      { fn: 'sus_rap_inspect', values: {} },
-      { fn: 'sus_rap_run', values: {} },
-    ],
-  },
-  {
-    id: 'rap-targets',
-    category: 'rap',
-    title: {
-      pt: 'RAP: pipeline com targets',
-      en: 'RAP: targets pipeline',
-      es: 'RAP: pipeline con targets',
-    },
-    description: {
-      pt: 'Gera um _targets.R para cache, paralelismo e reexecução seletiva de análises multiestado ou multiano.',
-      en: 'Generates a _targets.R file for cache, parallelism and selective reruns of multi-state or multi-year analyses.',
-      es: 'Genera un _targets.R para caché, paralelismo y reejecución selectiva de análisis multiestado o multianual.',
-    },
-    vignetteUrl: `${PKGDOWN}/rap-02-targets.html`,
-    steps: [
-      { fn: 'sus_rap_read', values: { path: 'analise_respiratoria_sp.R' } },
-      { fn: 'sus_rap_targets', values: {} },
-      { fn: 'sus_rap_make', values: {} },
-    ],
-  },
-  {
-    id: 'rap-compartilhar-scaffold',
-    category: 'rap',
-    title: {
-      pt: 'RAP: receita YAML e scaffolding',
-      en: 'RAP: YAML recipe and scaffolding',
-      es: 'RAP: receta YAML y scaffolding',
-    },
-    description: {
-      pt: 'Compartilha pipelines como receita YAML, reimporta análises de colegas ou cria a estrutura completa de um novo projeto.',
-      en: 'Shares pipelines as YAML recipes, reimports colleagues analyses or creates the full structure of a new project.',
-      es: 'Comparte pipelines como receta YAML, reimporta análisis de colegas o crea la estructura completa de un nuevo proyecto.',
-    },
-    vignetteUrl: `${PKGDOWN}/rap-03-compartilhar.html`,
-    steps: [
-      { fn: 'sus_rap_recipe', values: {} },
-      { fn: 'sus_rap_from_recipe', values: { path: 'receita.yaml' } },
-      { fn: 'sus_rap_template', values: {} },
     ],
   },
 ]

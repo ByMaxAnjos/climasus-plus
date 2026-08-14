@@ -1,0 +1,62 @@
+<svg viewBox="0 0 1100 460" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Da exposição climática ao desfecho de saúde, com defasagem</title>
+  <desc id="desc">Diagrama didático do livro ClimaSUS+ Studio.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrow-indigo" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4338ca"/>
+    </marker>
+    <marker id="arrow-ink" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f172a"/>
+    </marker>
+    <style>
+      .title{font-size:26px;font-weight:800;fill:#0f172a}
+      .subtitle{font-size:15px;fill:#475569}
+      .section{font-size:17px;font-weight:800;fill:#0f172a}
+      .label{font-size:15px;font-weight:750;fill:#0f172a}
+      .small{font-size:13px;fill:#475569}
+      .tiny{font-size:11px;fill:#475569}
+      .mono{font-size:11px;fill:#4338ca;font-family:"IBM Plex Mono","SF Mono",monospace}
+      .card{fill:#ffffff;stroke:#e2e8f0;stroke-width:1.5;filter:url(#shadow)}
+      .note{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1100" height="460" rx="18" fill="#f8fafc"/>
+<text x="32" y="42" class="title" >Clima e saúde: exposição, defasagem e vulnerabilidade</text>
+  <text x="32" y="68" class="subtitle" >Eventos climáticos afetam a saúde com atraso e de forma desigual no território.</text>
+  <line x1="105" y1="190" x2="975" y2="190" stroke="#0f172a" stroke-width="3"/>
+  <text x="85" y="158" class="section" >t0</text>
+  <text x="58" y="180" class="small" >evento climático</text>
+  <text x="900" y="158" class="section" >t0 + N dias</text>
+  <text x="885" y="180" class="small" >desfecho de saúde</text>
+  <g transform="translate(70 206)">
+    <circle cx="40" cy="40" r="38" fill="#fff7ed" stroke="#b45309" stroke-width="3"/>
+    <rect x="31" y="18" width="10" height="31" rx="5" fill="none" stroke="#b45309" stroke-width="3"/>
+    <circle cx="36" cy="56" r="9" fill="#b45309"/>
+    <path d="M54,20 C64,35 66,43 56,52 C45,43 47,33 54,20Z" fill="#0369a1"/>
+    <text x="40" y="102" class="tiny" text-anchor="middle">calor, chuva, fumaça</text>
+  </g>
+  <path d="M145,190 C310,92 650,92 900,190" stroke="#0f766e" stroke-width="3" fill="none" marker-end="url(#arrow-teal)" stroke-dasharray="8 8"/>
+  <text x="525" y="116" class="section" text-anchor="middle" fill="#0f4c47">janela de exposição / lag</text>
+  <text x="525" y="140" class="small" text-anchor="middle">o efeito pode aparecer dias ou semanas depois</text>
+  <g transform="translate(895 206)">
+    <circle cx="40" cy="40" r="38" fill="#fef2f2" stroke="#b91c1c" stroke-width="3"/>
+    <rect x="24" y="34" width="32" height="12" rx="2" fill="#b91c1c"/>
+    <rect x="34" y="24" width="12" height="32" rx="2" fill="#b91c1c"/>
+    <text x="40" y="102" class="tiny" text-anchor="middle">atendimento, internação, óbito</text>
+  </g>
+  <rect x="48" y="338" width="1004" height="88" rx="16" fill="#ecfeff" stroke="#bae6fd"/>
+  <text x="76" y="366" class="section" >Vulnerabilidade modifica o risco:</text>
+  <rect x="76" y="380" width="138" height="26" rx="13" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1.4"/>
+  <text x="88" y="398" class="tiny" >biológica: idade</text>
+  <rect x="270" y="380" width="154" height="26" rx="13" fill="#b45309" fill-opacity="0.14" stroke="#b45309" stroke-width="1.4"/>
+  <text x="282" y="398" class="tiny" >social: renda e acesso</text>
+  <rect x="490" y="380" width="190" height="26" rx="13" fill="#b91c1c" fill-opacity="0.14" stroke="#b91c1c" stroke-width="1.4"/>
+  <text x="502" y="398" class="tiny" >territorial: moradia e saneamento</text>
+  <text x="76" y="414" class="small" >A mesma exposição pode produzir impactos muito diferentes entre bairros e grupos populacionais.</text>
+</svg>

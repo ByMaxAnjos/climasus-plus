@@ -1,0 +1,61 @@
+<svg viewBox="0 0 1200 390" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Caso ec-02: dengue, precipitação e temperatura</title>
+  <desc id="desc">Diagrama didático do livro ClimaSUS+ Studio.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrow-indigo" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4338ca"/>
+    </marker>
+    <marker id="arrow-ink" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f172a"/>
+    </marker>
+    <style>
+      .title{font-size:26px;font-weight:800;fill:#0f172a}
+      .subtitle{font-size:15px;fill:#475569}
+      .section{font-size:17px;font-weight:800;fill:#0f172a}
+      .label{font-size:15px;font-weight:750;fill:#0f172a}
+      .small{font-size:13px;fill:#475569}
+      .tiny{font-size:11px;fill:#475569}
+      .mono{font-size:11px;fill:#4338ca;font-family:"IBM Plex Mono","SF Mono",monospace}
+      .card{fill:#ffffff;stroke:#e2e8f0;stroke-width:1.5;filter:url(#shadow)}
+      .note{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1200" height="390" rx="18" fill="#f8fafc"/>
+<text x="32" y="42" class="title" >Caso ec-02: dengue, precipitação e temperatura</text>
+  <text x="32" y="68" class="subtitle" >Chuva acumulada, defasagem vetorial e vigilância antecipada.</text>
+  <rect x="55" y="146" width="205" height="126" rx="14" fill="#ffffff" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="75" cy="166" r="13" fill="#0369a1"/>
+  <text x="75" y="171" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">1</text>
+  <text x="157.5" y="174" class="label" text-anchor="middle">Preparação</text>
+  <text x="157.5" y="198" class="small" text-anchor="middle">SINAN dengue</text>
+  <text x="157.5" y="215" class="small" text-anchor="middle">série semanal</text>
+  <rect x="310" y="146" width="205" height="126" rx="14" fill="#ffffff" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="330" cy="166" r="13" fill="#0369a1"/>
+  <text x="330" y="171" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">2</text>
+  <text x="412.5" y="174" class="label" text-anchor="middle">Integração</text>
+  <text x="412.5" y="198" class="small" text-anchor="middle">CHIRPS em grade</text>
+  <text x="412.5" y="215" class="small" text-anchor="middle">chuva acumulada</text>
+  <rect x="565" y="146" width="205" height="126" rx="14" fill="#ffffff" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="585" cy="166" r="13" fill="#0369a1"/>
+  <text x="585" y="171" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">3</text>
+  <text x="667.5" y="174" class="label" text-anchor="middle">Modelagem</text>
+  <text x="667.5" y="198" class="small" text-anchor="middle">DLNM</text>
+  <text x="667.5" y="215" class="small" text-anchor="middle">lag de semanas</text>
+  <rect x="820" y="146" width="205" height="126" rx="14" fill="#ffffff" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="840" cy="166" r="13" fill="#0369a1"/>
+  <text x="840" y="171" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">4</text>
+  <text x="922.5" y="174" class="label" text-anchor="middle">Gestão</text>
+  <text x="922.5" y="198" class="small" text-anchor="middle">janela de ação</text>
+  <text x="922.5" y="215" class="small" text-anchor="middle">controle vetorial</text>
+  <path d="M260,209 L306,209" stroke="#0369a1" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M515,209 L561,209" stroke="#0369a1" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <path d="M770,209 L816,209" stroke="#0369a1" stroke-width="3" fill="none" marker-end="url(#arrow-teal)"/>
+  <rect x="70" y="315" width="1060" height="44" rx="16" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="90" y="342" class="small" >Leitura: a unidade semanal preserva a dinâmica do vetor; indicadores de saneamento ajudam a separar clima e vulnerabilidade territorial.</text>
+</svg>

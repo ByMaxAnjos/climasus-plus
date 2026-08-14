@@ -13,7 +13,6 @@ const STAGES = [
   { id: 'preparacao', match: /^(sus_data_|sus_create_variables|sus_filter_cid_explore)/ },
   { id: 'integracao', match: /^(sus_join_spatial|sus_socio_|sus_census_explore|sus_climate_|sus_grid_)/ },
   { id: 'modelagem', match: /^sus_mod_/ },
-  { id: 'rap', match: /^sus_rap_/ },
 ]
 // sub-family for grouping inside a stage
 function family(name) {

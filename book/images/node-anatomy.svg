@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1100 420" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="title desc">
+  <title id="title">Da Biblioteca ao Pipeline</title>
+  <desc id="desc">Diagrama didático do livro ClimaSUS+ Studio.</desc>
+  <defs>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f766e"/>
+    </marker>
+    <marker id="arrow-indigo" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#4338ca"/>
+    </marker>
+    <marker id="arrow-ink" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0f172a"/>
+    </marker>
+    <style>
+      .title{font-size:26px;font-weight:800;fill:#0f172a}
+      .subtitle{font-size:15px;fill:#475569}
+      .section{font-size:17px;font-weight:800;fill:#0f172a}
+      .label{font-size:15px;font-weight:750;fill:#0f172a}
+      .small{font-size:13px;fill:#475569}
+      .tiny{font-size:11px;fill:#475569}
+      .mono{font-size:11px;fill:#4338ca;font-family:"IBM Plex Mono","SF Mono",monospace}
+      .card{fill:#ffffff;stroke:#e2e8f0;stroke-width:1.5;filter:url(#shadow)}
+      .note{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1100" height="420" rx="18" fill="#f8fafc"/>
+<text x="32" y="42" class="title" >Da Função ao Pipeline</text>
+  <text x="32" y="68" class="subtitle" >Uma Função vira Passo quando recebe Parâmetros; cada Passo aparece como um Nó no grafo.</text>
+  <rect x="36" y="98" width="285" height="235" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <text x="62" y="132" class="section" >Biblioteca</text>
+  <text x="62" y="156" class="small" >Funções disponíveis por Etapa</text>
+  <rect x="62" y="178" width="220" height="26" rx="13" fill="#0f766e" fill-opacity="0.14" stroke="#0f766e" stroke-width="1.4"/>
+  <text x="74" y="196" class="tiny" >Preparação · importar dados</text>
+  <rect x="62" y="214" width="220" height="26" rx="13" fill="#0369a1" fill-opacity="0.14" stroke="#0369a1" stroke-width="1.4"/>
+  <text x="74" y="232" class="tiny" >Integração · juntar clima</text>
+  <rect x="62" y="250" width="220" height="26" rx="13" fill="#7c3aed" fill-opacity="0.14" stroke="#7c3aed" stroke-width="1.4"/>
+  <text x="74" y="268" class="tiny" >Análise · ajustar modelo</text>
+  <rect x="62" y="286" width="220" height="26" rx="13" fill="#b45309" fill-opacity="0.14" stroke="#b45309" stroke-width="1.4"/>
+  <text x="74" y="304" class="tiny" >RAP · exportar análise</text>
+  <path d="M335,210 C390,210 410,210 458,210" stroke="#0f172a" stroke-width="3" fill="none" marker-end="url(#arrow-ink)" />
+  <text x="395" y="178" class="section" text-anchor="middle">escolher</text>
+  <text x="395" y="200" class="small" text-anchor="middle">+ preencher Parâmetros</text>
+  <rect x="472" y="98" width="590" height="235" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" filter="url(#shadow)"/>
+  <text x="502" y="132" class="section" >Pipeline</text>
+  <text x="502" y="156" class="small" >Sequência executável de Passos</text>
+  <path d="M565,230 L700,230" stroke="#0f172a" stroke-width="3" fill="none" marker-end="url(#arrow-ink)"/>
+  <path d="M765,230 L900,230" stroke="#0f172a" stroke-width="3" fill="none" marker-end="url(#arrow-ink)"/>
+  <rect x="520" y="185" width="135" height="90" rx="14" fill="#ffffff" stroke="#0f766e" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="540" cy="205" r="13" fill="#0f766e"/>
+  <text x="540" y="210" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">1</text>
+  <text x="587.5" y="213" class="label" text-anchor="middle">Passo 1</text>
+  <text x="587.5" y="237" class="small" text-anchor="middle">Nó visual</text>
+  <text x="587.5" y="254" class="small" text-anchor="middle">Parâmetros ✓</text>
+  <rect x="720" y="185" width="135" height="90" rx="14" fill="#ffffff" stroke="#0369a1" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="740" cy="205" r="13" fill="#0369a1"/>
+  <text x="740" y="210" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">2</text>
+  <text x="787.5" y="213" class="label" text-anchor="middle">Passo 2</text>
+  <text x="787.5" y="237" class="small" text-anchor="middle">Nó visual</text>
+  <text x="787.5" y="254" class="small" text-anchor="middle">Parâmetros ✓</text>
+  <rect x="920" y="185" width="110" height="90" rx="14" fill="#ffffff" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="940" cy="205" r="13" fill="#7c3aed"/>
+  <text x="940" y="210" class="tiny" text-anchor="middle" fill="#fff" font-weight="800">3</text>
+  <text x="975" y="213" class="label" text-anchor="middle">Passo 3</text>
+  <text x="975" y="237" class="small" text-anchor="middle">Nó visual</text>
+  <text x="975" y="254" class="small" text-anchor="middle">Resultado</text>
+  <rect x="82" y="356" width="936" height="36" rx="18" fill="#f1f5f9" stroke="#cbd5e1"/>
+  <text x="550" y="379" class="small" text-anchor="middle">Vocabulário-chave: Função = tipo; Passo = uso concreto; Nó = forma na tela; Pipeline = sequência.</text>
+</svg>

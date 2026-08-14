@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { usePipeline } from '../store/pipeline'
-import { byName } from '../catalog'
+import { byName, friendlyName } from '../catalog'
 import { t, tp } from '../i18n'
 import ResultBody from './result/ResultBody'
 import ResultActions from './result/ResultActions'
@@ -38,7 +38,7 @@ export default function ResultsPanel() {
   return (
     <div className="results">
       <div className="results-head">
-        <span className="mono fn-name">{fn.name}</span>
+        <span className="fn-name-friendly" title={fn.name}>{friendlyName(fn, lang)}</span>
         {result.ok && result.kind === 'table' && result.dims && (
           <span className="results-dims">
             {result.dims.nrow != null ? `${result.dims.nrow.toLocaleString()} × ${result.dims.ncol}` : `${result.dims.ncol} colunas`}
