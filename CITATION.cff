@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use climasus+ Studio in your research, please cite it as below."
+title: "climasus+ Studio"
+abstract: >-
+  Visual pipeline studio for building and running health, climate, and
+  environmental analyses from DATASUS, chaining climasus4r R functions
+  as a node graph without writing R code. Ships with an embedded R engine.
+type: software
+authors:
+  - given-names: Max
+    family-names: Anjos
+    email: max.anjos@ufrn.br
+    orcid: "https://orcid.org/0000-0001-6394-1324"
+version: 1.0.0
+date-released: "2026-08-13"
+license: MIT
+repository-code: "https://github.com/ByMaxAnjos/climasus-plus"
+keywords:
+  - climate and health
+  - DATASUS
+  - pipeline
+  - reproducible research
+  - R
+  - epidemiology

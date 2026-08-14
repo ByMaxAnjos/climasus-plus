@@ -6,10 +6,10 @@ Estúdio visual para montar e executar análises de saúde, clima e ambiente do 
 
 | Sistema | Download |
 |---|---|
-| **macOS** (Apple Silicon) | [climasus-plus_0.1.0_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-macos/climasus-plus_0.1.0_aarch64.dmg) |
-| **Windows** (x64) | [climasus-plus_0.1.0_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-windows/climasus-plus_0.1.0_x64-setup.exe) |
-| **Linux** (x64, deb) | [climasus-plus_0.1.0_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-linux/climasus-plus_0.1.0_amd64.deb) |
-| **Linux** (x64, AppImage) | [climasus-plus_0.1.0_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta-linux/climasus-plus_0.1.0_amd64.AppImage) |
+| **macOS** (Apple Silicon) | [climasus+.Studio_0.1.0_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta/climasus%2B.Studio_0.1.0_aarch64.dmg) |
+| **Windows** (x64) | [climasus+.Studio_0.1.0_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta/climasus%2B.Studio_0.1.0_x64-setup.exe) |
+| **Linux** (x64, deb) | [climasus+.Studio_0.1.0_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta/climasus%2B.Studio_0.1.0_amd64.deb) |
+| **Linux** (x64, AppImage) | [climasus+.Studio_0.1.0_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v0.1.0-beta/climasus%2B.Studio_0.1.0_amd64.AppImage) |
 
 Todas as versões em [Releases](https://github.com/ByMaxAnjos/climasus-plus/releases).
 

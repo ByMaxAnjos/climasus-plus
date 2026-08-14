@@ -54,17 +54,47 @@ jobs:
           options(timeout = 600)
           install.packages("pak")
           source("scripts/r-packages.R")
-          # INLA lives in its own repo and isn't on the public RSPM binary mirror — install it
-          # the documented way, with base install.packages and the INLA repo passed explicitly.
-          # dep=TRUE pulls INLA's hard deps (Matrix, sp, fmesher) too.
-          inla_repo <- "https://inla.r-inla-download.org/R/stable"
-          for (attempt in 1:3) {
-            try(install.packages("INLA", repos = c(getOption("repos"), INLA = inla_repo), dep = TRUE))
-            if ("INLA" %in% rownames(installed.packages())) break
-            message("INLA install attempt ", attempt, " failed; retrying in 10s...")
-            Sys.sleep(10)
+          # INLA lives in its own repo and isn't on the public RSPM binary mirror. The stable
+          # src index intermittently returns HTML on GitHub's Ubuntu runners, so try stable,
+          # then testing, then bypass install.packages' repository-index lookup by downloading
+          # the R 4.5-compatible testing tarball directly.
+          install_inla_from_repo <- function(repo) {
+            for (attempt in 1:3) {
+              message("Installing INLA from ", repo, " (attempt ", attempt, ")")
+              try(install.packages("INLA", repos = c(getOption("repos"), INLA = repo), dep = TRUE))
+              if ("INLA" %in% rownames(installed.packages())) return(TRUE)
+              message("INLA install attempt ", attempt, " failed; retrying in 10s...")
+              Sys.sleep(10)
+            }
+            FALSE
           }
-          if (!("INLA" %in% rownames(installed.packages()))) stop("INLA could not be installed from ", inla_repo)
+          inla_repos <- c(
+            stable = "https://inla.r-inla-download.org/R/stable",
+            testing = "https://inla.r-inla-download.org/R/testing",
+            stable_www = "https://www.inla.r-inla-download.org/R/stable",
+            testing_www = "https://www.inla.r-inla-download.org/R/testing"
+          )
+          for (repo in inla_repos) {
+            if (install_inla_from_repo(repo)) break
+          }
+          if (!("INLA" %in% rownames(installed.packages()))) {
+            message("Falling back to direct INLA testing tarball install for R 4.5")
+            ver <- "25.04.29"
+            tarball <- file.path(tempdir(), sprintf("INLA_%s.tar.gz", ver))
+            download.file(sprintf("%s/src/contrib/INLA_%s.tar.gz", inla_repos[["testing_www"]], ver), tarball, mode = "wb")
+            desc_dir <- file.path(tempdir(), "inla-desc")
+            unlink(desc_dir, recursive = TRUE)
+            untar(tarball, files = "INLA/DESCRIPTION", exdir = desc_dir)
+            desc <- read.dcf(file.path(desc_dir, "INLA", "DESCRIPTION"))[1, ]
+            dep_fields <- intersect(c("Depends", "Imports", "LinkingTo"), names(desc))
+            dep_text <- paste(na.omit(desc[dep_fields]), collapse = ",")
+            deps <- unlist(strsplit(dep_text, ",", fixed = TRUE))
+            deps <- trimws(sub("\\s*\\(.*\\)", "", deps))
+            deps <- setdiff(deps[nzchar(deps)], c("R", CLIMASUS_BASE_PKGS, rownames(installed.packages())))
+            if (length(deps)) install.packages(deps)
+            install.packages(tarball, repos = NULL, type = "source")
+          }
+          if (!("INLA" %in% rownames(installed.packages()))) stop("INLA could not be installed from stable/testing repos")
           # Everything else via pak: GitHub-only packages by "owner/repo" ref, the rest by name.
           cran_pkgs <- setdiff(CLIMASUS_USED, c(CLIMASUS_BASE_PKGS, names(CLIMASUS_GITHUB_PKGS), "INLA"))
           pak::pak(c(unname(CLIMASUS_GITHUB_PKGS), cran_pkgs, "rmarkdown"))

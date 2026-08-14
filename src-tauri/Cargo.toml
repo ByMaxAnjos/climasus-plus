@@ -1,9 +1,9 @@
 [package]
 name = "app"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
+version = "1.0.0"
+description = "climasus+ Studio — visual pipeline studio for climasus4r"
+authors = ["Max Anjos"]
+license = "MIT"
 repository = ""
 edition = "2021"
 rust-version = "1.77.2"
