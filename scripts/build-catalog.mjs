@@ -16,11 +16,11 @@ const STAGES = [
 ]
 // sub-family for grouping inside a stage
 function family(name) {
+  if (/plot/.test(name)) return 'plot'
   if (/^sus_grid_/.test(name)) return 'grid'
   if (/^sus_climate_/.test(name)) return 'climate'
   if (/^(sus_socio_|sus_census_explore)/.test(name)) return 'censo'
   if (/^sus_join_spatial/.test(name)) return 'spatial'
-  if (/plot/.test(name)) return 'plot'
   return 'core'
 }
 
@@ -107,8 +107,8 @@ function parseRoxygen(rox) {
 }
 
 function inferType(def, options) {
-  if (options.length > 1) return 'enum'
   if (def === 'TRUE' || def === 'FALSE') return 'boolean'
+  if (options.length > 1) return 'enum'
   if (def !== undefined && /^-?[\d.]+$/.test(def)) return 'number'
   return 'text'
 }

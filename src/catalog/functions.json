@@ -1043,7 +1043,7 @@
  {
   "name": "sus_climate_plot_aggregate",
   "stage": "integracao",
-  "family": "climate",
+  "family": "plot",
   "title": "Visualise Climate-Health Aggregate Data",
   "description": "",
   "args": [
@@ -1167,7 +1167,7 @@
  {
   "name": "sus_climate_plot_coldwaves",
   "stage": "integracao",
-  "family": "climate",
+  "family": "plot",
   "title": "Plot and Analyze Coldwave Events",
   "description": "",
   "args": [
@@ -1265,7 +1265,7 @@
  {
   "name": "sus_climate_plot_fill",
   "stage": "integracao",
-  "family": "climate",
+  "family": "plot",
   "title": "Visualise time-series gap-filling from sus_climate_fill()",
   "description": "",
   "args": [
@@ -1360,7 +1360,7 @@
  {
   "name": "sus_climate_plot_heatwaves",
   "stage": "integracao",
-  "family": "climate",
+  "family": "plot",
   "title": "Plot and Analyze Heatwave Events",
   "description": "",
   "args": [
@@ -2187,7 +2187,7 @@
     "name": "drop_ignored",
     "default": "FALSE",
     "required": false,
-    "type": "enum",
+    "type": "boolean",
     "options": [
      "9",
      "Ignorado"
@@ -2606,6 +2606,17 @@
     "doc": "Logical.  If `TRUE`, wraps the ggplot2 object with\n  `plotly::ggplotly()`.  Requires `plotly`.  Default `FALSE`."
    },
    {
+    "name": "return_sf",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "choropleth",
+     "quantile_choropleth"
+    ],
+    "doc": "Logical.  If `TRUE`, return the underlying `sf` object\n  used to build the map (municipality points for `map_type = \"bubble\"`,\n  polygons for `\"choropleth\"` / `\"quantile_choropleth\"`) instead of the\n  `ggplot2` object. Pipe the result into [sus_data_export()] to write it\n  as a shapefile, GeoPackage, GeoJSON or GeoParquet file. Default `FALSE`."
+   },
+   {
     "name": "use_cache",
     "default": "TRUE",
     "required": false,
@@ -2735,7 +2746,7 @@
     "name": "log_transform",
     "default": "FALSE",
     "required": false,
-    "type": "enum",
+    "type": "boolean",
     "options": [
      "epidemic",
      "seasonal",
@@ -3485,7 +3496,7 @@
      "daily",
      "annual"
     ],
-    "doc": "Character. Temporal resolution of source files:\n  \\itemize{\n    \\item `\"monthly\"` (default) — one file per month (~5–20 MB each);\n      returns mm/month.\n    \\item `\"daily\"` — one file per day (~3 MB each); returns mm/day.\n      Recommended only for short periods; a full year = 365 downloads.\n    \\item `\"annual\"` — one file per year; returns mm/year.\n  }"
+    "doc": "Character. Temporal resolution of source files:\n  \\itemize{\n    \\item `\"monthly\"` (default) -- one file per month (~5-20 MB each);\n      returns mm/month.\n    \\item `\"daily\"` -- one file per day (~3 MB each); returns mm/day.\n      Recommended only for short periods; a full year = 365 downloads.\n    \\item `\"annual\"` -- one file per year; returns mm/year.\n  }"
    },
    {
     "name": "years",
@@ -3493,7 +3504,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector. Years to download. Coverage: 1981 to present\n  for daily/monthly; 1981–2024 for annual. `NULL` defaults to the last\n  two complete years."
+    "doc": "Integer vector. Years to download. Coverage: 1981 to present\n  for daily/monthly; 1981-2024 for annual. `NULL` defaults to the last\n  two complete years."
    },
    {
     "name": "months",
@@ -3501,7 +3512,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector (1–12). Months to include for daily and monthly\n  resolutions. Ignored for annual. Default `1:12`."
+    "doc": "Integer vector (1-12). Months to include for daily and monthly\n  resolutions. Ignored for annual. Default `1:12`."
    },
    {
     "name": "municipalities",
@@ -3509,7 +3520,17 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, rasters are aggregated and a\n  `climasus_df` is returned. If `NULL`, a named character vector of cached\n  file paths is returned instead."
+    "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, rasters are aggregated and a\n  `climasus_df` is returned. If `NULL`, a named character vector of cached\n  file paths is returned instead (see `raster_area`)."
+   },
+   {
+    "name": "raster_area",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "MT"
+    ],
+    "doc": "Controls what is returned when `municipalities = NULL`.\n  One of:\n  \\itemize{\n    \\item `FALSE` (default) -- return the character vector of cached\n      file paths (legacy behavior).\n    \\item `TRUE` -- return an in-memory `terra::SpatRaster` (one layer\n      per date, named by date), full extent.\n    \\item an `sf` POLYGON object -- return the `SpatRaster` cropped and\n      masked to that area (e."
    },
    {
     "name": "agg_fun",
@@ -3591,7 +3612,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector of months to import (1–12). Default: `1:12`\n  (all months)."
+    "doc": "Integer vector of months to import (1-12). Default: `1:12`\n  (all months)."
    },
    {
     "name": "vars",
@@ -3609,7 +3630,7 @@
      "tp",
      "all"
     ],
-    "doc": "Character vector of variable aliases to download. Allowed values:\n  \\itemize{\n    \\item `\"t2m\"` — 2 m temperature mean (→ `tair_dry_bulb_c`, °C)\n    \\item `\"t2m_max\"` — 2 m temperature maximum (→ `tair_max_c`, °C)\n    \\item `\"t2m_min\"` — 2 m temperature minimum (→ `tair_min_c`, °C)\n    \\item `\"td2m\"` — 2 m dewpoint temperature mean (→ `dew_point_c`, °C)\n    \\item `\"u10\"` — 10 m u-component of wind"
+    "doc": "Character vector of variable aliases to download. Allowed values:\n  \\itemize{\n    \\item `\"t2m\"` -- 2 m temperature mean (-> `tair_dry_bulb_c`, degC)\n    \\item `\"t2m_max\"` -- 2 m temperature maximum (-> `tair_max_c`, degC)\n    \\item `\"t2m_min\"` -- 2 m temperature minimum (-> `tair_min_c`, degC)\n    \\item `\"td2m\"` -- 2 m dewpoint temperature mean (-> `dew_point_c`, degC)\n    \\item `\"u10\"` -- 10 m u-"
    },
    {
     "name": "municipalities",
@@ -3617,7 +3638,17 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "An `sf` object with polygon geometries representing the\n  areas to which raster data will be aggregated (typically Brazilian\n  municipalities from [geobr::read_municipality()]). Must contain a column\n  identifying each polygon — the function auto-detects `code_muni`, `CD_MUN`,\n  or `CD_GEOCMU`. If `NULL`, returns a named list of downloaded NetCDF file\n  paths instead of a `climasus_df`."
+    "doc": "An `sf` object with polygon geometries representing the\n  areas to which raster data will be aggregated (typically Brazilian\n  municipalities from [geobr::read_municipality()]). Must contain a column\n  identifying each polygon -- the function auto-detects `code_muni`, `CD_MUN`,\n  or `CD_GEOCMU`. If `NULL`, returns a named list of downloaded NetCDF file\n  paths instead of a `climasus_df`."
+   },
+   {
+    "name": "raster_area",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "MT"
+    ],
+    "doc": "Only used when `municipalities = NULL`. One of:\n  \\itemize{\n    \\item `FALSE` (default) -- return the character vector of cached\n      file paths.\n    \\item `TRUE` -- return an in-memory multi-layer `terra::SpatRaster`\n      (layers named by date and variable), full extent -- useful for\n      plotting with `sus_grid_plot()`.\n    \\item an `sf` POLYGON object -- return the `SpatRaster` cropped and\n "
    },
    {
     "name": "agg_fun",
@@ -3969,7 +4000,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector. Years to download.\n  TerraClimate: 1950–2025. NOAA PSL: 1850–2018.\n  `NULL` (default) = last two complete years."
+    "doc": "Integer vector. Years to download.\n  TerraClimate: 1950-2025. NOAA PSL: 1850-2018.\n  `NULL` (default) = last two complete years."
    },
    {
     "name": "months",
@@ -3977,7 +4008,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector (1–12). Months to include. Default `1:12`."
+    "doc": "Integer vector (1-12). Months to include. Default `1:12`."
    },
    {
     "name": "source",
@@ -3997,6 +4028,16 @@
     "type": "text",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, rasters are aggregated and a\n  `climasus_df` is returned. If `NULL`, returns cached NetCDF file paths."
+   },
+   {
+    "name": "raster_area",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "MT"
+    ],
+    "doc": "Only used when `municipalities = NULL`. One of:\n  \\itemize{\n    \\item `FALSE` (default) -- return the character vector of cached\n      file paths.\n    \\item `TRUE` -- return an in-memory `terra::SpatRaster` (one layer\n      per date), cropped to the same bounding box used elsewhere.\n    \\item an `sf` POLYGON object -- return the `SpatRaster` further\n      cropped and masked to that area.\n    \\item"
    },
    {
     "name": "agg_fun",
@@ -4045,6 +4086,174 @@
      "es"
     ],
     "doc": "Character. Message language: `\"pt\"` (default), `\"en\"`, `\"es\"`."
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. Print progress messages. Default `TRUE`."
+   }
+  ]
+ },
+ {
+  "name": "sus_grid_plot",
+  "stage": "integracao",
+  "family": "plot",
+  "title": "Plot a Raster Grid (GeoTIFF/NetCDF) as a Publication-Ready Map",
+  "description": "",
+  "args": [
+   {
+    "name": "x",
+    "default": null,
+    "required": true,
+    "type": "text",
+    "options": [],
+    "doc": "A `SpatRaster` (`terra`), a single file path (`.tif`, `.tif.gz`,\n  `.nc`), or a named character vector of file paths as returned by a\n  `sus_grid_*()` function."
+   },
+   {
+    "name": "layer",
+    "default": "1",
+    "required": false,
+    "type": "number",
+    "options": [
+     "all"
+    ],
+    "doc": "Integer index, layer name, or `\"all\"`. Selects which layer to\n  plot when `x` has multiple layers/dates. `\"all\"` facets over every\n  layer (capped at `max_layers`). Default `1` (first layer)."
+   },
+   {
+    "name": "max_layers",
+    "default": "12",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Integer. Maximum number of layers plotted when\n  `layer = \"all\"`; extra layers are dropped with a message. Default `12`."
+   },
+   {
+    "name": "municipalities",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "An optional `sf` POLYGON object (e.g. one or more\n  rows from [geobr::read_municipality()], or a state/region polygon).\n  When supplied, the raster is cropped and masked to this area (values\n  outside the polygon(s) become `NA` and are dropped from the plot), and\n  its boundary is drawn as a thin overlay. Default `NULL` (full raster\n  extent, no cropping)."
+   },
+   {
+    "name": "state_borders",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. Overlay Brazilian state boundaries\n  (downloaded via `geobr`, cached). Default `TRUE`."
+   },
+   {
+    "name": "diverging",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. Use a diverging blue-white-red scale centered\n  on 0 (for anomalies, indices, etc.) instead of the sequential\n  `palette`. Default `FALSE`."
+   },
+   {
+    "name": "palette",
+    "default": "\"viridis\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "viridis",
+     "plasma",
+     "magma",
+     "inferno",
+     "YlOrRd",
+     "Blues"
+    ],
+    "doc": "Character. Sequential colour palette used when\n  `diverging = FALSE`. One of `\"viridis\"`, `\"plasma\"`, `\"magma\"`,\n  `\"inferno\"`, or any [RColorBrewer::brewer.pal()] sequential name\n  (e.g. `\"YlOrRd\"`, `\"Blues\"`). Default `\"viridis\"`."
+   },
+   {
+    "name": "name",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Legend title. `NULL` (default) uses the layer\n  name."
+   },
+   {
+    "name": "max_cells",
+    "default": "500000",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Integer. Rasters with more cells than this are\n  regularly resampled before plotting to keep rendering fast.\n  Default `500000`."
+   },
+   {
+    "name": "title",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Map title. `NULL` uses a built-in multilingual\n  default."
+   },
+   {
+    "name": "subtitle",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Map subtitle. `NULL` auto-generates one from\n  the layer name and resolution."
+   },
+   {
+    "name": "caption",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Figure caption. `NULL` uses a generic\n  `climasus4r` source line."
+   },
+   {
+    "name": "base_size",
+    "default": "11",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Numeric. Base font size for `theme_void()`. Default `11`."
+   },
+   {
+    "name": "interactive",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE`, wraps the `ggplot2` object with\n  `plotly::ggplotly()`. Requires `plotly`. Default `FALSE`."
+   },
+   {
+    "name": "use_cache",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. Cache state-boundary metadata to disk.\n  Default `TRUE`."
+   },
+   {
+    "name": "cache_dir",
+    "default": "\"~/.climasus4r_cache/spatial\"",
+    "required": false,
+    "type": "text",
+    "options": [
+     "~/.climasus4r_cache/spatial"
+    ],
+    "doc": "Character. Directory for the disk cache.\n  Default `\"~/.climasus4r_cache/spatial\"`."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character. Language for messages and axis labels:\n  `\"pt\"` (default), `\"en\"`, `\"es\"`."
    },
    {
     "name": "verbose",
@@ -4170,7 +4379,7 @@
      "monthly",
      "annual"
     ],
-    "doc": "Character. Temporal aggregation of source files.\n  One of `\"daily\"`, `\"monthly\"`, or `\"annual\"`. Default: `\"monthly\"`.\n  \\itemize{\n    \\item `\"daily\"` — available for PM2.5 only (2017–2022). Each monthly\n      ZIP (~3 GB) is downloaded, extracted to a temp directory, each daily\n      NetCDF is aggregated, and the result is cached as Parquet. Subsequent\n      calls read from Parquet without re-extr"
+    "doc": "Character. Temporal aggregation of source files.\n  One of `\"daily\"`, `\"monthly\"`, or `\"annual\"`. Default: `\"monthly\"`.\n  \\itemize{\n    \\item `\"daily\"` -- available for PM2.5 only (2017-2022). Each monthly\n      ZIP (~3 GB) is downloaded, extracted to a temp directory, each daily\n      NetCDF is aggregated, and the result is cached as Parquet. Subsequent\n      calls read from Parquet without re-ext"
    },
    {
     "name": "years",
@@ -4178,7 +4387,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector. Years to download. Availability depends on\n  pollutant and resolution:\n  \\itemize{\n    \\item PM2.5 daily, monthly & annual: 2017–2022\n    \\item O3 annual: 2000–2020\n    \\item CO annual: 2019–2022\n  }\n  `NULL` (default) returns all available years for the selected pollutant."
+    "doc": "Integer vector. Years to download. Availability depends on\n  pollutant and resolution:\n  \\itemize{\n    \\item PM2.5 daily, monthly & annual: 2017-2022\n    \\item O3 annual: 2000-2020\n    \\item CO annual: 2019-2022\n  }\n  `NULL` (default) returns all available years for the selected pollutant."
    },
    {
     "name": "months",
@@ -4186,7 +4395,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector (1–12). Months to include when\n  `resolution = \"monthly\"`. Ignored for annual data. Default: `1:12`."
+    "doc": "Integer vector (1-12). Months to include when\n  `resolution = \"monthly\"`. Ignored for annual data. Default: `1:12`."
    },
    {
     "name": "municipalities",
@@ -4194,7 +4403,19 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "An `sf` object with polygon geometries\n  (e.g., from [geobr::read_municipality()]). If provided, raster data are\n  aggregated to these polygons and a `climasus_df` is returned.\n  If `NULL`, a named character vector of cached NetCDF file paths is\n  returned instead."
+    "doc": "An `sf` object with polygon geometries\n  (e.g., from [geobr::read_municipality()]). If provided, raster data are\n  aggregated to these polygons and a `climasus_df` is returned.\n  If `NULL`, a named character vector of cached NetCDF file paths is\n  returned instead (see `raster_area`)."
+   },
+   {
+    "name": "raster_area",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "MT",
+     "monthly",
+     "annual"
+    ],
+    "doc": "Only used when `municipalities = NULL`. One of:\n  \\itemize{\n    \\item `FALSE` (default) -- return the character vector of cached\n      file paths.\n    \\item `TRUE` -- return an in-memory `terra::SpatRaster`, full extent.\n    \\item an `sf` POLYGON object -- return the `SpatRaster` cropped and\n      masked to that area.\n    \\item a 2-letter Brazilian state code (e.g. `\"MT\"`) -- auto-download\n      t"
    },
    {
     "name": "agg_fun",
@@ -4286,7 +4507,7 @@
      "monthly",
      "daily"
     ],
-    "doc": "Character. Temporal resolution of source files.\n  One of:\n  \\itemize{\n    \\item `\"monthly\"` (default) — uses `M2TMNXAER`, one file per month,\n      already monthly-averaged. Recommended for most analyses.\n    \\item `\"daily\"` — uses `M2T1NXAER` (hourly), one file per day; 24\n      hourly layers are aggregated to a single daily value using `agg_fun`.\n      Note: `so2` only available in monthly resol"
+    "doc": "Character. Temporal resolution of source files.\n  One of:\n  \\itemize{\n    \\item `\"monthly\"` (default) -- uses `M2TMNXAER`, one file per month,\n      already monthly-averaged. Recommended for most analyses.\n    \\item `\"daily\"` -- uses `M2T1NXAER` (hourly), one file per day; 24\n      hourly layers are aggregated to a single daily value using `agg_fun`.\n      Note: `so2` only available in monthly res"
    },
    {
     "name": "years",
@@ -4302,7 +4523,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector (1–12). Months to include. Default `1:12`."
+    "doc": "Integer vector (1-12). Months to include. Default `1:12`."
    },
    {
     "name": "municipalities",
@@ -4310,7 +4531,20 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). If provided, raster data are aggregated\n  and a `climasus_df` is returned. If `NULL`, returns cached NetCDF paths."
+    "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). If provided, raster data are aggregated\n  and a `climasus_df` is returned. If `NULL`, returns cached NetCDF paths\n  (or a `SpatRaster` per `raster_area`)."
+   },
+   {
+    "name": "raster_area",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "MT",
+     "pm25",
+     "DUSMASS25_2020_01",
+     "BCSMASS_2020_01"
+    ],
+    "doc": "Only used when `municipalities = NULL`. One of:\n  \\itemize{\n    \\item `FALSE` (default) -- return the character vector of cached\n      file paths.\n    \\item `TRUE` -- return an in-memory `terra::SpatRaster`, full extent.\n    \\item an `sf` POLYGON object -- return the `SpatRaster` cropped and\n      masked to that area.\n    \\item a 2-letter Brazilian state code (e.g. `\"MT\"`) -- auto-download\n      t"
    },
    {
     "name": "agg_fun",
@@ -5729,7 +5963,7 @@
     "options": [
      "slice"
     ],
-    "doc": "Integer vector. Lag times shown in the `\"slice\"` plot.\n  Default `c(0L, 3L, 7L, 14L, 21L)` — automatically clipped to `lag_max`."
+    "doc": "Integer vector. Lag times shown in the `\"slice\"` plot.\n  Default `c(0L, 3L, 7L, 14L, 21L)` -- automatically clipped to `lag_max`."
    },
    {
     "name": "pred_at",
@@ -5737,7 +5971,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Numeric vector (0–1). Quantile probabilities at which to\n  report cumulative RR in the statistical table. Default:\n  `c(0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99)`."
+    "doc": "Numeric vector (0-1). Quantile probabilities at which to\n  report cumulative RR in the statistical table. Default:\n  `c(0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99)`."
    },
    {
     "name": "interactive",
@@ -5747,7 +5981,7 @@
     "options": [
      "surface"
     ],
-    "doc": "Logical. `TRUE` → [plotly::ggplotly()] / plotly 3-D for\n  `\"surface\"`; `FALSE` (default) → static ggplot2."
+    "doc": "Logical. `TRUE` -> [plotly::ggplotly()] / plotly 3-D for\n  `\"surface\"`; `FALSE` (default) -> static ggplot2."
    },
    {
     "name": "color_palette",
@@ -6386,7 +6620,7 @@
   "stage": "modelagem",
   "family": "plot",
   "title": "Plots and Tables from a Climate-Health SWOT Analysis",
-  "description": "Produces radar (spider), matrix (2×2 SWOT board), and bar charts from a\n`climasus_swot` object returned by [sus_mod_swot()].",
+  "description": "Produces radar (spider), matrix (2x2 SWOT board), and bar charts from a\n`climasus_swot` object returned by [sus_mod_swot()].",
   "args": [
    {
     "name": "x",

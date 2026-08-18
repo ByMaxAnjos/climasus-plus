@@ -187,6 +187,11 @@ export const FRIENDLY: Record<string, FriendlyEntry> = {
     en: { name: "Import drought index (PDSI)", description: "Downloads the Palmer Drought Severity Index (PDSI) by Brazilian municipality, a classic measure of drought intensity and duration." },
     es: { name: "Importar índice de sequía (PDSI)", description: "Descarga el Índice de Severidad de Sequía de Palmer (PDSI) por municipio brasileño, una medida clásica de la intensidad y duración de la sequía." },
   },
+  "sus_grid_plot": {
+    pt: { name: "Mapear grade climática/ambiental", description: "Desenha um mapa a partir de um raster (GeoTIFF/NetCDF) devolvido pelas Funções de grade — chuva, temperatura, seca, poluição — no mesmo estilo dos demais mapas do Studio." },
+    en: { name: "Map climate/environmental grid", description: "Draws a map from a raster (GeoTIFF/NetCDF) returned by the grid Functions — rainfall, temperature, drought, pollution — using the same publication style as the other Studio maps." },
+    es: { name: "Mapear grilla climática/ambiental", description: "Dibuja un mapa a partir de un raster (GeoTIFF/NetCDF) devuelto por las Funciones de grilla — lluvia, temperatura, sequía, contaminación — con el mismo estilo que los demás mapas del Studio." },
+  },
   "sus_grid_pollution_cams": {
     pt: { name: "Importar poluição do ar (CAMS)", description: "Baixa dados de poluentes atmosféricos do serviço CAMS (Copernicus) por município, para estudar a relação entre qualidade do ar e saúde." },
     en: { name: "Import air pollution data (CAMS)", description: "Downloads air pollutant data from the CAMS (Copernicus) service by municipality, to study the relationship between air quality and health." },

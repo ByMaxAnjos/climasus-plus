@@ -62,6 +62,9 @@ lógicas, cada uma respondendo a uma pergunta diferente:
   faixa etária, escolaridade, região, município.
 - **Explorar grupos de doenças (CID-10)** (`sus_data_cid_select`) — abre uma interface interativa para explorar grupos de doença e
   fatores climáticos associados, de apoio ao uso de **Filtrar por CID-10 ou grupo de doença** (`sus_data_filter_cid`).
+  Para ver a lista completa de grupos disponíveis, adicione este Passo ao Pipeline e execute-o antes
+  de configurar `disease_group` em **Filtrar por CID-10 ou grupo de doença** — o Resultado abre a tela
+  interativa com todos os grupos e códigos CID-10 correspondentes.
 
 **(d) Transformar, agregar, exportar e visualizar** — preparar a forma final dos dados.
 
@@ -114,9 +117,10 @@ Os demais Parâmetros podem ficar no padrão enquanto você estiver aprendendo o
 
 ### Passo a passo
 
-1. **Importar** — Função **Importar dados do DATASUS** (`sus_data_import`). Parâmetro-chave: `system = "SIM-DO"` (óbitos)
-   e `uf` com os estados de interesse (ex. `"SP"`). O Resultado é uma tabela bruta de
-   óbitos, ainda sem qualquer recorte.
+1. **Importar** — Função **Importar dados do DATASUS** (`sus_data_import`). Parâmetro-chave: `system = "SIM-DO"` (óbitos),
+   `uf` com os estados de interesse (ex. `"SP"`) e `year` com o(s) ano(s) de interesse (ex.
+   `2022`) — os três são obrigatórios. O Resultado é uma tabela bruta de óbitos, ainda
+   sem qualquer recorte.
 
 2. **Padronizar / corrigir encoding** — Funções **Corrigir acentuação e caracteres** (`sus_data_clean_encoding`) e depois
    **Padronizar nomes e valores** (`sus_data_standardize`). Não há parâmetro que o leitor precise decidir aqui — é

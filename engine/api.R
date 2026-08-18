@@ -120,7 +120,30 @@ classify <- function(obj, var, idx) {
         }, error = function(e) FALSE)
         if (interactive_ok) artifacts$html <- html_rel
       }
+      # map-plot functions (e.g. sus_data_plot_aggregate_map) attach the sf they built the
+      # map from as an attribute — a best-effort GeoPackage download alongside the plot
+      spatial <- attr(obj, "climasus_sf")
+      if (!is.null(spatial) && inherits(spatial, "sf")) {
+        gpkg_rel <- sprintf("step%d_%s.gpkg", idx, var)
+        gpkg_ok <- tryCatch({
+          sf::st_write(spatial, file.path(ARTIFACT_DIR, gpkg_rel), quiet = TRUE, delete_dsn = TRUE)
+          TRUE
+        }, error = function(e) FALSE)
+        if (gpkg_ok) artifacts$gpkg <- gpkg_rel
+      }
       return(list(kind = "plot", class = "ggplot", artifacts = artifacts))
+    }
+  }
+
+  if (inherits(obj, "SpatRaster")) {
+    tif_rel <- sprintf("step%d_%s.tif", idx, var)
+    ok <- tryCatch({
+      terra::writeRaster(obj, file.path(ARTIFACT_DIR, tif_rel), overwrite = TRUE)
+      TRUE
+    }, error = function(e) FALSE)
+    if (ok) {
+      txt <- tryCatch(paste(utils::capture.output(print(obj)), collapse = "\n"), error = function(e) "")
+      return(list(kind = "raster", class = "SpatRaster", artifacts = list(tif = tif_rel), print = substr(strip_ansi(txt), 1, 8000)))
     }
   }
 
@@ -158,8 +181,17 @@ classify <- function(obj, var, idx) {
   if (is_tabular(obj)) {
     prev <- table_preview(obj)
     if (!is.null(prev)) {
-      return(list(kind = "table", class = class(obj)[1],
-                  dims = list(nrow = prev$nrow, ncol = prev$ncol), preview = prev))
+      result <- list(kind = "table", class = class(obj)[1],
+                      dims = list(nrow = prev$nrow, ncol = prev$ncol), preview = prev)
+      if (inherits(obj, "sf")) {
+        gpkg_rel <- sprintf("step%d_%s.gpkg", idx, var)
+        gpkg_ok <- tryCatch({
+          sf::st_write(obj, file.path(ARTIFACT_DIR, gpkg_rel), quiet = TRUE, delete_dsn = TRUE)
+          TRUE
+        }, error = function(e) FALSE)
+        if (gpkg_ok) result$artifacts <- list(gpkg = gpkg_rel)
+      }
+      return(result)
     }
   }
 

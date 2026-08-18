@@ -15,12 +15,16 @@ interface Props {
 // download/export button row + console toggle, shared by the graph node header and the detail panel
 export default function ResultActions({ result, lang, showConsole, onToggleConsole }: Props) {
   const [downloading, setDownloading] = useState<string | null>(null)
+  const [downloadError, setDownloadError] = useState<string | null>(null)
   const artifacts = result.artifacts
 
   async function handleDownload(url: string, filename: string, key: string) {
     try {
       setDownloading(key)
+      setDownloadError(null)
       await saveRemoteFile(url, filename)
+    } catch (e) {
+      setDownloadError(e instanceof Error ? e.message : String(e))
     } finally {
       setDownloading(null)
     }
@@ -61,11 +65,26 @@ export default function ResultActions({ result, lang, showConsole, onToggleConso
           )}
         </>
       )}
+      {result.ok && result.kind === 'raster' && artifacts?.tif && (
+        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.tif!), `${result.var}.tif`, 'tif')} disabled={downloading !== null}>
+          {downloading === 'tif' ? '...' : 'GeoTIFF'}
+        </button>
+      )}
+      {result.ok && (result.kind === 'plot' || result.kind === 'table') && artifacts?.gpkg && (
+        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.gpkg!), `${result.var}.gpkg`, 'gpkg')} disabled={downloading !== null}>
+          {downloading === 'gpkg' ? '...' : 'GeoPackage'}
+        </button>
+      )}
       {(result.console || !result.ok) && (
-        <button className={`btn btn-sm ${showConsole ? 'btn-primary' : ''}`} onClick={onToggleConsole}>
+        <button
+          className={`btn btn-sm ${showConsole ? 'btn-primary' : ''}`}
+          style={result.ok && result.console.includes('Aviso') ? { borderColor: 'var(--alert-500)', color: 'var(--alert-500)' } : undefined}
+          onClick={onToggleConsole}
+        >
           {t('console', lang)}
         </button>
       )}
+      {downloadError && <span style={{ color: 'var(--alert-500)' }}>{downloadError}</span>}
     </div>
   )
 }

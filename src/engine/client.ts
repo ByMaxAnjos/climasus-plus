@@ -40,11 +40,13 @@ export interface StepResult {
   ms: number
   console: string
   cacheKey?: string // client-side nonce to bust stale image/widget caching after reruns
-  kind?: 'table' | 'plot' | 'widget' | 'object'
+  kind?: 'table' | 'plot' | 'widget' | 'raster' | 'object'
   class?: string
   dims?: { nrow: number | null; ncol: number }
   preview?: { columns: string[]; rows: Record<string, unknown>[]; nrow: number | null; ncol: number }
-  artifacts?: { png?: string; svg?: string; html?: string } // widget.png present only when the server could snapshot it (see engine/api.R)
+  // widget.png present only when the server could snapshot it; gpkg present on a map plot (or a
+  // bare `sf` table result) when the underlying spatial data could be exported (see engine/api.R)
+  artifacts?: { png?: string; svg?: string; html?: string; tif?: string; gpkg?: string }
   print?: string
   error?: string
 }
