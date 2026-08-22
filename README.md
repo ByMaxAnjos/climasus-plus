@@ -20,10 +20,10 @@ Esse tutorial usa uma base leve incluída no aplicativo, então serve para testa
 
 | Sistema | Download |
 |---|---|
-| **macOS** (Apple Silicon) | [climasus+.Studio_1.0.0_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.0/climasus%2B.Studio_1.0.0_aarch64.dmg) |
-| **Windows** (x64) | [climasus+.Studio_1.0.0_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.0/climasus%2B.Studio_1.0.0_x64-setup.exe) |
-| **Linux** (x64, deb) | [climasus+.Studio_1.0.0_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.0/climasus%2B.Studio_1.0.0_amd64.deb) |
-| **Linux** (x64, AppImage) | [climasus+.Studio_1.0.0_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.0/climasus%2B.Studio_1.0.0_amd64.AppImage) |
+| **macOS** (Apple Silicon) | [climasus+.Studio_1.0.1_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.1/climasus%2B.Studio_1.0.1_aarch64.dmg) |
+| **Windows** (x64) | [climasus+.Studio_1.0.1_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.1/climasus%2B.Studio_1.0.1_x64-setup.exe) |
+| **Linux** (x64, deb) | [climasus+.Studio_1.0.1_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.1/climasus%2B.Studio_1.0.1_amd64.deb) |
+| **Linux** (x64, AppImage) | [climasus+.Studio_1.0.1_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.1/climasus%2B.Studio_1.0.1_amd64.AppImage) |
 
 Todas as versões em [Releases](https://github.com/ByMaxAnjos/climasus-plus/releases).
 
