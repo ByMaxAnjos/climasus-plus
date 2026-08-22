@@ -60,7 +60,7 @@ O climasus+ Studio é parte do ecossistema climaSUS e do Centro de Clima de Saú
 
 Se usar o climasus+ Studio em pesquisa, ensino, relatórios técnicos ou materiais institucionais, cite o software. Os metadados completos estão em [`CITATION.cff`](CITATION.cff).
 
-> Anjos, M. (2026). *climasus+ Studio* (v1.0.0) [Software]. GitHub. https://github.com/ByMaxAnjos/climasus-plus
+> Anjos, M. (2026). *climasus+ Studio* (v1.0.1) [Software]. GitHub. https://github.com/ByMaxAnjos/climasus-plus
 
 BibTeX:
 
@@ -68,8 +68,8 @@ BibTeX:
 @software{anjos_2026_climasus_studio,
   author = {Anjos, Max},
   title = {climasus+ Studio},
-  version = {1.0.0},
-  date = {2026-08-13},
+  version = {1.0.1},
+  date = {2026-08-22},
   url = {https://github.com/ByMaxAnjos/climasus-plus},
   license = {MIT}
 }
