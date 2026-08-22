@@ -2,6 +2,17 @@
 port <- as.integer(commandArgs(trailingOnly = TRUE)[1])
 if (is.na(port)) port <- 8787L
 
+# Windows R's libcurl (schannel) fails the TLS certificate REVOCATION check on networks that
+# can't reach an OCSP/CRL endpoint (common on locked-down/corporate machines), reporting it as
+# an opaque "cannot open URL" — this breaks every HTTPS download the engine does at runtime
+# (geobr boundary polygons, sus_* product downloads). Same fix CI needed for INLA installs
+# (see .github/workflows/build-windows-beta.yml); best-effort revocation checking is safe here
+# because the download targets (IBGE, DATASUS mirrors) are fixed, trusted endpoints.
+if (.Platform$OS.type == "windows") {
+  Sys.setenv(R_LIBCURL_SSL_REVOKE_BEST_EFFORT = "TRUE")
+  options(download.file.method = "libcurl")
+}
+
 # bundled runtime ships every dependency already; its library is read-only and often offline
 if (!nzchar(Sys.getenv("CLIMASUS_BUNDLED"))) {
   for (p in c("plumber", "writexl")) {
