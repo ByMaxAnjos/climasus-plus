@@ -17,6 +17,7 @@ type TeamMember = {
   photo: string
   github?: string
   linkedin?: string
+  lattes?: string
 }
 
 const sections: AboutSection[] = [
@@ -94,10 +95,35 @@ const team: TeamMember[] = [
       es: 'Coordinación · Mantenedor',
     },
     institution: 'UFJF · Fiocruz-RO (CCSRO) · INCT-CONEXAO',
-    email: 'max.anjos@campus.ul.pt',
+    email: 'max.anjos@ufjf.br',
     photo: '/team/max-anjos.jpg',
     github: 'https://github.com/ByMaxAnjos',
     linkedin: 'https://linkedin.com/in/maxanjos',
+  },
+  {
+    name: 'Sergio Lins',
+    role: {
+      pt: 'Desenvolvedor assistente',
+      en: 'Assistant developer',
+      es: 'Desarrollador asistente',
+    },
+    institution: 'Universidade do Estado do Rio de Janeiro (UERJ)',
+    email: 'sergiolinsdec@gmail.com',
+    photo: '/team/sergio-lins.jpg',
+    linkedin: 'https://www.linkedin.com/in/sergio-lins-2171901b8/',
+  },
+  {
+    name: 'Cecília Cassab',
+    role: {
+      pt: 'Desenvolvedora assistente',
+      en: 'Assistant developer',
+      es: 'Desarrolladora asistente',
+    },
+    institution: 'Universidade Federal de Viçosa (UFV)',
+    email: 'cecilia.prieto@ufv.br',
+    photo: '/team/cecilia-cassab.jpg',
+    linkedin: 'https://www.linkedin.com/in/ceciliacassab',
+    lattes: 'http://lattes.cnpq.br/2408443124108030',
   },
   {
     name: 'Marlon Resende Faria',
@@ -216,7 +242,8 @@ export default function AboutPanel() {
   return (
     <div className="about-backdrop" onClick={closeAbout}>
       <div className="about-panel glass" role="dialog" aria-modal="true" aria-labelledby="about-title" onClick={(e) => e.stopPropagation()}>
-        <div className="about-logos" title="INCT-CONEXAO · CNPq · Fiocruz Rondônia · UFJF">
+        <div className="about-logos" title="climaSUS · INCT-CONEXAO · CNPq · Fiocruz Rondônia · UFJF">
+          <img className="about-logo-lg" src="/logos/climasus.png" alt="climaSUS" />
           <img className="about-logo-lg" src="/logos/inct-conexao.png" alt="INCT-CONEXAO" />
           <img src="/logos/cnpq.png" alt="CNPq" />
           <img src="/logos/fiocruz-rondonia.png" alt="Fiocruz Rondônia" />
@@ -258,6 +285,7 @@ export default function AboutPanel() {
                     <a href={`mailto:${member.email}`}>{member.email}</a>
                     {member.github && <a href={member.github} target="_blank" rel="noreferrer">GitHub</a>}
                     {member.linkedin && <a href={member.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
+                    {member.lattes && <a href={member.lattes} target="_blank" rel="noreferrer">Lattes</a>}
                   </div>
                 </div>
               </article>
