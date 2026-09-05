@@ -36,6 +36,42 @@ strip_ansi <- function(x) {
   if (requireNamespace("cli", quietly = TRUE)) cli::ansi_strip(x) else x
 }
 
+# generic leaflet widget for any climasus_sf attribute carrying fill_var (continuous, e.g.
+# sus_data_plot_aggregate_map's bubble/choropleth) or fill_class (discrete, quantile_choropleth) —
+# ggplotly() can't render this data's ggplot (coord_sf/geom_sf), so build directly from the sf data
+map_leaflet_widget <- function(spatial) {
+  is_point <- all(sf::st_geometry_type(spatial) %in% c("POINT", "MULTIPOINT"))
+  has_class <- "fill_class" %in% names(spatial) && any(!is.na(spatial$fill_class))
+
+  if (has_class) {
+    values <- spatial$fill_class
+    pal_fun <- leaflet::colorFactor("YlOrRd", domain = values, na.color = "#cccccc")
+  } else {
+    values <- spatial$fill_var
+    pal_fun <- leaflet::colorNumeric("YlOrRd", domain = values, na.color = "#cccccc")
+  }
+
+  label <- if ("name" %in% names(spatial)) spatial$name else NULL
+  fill_val <- if ("fill_var" %in% names(spatial)) format(round(spatial$fill_var, 1), big.mark = ",") else as.character(values)
+  popup <- paste0(
+    if (!is.null(label)) paste0("<strong>", label, "</strong><br/>") else "",
+    fill_val
+  )
+
+  m <- leaflet::leaflet(spatial) |>
+    leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron)
+
+  m <- if (is_point) {
+    m |> leaflet::addCircleMarkers(radius = 6, stroke = FALSE, fillOpacity = 0.8,
+      color = pal_fun(values), popup = popup)
+  } else {
+    m |> leaflet::addPolygons(fillColor = pal_fun(values), fillOpacity = 0.75,
+      color = "#666666", weight = 0.5, popup = popup)
+  }
+
+  m |> leaflet::addLegend(pal = pal_fun, values = values, position = "bottomright")
+}
+
 # evaluate one step, capturing console + classifying the result
 run_step <- function(code, var, idx) {
   console <- character(0)
@@ -107,10 +143,26 @@ classify <- function(obj, var, idx) {
     }, error = function(e) FALSE)
     if (ok) {
       artifacts <- list(png = png_rel, svg = svg_rel)
+      # map-plot functions (e.g. sus_data_plot_aggregate_map) attach the sf they built the
+      # map from as an attribute — a best-effort GeoPackage download alongside the plot
+      spatial <- attr(obj, "climasus_sf")
       # best-effort interactive version — the static PNG/SVG above are what report/exports use;
-      # this is purely an extra artifact for the on-screen toggle, failure here is silently ignored
-      if (requireNamespace("plotly", quietly = TRUE)) {
-        html_rel <- sprintf("step%d_%s.html", idx, var)
+      # this is purely an extra artifact for the on-screen toggle, failure here is silently ignored.
+      # plotly::ggplotly() cannot convert coord_sf/geom_sf maps or patchwork multi-panels, so for
+      # anything carrying map data build a leaflet widget straight from that instead.
+      html_rel <- sprintf("step%d_%s.html", idx, var)
+      interactive_ok <- FALSE
+      if (!is.null(spatial) && inherits(spatial, "sf") &&
+          any(c("fill_var", "fill_class") %in% names(spatial)) &&
+          requireNamespace("leaflet", quietly = TRUE)) {
+        interactive_ok <- tryCatch({
+          suppressWarnings(suppressMessages({
+            widget <- map_leaflet_widget(spatial)
+            htmlwidgets::saveWidget(widget, file.path(ARTIFACT_DIR, html_rel), selfcontained = TRUE)
+          }))
+          TRUE
+        }, error = function(e) FALSE)
+      } else if (requireNamespace("plotly", quietly = TRUE)) {
         interactive_ok <- tryCatch({
           suppressWarnings(suppressMessages({
             widget <- plotly::ggplotly(obj)
@@ -118,11 +170,8 @@ classify <- function(obj, var, idx) {
           }))
           TRUE
         }, error = function(e) FALSE)
-        if (interactive_ok) artifacts$html <- html_rel
       }
-      # map-plot functions (e.g. sus_data_plot_aggregate_map) attach the sf they built the
-      # map from as an attribute — a best-effort GeoPackage download alongside the plot
-      spatial <- attr(obj, "climasus_sf")
+      if (interactive_ok) artifacts$html <- html_rel
       if (!is.null(spatial) && inherits(spatial, "sf")) {
         gpkg_rel <- sprintf("step%d_%s.gpkg", idx, var)
         gpkg_ok <- tryCatch({

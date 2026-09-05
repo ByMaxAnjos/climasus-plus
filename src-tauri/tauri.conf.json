@@ -36,6 +36,7 @@
     ],
     "resources": {
       "resources/r": "r",
+      "resources/spatial-seed": "spatial-seed",
       "../engine": "engine"
     },
     "android": {

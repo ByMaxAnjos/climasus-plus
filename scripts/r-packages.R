@@ -25,7 +25,7 @@ CLIMASUS_USED <- c(
   "arrow", "CARBayes", "censobr", "cli", "data.table", "DBI", "digest", "dlnm", "dplyr",
   "duckdb", "exactextractr", "fs", "furrr", "future", "future.apply", "geobr", "geocodebr",
   "ggplot2", "ggrepel", "ggsci", "glue", "gt", "htmltools", "htmlwidgets", "httr", "httr2",
-  "INLA", "knitr", "lubridate", "magrittr", "MASS", "microdatasus", "mvmeta",
+  "INLA", "knitr", "leaflet", "lubridate", "magrittr", "MASS", "microdatasus", "mvmeta",
   "parallelly", "patchwork", "plotly", "purrr", "RColorBrewer", "read.dbc", "readxl",
   "rlang", "rstudioapi", "scales", "sf", "sfarrow", "slider", "SpatialEpi", "spatialreg",
   "spdep", "splines", "stringi", "stringr", "strucchange", "survival", "targets", "terra",

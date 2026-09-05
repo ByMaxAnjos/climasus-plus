@@ -23,9 +23,26 @@ if (!nzchar(Sys.getenv("CLIMASUS_BUNDLED"))) {
   }
 }
 
-api_file <- file.path(dirname(sub("--file=", "", grep("--file=", commandArgs(), value = TRUE))), "api.R")
-resource_dir <- normalizePath(file.path(dirname(api_file), ".."), mustWork = FALSE)
-Sys.setenv(CLIMASUS_RESOURCE_DIR = resource_dir)
+# prefer the resource dir Tauri passes directly: commandArgs()'s own --file= path gets
+# corrupted by R (spaces become "~+~") whenever the app is installed under a path with a
+# space, e.g. "climasus+ Studio.app"
+resource_dir <- Sys.getenv("CLIMASUS_RESOURCE_DIR")
+if (!nzchar(resource_dir)) {
+  api_file <- file.path(dirname(sub("--file=", "", grep("--file=", commandArgs(), value = TRUE))), "api.R")
+  resource_dir <- normalizePath(file.path(dirname(api_file), ".."), mustWork = FALSE)
+  Sys.setenv(CLIMASUS_RESOURCE_DIR = resource_dir)
+}
+# pre-seed geobr's state-boundary cache from the bundled resource so sus_data_plot_aggregate_map()
+# and friends don't need a live download on first use — classroom Windows machines are often
+# behind a proxy/firewall that breaks geobr's own metadata download (see engine/api.R history).
+seed_file <- file.path(resource_dir, "spatial-seed", "state_.parquet")
+cache_file <- path.expand("~/.climasus4r_cache/spatial/state_.parquet")
+if (file.exists(seed_file) && !file.exists(cache_file)) {
+  dir.create(dirname(cache_file), recursive = TRUE, showWarnings = FALSE)
+  file.copy(seed_file, cache_file)
+}
+
+api_file <- file.path(resource_dir, "engine", "api.R")
 pr <- plumber::plumb(api_file)
 # serve artifact files (plots, widgets, report)
 pr$mount("/artifact", plumber::PlumberStatic$new(file.path(tempdir(), "climasus-artifacts")))

@@ -2710,7 +2710,7 @@
    },
    {
     "name": "plot_type",
-    "default": "c(\"epidemic\", \"seasonal\", \"heatmap\", \"trend\")",
+    "default": "\"epidemic\"",
     "required": false,
     "type": "enum",
     "options": [
