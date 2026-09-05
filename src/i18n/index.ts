@@ -73,6 +73,10 @@ const dict: Dict = {
   moveStepDown: { pt: 'Mover passo para baixo', en: 'Move step down', es: 'Mover paso hacia abajo' },
   removeStep: { pt: 'Remover passo', en: 'Remove step', es: 'Eliminar paso' },
   restartEngine: { pt: 'Reiniciar motor', en: 'Restart engine', es: 'Reiniciar motor' },
+  undo: { pt: 'Desfazer', en: 'Undo', es: 'Deshacer' },
+  redo: { pt: 'Refazer', en: 'Redo', es: 'Rehacer' },
+  undoHint: { pt: 'Desfazer (Ctrl/Cmd+Z)', en: 'Undo (Ctrl/Cmd+Z)', es: 'Deshacer (Ctrl/Cmd+Z)' },
+  redoHint: { pt: 'Refazer (Ctrl/Cmd+Shift+Z)', en: 'Redo (Ctrl/Cmd+Shift+Z)', es: 'Rehacer (Ctrl/Cmd+Shift+Z)' },
   report: { pt: '📄 Relatório', en: '📄 Report', es: '📄 Informe' },
   reportHint: {
     pt: 'Gerar e baixar um relatório HTML com os resultados já executados nesta sessão',

@@ -40,17 +40,47 @@ const ICON = {
       <line x1="12" y1="11.3" x2="12" y2="16.7" />
     </svg>
   ),
+  undo: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M7 7H4V4" />
+      <path d="M4.5 12a8 8 0 1 0 2.5-6.5L4 7" />
+    </svg>
+  ),
+  redo: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M17 7h3V4" />
+      <path d="M19.5 12a8 8 0 1 1-2.5-6.5L20 7" />
+    </svg>
+  ),
+}
+
+// Ctrl/Cmd+Z undo, Ctrl/Cmd+Shift+Z redo — skipped while typing so native text-field undo still works
+function useUndoRedoShortcut(undo: () => void, redo: () => void) {
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key.toLowerCase() !== 'z' || !(e.metaKey || e.ctrlKey)) return
+      const el = document.activeElement as HTMLElement | null
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return
+      e.preventDefault()
+      if (e.shiftKey) redo(); else undo()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [undo, redo])
 }
 
 export default function TopBar() {
   const {
     lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
     openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
+    undo, redo, past, future,
   } = usePipeline()
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
   }, [theme])
+
+  useUndoRedoShortcut(undo, redo)
 
   const canRun = engineStatus === 'ready' && steps.length > 0
   return (
@@ -77,6 +107,14 @@ export default function TopBar() {
             <span className="btn-icon">{ICON.pipelines}</span>{t('help', lang)}
           </button>
           <button className="btn" onClick={clear}>{t('clearAll', lang)}</button>
+        </div>
+        <div className="topbar-group">
+          <button className="btn" disabled={!past.length} onClick={undo} title={t('undoHint', lang)} aria-label={t('undo', lang)}>
+            <span className="btn-icon">{ICON.undo}</span>
+          </button>
+          <button className="btn" disabled={!future.length} onClick={redo} title={t('redoHint', lang)} aria-label={t('redo', lang)}>
+            <span className="btn-icon">{ICON.redo}</span>
+          </button>
         </div>
         <div className="topbar-group">
           <button className="btn" onClick={saveProject} title={t('saveProjectHint', lang)}>

@@ -28,6 +28,8 @@ const PIPELINE_SCHEMA_VERSION = 4
 
 interface PipelineState {
   steps: Step[]
+  past: Step[][] // undo stack of prior `steps` snapshots (in-memory only, not persisted)
+  future: Step[][] // redo stack, cleared on any new edit
   selectedStep: string | null
   inspectFn: string | null // function being previewed from the library
   lang: Lang
@@ -49,6 +51,8 @@ interface PipelineState {
   removeStep: (id: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
   setValue: (id: string, arg: string, value: string) => void
+  undo: () => void
+  redo: () => void
   select: (id: string | null) => void
   inspect: (fn: string | null) => void
   setLang: (l: Lang) => void
@@ -133,6 +137,8 @@ const uid = () => `s${(seq++).toString(36)}`
 
 export const usePipeline = create<PipelineState>((set, get) => ({
   ...load(),
+  past: [],
+  future: [],
   selectedStep: null,
   inspectFn: null,
   engineStatus: 'offline' as EngineStatus,
@@ -149,11 +155,13 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   helpOpen: false,
   aboutOpen: false,
   addStep: (fn) => {
+    pushHistory(get, set)
     const step: Step = { id: uid(), fn, values: {} }
     set((s) => ({ steps: [...s.steps, step], selectedStep: step.id, inspectFn: null }))
     persist(get)
   },
   removeStep: (id) => {
+    pushHistory(get, set)
     set((s) => ({
       steps: s.steps.filter((x) => x.id !== id),
       selectedStep: s.selectedStep === id ? null : s.selectedStep,
@@ -161,10 +169,12 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     persist(get)
   },
   moveStep: (id, dir) => {
+    const s0 = get()
+    const i = s0.steps.findIndex((x) => x.id === id)
+    const j = i + dir
+    if (i < 0 || j < 0 || j >= s0.steps.length) return
+    pushHistory(get, set)
     set((s) => {
-      const i = s.steps.findIndex((x) => x.id === id)
-      const j = i + dir
-      if (i < 0 || j < 0 || j >= s.steps.length) return s
       const steps = [...s.steps]
       ;[steps[i], steps[j]] = [steps[j], steps[i]]
       return { steps }
@@ -172,8 +182,37 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     persist(get)
   },
   setValue: (id, arg, value) => {
+    const key = `${id}:${arg}`
+    const now = Date.now()
+    if (key !== lastEditKey || now - lastEditAt > EDIT_COALESCE_MS) pushHistory(get, set)
+    lastEditKey = key
+    lastEditAt = now
     set((s) => ({
       steps: s.steps.map((x) => (x.id === id ? { ...x, values: { ...x.values, [arg]: value } } : x)),
+    }))
+    persist(get)
+  },
+  undo: () => {
+    const { past, steps, selectedStep } = get()
+    if (!past.length) return
+    const prev = past[past.length - 1]
+    set((s) => ({
+      steps: prev,
+      past: s.past.slice(0, -1),
+      future: [...s.future, steps],
+      selectedStep: prev.some((x) => x.id === selectedStep) ? selectedStep : null,
+    }))
+    persist(get)
+  },
+  redo: () => {
+    const { future, steps, selectedStep } = get()
+    if (!future.length) return
+    const next = future[future.length - 1]
+    set((s) => ({
+      steps: next,
+      future: s.future.slice(0, -1),
+      past: [...s.past, steps],
+      selectedStep: next.some((x) => x.id === selectedStep) ? selectedStep : null,
     }))
     persist(get)
   },
@@ -188,6 +227,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     persist(get)
   },
   clear: () => {
+    pushHistory(get, set)
     set({
       steps: [], selectedStep: null, stepRun: {}, stepResults: {}, runError: null,
       validationIssues: [], engineIssue: null,
@@ -263,6 +303,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     }
   },
   startTutorial: (tutorial) => {
+    pushHistory(get, set)
     const steps: Step[] = tutorial.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
     const first = steps[0]
     set({
@@ -301,6 +342,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   openAbout: () => set({ aboutOpen: true }),
   closeAbout: () => set({ aboutOpen: false }),
   loadTemplate: (tpl) => {
+    pushHistory(get, set)
     const steps: Step[] = tpl.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
     set({ ...freshRun, steps, selectedStep: steps[0]?.id ?? null })
     persist(get)
@@ -324,6 +366,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     if (raw == null) return // user cancelled
     try {
       const { steps, lang, theme } = deserializeProject(raw)
+      pushHistory(get, set)
       set({ ...freshRun, steps, lang, theme, selectedStep: steps[0]?.id ?? null })
       persist(get)
     } catch {
@@ -334,6 +377,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     const path = await pickDataFile()
     if (!path) return
     // ponytail: path stored raw; toR() wraps it in "..." — fine on macOS/Linux, would need \\ escaping on Windows
+    pushHistory(get, set)
     const step: Step = { id: uid(), fn: 'sus_data_read', values: { path } }
     set((s) => ({ steps: [...s.steps, step], selectedStep: step.id, inspectFn: null, helpOpen: false }))
     persist(get)
@@ -359,6 +403,19 @@ function persist(get: () => PipelineState) {
   const { steps, lang, theme } = get()
   localStorage.setItem(KEY, serializeProject({ steps, lang, theme }))
 }
+
+// undo history — capped in-memory stack of `steps` snapshots, not persisted across reloads
+const HISTORY_LIMIT = 50
+function pushHistory(get: () => PipelineState, set: (partial: Partial<PipelineState>) => void) {
+  const { steps, past } = get()
+  set({ past: [...past, steps].slice(-HISTORY_LIMIT), future: [] })
+}
+
+// consecutive setValue calls on the same field within this window coalesce into one undo step,
+// so undo reverts a whole "burst" of typing rather than one keystroke at a time
+const EDIT_COALESCE_MS = 800
+let lastEditKey: string | null = null
+let lastEditAt = 0
 
 // state reset shared by loadTemplate/openProject — clears run + tutorial + help, keeps nothing stale
 const freshRun = {
