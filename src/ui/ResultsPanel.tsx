@@ -4,6 +4,7 @@ import { byName, friendlyName } from '../catalog'
 import { t, tp } from '../i18n'
 import ResultBody from './result/ResultBody'
 import ResultActions from './result/ResultActions'
+import MethodWarningBanner from './result/MethodWarningBanner'
 
 export default function ResultsPanel() {
   const { steps, selectedStep, stepResults, stepRun, lang, runError, validationIssues, engineIssue, engineStatus } = usePipeline()
@@ -48,6 +49,7 @@ export default function ResultsPanel() {
         <ResultActions result={result} lang={lang} showConsole={showConsole} onToggleConsole={() => setShowConsole(!showConsole)} />
       </div>
       <div className="results-body">
+        <MethodWarningBanner consoleText={result.console} />
         <ResultBody result={result} fn={fn} lang={lang} />
         {showConsole && result.console && <pre className="console-out mono">{result.console}</pre>}
       </div>

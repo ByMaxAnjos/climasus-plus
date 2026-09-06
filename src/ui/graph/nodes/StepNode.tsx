@@ -5,6 +5,7 @@ import { usePipeline } from '../../../store/pipeline'
 import { t } from '../../../i18n'
 import ResultBody from '../../result/ResultBody'
 import ResultActions from '../../result/ResultActions'
+import MethodWarningBanner from '../../result/MethodWarningBanner'
 import type { StepNodeData } from '../layout'
 
 function StatusDot({ state }: { state: 'idle' | 'running' | 'ok' | 'error' | 'stale' | undefined }) {
@@ -26,22 +27,41 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
   const select = usePipeline((s) => s.select)
   const removeStep = usePipeline((s) => s.removeStep)
   const moveStep = usePipeline((s) => s.moveStep)
+  const reorderStep = usePipeline((s) => s.reorderStep)
   const runPipeline = usePipeline((s) => s.runPipeline)
   const [showConsole, setShowConsole] = useState(false)
+  const [dragOver, setDragOver] = useState(false)
 
   if (!fn) return null
   const setArgs = fn.args.filter((a) => (step.values[a.name] ?? '').trim())
 
   return (
     <div
-      className={`step-card graph-node ${selected ? 'active' : ''} ${run === 'error' ? 'has-error' : ''} ${dimmed ? 'graph-node-dimmed' : ''} ${focused ? 'tutorial-focus' : ''}`}
+      className={`step-card graph-node ${selected ? 'active' : ''} ${run === 'error' ? 'has-error' : ''} ${dimmed ? 'graph-node-dimmed' : ''} ${focused ? 'tutorial-focus' : ''} ${dragOver ? 'drag-over' : ''}`}
       style={{ ['--stage' as string]: stageColor(fn.stage) }}
       onClick={() => select(step.id)}
+      onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={(e) => {
+        e.preventDefault()
+        setDragOver(false)
+        const draggedId = e.dataTransfer.getData('text/plain')
+        if (draggedId) reorderStep(draggedId, step.id)
+      }}
       data-fn={fn.name}
       data-run={run ?? 'idle'}
     >
       <Handle type="target" position={Position.Left} style={{ visibility: 'hidden' }} />
       <div className="node-header">
+        <span
+          className="step-drag-handle"
+          title={t('dragToReorder', lang)}
+          draggable
+          onDragStart={(e) => { e.stopPropagation(); e.dataTransfer.setData('text/plain', step.id); e.dataTransfer.effectAllowed = 'move' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          ⠿
+        </span>
         <StatusDot state={run} />
         <div className="step-body">
           <span className="fn-name-friendly">
@@ -63,6 +83,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
       </div>
       {result && (
         <div className="node-result">
+          <MethodWarningBanner consoleText={result.console} />
           <ResultActions result={result} lang={lang} showConsole={showConsole} onToggleConsole={() => setShowConsole(!showConsole)} />
           <ResultBody result={result} fn={fn} lang={lang} compact />
           {showConsole && result.console && <pre className="console-out mono compact nowheel">{result.console}</pre>}
