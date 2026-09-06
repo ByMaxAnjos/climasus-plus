@@ -50,6 +50,7 @@ interface PipelineState {
   addStep: (fn: string) => void
   removeStep: (id: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
+  reorderStep: (id: string, beforeId: string) => void
   setValue: (id: string, arg: string, value: string) => void
   undo: () => void
   redo: () => void
@@ -177,6 +178,21 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     set((s) => {
       const steps = [...s.steps]
       ;[steps[i], steps[j]] = [steps[j], steps[i]]
+      return { steps }
+    })
+    persist(get)
+  },
+  // drag-and-drop reorder: move `id` to sit right before `beforeId`
+  reorderStep: (id, beforeId) => {
+    if (id === beforeId) return
+    const s0 = get()
+    const from = s0.steps.findIndex((x) => x.id === id)
+    if (from < 0 || s0.steps.findIndex((x) => x.id === beforeId) < 0) return
+    pushHistory(get, set)
+    set((s) => {
+      const steps = [...s.steps]
+      const [moved] = steps.splice(steps.findIndex((x) => x.id === id), 1)
+      steps.splice(steps.findIndex((x) => x.id === beforeId), 0, moved)
       return { steps }
     })
     persist(get)
@@ -429,6 +445,14 @@ const freshRun = {
 
 const BARE = /^(TRUE|FALSE|NULL|NA|Inf|-?[\d.]+([eE][+-]?\d+)?|-?\d+:-?\d+)$/
 
+// step-reference values: an arg can point at an EARLIER step's result instead of literal text
+// (e.g. a second data.frame/weights/covariates arg a function needs beyond its piped first arg).
+// Stored as a plain string in `step.values` so no schema change is needed.
+const STEP_REF_PREFIX = '@step:'
+export const stepRef = (id: string): string => `${STEP_REF_PREFIX}${id}`
+export const isStepRef = (v: string): boolean => v.startsWith(STEP_REF_PREFIX)
+export const stepRefId = (v: string): string => v.slice(STEP_REF_PREFIX.length)
+
 function toR(value: string, spec: { type: string }): string {
   const v = value.trim()
   if (spec.type === 'boolean') return v
@@ -438,12 +462,17 @@ function toR(value: string, spec: { type: string }): string {
   return `"${v}"`
 }
 
-function stepArgs(step: Step, fn: FnSpec, skipFirst: boolean): string[] {
+function stepArgs(step: Step, fn: FnSpec, skipFirst: boolean, varByStepId: Record<string, string>): string[] {
   const out: string[] = []
   for (const a of fn.args) {
     if (skipFirst && a.name === fn.args[0].name) continue
     const v = (step.values[a.name] ?? '').trim()
     if (!v) continue
+    if (isStepRef(v)) {
+      const refVar = varByStepId[stepRefId(v)]
+      if (refVar) out.push(`${a.name} = ${refVar}`) // unquoted: a real R variable reference
+      continue
+    }
     out.push(`${a.name} = ${toR(v, a)}`)
   }
   return out
@@ -454,19 +483,27 @@ const NUMERIC = /^-?\d+(\.\d+)?([eE][+-]?\d+)?$/
 function validateSteps(steps: Step[], lang: Lang): PipelineIssue[] {
   const issues: PipelineIssue[] = []
   const built = buildSteps(steps)
-  for (const item of built) {
+  const posByStepId = new Map(built.map((b, i) => [b.stepId, i]))
+  built.forEach((item, pos) => {
     const step = steps.find((s) => s.id === item.stepId)
     const fn = item.fn
-    if (!step) continue
+    if (!step) return
     if (!fn) {
       issues.push({ stepId: step.id, fn: step.fn, message: tp('unknownFn', lang, { fn: step.fn }) })
-      continue
+      return
     }
     for (const [index, arg] of fn.args.entries()) {
       if (index === 0 && item.input) continue
       const raw = (step.values[arg.name] ?? '').trim()
       if (!raw) {
         if (arg.required) issues.push({ stepId: step.id, fn: fn.name, arg: arg.name, message: tp('missingArg', lang, { fn: fn.name, arg: arg.name }) })
+        continue
+      }
+      if (isStepRef(raw)) {
+        const refPos = posByStepId.get(stepRefId(raw))
+        if (refPos == null || refPos >= pos) {
+          issues.push({ stepId: step.id, fn: fn.name, arg: arg.name, message: tp('invalidStepRef', lang, { fn: fn.name, arg: arg.name }) })
+        }
         continue
       }
       if (arg.type === 'enum' && arg.options.length && !arg.options.includes(raw)) {
@@ -476,7 +513,7 @@ function validateSteps(steps: Step[], lang: Lang): PipelineIssue[] {
         issues.push({ stepId: step.id, fn: fn.name, arg: arg.name, message: tp('invalidNumber', lang, { fn: fn.name, arg: arg.name }) })
       }
     }
-  }
+  })
   return issues
 }
 
@@ -494,6 +531,7 @@ export interface BuiltStep {
 export function buildSteps(steps: Step[]): BuiltStep[] {
   const out: BuiltStep[] = []
   const used: Record<string, number> = {}
+  const varByStepId: Record<string, string> = {} // filled in as each step's var is decided, for step-ref args
   let openVar: string | null = null
   let openVarStepId: string | null = null
   let openBase: string | null = null
@@ -512,24 +550,25 @@ export function buildSteps(steps: Step[]): BuiltStep[] {
       // source: starts a new data block
       openVar = newVar(base)
       openBase = base
-      built = { stepId: step.id, fn, var: openVar, chains: false, args: stepArgs(step, fn, false), input: null, inputStepId: null }
+      built = { stepId: step.id, fn, var: openVar, chains: false, args: stepArgs(step, fn, false, varByStepId), input: null, inputStepId: null }
       openVarStepId = step.id
     } else if (fn.family === 'plot') {
       // plot: consumes the open var but never replaces it (fig_N <- sus_x_plot(dados))
-      built = { stepId: step.id, fn, var: `fig_${++figN}`, chains: false, args: stepArgs(step, fn, true), input: openVar, inputStepId: openVarStepId }
+      built = { stepId: step.id, fn, var: `fig_${++figN}`, chains: false, args: stepArgs(step, fn, true, varByStepId), input: openVar, inputStepId: openVarStepId }
     } else if (base === openBase) {
       // same-family transform: continues the pipe chain (dados <- ... |> fn())
-      built = { stepId: step.id, fn, var: openVar!, chains: true, args: stepArgs(step, fn, true), input: openVar, inputStepId: openVarStepId }
+      built = { stepId: step.id, fn, var: openVar!, chains: true, args: stepArgs(step, fn, true, varByStepId), input: openVar, inputStepId: openVarStepId }
       openVarStepId = step.id
     } else {
       // family change (e.g. sus_mod_dlnm over dados): new block consuming the open var
       const v = newVar(base)
-      built = { stepId: step.id, fn, var: v, chains: false, args: stepArgs(step, fn, true), input: openVar, inputStepId: openVarStepId }
+      built = { stepId: step.id, fn, var: v, chains: false, args: stepArgs(step, fn, true, varByStepId), input: openVar, inputStepId: openVarStepId }
       openVar = v
       openBase = base
       openVarStepId = step.id
     }
     out.push(built)
+    varByStepId[step.id] = built.var
   }
   return out
 }
