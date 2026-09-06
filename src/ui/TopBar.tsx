@@ -73,7 +73,7 @@ export default function TopBar() {
   const {
     lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
     openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
-    undo, redo, past, future,
+    undo, redo, past, future, mode, openModeSelector,
   } = usePipeline()
 
   useEffect(() => {
@@ -129,6 +129,11 @@ export default function TopBar() {
             <span className="btn-icon">{ICON.importData}</span>{t('openData', lang)}
           </button>
           <button className="btn" onClick={openAbout}>{t('about', lang)}</button>
+        </div>
+        <div className="topbar-group">
+          <button className="btn mode-badge" onClick={openModeSelector}>
+            {mode ? t(mode === 'vigilancia' ? 'modeVigilancia' : 'modePesquisa', lang) : t('chooseMode', lang)}
+          </button>
         </div>
         <div className="topbar-group topbar-group-compact">
           <select

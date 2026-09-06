@@ -15,6 +15,11 @@ export interface Step {
 
 export type Lang = 'pt' | 'en' | 'es'
 
+// usage mode: chosen per project, foundation for future differences in language/guardrails
+// between a vigilância/gestão workflow and an advanced-research workflow. Purely a label +
+// persisted choice for now — it doesn't yet gate or hide anything (see project notes).
+export type UsageMode = 'vigilancia' | 'pesquisa'
+
 export type StepRunState = 'idle' | 'running' | 'ok' | 'error' | 'stale'
 
 export interface PipelineIssue {
@@ -47,6 +52,8 @@ interface PipelineState {
   activeTutorialId: string | null // which TutorialDef.id is active, for the overlay to look up explain text
   helpOpen: boolean // Help / Pipelines panel visibility
   aboutOpen: boolean // About / institutional panel visibility
+  mode: UsageMode | null // usage mode for this project; null = not chosen yet
+  modeOpen: boolean // mode selector panel visibility
   addStep: (fn: string) => void
   removeStep: (id: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
@@ -72,6 +79,9 @@ interface PipelineState {
   closeHelp: () => void
   openAbout: () => void
   closeAbout: () => void
+  setMode: (m: UsageMode) => void
+  openModeSelector: () => void
+  closeModeSelector: () => void
   loadTemplate: (tpl: PipelineTemplate) => void
   saveProject: () => Promise<void>
   openProject: () => Promise<void>
@@ -80,10 +90,12 @@ interface PipelineState {
 
 const KEY = 'climasus-plus-pipeline-v2'
 
-type ProjectData = { steps: Step[]; lang: Lang; theme: 'dark' | 'light' }
+type ProjectData = { steps: Step[]; lang: Lang; theme: 'dark' | 'light'; mode: UsageMode | null }
 
 function serializeProject(d: ProjectData): string {
-  return JSON.stringify({ schemaVersion: PIPELINE_SCHEMA_VERSION, steps: d.steps, lang: d.lang, theme: d.theme })
+  return JSON.stringify({
+    schemaVersion: PIPELINE_SCHEMA_VERSION, steps: d.steps, lang: d.lang, theme: d.theme, mode: d.mode,
+  })
 }
 
 // Parse + validate untrusted JSON (a project file or localStorage). Throws on malformed input.
@@ -104,6 +116,7 @@ function deserializeProject(raw: string): ProjectData {
     })),
     lang: (['pt', 'en', 'es'] as const).includes(parsed.lang) ? parsed.lang : 'pt',
     theme: parsed.theme === 'light' ? 'light' : 'dark',
+    mode: (['vigilancia', 'pesquisa'] as const).includes(parsed.mode) ? parsed.mode : null,
   }
 }
 
@@ -130,7 +143,7 @@ function load(): ProjectData {
     const raw = localStorage.getItem(KEY)
     if (raw) return deserializeProject(raw)
   } catch { /* corrupt state → start fresh */ }
-  return { steps: [], lang: 'pt', theme: 'dark' }
+  return { steps: [], lang: 'pt', theme: 'dark', mode: null }
 }
 
 let seq = Date.now()
@@ -155,6 +168,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   activeTutorialId: null,
   helpOpen: false,
   aboutOpen: false,
+  modeOpen: false,
   addStep: (fn) => {
     pushHistory(get, set)
     const step: Step = { id: uid(), fn, values: {} }
@@ -357,6 +371,12 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   closeHelp: () => set({ helpOpen: false }),
   openAbout: () => set({ aboutOpen: true }),
   closeAbout: () => set({ aboutOpen: false }),
+  setMode: (mode) => {
+    set({ mode, modeOpen: false })
+    persist(get)
+  },
+  openModeSelector: () => set({ modeOpen: true }),
+  closeModeSelector: () => set({ modeOpen: false }),
   loadTemplate: (tpl) => {
     pushHistory(get, set)
     const steps: Step[] = tpl.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
@@ -364,9 +384,9 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     persist(get)
   },
   saveProject: async () => {
-    const { steps, lang, theme } = get()
+    const { steps, lang, theme, mode } = get()
     try {
-      await saveProjectFile(serializeProject({ steps, lang, theme }))
+      await saveProjectFile(serializeProject({ steps, lang, theme, mode }))
     } catch (e) {
       set({ runError: String(e), centerTab: 'results' })
     }
@@ -381,9 +401,9 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     }
     if (raw == null) return // user cancelled
     try {
-      const { steps, lang, theme } = deserializeProject(raw)
+      const { steps, lang, theme, mode } = deserializeProject(raw)
       pushHistory(get, set)
-      set({ ...freshRun, steps, lang, theme, selectedStep: steps[0]?.id ?? null })
+      set({ ...freshRun, steps, lang, theme, mode, selectedStep: steps[0]?.id ?? null })
       persist(get)
     } catch {
       set({ runError: t('invalidProject', get().lang), centerTab: 'results' })
@@ -416,8 +436,8 @@ async function pollHealth() {
 pollHealth()
 
 function persist(get: () => PipelineState) {
-  const { steps, lang, theme } = get()
-  localStorage.setItem(KEY, serializeProject({ steps, lang, theme }))
+  const { steps, lang, theme, mode } = get()
+  localStorage.setItem(KEY, serializeProject({ steps, lang, theme, mode }))
 }
 
 // undo history — capped in-memory stack of `steps` snapshots, not persisted across reloads
@@ -439,6 +459,7 @@ const freshRun = {
   stepRun: {}, stepResults: {}, runError: null, validationIssues: [],
   engineIssue: null as string | null,
   tutorialStep: null, tutorialFocusId: null, activeTutorialId: null, helpOpen: false, aboutOpen: false,
+  modeOpen: false,
 }
 
 // ---- R code generation ----------------------------------------------------

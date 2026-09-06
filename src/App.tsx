@@ -7,6 +7,7 @@ import CodePanel from './ui/CodePanel'
 import ResultsPanel from './ui/ResultsPanel'
 import HelpPanel from './ui/HelpPanel'
 import AboutPanel from './ui/AboutPanel'
+import ModeSelector from './ui/ModeSelector'
 import { usePipeline } from './store/pipeline'
 import { t } from './i18n'
 
@@ -18,11 +19,20 @@ export default function App() {
     setCenterTab,
     expandedPanel,
     toggleExpand,
+    mode,
+    steps,
+    openModeSelector,
   } = usePipeline()
 
   useEffect(() => {
     document.documentElement.dataset.outputMode = centerTab
   }, [centerTab])
+
+  // first-ever launch (no project yet, no mode chosen): prompt for it once
+  useEffect(() => {
+    if (mode === null && steps.length === 0) openModeSelector()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (engineStatus === 'offline' && centerTab !== 'code') setCenterTab('code')
@@ -67,6 +77,7 @@ export default function App() {
       </main>
       <HelpPanel />
       <AboutPanel />
+      <ModeSelector />
     </div>
   )
 }
