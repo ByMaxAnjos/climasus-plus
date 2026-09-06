@@ -18,7 +18,7 @@
     "name": "climate_data",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `climasus_df` object produced by `sus_climate_fill_inmet()`.\n  Must contain `date` (Date or POSIXct), `station_code`, `latitude`, `longitude`,\n  and climate variables."
    },
@@ -227,7 +227,7 @@
     "name": "normals",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `climasus_df` from [sus_climate_normals()]. Must contain\n  columns `codigo`, `mes`, `decada`, `var_code`, and `valor`. Run\n  [sus_climate_normals_meta()] to see available `var_code` values."
    },
@@ -657,11 +657,8 @@
     "name": "rain_var",
     "default": "\"rainfall_chirps_mm\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "rainfall_chirps_mm",
-     "rainfall_mm"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the monthly precipitation column (mm).\n  Default `\"rainfall_chirps_mm\"`. Other common value: `\"rainfall_mm\"`."
    },
    {
@@ -768,11 +765,8 @@
     "name": "var",
     "default": "\"rainfall_chirps_mm\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "rainfall_chirps_mm",
-     "rainfall_mm"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the monthly precipitation column.\n  Default `\"rainfall_chirps_mm\"`. Other common value: `\"rainfall_mm\"`."
    },
    {
@@ -1059,11 +1053,8 @@
     "name": "outcome_col",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "n_obitos",
-     "n_internacoes"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the health-outcome column\n  (e.g. `\"n_obitos\"`, `\"n_internacoes\"`). If `NULL` (default) the first\n  integer column that is not a climate variable is used."
    },
    {
@@ -1253,11 +1244,8 @@
     "name": "save_plot",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "plot.html",
-     "plot.png"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Optional file path to save the plot\n  (e.g., `\"plot.html\"` or `\"plot.png\"`)."
    }
   ]
@@ -1318,11 +1306,8 @@
     "name": "save_plot",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "plot.png",
-     "plot.html"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Optional file path to save the plot (e.g. `\"plot.png\"` or\n  `\"plot.html\"`)."
    },
    {
@@ -1610,15 +1595,8 @@
     "name": "value_col",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "count",
-     "sum",
-     "mean",
-     "temperature",
-     "precipitation",
-     "pm25"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character string with the name of the column to aggregate when\n  using functions other than `\"count\"`. Required for `\"sum\"`, `\"mean\"`, etc.\n  For example, `\"temperature\"`, `\"precipitation\"`, `\"pm25\"`."
    },
    {
@@ -2004,33 +1982,8 @@
     "name": "icd_codes",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "J18.9",
-     "J00-J99",
-     "J09-J18",
-     "I",
-     "C00-D48",
-     "causas_externas",
-     "external_causes",
-     "causas_maternas",
-     "maternal_causes",
-     "causas_infantis",
-     "infant_causes",
-     "doencas_infecciosas",
-     "infectious_diseases",
-     "doencas_respiratorias",
-     "respiratory_diseases",
-     "doencas_cardiovasculares",
-     "cardiovascular_diseases",
-     "neoplasias",
-     "neoplasms",
-     "dengue_like",
-     "zika_chik",
-     "tb_respiratoria",
-     "covid19",
-     "violencia"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "A character vector of ICD-10 codes, ranges, or categories.\n  Multiple syntaxes are supported:"
    },
    {
@@ -2045,16 +1998,8 @@
     "name": "icd_column",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "CAUSABAS",
-     "DIAG_PRINC",
-     "DIAG_SECUN",
-     "CAUSAOBITO",
-     "DIAGNOSTIC",
-     "linha_a",
-     "linha_f"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the column containing ICD-10 codes.\n  If NULL (default), the function attempts auto-detection from common SUS\n  column names in this priority order:\n  1. `\"CAUSABAS\"` - Underlying cause (primary cause of death in SIM)\n  2. `\"DIAG_PRINC\"` - Main diagnosis (SIH hospitalizations)\n  3. `\"DIAG_SECUN\"` - Secondary diagnosis\n  4. `\"CAUSAOBITO\"` - Cause of death (alternative SIM field)\n"
    },
    {
@@ -2123,11 +2068,8 @@
     "name": "sex",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "Male",
-     "Masculino"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character vector specifying sex categories to include. Accepts\n  values in English, Portuguese, or Spanish (e.g., `\"Male\"`, `\"Masculino\"`,\n  `\"Masculino\"`). If `NULL` (default), includes all sexes."
    },
    {
@@ -2166,13 +2108,8 @@
     "name": "city",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "Sao Paulo",
-     "Natal",
-     "3550308",
-     "2408102"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character vector of municipality names (e.g., `\"Sao Paulo\"`,\n  `\"Natal\"`) or IBGE codes (6 or 7-digit, e.g., `\"3550308\"`, `\"2408102\"`).\n  Case-insensitive; accents are normalised for matching. Partial typos trigger\n  fuzzy suggestions. If `NULL` (default), no additional municipality filter is\n  applied. Results are merged (union) with any codes in `municipality_code`."
    },
    {
@@ -2373,11 +2310,8 @@
     "name": "city",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "Porto Velho",
-     "São Paulo"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character vector of municipality names (e.g., `\"Porto Velho\"`,\n  `\"São Paulo\"`). Case-insensitive; accents are normalised. Typos trigger\n  fuzzy suggestions. Union with `municipality_code`. Applied after download\n  to the combined dataset."
    },
    {
@@ -2537,14 +2471,8 @@
     "name": "palette",
     "default": "\"YlOrRd\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "YlOrRd",
-     "Blues",
-     "RdYlBu",
-     "lancet",
-     "nejm"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character.  Colour palette for the fill / bubble fill scale.\n  Any [RColorBrewer::brewer.pal()] sequential/diverging palette name\n  (e.g. `\"YlOrRd\"`, `\"Blues\"`, `\"RdYlBu\"`) or one of the `ggsci` aliases\n  `\"lancet\"` / `\"nejm\"`.  Default `\"YlOrRd\"`."
    },
    {
@@ -2685,11 +2613,8 @@
     "name": "group_col",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "epidemic",
-     "seasonal"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Optional column used for colour-grouping in\n  `\"epidemic\"` and `\"seasonal\"` plots."
    },
    {
@@ -2963,12 +2888,8 @@
     "name": "fill_var",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "sex",
-     "age_group",
-     "climate_risk_group"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Optional stratification variable for temporal\n  plots (e.g., `\"sex\"`, `\"age_group\"`, `\"climate_risk_group\"`)."
    },
    {
@@ -3518,7 +3439,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, rasters are aggregated and a\n  `climasus_df` is returned. If `NULL`, a named character vector of cached\n  file paths is returned instead (see `raster_area`)."
    },
@@ -3636,7 +3557,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` object with polygon geometries representing the\n  areas to which raster data will be aggregated (typically Brazilian\n  municipalities from [geobr::read_municipality()]). Must contain a column\n  identifying each polygon -- the function auto-detects `code_muni`, `CD_MUN`,\n  or `CD_GEOCMU`. If `NULL`, returns a named list of downloaded NetCDF file\n  paths instead of a `climasus_df`."
    },
@@ -3775,7 +3696,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, fire points are spatially\n  joined to polygons and aggregated to daily municipality-level counts.\n  If `NULL`, the raw fire point data are returned as a `climasus_df`."
    },
@@ -3876,10 +3797,8 @@
     "name": "grid_data",
     "default": null,
     "required": true,
-    "type": "text",
-    "options": [
-     "climate"
-    ],
+    "type": "data",
+    "options": [],
     "doc": "A `climasus_df` at stage `\"climate\"` produced by any\n  `sus_grid_*()` function. Must contain `code_muni` and `date` columns and\n  at least one environmental variable column."
    },
    {
@@ -4025,7 +3944,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, rasters are aggregated and a\n  `climasus_df` is returned. If `NULL`, returns cached NetCDF file paths."
    },
@@ -4134,7 +4053,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An optional `sf` POLYGON object (e.g. one or more\n  rows from [geobr::read_municipality()], or a state/region polygon).\n  When supplied, the raster is cropped and masked to this area (values\n  outside the polygon(s) become `NA` and are dropped from the plot), and\n  its boundary is drawn as a thin overlay. Default `NULL` (full raster\n  extent, no cropping)."
    },
@@ -4401,7 +4320,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` object with polygon geometries\n  (e.g., from [geobr::read_municipality()]). If provided, raster data are\n  aggregated to these polygons and a `climasus_df` is returned.\n  If `NULL`, a named character vector of cached NetCDF file paths is\n  returned instead (see `raster_area`)."
    },
@@ -4529,7 +4448,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). If provided, raster data are aggregated\n  and a `climasus_df` is returned. If `NULL`, returns cached NetCDF paths\n  (or a `SpatRaster` per `raster_area`)."
    },
@@ -4670,7 +4589,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, deforestation polygons are\n  spatially intersected with municipality boundaries and annual areas are\n  aggregated. If `NULL`, raw deforestation polygons are returned as an sf\n  `climasus_df`."
    },
@@ -4733,7 +4652,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` POLYGON object (e.g., from\n  [geobr::read_municipality()]). When provided, flash drought events are\n  spatially assigned to municipalities and statistics are aggregated.\n  If `NULL`, returns the raw event data frame for Brazil filtered to\n  the requested years."
    },
@@ -4994,23 +4913,16 @@
     "name": "outcome_col",
     "default": "\"n_obitos\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "n_obitos",
-     "n_internacoes"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the daily health outcome count column\n  (e.g., `\"n_obitos\"`, `\"n_internacoes\"`). Default: `\"n_obitos\"`."
    },
    {
     "name": "exposure_col",
     "default": null,
     "required": true,
-    "type": "enum",
-    "options": [
-     "tair_dry_bulb_c",
-     "pm25_mean",
-     "precip_mm"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the exposure column. Required; no\n  auto-detection is performed (unlike `sus_mod_dlnm()`). Examples:\n  `\"tair_dry_bulb_c\"`, `\"pm25_mean\"`, `\"precip_mm\"`."
    },
    {
@@ -5025,13 +4937,8 @@
     "name": "stratum",
     "default": "\"month\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "month",
-     "2021-07",
-     "week",
-     "2021-W27"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Time stratum type or name of an existing column:\n  - `\"month\"` (default): year-month strata (e.g., `\"2021-07\"`).\n  - `\"week\"`: ISO year-week strata (e.g., `\"2021-W27\"`).\n  - Any column name in `data`: uses that column's values as stratum IDs."
    },
    {
@@ -5116,12 +5023,8 @@
     "name": "outcome_col",
     "default": "\"n_obitos\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "n_obitos",
-     "n_internacoes",
-     "n_dengue"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the daily health count column\n  (e.g., `\"n_obitos\"`, `\"n_internacoes\"`, `\"n_dengue\"`). Default:\n  `\"n_obitos\"`."
    },
    {
@@ -5451,11 +5354,8 @@
     "name": "covariates",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "rh_pct",
-     "holiday"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character vector or `NULL`. Names of additional columns to\n  include as linear confounders (e.g., `\"rh_pct\"`, `\"holiday\"`). Must be\n  numeric or dummy-coded. Default: `NULL`."
    },
    {
@@ -5515,7 +5415,7 @@
     "name": "covariates",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `data.frame` with one row per city and city-level\n  predictors. City names must be stored as row names (default) or in the\n  column specified by `city_col`. Cities present in `fits` but absent in\n  `covariates` are excluded from the meta-regression with a warning."
    },
@@ -6331,7 +6231,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` polygon object with a `code_muni` column\n  (7-digit IBGE code). Required for `type = \"rr_map\"` and\n  `type = \"exceedance\"`. Typically from [geobr::read_municipality()]."
    },
@@ -6371,12 +6271,8 @@
     "name": "palette",
     "default": "\"RdYlBu\"",
     "required": false,
-    "type": "enum",
-    "options": [
-     "RdYlBu",
-     "RdBu",
-     "PuOr"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of a diverging RColorBrewer palette for RR\n  maps (e.g. `\"RdYlBu\"`, `\"RdBu\"`, `\"PuOr\"`). Default `\"RdYlBu\"`."
    },
    {
@@ -6436,11 +6332,8 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "uncertainty",
-     "both"
-    ],
+    "type": "data",
+    "options": [],
     "doc": "An `sf` object containing municipality polygons with a\n  `code_muni` column (7-digit IBGE code). Required for `type = \"rr\"`,\n  `\"uncertainty\"`, and `\"both\"`. Typically obtained via\n  [geobr::read_municipality()]."
    },
    {
@@ -6505,11 +6398,8 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "map",
-     "both"
-    ],
+    "type": "data",
+    "options": [],
     "doc": "An `sf` object with at least the column `code_muni`\n  (7-digit IBGE code) and polygon geometry. Required when `type` is `\"map\"`\n  or `\"both\"`. Ignored for `type = \"scatter\"`."
    },
    {
@@ -6573,7 +6463,7 @@
     "name": "municipalities",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` object with POLYGON or MULTIPOLYGON geometry\n  containing a `code_muni` column that matches the identifiers stored in\n  `x$most_likely_cluster$location_ids` and `x$secondary_clusters`."
    },
@@ -7195,7 +7085,7 @@
     "name": "municipalities",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` object with at least a `code_muni` column\n  and geometry. If provided, geometry is joined to the exceedance table\n  so the result can be mapped directly. Requires the **sf** package.\n  Default `NULL`."
    },
@@ -7240,7 +7130,7 @@
     "name": "newdata",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `data.frame` with at least columns `code_muni` (7-digit\n  IBGE code) and `time_idx` (integer period index, 1-based, matching the\n  encoding used in the original fit) plus any covariate columns required\n  by the model. If `NULL` and `horizon > 0`, a synthetic grid is constructed\n  by crossing all fitted municipalities with the next `horizon` time steps,\n  using covariate values from the last obse"
    },
@@ -7317,11 +7207,8 @@
     "name": "outcome",
     "default": null,
     "required": true,
-    "type": "enum",
-    "options": [
-     "deaths",
-     "hospitalizations"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the response variable column in `df`\n  (e.g. `\"deaths\"`, `\"hospitalizations\"`)."
    },
    {
@@ -7458,19 +7345,15 @@
     "name": "outcome",
     "default": null,
     "required": true,
-    "type": "enum",
-    "options": [
-     "deaths",
-     "rate_100k",
-     "hospitalization_rate"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Character. Name of the numeric outcome column in `df`\n  (e.g. `\"deaths\"`, `\"rate_100k\"`, `\"hospitalization_rate\"`)."
    },
    {
     "name": "W",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `climasus_weights` object produced by\n  `sus_mod_spatial_weights()`. Must contain a `listw` element (a\n  `listw`-class object from **spdep**) whose length matches `nrow(df)` after\n  any filtering by `municipalities`."
    },
@@ -7559,7 +7442,7 @@
     "name": "W",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "A `climasus_weights` object produced by\n  [sus_mod_spatial_weights()]. Must contain a `listw` element whose\n  length matches `nrow(df)`."
    },
@@ -7654,7 +7537,7 @@
     "name": "municipalities",
     "default": null,
     "required": true,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "An `sf` object with POLYGON or MULTIPOLYGON\n  geometry and a `code_muni` column used to join to `df`."
    },

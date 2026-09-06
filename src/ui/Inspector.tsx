@@ -40,7 +40,7 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps }: {
   const missingRequired = arg.required && !value.trim()
   const defaultActive = !value.trim() && arg.default != null
   const refId = isStepRef(value) ? stepRefId(value) : ''
-  const canReference = arg.type === 'text' && priorSteps.length > 0
+  const canReference = arg.type === 'data' && priorSteps.length > 0
   return (
     <div className={`arg-field ${missingRequired ? 'arg-field-missing' : ''} ${issue ? 'arg-field-issue' : ''}`}>
       <label className="label">

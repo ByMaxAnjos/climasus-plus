@@ -9,7 +9,9 @@ export interface ArgSpec {
   name: string
   default: string | null
   required: boolean
-  type: 'enum' | 'boolean' | 'number' | 'text'
+  // 'data' = expects an object produced by an earlier pipeline step (sf/data.frame/climasus_df/
+  // weights) — the only args offered the "use result from step N" picker in the Inspector.
+  type: 'enum' | 'boolean' | 'number' | 'text' | 'data'
   options: string[]
   doc: string
 }
