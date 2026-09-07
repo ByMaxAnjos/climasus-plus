@@ -27,7 +27,7 @@ function ArgHelp({ doc }: { doc: string }) {
   )
 }
 
-function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps }: {
+function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoDefault }: {
   arg: ArgSpec
   fnName: string
   value: string
@@ -35,12 +35,13 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps }: {
   lang: 'pt' | 'en' | 'es'
   issue?: string
   priorSteps: PriorStepOption[]
+  autoDefault?: boolean
 }) {
   const hint = arg.default != null ? `${t('defaultHint', lang)}: ${arg.default}` : ''
   const missingRequired = arg.required && !value.trim()
   const defaultActive = !value.trim() && arg.default != null
   const refId = isStepRef(value) ? stepRefId(value) : ''
-  const canReference = arg.type === 'data' && priorSteps.length > 0
+  const canReference = (arg.type === 'data' || autoDefault) && priorSteps.length > 0
   return (
     <div className={`arg-field ${missingRequired ? 'arg-field-missing' : ''} ${issue ? 'arg-field-issue' : ''}`}>
       <label className="label">
@@ -81,20 +82,13 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps }: {
       )}
       {missingRequired ? (
         <p className="arg-note arg-note-required">{issue || t('requiredMissingHint', lang)}</p>
+      ) : autoDefault && !refId ? (
+        <p className="arg-note">↳ {t('autoFromPrevious', lang)}</p>
       ) : defaultActive ? (
         <p className="arg-note">{tp('usingDefault', lang, { value: String(arg.default) })}</p>
       ) : issue ? (
         <p className="arg-note arg-note-required">{issue}</p>
       ) : null}
-    </div>
-  )
-}
-
-function AutoArgField({ name, lang }: { name: string; lang: 'pt' | 'en' | 'es' }) {
-  return (
-    <div className="arg-field arg-auto">
-      <label className="label">{name}</label>
-      <div className="auto-value mono">↳ {t('autoFromPrevious', lang)}</div>
     </div>
   )
 }
@@ -133,20 +127,17 @@ export default function Inspector() {
       })
     : []
   const renderArg = (a: ArgSpec) => (
-    a.name === autoArg ? (
-      <AutoArgField key={a.name} name={a.name} lang={lang} />
-    ) : (
-      <ArgField
-        key={a.name}
-        arg={a}
-        fnName={fn.name}
-        lang={lang}
-        value={step?.values[a.name] ?? ''}
-        issue={issueByArg.get(a.name)}
-        priorSteps={priorSteps}
-        onChange={(v) => step && setValue(step.id, a.name, v)}
-      />
-    )
+    <ArgField
+      key={a.name}
+      arg={a}
+      fnName={fn.name}
+      lang={lang}
+      value={step?.values[a.name] ?? ''}
+      issue={issueByArg.get(a.name)}
+      priorSteps={priorSteps}
+      autoDefault={a.name === autoArg}
+      onChange={(v) => step && setValue(step.id, a.name, v)}
+    />
   )
 
   return (

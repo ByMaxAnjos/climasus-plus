@@ -564,7 +564,13 @@ export function buildSteps(steps: Step[]): BuiltStep[] {
   for (const step of steps) {
     const fn = byName.get(step.fn)
     if (!fn) continue
-    const hasInput = pipeArg(fn) !== null && openVar !== null
+    const firstArgName = fn.args[0]?.name
+    const explicitFirst = firstArgName ? (step.values[firstArgName] ?? '').trim() : ''
+    const overrideStepId = explicitFirst && isStepRef(explicitFirst) ? stepRefId(explicitFirst) : null
+    const overrideVar = overrideStepId ? (varByStepId[overrideStepId] ?? null) : null
+    const effectiveOpenVar = overrideVar ?? openVar
+    const effectiveOpenStepId = overrideStepId ?? openVarStepId
+    const hasInput = pipeArg(fn) !== null && effectiveOpenVar !== null
     const base = blockVar(fn)
     let built: BuiltStep
     if (!hasInput) {
@@ -575,7 +581,15 @@ export function buildSteps(steps: Step[]): BuiltStep[] {
       openVarStepId = step.id
     } else if (fn.family === 'plot') {
       // plot: consumes the open var but never replaces it (fig_N <- sus_x_plot(dados))
-      built = { stepId: step.id, fn, var: `fig_${++figN}`, chains: false, args: stepArgs(step, fn, true, varByStepId), input: openVar, inputStepId: openVarStepId }
+      built = { stepId: step.id, fn, var: `fig_${++figN}`, chains: false, args: stepArgs(step, fn, true, varByStepId), input: effectiveOpenVar, inputStepId: effectiveOpenStepId }
+    } else if (overrideVar) {
+      // explicit override of the first arg: always a new block, never chains visually
+      // (the referenced step may not be the one immediately above in the list)
+      const v = newVar(base)
+      built = { stepId: step.id, fn, var: v, chains: false, args: stepArgs(step, fn, true, varByStepId), input: overrideVar, inputStepId: overrideStepId }
+      openVar = v
+      openBase = base
+      openVarStepId = step.id
     } else if (base === openBase) {
       // same-family transform: continues the pipe chain (dados <- ... |> fn())
       built = { stepId: step.id, fn, var: openVar!, chains: true, args: stepArgs(step, fn, true, varByStepId), input: openVar, inputStepId: openVarStepId }
