@@ -38,7 +38,9 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
   autoDefault?: boolean
 }) {
   const hint = arg.default != null ? `${t('defaultHint', lang)}: ${arg.default}` : ''
-  const missingRequired = arg.required && !value.trim()
+  // an auto-piped first arg is never "missing" — it's always filled from the previous step
+  // (or an explicit stepRef override) by the time the pipeline actually runs
+  const missingRequired = arg.required && !value.trim() && !autoDefault
   const defaultActive = !value.trim() && arg.default != null
   const refId = isStepRef(value) ? stepRefId(value) : ''
   const canReference = (arg.type === 'data' || autoDefault) && priorSteps.length > 0
@@ -55,13 +57,13 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
           value={refId}
           onChange={(e) => onChange(e.target.value ? stepRef(e.target.value) : '')}
         >
-          <option value="">{t('freeTextOption', lang)}</option>
+          <option value="">{autoDefault ? t('autoFromPreviousOption', lang) : t('freeTextOption', lang)}</option>
           {priorSteps.map((p) => <option key={p.id} value={p.id}>{p.label}</option>)}
         </select>
       )}
       {refId ? (
         <div className="auto-value mono">↳ {t('stepRefValue', lang)}: {priorSteps.find((p) => p.id === refId)?.label ?? refId}</div>
-      ) : arg.type === 'enum' ? (
+      ) : autoDefault ? null /* typing here would be silently dropped (stepArgs skips the first arg when chained) — nothing to show but the hint below */ : arg.type === 'enum' ? (
         <select className="input" value={value} onChange={(e) => onChange(e.target.value)}>
           <option value="">{hint || '—'}</option>
           {arg.options.map((o) => <option key={o} value={o}>{o}</option>)}

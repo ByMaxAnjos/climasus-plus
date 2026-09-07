@@ -39,15 +39,6 @@ export const DENGUE_CLIMA: TutorialDef = {
       },
     },
     {
-      fn: 'sus_data_filter_cid',
-      values: { disease_group: 'dengue' },
-      explain: {
-        pt: 'Mantemos só os casos de dengue.',
-        en: 'We keep only dengue cases.',
-        es: 'Mantenemos solo los casos de dengue.',
-      },
-    },
-    {
       fn: 'sus_data_create_variables',
       values: {},
       explain: {

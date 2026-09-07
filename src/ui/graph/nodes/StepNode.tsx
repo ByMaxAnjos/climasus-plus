@@ -20,7 +20,10 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
   const run = usePipeline((s) => s.stepRun[step.id])
   const result = usePipeline((s) => s.stepResults[step.id])
   const selected = usePipeline((s) => s.selectedStep === step.id)
-  const dimmed = usePipeline((s) => s.tutorialStep != null && s.tutorialFocusId !== step.id)
+  // don't dim a step that has actually run (or is running) just because tutorial narration
+  // hasn't reached it yet — otherwise "Executar" on a ready-made template fades every node
+  // except whichever one the (unrelated) walkthrough happens to be spotlighting
+  const dimmed = usePipeline((s) => s.tutorialStep != null && s.tutorialFocusId !== step.id && (s.stepRun[step.id] ?? 'idle') === 'idle')
   const focused = usePipeline((s) => s.tutorialStep != null && s.tutorialFocusId === step.id)
   const engineStatus = usePipeline((s) => s.engineStatus)
   const lang = usePipeline((s) => s.lang)

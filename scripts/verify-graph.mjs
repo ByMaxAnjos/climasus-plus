@@ -108,7 +108,7 @@ if (!engineUp) {
     // merged climate data at all, so it has no sus_climate_aggregate step). `climateVar` is
     // asserted only where a climate frame is actually merged in.
     const CASE_STUDIES = [
-      { title: 'Dengue e clima — Nordeste 2015-2019', nodes: 11, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Dengue e clima — Nordeste 2015-2019', nodes: 10, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
       { title: 'Mortalidade respiratória pediátrica e temperatura — Sudeste 2015-2019', nodes: 13, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
       { title: 'Mortalidade cardiovascular em idosos e ondas de calor — SP 2010-2019', nodes: 15, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
       { title: 'Hospitalizações respiratórias e frio extremo — Região Sul 2010-2019', nodes: 11, combiner: 'sus_mod_its', healthVar: 'dados', climateVar: null },

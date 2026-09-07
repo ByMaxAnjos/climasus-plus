@@ -83,6 +83,7 @@ const dict: Dict = {
   moveStepDown: { pt: 'Mover passo para baixo', en: 'Move step down', es: 'Mover paso hacia abajo' },
   dragToReorder: { pt: 'Arraste para reordenar', en: 'Drag to reorder', es: 'Arrastre para reordenar' },
   freeTextOption: { pt: '— texto livre —', en: '— free text —', es: '— texto libre —' },
+  autoFromPreviousOption: { pt: '↳ Automático (passo anterior)', en: '↳ Automatic (previous step)', es: '↳ Automático (paso anterior)' },
   stepRefValue: { pt: 'Resultado do passo', en: 'Result from step', es: 'Resultado del paso' },
   invalidStepRef: {
     pt: '{fn}: o parâmetro "{arg}" referencia um passo que não existe mais ou vem depois — escolha outro.',
