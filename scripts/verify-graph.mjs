@@ -74,7 +74,9 @@ if (!engineUp) {
     // RESPIRATORIO_SP has 9 steps (verified by reading src/tutorials/respiratorio.ts directly —
     // not the same count as the small 5-step graph built above)
     const RESPIRATORIO_SP_STEPS = 9
-    const openTemplatesMenu = () => page.locator('.topbar-actions button', { hasText: 'Tutorial guiado' }).click()
+    // the button reads "Templates" whenever more than one template applies to the current mode
+    // (it falls back to "Tutorial guiado" only when a single one applies) — see TopBar.tsx
+    const openTemplatesMenu = () => page.locator('.topbar-actions button', { hasText: 'Templates' }).click()
     await openTemplatesMenu()
     await page.waitForSelector('.settings-menu')
     await page.locator('.settings-menu .settings-row', { hasText: 'Mortalidade Respiratória — SP 2014-2019' }).click()
@@ -101,11 +103,15 @@ if (!engineUp) {
     // startTutorial() auto-runs — block that one request so the checks below (node count and
     // generated code, both purely client-side) stay fast and don't tie up the shared R engine
     await page.route('http://127.0.0.1:8787/run', (route) => route.abort())
+    // `combiner` is the call that must receive the health chain as its FIRST POSITIONAL argument —
+    // sus_climate_aggregate for the 3 DLNM templates, sus_mod_its for the ITS one (which needs no
+    // merged climate data at all, so it has no sus_climate_aggregate step). `climateVar` is
+    // asserted only where a climate frame is actually merged in.
     const CASE_STUDIES = [
-      { title: 'Dengue e clima — Nordeste 2015-2019', nodes: 11, healthVar: 'dados', climateVar: 'clima' },
-      { title: 'Mortalidade respiratória pediátrica e temperatura — Sudeste 2015-2019', nodes: 13, healthVar: 'dados', climateVar: 'clima' },
-      { title: 'Mortalidade cardiovascular em idosos e ondas de calor — SP 2010-2019', nodes: 14, healthVar: 'dados', climateVar: 'clima' },
-      { title: 'Hospitalizações respiratórias e frio extremo — Região Sul 2010-2019', nodes: 11, healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Dengue e clima — Nordeste 2015-2019', nodes: 11, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Mortalidade respiratória pediátrica e temperatura — Sudeste 2015-2019', nodes: 13, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Mortalidade cardiovascular em idosos e ondas de calor — SP 2010-2019', nodes: 15, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Hospitalizações respiratórias e frio extremo — Região Sul 2010-2019', nodes: 11, combiner: 'sus_mod_its', healthVar: 'dados', climateVar: null },
     ]
     for (const tpl of CASE_STUDIES) {
       await openTemplatesMenu()
@@ -121,9 +127,19 @@ if (!engineUp) {
       // we want to inspect only renders under the code tab
       await page.locator('.output-tab', { hasText: 'Código' }).click()
       const code = await page.locator('[data-testid="r-code"]').textContent()
-      const call = code?.match(/sus_climate_aggregate\([^)]*\)/s)?.[0] ?? ''
-      check(`"${tpl.title}" combiner call pipes the health-chain variable`, call.includes(tpl.healthVar))
-      check(`"${tpl.title}" combiner call names climate_data on the climate-chain variable`, call.includes(`climate_data = ${tpl.climateVar}`))
+      const call = code?.match(new RegExp(`${tpl.combiner}\\([^)]*\\)`, 's'))?.[0] ?? ''
+      // the health chain must arrive POSITIONALLY FIRST — a named-arg or wrong-variable wiring
+      // (e.g. the climate branch leaking in as the piped input) must fail this, not just any
+      // mention of `dados` somewhere in the arg list
+      check(
+        `"${tpl.title}" ${tpl.combiner} takes the health-chain variable as its first positional argument`,
+        call.startsWith(`${tpl.combiner}(\n    ${tpl.healthVar},`),
+      )
+      if (tpl.climateVar) {
+        check(`"${tpl.title}" combiner call names climate_data on the climate-chain variable`, call.includes(`climate_data = ${tpl.climateVar}`))
+      } else {
+        check(`"${tpl.title}" has no sus_climate_aggregate step (ITS needs no merged climate data)`, !code?.includes('sus_climate_aggregate('))
+      }
     }
     await page.unroute('http://127.0.0.1:8787/run')
 
