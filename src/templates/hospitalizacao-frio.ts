@@ -79,14 +79,14 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
     },
     {
       fn: 'sus_mod_its',
-      // `interruption_dates` has no default and is required — placeholder illustrates the format
-      // (a real cold snap that hit Southern Brazil, July 2013); users replace it with the actual
-      // event date(s) they want to evaluate before running.
+      // `interruption_dates` has no default and is required. This date is a placeholder EXAMPLE
+      // only, not a verified real cold-wave event — it exists purely so the template loads without
+      // a missing-argument error. Users must replace it with a real date before drawing conclusions.
       values: { interruption_dates: '2013-07-23' },
       explain: {
-        pt: 'Avaliamos com série interrompida se os períodos de onda de frio mudam o nível ou a tendência das internações — um desenho mais leve que o DLNM, indicado para perguntas sobre um evento específico. Ajuste a data de interrupção para o evento que você quer avaliar.',
-        en: 'We use an interrupted time series to assess whether cold-wave periods change the level or trend of hospitalizations — a lighter design than DLNM, suited to questions about a specific event. Adjust the interruption date to the event you want to evaluate.',
-        es: 'Evaluamos con serie interrumpida si los períodos de ola de frío cambian el nivel o la tendencia de las internaciones. Ajuste la fecha de interrupción al evento que desea evaluar.',
+        pt: 'Avaliamos com série interrompida se os períodos de onda de frio mudam o nível ou a tendência das internações — um desenho mais leve que o DLNM, indicado para perguntas sobre um evento específico. A data "2013-07-23" é apenas um EXEMPLO de formato, não um evento real verificado — substitua pela data real do evento que você quer avaliar antes de interpretar os resultados. Atenção também ao padrão de outcome_col ("n_obitos"): SIH-RD conta internações, não óbitos, então confira o nome real da coluna produzida na agregação e informe outcome_col explicitamente se for diferente.',
+        en: 'We use an interrupted time series to assess whether cold-wave periods change the level or trend of hospitalizations — a lighter design than DLNM, suited to questions about a specific event. The date "2013-07-23" is only a placeholder EXAMPLE of the expected format, not a verified real event — replace it with the actual event date you want to evaluate before interpreting any results. Also note the outcome_col default ("n_obitos"): SIH-RD counts hospitalizations, not deaths, so check the actual column name your aggregation step produced and set outcome_col explicitly if it differs.',
+        es: 'Evaluamos con serie interrumpida si los períodos de ola de frío cambian el nivel o la tendencia de las internaciones. La fecha "2013-07-23" es solo un EJEMPLO de formato, no un evento real verificado — reemplácela por la fecha real del evento que desea evaluar antes de interpretar los resultados. Atención también al valor por defecto de outcome_col ("n_obitos"): SIH-RD cuenta internaciones, no óbitos, verifique el nombre real de columna producido y configure outcome_col explícitamente si es diferente.',
       },
     },
   ],
