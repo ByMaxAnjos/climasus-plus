@@ -1,14 +1,18 @@
 import type { Lang } from '../store/pipeline'
 
 export interface TutorialStepDef {
+  id?: string
   fn: string
   values: Record<string, string>
   explain: Record<Lang, string>
 }
 
+export type TemplateAudience = 'vigilancia' | 'pesquisa' | 'both'
+
 export interface TutorialDef {
   id: string
   title: Record<Lang, string>
+  audience?: TemplateAudience
   steps: TutorialStepDef[]
 }
 

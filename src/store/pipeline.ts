@@ -334,7 +334,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   },
   startTutorial: (tutorial) => {
     pushHistory(get, set)
-    const steps: Step[] = tutorial.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
+    const steps: Step[] = tutorial.steps.map((s) => ({ id: s.id ?? uid(), fn: s.fn, values: { ...s.values } }))
     const first = steps[0]
     set({
       steps,
