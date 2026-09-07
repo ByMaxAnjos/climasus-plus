@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { byName, pipeArg, stageColor, friendlyName, friendlyDescription, friendlyArgDoc, type ArgSpec, type FnSpec } from '../catalog'
+import { enumOptionLabel, nullDefaultHint } from '../catalog/enum-options'
 import { usePipeline, stepRef, isStepRef, stepRefId, type Step, type UsageMode } from '../store/pipeline'
 import { t, tp } from '../i18n'
 
@@ -37,7 +38,17 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
   priorSteps: PriorStepOption[]
   autoDefault?: boolean
 }) {
-  const hint = arg.default != null ? `${t('defaultHint', lang)}: ${arg.default}` : ''
+  // when the default is NULL, "Usando padrão: NULL" means nothing to a non-technical user —
+  // surface what NULL actually does for this specific parameter (from the doc text that already
+  // exists) whenever it's phrased in an extractable way, instead of the bare literal
+  const nullHint = arg.default === 'NULL' ? nullDefaultHint(arg.doc) : null
+  // R's match.arg() idiom (`type = c("overall", "lag", ...)`) makes the FULL vector the
+  // signature default, but the effective default is always its first element — showing the
+  // whole vector ("Usando padrão: c("overall", "lag", "surface", ...)") is exactly the kind of
+  // technical noise this is meant to avoid
+  const enumDefault = arg.type === 'enum' && arg.options.length > 0 ? arg.options[0] : null
+  const defaultDisplay = enumDefault != null ? enumOptionLabel(fnName, arg.name, arg.doc, enumDefault) : (nullHint ?? arg.default)
+  const hint = arg.default != null ? `${t('defaultHint', lang)}: ${defaultDisplay}` : ''
   // an auto-piped first arg is never "missing" — it's always filled from the previous step
   // (or an explicit stepRef override) by the time the pipeline actually runs
   const missingRequired = arg.required && !value.trim() && !autoDefault
@@ -66,7 +77,7 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
       ) : autoDefault ? null /* typing here would be silently dropped (stepArgs skips the first arg when chained) — nothing to show but the hint below */ : arg.type === 'enum' ? (
         <select className="input" value={value} onChange={(e) => onChange(e.target.value)}>
           <option value="">{hint || '—'}</option>
-          {arg.options.map((o) => <option key={o} value={o}>{o}</option>)}
+          {arg.options.map((o) => <option key={o} value={o}>{enumOptionLabel(fnName, arg.name, arg.doc, o)}</option>)}
         </select>
       ) : arg.type === 'boolean' ? (
         <select className="input" value={value} onChange={(e) => onChange(e.target.value)}>
@@ -92,7 +103,7 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
       ) : autoDefault && !refId ? (
         <p className="arg-note">↳ {t('autoFromPrevious', lang)}</p>
       ) : defaultActive ? (
-        <p className="arg-note">{tp('usingDefault', lang, { value: String(arg.default) })}</p>
+        <p className="arg-note">{tp('usingDefault', lang, { value: String(defaultDisplay) })}</p>
       ) : issue ? (
         <p className="arg-note arg-note-required">{issue}</p>
       ) : null}

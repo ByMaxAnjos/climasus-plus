@@ -108,9 +108,21 @@ function parseRoxygen(rox) {
   return { title: title.trim(), description, params }
 }
 
+// the common R `match.arg()` idiom: `type = c("overall", "lag", "surface", ...)` in the
+// signature IS the enum's real option list — a much more reliable signal than scraping quoted
+// strings out of the roxygen doc paragraph (which misses any function whose per-option
+// descriptions live in a separate @section, e.g. sus_mod_plot_dlnm's `type`/`@section Plot
+// types`). Only used as a fallback when the doc-text scrape didn't already find 2+ options.
+function parseSignatureEnum(def) {
+  if (def === undefined) return null
+  const m = def.match(/^c\(\s*("(?:[^"\\]|\\.)*"(?:\s*,\s*"(?:[^"\\]|\\.)*")+)\s*\)$/)
+  if (!m) return null
+  return [...m[1].matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((x) => x[1])
+}
+
 function inferType(def, options) {
   if (def === 'TRUE' || def === 'FALSE') return 'boolean'
-  if (options.length > 1) return 'enum'
+  if (options.length > 1 || parseSignatureEnum(def)) return 'enum'
   if (def !== undefined && /^-?[\d.]+$/.test(def)) return 'number'
   return 'text'
 }
@@ -134,6 +146,11 @@ const FORCE_TEXT = new Set([
   'sus_mod_casecrossover.stratum', 'sus_mod_dlnm.outcome_col', 'sus_mod_its.covariates',
   'sus_mod_spatial_bayes.outcome', 'sus_mod_spatial_moran.outcome',
   'sus_data_plot_aggregate_ts.group_col',
+  // a multi-value join-key VECTOR (default `c("code_muni", "date")`, and the doc explicitly
+  // documents overriding it to `c("code_muni")` alone) — not a single exclusive choice among
+  // "code_muni"/"date", which is what the new signature-vector enum heuristic below would
+  // otherwise conclude from the same c("...", "...") shape a real match.arg() enum has
+  'sus_grid_join.by',
 ])
 
 // args that expect an object produced by an EARLIER pipeline step (sf boundary, climasus_df,
@@ -174,7 +191,7 @@ for (const f of readdirSync(RDIR).filter((f) => f.endsWith('.R'))) {
         default: def ?? null,
         required: eq === -1 && pname !== '...',
         type: forced ?? inferType(def, doc.options),
-        options: forced ? [] : doc.options,
+        options: forced ? [] : (doc.options.length > 1 ? doc.options : (parseSignatureEnum(def) ?? doc.options)),
         doc: doc.doc,
       }
     }).filter((a) => a.name !== '...')
