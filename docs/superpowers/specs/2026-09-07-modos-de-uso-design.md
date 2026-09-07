@@ -31,6 +31,12 @@ filtro. O modo só afeta o que é escondido/simplificado por padrão para Vigil�
 - `src/templates/index.ts` exporta `TEMPLATES: TutorialDef[]` (substitui o `TUTORIALS` atual).
 - UI: botão do topo (`Tutorial guiado` → `Templates` quando há mais de 1) abre uma lista
   filtrada por `audience` vs. `mode` atual, reaproveitando `TutorialOverlay.tsx`.
+- `TutorialStepDef` ganha um campo opcional `id?: string`. `startTutorial` usa `s.id ?? uid()`
+  em vez de sempre gerar um novo id — necessário para que um passo de junção (ex.:
+  `sus_climate_aggregate`, `sus_grid_join`) possa referenciar, via `stepRef('<id-do-template>')`
+  no seu `values`, um passo anterior específico do mesmo template (ver item 4, correção do
+  primeiro argumento). Templates que não precisam de referências cruzadas não precisam definir
+  `id` em nenhum passo (fallback `uid()` idêntico ao comportamento atual).
 
 ### 2. Linguagem simplificada
 
@@ -43,13 +49,39 @@ filtro. O modo só afeta o que é escondido/simplificado por padrão para Vigil�
 
 ### 3. Ocultar parâmetros avançados
 
-- Novo overlay `src/catalog/advanced-args.ts`: `ADVANCED_ARGS: Record<fnName, string[]>`,
-  curado só para as funções dos 4 templates.
-- Store: `showAdvanced: boolean` (persistido por projeto, mesmo padrão de `mode`/`lang`) +
-  `toggleShowAdvanced()`.
-- `Inspector.tsx`: quando `mode === 'vigilancia' && !showAdvanced`, filtra os args listados em
-  `ADVANCED_ARGS[fn.name]` e mostra um link "Mostrar N parâmetros avançados". Função sem entrada
-  em `ADVANCED_ARGS` não tem nada escondido, em nenhum modo.
+**Descoberta durante o design**: `Inspector.tsx` já dobra args não-essenciais numa seção
+"avançado" recolhida por padrão (`<details className="advanced-params">`), para **qualquer**
+função com mais de 5 argumentos, independente de modo — confirmado ao vivo com
+`sus_climate_compute_indicators` (15 args: só 4 visíveis por padrão, 11 recolhidos). Não é
+preciso nenhum overlay de curadoria novo. Único ajuste: no modo Pesquisa, essa seção some
+aberta por padrão (pesquisador quer ver tudo de cara); em Vigilância mantém o recolhido atual.
+- `Inspector.tsx`: `<details className="advanced-params" open={mode === 'pesquisa'}>`.
+
+### 4. Correção pré-requisito: primeiro argumento sobrescrevível
+
+**Bug descoberto durante o design, bloqueia os templates de dengue/respiratório/cardio**: o
+primeiro argumento de qualquer função é sempre auto-preenchido a partir do passo imediatamente
+anterior na lista (`autoArg` em `Inspector.tsx`, sem opção de sobrescrever) e `buildSteps`
+(`src/store/pipeline.ts`) sempre usa `openVar` (o var do passo imediatamente anterior) como
+esse valor. Isso é semanticamente errado para funções que combinam duas trilhas de dados (ex.:
+`sus_climate_aggregate(health_data, climate_data)`, `sus_grid_join(health_data, grid_data)`)
+quando não são o primeiro passo do pipeline — confirmado ao vivo: uma sequência
+`sus_climate_inmet()` → `sus_climate_aggregate()` gera `clima <- sus_climate_inmet() |>
+sus_climate_aggregate()`, ligando os dados de clima ao parâmetro `health_data` (errado) e nunca
+referenciando a série de saúde. Isso não é causado pela feature de modos — afeta qualquer
+pipeline manual com esse padrão hoje.
+
+**Correção, pequena e cirúrgica:**
+- `src/store/pipeline.ts` `buildSteps`: antes de decidir `hasInput`/`input` a partir de
+  `openVar`, verificar se `step.values[fn.args[0].name]` já é uma step-ref explícita
+  (`isStepRef`); se for, usar o var do passo referenciado (via `varByStepId`) no lugar de
+  `openVar`, e tratar como um "family change" (novo bloco, `chains: false`) mesmo que a família
+  bata com o bloco aberto atual.
+- `src/ui/Inspector.tsx`: o primeiro argumento auto-preenchido (`autoArg`) passa a ser
+  renderizado como `ArgField` (com o mesmo seletor de step-reference que os outros argumentos de
+  dado já usam), não mais como o atual `AutoArgField` sem opção de escolha. Quando vazio, mostra
+  o mesmo hint "↳ vem do passo anterior" que hoje aparece sempre; ao escolher um passo no
+  seletor, grava a step-ref normalmente. `AutoArgField` é removido (código morto após a troca).
 
 ## Casos-limite
 
