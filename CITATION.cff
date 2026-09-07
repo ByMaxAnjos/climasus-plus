@@ -11,7 +11,7 @@ authors:
     family-names: Anjos
     email: max.anjos@ufrn.br
     orcid: "https://orcid.org/0000-0001-6394-1324"
-version: 1.0.3
+version: 1.0.4
 date-released: "2026-09-07"
 license: MIT
 repository-code: "https://github.com/ByMaxAnjos/climasus-plus"

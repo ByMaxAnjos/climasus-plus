@@ -20,10 +20,10 @@ Esse tutorial usa uma base leve incluída no aplicativo, então serve para testa
 
 | Sistema | Download |
 |---|---|
-| **macOS** (Apple Silicon) | [climasus+.Studio_1.0.3_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.3/climasus%2B.Studio_1.0.3_aarch64.dmg) |
-| **Windows** (x64) | [climasus+.Studio_1.0.3_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.3/climasus%2B.Studio_1.0.3_x64-setup.exe) |
-| **Linux** (x64, deb) | [climasus+.Studio_1.0.3_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.3/climasus%2B.Studio_1.0.3_amd64.deb) |
-| **Linux** (x64, AppImage) | [climasus+.Studio_1.0.3_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.3/climasus%2B.Studio_1.0.3_amd64.AppImage) |
+| **macOS** (Apple Silicon) | [climasus+.Studio_1.0.4_aarch64.dmg](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.4/climasus%2B.Studio_1.0.4_aarch64.dmg) |
+| **Windows** (x64) | [climasus+.Studio_1.0.4_x64-setup.exe](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.4/climasus%2B.Studio_1.0.4_x64-setup.exe) |
+| **Linux** (x64, deb) | [climasus+.Studio_1.0.4_amd64.deb](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.4/climasus%2B.Studio_1.0.4_amd64.deb) |
+| **Linux** (x64, AppImage) | [climasus+.Studio_1.0.4_amd64.AppImage](https://github.com/ByMaxAnjos/climasus-plus/releases/download/v1.0.4/climasus%2B.Studio_1.0.4_amd64.AppImage) |
 
 Todas as versões em [Releases](https://github.com/ByMaxAnjos/climasus-plus/releases).
 
@@ -60,7 +60,7 @@ O climasus+ Studio é parte do ecossistema climaSUS e do Centro de Clima de Saú
 
 Se usar o climasus+ Studio em pesquisa, ensino, relatórios técnicos ou materiais institucionais, cite o software. Os metadados completos estão em [`CITATION.cff`](CITATION.cff).
 
-> Anjos, M. (2026). *climasus+ Studio* (v1.0.3) [Software]. GitHub. https://github.com/ByMaxAnjos/climasus-plus
+> Anjos, M. (2026). *climasus+ Studio* (v1.0.4) [Software]. GitHub. https://github.com/ByMaxAnjos/climasus-plus
 
 BibTeX:
 
@@ -68,7 +68,7 @@ BibTeX:
 @software{anjos_2026_climasus_studio,
   author = {Anjos, Max},
   title = {climasus+ Studio},
-  version = {1.0.3},
+  version = {1.0.4},
   date = {2026-09-07},
   url = {https://github.com/ByMaxAnjos/climasus-plus},
   license = {MIT}
