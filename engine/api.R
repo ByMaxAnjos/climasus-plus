@@ -36,6 +36,23 @@ strip_ansi <- function(x) {
   if (requireNamespace("cli", quietly = TRUE)) cli::ansi_strip(x) else x
 }
 
+# print(obj) text, robust to print methods built on cli (cli_h1/cli_alert_*/...), which emit
+# via message() conditions rather than cat() to stdout — a bare capture.output(print(obj))
+# silently returns "" for those (confirmed with climasus_quality_report's print method).
+capture_print <- function(obj) {
+  tryCatch({
+    msgs <- character(0)
+    out <- withCallingHandlers(
+      utils::capture.output(print(obj)),
+      message = function(m) {
+        msgs <<- c(msgs, strip_ansi(conditionMessage(m)))
+        invokeRestart("muffleMessage")
+      }
+    )
+    substr(strip_ansi(paste(c(out, msgs), collapse = "")), 1, 8000)
+  }, error = function(e) "")
+}
+
 # generic leaflet widget for any climasus_sf attribute carrying fill_var (continuous, e.g.
 # sus_data_plot_aggregate_map's bubble/choropleth) or fill_class (discrete, quantile_choropleth) —
 # ggplotly() can't render this data's ggplot (coord_sf/geom_sf), so build directly from the sf data
@@ -131,6 +148,16 @@ table_preview <- function(obj, n = 100) {
 classify <- function(obj, var, idx) {
   if (is.null(obj)) return(list(kind = "object", class = "NULL", print = ""))
 
+  # sus_mod_plot_*(output_type = "all") returns a plain, unclassed list like
+  # list(plot = <ggplot/htmlwidget>, table = <gt_tbl>, data = ...) — no S3 class of its own, so it
+  # would otherwise fall through every branch below to the generic "object" dump. Recurse into
+  # its plot (the richest element) so "all" renders the same as "plot" instead of a bare printout;
+  # the table is still reachable by picking output_type = "table" on the same step.
+  if (is.list(obj) && !is.data.frame(obj) && !inherits(obj, "ggplot") && !inherits(obj, "htmlwidget") &&
+      !is.null(obj$plot) && (inherits(obj$plot, "ggplot") || inherits(obj$plot, "htmlwidget"))) {
+    return(classify(obj$plot, var, idx))
+  }
+
   if (inherits(obj, "ggplot")) {
     png_rel <- sprintf("step%d_%s.png", idx, var)
     svg_rel <- sprintf("step%d_%s.svg", idx, var)
@@ -191,8 +218,7 @@ classify <- function(obj, var, idx) {
       TRUE
     }, error = function(e) FALSE)
     if (ok) {
-      txt <- tryCatch(paste(utils::capture.output(print(obj)), collapse = "\n"), error = function(e) "")
-      return(list(kind = "raster", class = "SpatRaster", artifacts = list(tif = tif_rel), print = substr(strip_ansi(txt), 1, 8000)))
+      return(list(kind = "raster", class = "SpatRaster", artifacts = list(tif = tif_rel), print = capture_print(obj)))
     }
   }
 
@@ -227,6 +253,27 @@ classify <- function(obj, var, idx) {
     return(list(kind = "widget", class = class(obj)[1], artifacts = artifacts))
   }
 
+  # gt tables (e.g. sus_data_quality_report(output_format = "gt")) — render to a
+  # self-contained HTML artifact and reuse the same widget/iframe rendering as htmlwidgets.
+  if (inherits(obj, "gt_tbl") && requireNamespace("gt", quietly = TRUE)) {
+    html_rel <- sprintf("step%d_%s.html", idx, var)
+    ok <- tryCatch({
+      gt::gtsave(obj, file.path(ARTIFACT_DIR, html_rel), inline_css = TRUE)
+      TRUE
+    }, error = function(e) FALSE)
+    if (ok) return(list(kind = "widget", class = "gt_tbl", artifacts = list(html = html_rel)))
+  }
+
+  # sus_data_ts_quality()'s flagged-station/period table is the actionable payload — show it
+  # as a real table instead of the cli-formatted print() dump the generic fallback would give.
+  if (inherits(obj, "climasus_ts_quality") && is.data.frame(obj$flags)) {
+    prev <- table_preview(obj$flags)
+    if (!is.null(prev)) {
+      return(list(kind = "table", class = "climasus_ts_quality",
+                  dims = list(nrow = prev$nrow, ncol = prev$ncol), preview = prev))
+    }
+  }
+
   if (is_tabular(obj)) {
     prev <- table_preview(obj)
     if (!is.null(prev)) {
@@ -244,8 +291,7 @@ classify <- function(obj, var, idx) {
     }
   }
 
-  txt <- tryCatch(paste(utils::capture.output(print(obj)), collapse = "\n"), error = function(e) "")
-  list(kind = "object", class = class(obj)[1], print = substr(strip_ansi(txt), 1, 8000))
+  list(kind = "object", class = class(obj)[1], print = capture_print(obj))
 }
 
 #* @filter cors
