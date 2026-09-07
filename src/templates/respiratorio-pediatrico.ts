@@ -47,7 +47,7 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
     {
       id: 'resp-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'month' },
+      values: { time_unit: 'month', group_by: 'codigo_municipio_residencia' },
       explain: {
         pt: 'Agregamos a série por mês.',
         en: 'We aggregate the series by month.',

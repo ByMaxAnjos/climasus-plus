@@ -59,7 +59,7 @@ export const DENGUE_CLIMA: TutorialDef = {
     {
       id: 'dengue-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'week' },
+      values: { time_unit: 'week', group_by: 'codigo_municipio_residencia' },
       explain: {
         pt: 'Agregamos a série por semana — a unidade certa para dengue, mais fina que os meses usados no recorte respiratório.',
         en: 'We aggregate the series by week — the right unit for dengue, finer than the months used in the respiratory case study.',

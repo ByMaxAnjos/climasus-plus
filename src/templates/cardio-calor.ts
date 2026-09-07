@@ -43,7 +43,7 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
     {
       id: 'cardio-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'day' },
+      values: { time_unit: 'day', group_by: 'codigo_municipio_residencia' },
       explain: {
         pt: 'Agregamos por dia — o efeito do calor sobre óbito cardiovascular agudo é quase imediato.',
         en: 'We aggregate by day — the effect of heat on acute cardiovascular death is nearly immediate.',

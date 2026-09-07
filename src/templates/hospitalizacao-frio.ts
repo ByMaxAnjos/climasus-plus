@@ -39,7 +39,7 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
     {
       id: 'frio-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'day' },
+      values: { time_unit: 'day', group_by: 'codigo_municipio_residencia' },
       explain: {
         pt: 'Agregamos por dia.',
         en: 'We aggregate by day.',
