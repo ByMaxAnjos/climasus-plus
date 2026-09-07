@@ -92,20 +92,36 @@ export const DENGUE_CLIMA: TutorialDef = {
     },
     {
       fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('dengue-spatial'), climate_data: stepRef('dengue-inmet'), time_unit: 'week' },
+      // temporal_strategy='distributed_lag' is what creates the tair_dry_bulb_c_lag0..N columns
+      // that sus_mod_dlnm requires (it aborts without them). lag_days is the max lag, in DAYS
+      // (the join shifts the climate calendar by `date + l`), and climate_var is pinned to a
+      // single variable so sus_mod_dlnm's climate_col auto-detection has no ambiguity.
+      // time_unit is deliberately left unset (default "day"): it only controls the CLIMATE
+      // pre-aggregation, and daily climate rows are what make every integer lag find a match
+      // against the weekly health date — flooring the climate to weeks would leave the
+      // non-multiple-of-7 lag columns all-NA, which empties the model frame downstream.
+      values: {
+        health_data: stepRef('dengue-spatial'),
+        climate_data: stepRef('dengue-inmet'),
+        climate_var: 'tair_dry_bulb_c',
+        temporal_strategy: 'distributed_lag',
+        lag_days: '28',
+      },
       explain: {
-        pt: 'Cruzamos saúde e clima, agregados por semana.',
-        en: 'We cross health and climate data, aggregated by week.',
-        es: 'Cruzamos salud y clima, agregados por semana.',
+        pt: 'Cruzamos saúde e clima criando as colunas de defasagem (temperatura de 0 a 28 dias antes de cada semana) que o DLNM precisa. A janela de 28 dias é um valor ILUSTRATIVO, plausível para o ciclo do vetor, não um parâmetro calibrado na literatura — ajuste-o para a sua pergunta.',
+        en: 'We cross health and climate data, creating the lag columns (temperature from 0 to 28 days before each week) that DLNM needs. The 28-day window is an ILLUSTRATIVE value, plausible for the vector cycle, not a literature-calibrated parameter — adjust it for your question.',
+        es: 'Cruzamos salud y clima creando las columnas de rezago (temperatura de 0 a 28 días antes de cada semana) que el DLNM necesita. La ventana de 28 días es un valor ILUSTRATIVO, no un parámetro calibrado en la literatura — ajústelo a su pregunta.',
       },
     },
     {
       fn: 'sus_mod_dlnm',
-      values: {},
+      // SINAN-DENGUE counts cases, so sus_data_aggregate names the outcome column "n_casos"
+      // (get_smart_column_name, sus_data_aggregate.R:1984-2018), not the function default "n_obitos"
+      values: { outcome_col: 'n_casos' },
       explain: {
-        pt: 'Ajustamos o modelo DLNM: o risco de dengue sobe com o acúmulo de temperatura favorável ao vetor ao longo de várias semanas, não no mesmo dia — é essa defasagem que o DLNM captura. Atenção: o padrão de outcome_col ("n_obitos") pode não ser o nome real da coluna de casos gerada pela agregação (SINAN-DENGUE conta casos, não óbitos) — confira o nome da coluna produzida no passo de agregação e informe outcome_col explicitamente se for diferente.',
-        en: 'We fit the DLNM model: dengue risk rises with vector-favorable temperature accumulated over several weeks, not on the same day — this lag is what DLNM captures. Note: the outcome_col default ("n_obitos") may not match the actual case-count column produced by the aggregation step (SINAN-DENGUE counts cases, not deaths) — check the column name your aggregation step actually produced and set outcome_col explicitly if it differs.',
-        es: 'Ajustamos el modelo DLNM: el riesgo de dengue aumenta con la temperatura favorable al vector acumulada durante varias semanas. Atención: el valor por defecto de outcome_col ("n_obitos") puede no coincidir con la columna real de casos generada por la agregación (SINAN-DENGUE cuenta casos, no óbitos) — verifique el nombre de columna producido y configure outcome_col explícitamente si es diferente.',
+        pt: 'Ajustamos o modelo DLNM sobre a contagem de casos (n_casos): o risco de dengue sobe com o acúmulo de temperatura favorável ao vetor ao longo de várias semanas, não no mesmo dia — é essa defasagem que o DLNM captura.',
+        en: 'We fit the DLNM model over the case count (n_casos): dengue risk rises with vector-favorable temperature accumulated over several weeks, not on the same day — this lag is what DLNM captures.',
+        es: 'Ajustamos el modelo DLNM sobre el conteo de casos (n_casos): el riesgo de dengue aumenta con la temperatura favorable al vector acumulada durante varias semanas.',
       },
     },
     {

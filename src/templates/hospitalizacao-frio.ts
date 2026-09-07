@@ -69,16 +69,13 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       },
     },
     {
-      id: 'frio-merged',
-      fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('frio-spatial'), climate_data: stepRef('frio-inmet'), time_unit: 'day' },
-      explain: {
-        pt: 'Cruzamos a série diária de internações com a série diária de temperatura.',
-        en: 'We cross the daily hospitalization series with the daily temperature series.',
-        es: 'Cruzamos la serie diaria de internaciones con la serie diaria de temperatura.',
-      },
-    },
-    {
+      // cold-wave detection is a TERMINAL side-branch: it must read the raw INMET climate frame
+      // (sus_climate_compute_coldwaves aborts unless sus_meta(df,"type") is climate/inmet/filled/
+      // indicators — coldwaves.R:306-309) and it returns a climasus_cw list, not a climasus_df,
+      // so its output only feeds sus_climate_plot_coldwaves, never the model. It chains directly
+      // off frio-inmet (same `clima` family) and nothing downstream reads that variable again.
+      // There is deliberately NO sus_climate_aggregate step here: sus_mod_its takes no
+      // climate_col argument and needs no climate columns merged in (sus_mod_its.R:245-250).
       fn: 'sus_climate_compute_coldwaves',
       values: { method: 'WHO', percentile: '10' },
       explain: {
@@ -88,15 +85,28 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       },
     },
     {
+      fn: 'sus_climate_plot_coldwaves',
+      values: {},
+      explain: {
+        pt: 'Visualizamos os dias classificados como onda de frio.',
+        en: 'We visualize the days classified as cold waves.',
+        es: 'Visualizamos los días clasificados como ola de frío.',
+      },
+    },
+    {
       fn: 'sus_mod_its',
+      // `data` must point back at the health chain explicitly: the step immediately above is the
+      // cold-wave plot, so without this override the model would be wired onto the climate branch.
       // `interruption_dates` has no default and is required. This date is a placeholder EXAMPLE
       // only, not a verified real cold-wave event — it exists purely so the template loads without
       // a missing-argument error. Users must replace it with a real date before drawing conclusions.
-      values: { interruption_dates: '2013-07-23' },
+      // SIH-RD counts hospitalizations, so sus_data_aggregate names the outcome column
+      // "n_internacoes" (get_smart_column_name, sus_data_aggregate.R:1984-2018), not "n_obitos".
+      values: { data: stepRef('frio-spatial'), outcome_col: 'n_internacoes', interruption_dates: '2013-07-23' },
       explain: {
-        pt: 'Avaliamos com série interrompida se os períodos de onda de frio mudam o nível ou a tendência das internações — um desenho mais leve que o DLNM, indicado para perguntas sobre um evento específico. A data "2013-07-23" é apenas um EXEMPLO de formato, não um evento real verificado — substitua pela data real do evento que você quer avaliar antes de interpretar os resultados. Atenção também ao padrão de outcome_col ("n_obitos"): SIH-RD conta internações, não óbitos, então confira o nome real da coluna produzida na agregação e informe outcome_col explicitamente se for diferente.',
-        en: 'We use an interrupted time series to assess whether cold-wave periods change the level or trend of hospitalizations — a lighter design than DLNM, suited to questions about a specific event. The date "2013-07-23" is only a placeholder EXAMPLE of the expected format, not a verified real event — replace it with the actual event date you want to evaluate before interpreting any results. Also note the outcome_col default ("n_obitos"): SIH-RD counts hospitalizations, not deaths, so check the actual column name your aggregation step produced and set outcome_col explicitly if it differs.',
-        es: 'Evaluamos con serie interrumpida si los períodos de ola de frío cambian el nivel o la tendencia de las internaciones. La fecha "2013-07-23" es solo un EJEMPLO de formato, no un evento real verificado — reemplácela por la fecha real del evento que desea evaluar antes de interpretar los resultados. Atención también al valor por defecto de outcome_col ("n_obitos"): SIH-RD cuenta internaciones, no óbitos, verifique el nombre real de columna producido y configure outcome_col explícitamente si es diferente.',
+        pt: 'Avaliamos com série interrompida se os períodos de onda de frio mudam o nível ou a tendência das internações (n_internacoes) — um desenho mais leve que o DLNM, indicado para perguntas sobre um evento específico. A data "2013-07-23" é apenas um EXEMPLO de formato, não um evento real verificado — substitua pela data real do evento que você quer avaliar antes de interpretar os resultados.',
+        en: 'We use an interrupted time series to assess whether cold-wave periods change the level or trend of hospitalizations (n_internacoes) — a lighter design than DLNM, suited to questions about a specific event. The date "2013-07-23" is only a placeholder EXAMPLE of the expected format, not a verified real event — replace it with the actual event date you want to evaluate before interpreting any results.',
+        es: 'Evaluamos con serie interrumpida si los períodos de ola de frío cambian el nivel o la tendencia de las internaciones (n_internacoes). La fecha "2013-07-23" es solo un EJEMPLO de formato, no un evento real verificado — reemplácela por la fecha real del evento que desea evaluar antes de interpretar los resultados.',
       },
     },
   ],

@@ -71,22 +71,50 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       },
     },
     {
-      id: 'cardio-merged',
-      fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('cardio-spatial'), climate_data: stepRef('cardio-inmet'), time_unit: 'day' },
-      explain: {
-        pt: 'Cruzamos a série diária de óbitos com a série diária de temperatura.',
-        en: 'We cross the daily death series with the daily temperature series.',
-        es: 'Cruzamos la serie diaria de óbitos con la serie diaria de temperatura.',
-      },
-    },
-    {
+      // heatwave detection is a TERMINAL side-branch: it must read the raw INMET climate frame
+      // (sus_climate_compute_heatwaves aborts unless sus_meta(df,"type") is climate/inmet/filled/
+      // indicators — heatwaves.R:302-310) and it returns a climasus_hw list, not a climasus_df
+      // (heatwaves.R:361-363), so its output must never feed the model chain. Hence it sits
+      // BEFORE sus_climate_aggregate, and the explicit `df` stepRef is required: without it the
+      // step would continue the `clima` pipe in place and clobber the variable that
+      // cardio-merged's `climate_data` reference reads.
+      id: 'cardio-heatwave',
       fn: 'sus_climate_compute_heatwaves',
-      values: { method: 'WHO', percentile: '90' },
+      values: { df: stepRef('cardio-inmet'), method: 'WHO', percentile: '90' },
       explain: {
         pt: 'Detectamos ondas de calor com a metodologia da OMS, percentil 90 como limiar.',
         en: 'We detect heatwaves using the WHO methodology, 90th percentile as the threshold.',
         es: 'Detectamos olas de calor con la metodología de la OMS, percentil 90 como umbral.',
+      },
+    },
+    {
+      fn: 'sus_climate_plot_heatwaves',
+      values: {},
+      explain: {
+        pt: 'Visualizamos os dias classificados como onda de calor.',
+        en: 'We visualize the days classified as heatwaves.',
+        es: 'Visualizamos los días clasificados como ola de calor.',
+      },
+    },
+    {
+      id: 'cardio-merged',
+      fn: 'sus_climate_aggregate',
+      // temporal_strategy='distributed_lag' creates the tair_dry_bulb_c_lag0..N columns that
+      // sus_mod_dlnm requires (it aborts without them); climate_var is pinned to one variable so
+      // its climate_col auto-detection is unambiguous. lag_days is the max lag in DAYS — 21 days
+      // is the usual window in heat-mortality DLNM work, but treat it as an illustrative default.
+      values: {
+        health_data: stepRef('cardio-spatial'),
+        climate_data: stepRef('cardio-inmet'),
+        time_unit: 'day',
+        climate_var: 'tair_dry_bulb_c',
+        temporal_strategy: 'distributed_lag',
+        lag_days: '21',
+      },
+      explain: {
+        pt: 'Cruzamos a série diária de óbitos com a temperatura diária, criando as colunas de defasagem de 0 a 21 dias exigidas pelo DLNM. A janela de 21 dias é o valor usual em estudos de calor e mortalidade, mas aqui é um padrão ILUSTRATIVO — ajuste-o para a sua pergunta.',
+        en: 'We cross the daily death series with daily temperature, creating the 0-to-21-day lag columns DLNM requires. The 21-day window is the usual choice in heat-mortality studies, but here it is an ILLUSTRATIVE default — adjust it for your question.',
+        es: 'Cruzamos la serie diaria de óbitos con la temperatura diaria, creando las columnas de rezago de 0 a 21 días exigidas por el DLNM. La ventana de 21 días es un valor ILUSTRATIVO — ajústelo a su pregunta.',
       },
     },
     { fn: 'sus_mod_dlnm', values: {}, explain: {

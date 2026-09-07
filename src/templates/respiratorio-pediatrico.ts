@@ -76,11 +76,24 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
     },
     {
       fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('resp-spatial'), climate_data: stepRef('resp-inmet'), time_unit: 'month' },
+      // temporal_strategy='distributed_lag' creates the tair_dry_bulb_c_lag0..N columns that
+      // sus_mod_dlnm requires (it aborts without them); climate_var is pinned to one variable so
+      // its climate_col auto-detection is unambiguous. lag_days is in DAYS and is capped by
+      // sus_mod_dlnm's own `n_obs >= lag_max + 10` check: this series is monthly (60 months for
+      // 2015-2019), so lag_max must stay well under 50. time_unit is deliberately left unset
+      // (default "day") — it only floors the CLIMATE series, and daily climate rows are what let
+      // every integer lag match the monthly health date instead of producing all-NA lag columns.
+      values: {
+        health_data: stepRef('resp-spatial'),
+        climate_data: stepRef('resp-inmet'),
+        climate_var: 'tair_dry_bulb_c',
+        temporal_strategy: 'distributed_lag',
+        lag_days: '30',
+      },
       explain: {
-        pt: 'Cruzamos saúde e clima, agregados por mês.',
-        en: 'We cross health and climate data, aggregated by month.',
-        es: 'Cruzamos salud y clima, agregados por mes.',
+        pt: 'Cruzamos saúde e clima criando as colunas de defasagem (temperatura de 0 a 30 dias antes de cada mês) exigidas pelo DLNM. A janela de 30 dias é um valor ILUSTRATIVO, não um parâmetro calibrado na literatura — ajuste-o para a sua pergunta.',
+        en: 'We cross health and climate data, creating the lag columns (temperature from 0 to 30 days before each month) that DLNM requires. The 30-day window is an ILLUSTRATIVE value, not a literature-calibrated parameter — adjust it for your question.',
+        es: 'Cruzamos salud y clima creando las columnas de rezago (temperatura de 0 a 30 días antes de cada mes) exigidas por el DLNM. La ventana de 30 días es un valor ILUSTRATIVO — ajústelo a su pregunta.',
       },
     },
     { id: 'resp-dlnm', fn: 'sus_mod_dlnm', values: {}, explain: {
