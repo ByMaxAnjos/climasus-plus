@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { byName, pipeArg, stageColor, friendlyName, friendlyDescription, friendlyArgDoc, type ArgSpec, type FnSpec } from '../catalog'
-import { usePipeline, stepRef, isStepRef, stepRefId, type Step } from '../store/pipeline'
+import { usePipeline, stepRef, isStepRef, stepRefId, type Step, type UsageMode } from '../store/pipeline'
 import { t, tp } from '../i18n'
 
 export interface PriorStepOption {
@@ -93,13 +93,13 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
   )
 }
 
-function FnDoc({ fn, lang }: { fn: FnSpec; lang: 'pt' | 'en' | 'es' }) {
+function FnDoc({ fn, lang, mode }: { fn: FnSpec; lang: 'pt' | 'en' | 'es'; mode?: UsageMode | null }) {
   return (
     <section className="insp-doc-block">
       <div className="label insp-doc-label">{t('aboutFunction', lang)}</div>
-      <h3 className="insp-title" style={{ color: stageColor(fn.stage) }}>{friendlyName(fn, lang)}</h3>
+      <h3 className="insp-title" style={{ color: stageColor(fn.stage) }}>{friendlyName(fn, lang, mode)}</h3>
       <p className="insp-technical mono">{fn.name}()</p>
-      <p className="insp-desc">{friendlyDescription(fn, lang)}</p>
+      <p className="insp-desc">{friendlyDescription(fn, lang, mode)}</p>
     </section>
   )
 }
@@ -123,7 +123,7 @@ export default function Inspector() {
   const priorSteps: PriorStepOption[] = step
     ? steps.slice(0, stepIndex).flatMap((s, i) => {
         const sFn = byName.get(s.fn)
-        return sFn ? [{ id: s.id, label: `${i + 1}. ${friendlyName(sFn, lang)}` }] : []
+        return sFn ? [{ id: s.id, label: `${i + 1}. ${friendlyName(sFn, lang, mode)}` }] : []
       })
     : []
   const renderArg = (a: ArgSpec) => (
@@ -143,7 +143,7 @@ export default function Inspector() {
   return (
     <aside className="inspector glass">
       <div className="insp-scroll">
-        <FnDoc fn={fn} lang={lang} />
+        <FnDoc fn={fn} lang={lang} mode={mode} />
         {step && (
           <p className="insp-step-position">
             {tp('stepPosition', lang, { n: String(stepIndex + 1), total: String(steps.length) })}

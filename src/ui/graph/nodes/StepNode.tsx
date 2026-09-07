@@ -24,6 +24,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
   const focused = usePipeline((s) => s.tutorialStep != null && s.tutorialFocusId === step.id)
   const engineStatus = usePipeline((s) => s.engineStatus)
   const lang = usePipeline((s) => s.lang)
+  const mode = usePipeline((s) => s.mode)
   const select = usePipeline((s) => s.select)
   const removeStep = usePipeline((s) => s.removeStep)
   const moveStep = usePipeline((s) => s.moveStep)
@@ -65,7 +66,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
         <StatusDot state={run} />
         <div className="step-body">
           <span className="fn-name-friendly">
-            <span className="fn-name-text">{friendlyName(fn, lang)}</span>
+            <span className="fn-name-text">{friendlyName(fn, lang, mode)}</span>
             {run === 'running' && <span className="step-running-label">{t('running', lang)}</span>}
           </span>
           <span className="step-args mono">

@@ -1,7 +1,8 @@
 import raw from './functions.json'
 import { FRIENDLY } from './friendly'
+import { PLAIN_LANGUAGE } from './plain-language'
 import { ARG_DOCS } from './arg-docs'
-import type { Lang } from '../store/pipeline'
+import type { Lang, UsageMode } from '../store/pipeline'
 
 export type StageId = 'preparacao' | 'integracao' | 'modelagem'
 
@@ -57,9 +58,14 @@ export const stageColor = (id: StageId) => STAGES.find((s) => s.id === id)!.colo
 // plain-language overlay (src/catalog/friendly.ts) over the roxygen-derived title/description —
 // falls back to the technical text for any function not yet covered, so new sus_* functions
 // added by a future `build-catalog.mjs` run degrade gracefully instead of showing blank/undefined
-export const friendlyName = (fn: FnSpec, lang: Lang): string => FRIENDLY[fn.name]?.[lang]?.name ?? fn.title
-export const friendlyDescription = (fn: FnSpec, lang: Lang): string =>
-  FRIENDLY[fn.name]?.[lang]?.description ?? fn.description ?? fn.title
+export const friendlyName = (fn: FnSpec, lang: Lang, mode?: UsageMode | null): string => {
+  if (mode === 'vigilancia' && PLAIN_LANGUAGE[fn.name]) return PLAIN_LANGUAGE[fn.name].title[lang]
+  return FRIENDLY[fn.name]?.[lang]?.name ?? fn.title
+}
+export const friendlyDescription = (fn: FnSpec, lang: Lang, mode?: UsageMode | null): string => {
+  if (mode === 'vigilancia' && PLAIN_LANGUAGE[fn.name]) return PLAIN_LANGUAGE[fn.name].description[lang]
+  return FRIENDLY[fn.name]?.[lang]?.description ?? fn.description ?? fn.title
+}
 
 // per-parameter help overlay (src/catalog/arg-docs.ts) — falls back to the English roxygen
 // arg.doc for any function/param not yet translated, same graceful-degradation rule as above
