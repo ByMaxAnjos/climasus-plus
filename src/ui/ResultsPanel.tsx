@@ -7,7 +7,7 @@ import ResultActions from './result/ResultActions'
 import MethodWarningBanner from './result/MethodWarningBanner'
 
 export default function ResultsPanel() {
-  const { steps, selectedStep, stepResults, stepRun, lang, runError, validationIssues, engineIssue, engineStatus } = usePipeline()
+  const { steps, selectedStep, stepResults, stepRun, lang, mode, runError, validationIssues, engineIssue, engineStatus } = usePipeline()
   const [showConsole, setShowConsole] = useState(false)
 
   // show the selected step's result, else the last step that has one
@@ -39,7 +39,7 @@ export default function ResultsPanel() {
   return (
     <div className="results">
       <div className="results-head">
-        <span className="fn-name-friendly" title={fn.name}>{friendlyName(fn, lang)}</span>
+        <span className="fn-name-friendly" title={fn.name}>{friendlyName(fn, lang, mode)}</span>
         {result.ok && result.kind === 'table' && result.dims && (
           <span className="results-dims">
             {result.dims.nrow != null ? `${result.dims.nrow.toLocaleString()} × ${result.dims.ncol}` : `${result.dims.ncol} colunas`}

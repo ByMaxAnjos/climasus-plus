@@ -28,7 +28,7 @@ const STAGE_ICONS: Record<StageId, JSX.Element> = {
 }
 
 export default function Library() {
-  const { lang, inspectFn, inspect, addStep } = usePipeline()
+  const { lang, mode, inspectFn, inspect, addStep } = usePipeline()
   const [stage, setStage] = useState<StageId>('preparacao')
   const [query, setQuery] = useState('')
 
@@ -81,7 +81,7 @@ export default function Library() {
                 title={f.title}
               >
                 <span className="fn-friendly">
-                  <span className="fn-friendly-name">{friendlyName(f, lang)}</span>
+                  <span className="fn-friendly-name">{friendlyName(f, lang, mode)}</span>
                   <span className="mono fn-name">{f.name}</span>
                 </span>
                 <button
