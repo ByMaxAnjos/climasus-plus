@@ -129,7 +129,8 @@ export default function TopBar() {
                 setTemplatesOpen((o) => !o)
               }}
             >
-              <span className="btn-icon">{ICON.tutorial}</span>{t('guidedTutorial', lang)}
+              <span className="btn-icon">{ICON.tutorial}</span>
+              {applicableTemplates.length > 1 ? t('templatesButton', lang) : t('guidedTutorial', lang)}
             </button>
             {templatesOpen && applicableTemplates.length > 1 && (
               <div className="settings-menu glass">

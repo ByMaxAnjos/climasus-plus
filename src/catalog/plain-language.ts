@@ -64,6 +64,14 @@ export const PLAIN_LANGUAGE: Record<string, PlainEntry> = {
       es: 'Transforma registros individuales en un conteo por período (día, semana o mes).',
     },
   },
+  sus_spatial_join: {
+    title: { pt: 'Ligar ao mapa de municípios', en: 'Link to the municipality map', es: 'Vincular al mapa de municipios' },
+    description: {
+      pt: 'Localiza cada registro de saúde no mapa oficial dos municípios brasileiros, necessário antes de cruzar com dados de clima ou ambiente.',
+      en: 'Places each health record on the official map of Brazilian municipalities, required before merging with climate or environmental data.',
+      es: 'Ubica cada registro de salud en el mapa oficial de los municipios brasileños, necesario antes de cruzar con datos de clima o ambiente.',
+    },
+  },
   sus_climate_inmet: {
     title: { pt: 'Trazer dados de temperatura das estações', en: 'Bring in station temperature data', es: 'Traer datos de temperatura de las estaciones' },
     description: {
@@ -110,6 +118,22 @@ export const PLAIN_LANGUAGE: Record<string, PlainEntry> = {
       pt: 'Marca quais dias, na série de temperatura, contam como onda de frio, usando um critério padrão internacional.',
       en: 'Flags which days in the temperature series count as a cold wave, using a standard international criterion.',
       es: 'Marca qué días de la serie de temperatura cuentan como ola de frío.',
+    },
+  },
+  sus_climate_plot_heatwaves: {
+    title: { pt: 'Ver os dias de onda de calor no gráfico', en: 'See the heatwave days on a chart', es: 'Ver los días de ola de calor en el gráfico' },
+    description: {
+      pt: 'Mostra num gráfico quando as ondas de calor aconteceram e quanto tempo duraram.',
+      en: 'Shows on a chart when the heatwaves happened and how long they lasted.',
+      es: 'Muestra en un gráfico cuándo ocurrieron las olas de calor y cuánto duraron.',
+    },
+  },
+  sus_climate_plot_coldwaves: {
+    title: { pt: 'Ver os dias de onda de frio no gráfico', en: 'See the cold-wave days on a chart', es: 'Ver los días de ola de frío en el gráfico' },
+    description: {
+      pt: 'Mostra num gráfico quando as ondas de frio aconteceram e quanto tempo duraram.',
+      en: 'Shows on a chart when the cold waves happened and how long they lasted.',
+      es: 'Muestra en un gráfico cuándo ocurrieron las olas de frío y cuánto duraron.',
     },
   },
   sus_mod_dlnm: {

@@ -80,7 +80,12 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
           onChange={(e) => onChange(e.target.value)}
         />
       )}
-      {missingRequired ? (
+      {/* typed literal text in an auto-piped first arg is dropped by stepArgs' skipFirst — warn
+          instead of silently ignoring it. Must come before the autoDefault branch below, which
+          would otherwise swallow this case. */}
+      {autoDefault && !refId && value.trim() ? (
+        <p className="arg-note arg-note-required">{t('autoArgIgnoredWarning', lang)}</p>
+      ) : missingRequired ? (
         <p className="arg-note arg-note-required">{issue || t('requiredMissingHint', lang)}</p>
       ) : autoDefault && !refId ? (
         <p className="arg-note">↳ {t('autoFromPrevious', lang)}</p>

@@ -167,6 +167,11 @@ const dict: Dict = {
   autoFromPrevious: {
     pt: 'vem do passo anterior', en: 'comes from the previous step', es: 'viene del paso anterior',
   },
+  autoArgIgnoredWarning: {
+    pt: 'Este valor será ignorado — escolha um passo acima ou deixe em branco para usar o passo anterior automaticamente.',
+    en: 'This value will be ignored — pick a step above, or leave it blank to use the previous step automatically.',
+    es: 'Este valor será ignorado — elija un paso arriba o déjelo vacío para usar el paso anterior automáticamente.',
+  },
   loadTutorial: { pt: '🎓 Tutorial', en: '🎓 Tutorial', es: '🎓 Tutorial' },
   tutorialStepOf: { pt: 'Passo {n} de {total}', en: 'Step {n} of {total}', es: 'Paso {n} de {total}' },
   tutorialPrev: { pt: '← Anterior', en: '← Previous', es: '← Anterior' },
@@ -238,6 +243,7 @@ const dict: Dict = {
     es: 'Este template empieza desde un archivo preparado. Cargue el pipeline e informe el parámetro path, o use Importar datos en la barra superior para iniciar desde un archivo local.',
   },
   guidedTutorial: { pt: 'Tutorial guiado', en: 'Guided tutorial', es: 'Tutorial guiado' },
+  templatesButton: { pt: 'Templates', en: 'Templates', es: 'Templates' },
   close: { pt: 'Fechar', en: 'Close', es: 'Cerrar' },
   // Project file IO
   saveProject: { pt: 'Salvar projeto', en: 'Save project', es: 'Guardar proyecto' },
