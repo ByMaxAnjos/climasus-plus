@@ -105,7 +105,7 @@ function FnDoc({ fn, lang }: { fn: FnSpec; lang: 'pt' | 'en' | 'es' }) {
 }
 
 export default function Inspector() {
-  const { steps, selectedStep, inspectFn, lang, addStep, setValue, validationIssues } = usePipeline()
+  const { steps, selectedStep, inspectFn, lang, mode, addStep, setValue, validationIssues } = usePipeline()
   const stepIndex = steps.findIndex((s) => s.id === selectedStep)
   const step: Step | undefined = steps[stepIndex]
   const fn = step ? byName.get(step.fn) : inspectFn ? byName.get(inspectFn) : undefined
@@ -162,7 +162,7 @@ export default function Inspector() {
             </div>
             {visibleArgs.map(renderArg)}
             {advancedArgs.length > 0 && (
-              <details className="advanced-params">
+              <details className="advanced-params" open={mode === 'pesquisa'}>
                 <summary>
                   <span>{t('advancedParams', lang)}</span>
                   <span className="advanced-count">{advancedArgs.length}</span>
