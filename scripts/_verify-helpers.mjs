@@ -16,6 +16,12 @@ export function makeChecker() {
   return { check, summary }
 }
 
+// a fresh project (no steps, no mode chosen) auto-opens the usage-mode modal on mount; every
+// script drives the app from that same fresh state, so all of them need to dismiss it first
+export async function dismissModeSelector(page) {
+  if (await page.locator('.about-backdrop').count() > 0) await page.keyboard.press('Escape')
+}
+
 export async function waitForHealth(url, timeoutMs) {
   const deadline = Date.now() + timeoutMs
   while (Date.now() < deadline) {

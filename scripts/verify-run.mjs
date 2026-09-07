@@ -4,7 +4,7 @@
 import { chromium } from 'playwright'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { makeChecker, waitForHealth, spawnEngine } from './_verify-helpers.mjs'
+import { makeChecker, waitForHealth, spawnEngine, dismissModeSelector } from './_verify-helpers.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
 const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/climasus4r/inst/testdata'
@@ -84,6 +84,7 @@ try {
     await page.evaluate(() => localStorage.clear())
     await page.reload()
     await page.waitForSelector('.stage-tab')
+    await dismissModeSelector(page)
     await page.waitForSelector('.engine-ready', { timeout: 15000 })
     check('engine pill shows ready in UI', true)
 

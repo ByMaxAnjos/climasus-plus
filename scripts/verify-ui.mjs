@@ -1,6 +1,6 @@
 // e2e verification of the climasus+ Pipeline Studio (needs `npm run dev` on :1420)
 import { chromium } from 'playwright'
-import { makeChecker } from './_verify-helpers.mjs'
+import { makeChecker, dismissModeSelector } from './_verify-helpers.mjs'
 
 const URL = process.env.CLIMASUS_VERIFY_URL ?? 'http://localhost:1420/'
 const { check, summary } = makeChecker()
@@ -14,6 +14,7 @@ await page.goto(URL)
 await page.evaluate(() => localStorage.clear())
 await page.reload()
 await page.waitForSelector('.stage-tab')
+await dismissModeSelector(page)
 
 // 1. no welcome screen — studio renders directly
 check('studio renders, no welcome', await page.locator('.workspace').count() === 1)
@@ -69,10 +70,12 @@ await page.reload()
 await page.waitForSelector('.step-card')
 check('pipeline persists reload', await page.locator('.step-card').count() === 2)
 
-// 12. language switch
+// 12. language switch (lang + theme now live under the settings gear menu)
+await page.locator('.settings-toggle').click()
+await page.waitForSelector('.settings-menu')
 await page.locator('.lang-select').selectOption('en')
 const sub = await page.locator('.brand-sub').textContent()
-check('EN subtitle', sub === 'Health & climate analytics studio', sub ?? '')
+check('EN subtitle', sub === 'Studio module of the climaSUS ecosystem', sub ?? '')
 
 // 13. theme toggle
 await page.locator('.theme-toggle').click()
@@ -82,6 +85,9 @@ check('light theme attr', await page.evaluate(() => document.documentElement.dat
 await page.locator('.topbar-actions .btn', { hasText: 'Pipelines' }).click()
 await page.waitForSelector('.help-panel')
 check('pipeline center opens', await page.locator('.help-panel').count() === 1)
+// default tab is "recommended" (a curated subset) — search across every fn name (all start
+// with "sus_") to see the full catalog regardless of category
+await page.locator('.help-search').fill('sus')
 check('center lists many pipelines', await page.locator('.help-card').count() >= 10)
 check('climate aggregate pipeline present', await page.locator('.help-card', { hasText: 'sus_climate_aggregate' }).count() >= 1)
 // load a full case study to assert multi-step load
