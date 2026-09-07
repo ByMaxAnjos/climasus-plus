@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { usePipeline, type Lang } from '../store/pipeline'
 import { t } from '../i18n'
-import { RESPIRATORIO_SP } from '../tutorials/respiratorio'
+import { CASE_TEMPLATES } from '../templates'
 
 // topbar action icons — chosen from the icon-review artifact
 const ICON = {
@@ -52,6 +52,12 @@ const ICON = {
       <path d="M19.5 12a8 8 0 1 1-2.5-6.5L20 7" />
     </svg>
   ),
+  settings: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 3.5v2.1M12 18.4v2.1M4.9 6.4l1.5 1.5M17.6 16.1l1.5 1.5M3.5 12h2.1M18.4 12h2.1M4.9 17.6l1.5-1.5M17.6 7.9l1.5-1.5" />
+    </svg>
+  ),
 }
 
 // Ctrl/Cmd+Z undo, Ctrl/Cmd+Shift+Z redo — skipped while typing so native text-field undo still works
@@ -81,8 +87,13 @@ export default function TopBar() {
   }, [theme])
 
   useUndoRedoShortcut(undo, redo)
+  const [settingsOpen, setSettingsOpen] = useState(false)
+  const [templatesOpen, setTemplatesOpen] = useState(false)
 
   const canRun = engineStatus === 'ready' && steps.length > 0
+  const applicableTemplates = CASE_TEMPLATES.filter(
+    (tpl) => !tpl.audience || tpl.audience === 'both' || tpl.audience === mode,
+  )
   return (
     <header className="topbar">
       <div className="brand-block">
@@ -100,9 +111,39 @@ export default function TopBar() {
           <button className="btn btn-primary" disabled={!canRun} onClick={() => runPipeline()}>
             {engineStatus === 'busy' ? t('running', lang) : `▶ ${t('run', lang)}`}
           </button>
-          <button className="btn" onClick={() => startTutorial(RESPIRATORIO_SP)}>
-            <span className="btn-icon">{ICON.tutorial}</span>{t('guidedTutorial', lang)}
-          </button>
+          <div
+            className="settings-group"
+            tabIndex={-1}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setTemplatesOpen(false)
+            }}
+          >
+            <button
+              className="btn"
+              onClick={() => {
+                if (applicableTemplates.length <= 1) {
+                  if (applicableTemplates[0]) startTutorial(applicableTemplates[0])
+                  return
+                }
+                setTemplatesOpen((o) => !o)
+              }}
+            >
+              <span className="btn-icon">{ICON.tutorial}</span>{t('guidedTutorial', lang)}
+            </button>
+            {templatesOpen && applicableTemplates.length > 1 && (
+              <div className="settings-menu glass">
+                {applicableTemplates.map((tpl) => (
+                  <button
+                    key={tpl.id}
+                    className="btn settings-row"
+                    onClick={() => { startTutorial(tpl); setTemplatesOpen(false) }}
+                  >
+                    {tpl.title[lang]}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <button className="btn" onClick={openHelp}>
             <span className="btn-icon">{ICON.pipelines}</span>{t('help', lang)}
           </button>
@@ -128,27 +169,53 @@ export default function TopBar() {
           <button className="btn" onClick={startFromDataFile} title={t('openDataHint', lang)}>
             <span className="btn-icon">{ICON.importData}</span>{t('openData', lang)}
           </button>
-          <button className="btn" onClick={openAbout}>{t('about', lang)}</button>
         </div>
         <div className="topbar-group">
           <button className="btn mode-badge" onClick={openModeSelector}>
             {mode ? t(mode === 'vigilancia' ? 'modeVigilancia' : 'modePesquisa', lang) : t('chooseMode', lang)}
           </button>
         </div>
-        <div className="topbar-group topbar-group-compact">
-          <select
-            className="input lang-select"
-            value={lang}
-            onChange={(e) => setLang(e.target.value as Lang)}
-            aria-label="language"
+        <div
+          className="topbar-group settings-group"
+          tabIndex={-1}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setSettingsOpen(false)
+          }}
+        >
+          <button
+            className="btn settings-toggle"
+            aria-label={t('settings', lang)}
+            title={t('settings', lang)}
+            onClick={() => setSettingsOpen((o) => !o)}
           >
-            <option value="pt">PT</option>
-            <option value="en">EN</option>
-            <option value="es">ES</option>
-          </select>
-          <button className="btn theme-toggle" onClick={toggleTheme} aria-label="theme">
-            {theme === 'dark' ? '☀' : '☾'}
+            <span className="btn-icon">{ICON.settings}</span>
           </button>
+          {settingsOpen && (
+            <div className="settings-menu glass">
+              <label className="settings-row">
+                <span>{t('language', lang)}</span>
+                <select
+                  className="input lang-select"
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value as Lang)}
+                  aria-label="language"
+                >
+                  <option value="pt">PT</option>
+                  <option value="en">EN</option>
+                  <option value="es">ES</option>
+                </select>
+              </label>
+              <label className="settings-row">
+                <span>{t('theme', lang)}</span>
+                <button className="btn theme-toggle" onClick={toggleTheme} aria-label="theme">
+                  {theme === 'dark' ? '☀' : '☾'}
+                </button>
+              </label>
+              <button className="btn settings-row settings-about" onClick={() => { openAbout(); setSettingsOpen(false) }}>
+                {t('about', lang)}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </header>

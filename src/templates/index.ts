@@ -5,7 +5,7 @@ import { CARDIO_IDOSOS_CALOR } from './cardio-calor'
 import { HOSPITALIZACAO_FRIO } from './hospitalizacao-frio'
 import type { TutorialDef } from '../tutorials/respiratorio'
 
-export const TEMPLATES: TutorialDef[] = [
+export const CASE_TEMPLATES: TutorialDef[] = [
   RESPIRATORIO_SP,
   DENGUE_CLIMA,
   RESPIRATORIO_PEDIATRICO,
