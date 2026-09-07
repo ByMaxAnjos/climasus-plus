@@ -82,6 +82,9 @@ const dict: Dict = {
   removeStep: { pt: 'Remover passo', en: 'Remove step', es: 'Eliminar paso' },
   restartEngine: { pt: 'Reiniciar motor', en: 'Restart engine', es: 'Reiniciar motor' },
   chooseMode: { pt: 'Escolher modo', en: 'Choose mode', es: 'Elegir modo' },
+  settings: { pt: 'Configurações', en: 'Settings', es: 'Configuración' },
+  language: { pt: 'Idioma', en: 'Language', es: 'Idioma' },
+  theme: { pt: 'Tema', en: 'Theme', es: 'Tema' },
   modeVigilancia: { pt: 'Vigilância e gestão', en: 'Surveillance & management', es: 'Vigilancia y gestión' },
   modePesquisa: { pt: 'Pesquisa avançada', en: 'Advanced research', es: 'Investigación avanzada' },
   modeSelectorTitle: {
