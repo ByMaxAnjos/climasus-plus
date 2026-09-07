@@ -306,6 +306,23 @@
   color: var(--env-400);
   font-weight: 800;
 }
+.pipeline-empty-mode {
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+.pipeline-empty-terminal-warn {
+  width: fit-content;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--warn-500) 45%, var(--border));
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--warn-500) 10%, transparent);
+  font-size: 12.5px;
+  line-height: 1.5;
+  max-width: 460px;
+}
 .pipeline-empty-note {
   width: fit-content;
   margin: 0;

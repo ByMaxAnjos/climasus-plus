@@ -77,8 +77,8 @@ function useUndoRedoShortcut(undo: () => void, redo: () => void) {
 
 export default function TopBar() {
   const {
-    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, stepResults, runPipeline,
-    openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial, exportReport,
+    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
+    openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
     undo, redo, past, future, mode, openModeSelector,
   } = usePipeline()
 
@@ -91,7 +91,6 @@ export default function TopBar() {
   const [templatesOpen, setTemplatesOpen] = useState(false)
 
   const canRun = engineStatus === 'ready' && steps.length > 0
-  const canExportReport = engineStatus === 'ready' && Object.keys(stepResults).length > 0
   const applicableTemplates = CASE_TEMPLATES.filter(
     (tpl) => !tpl.audience || tpl.audience === 'both' || tpl.audience === mode,
   )
@@ -165,9 +164,6 @@ export default function TopBar() {
           </button>
           <button className="btn" onClick={openProject} title={t('openProjectHint', lang)}>
             <span className="btn-icon">{ICON.open}</span>{t('openProject', lang)}
-          </button>
-          <button className="btn" disabled={!canExportReport} onClick={exportReport} title={t('reportHint', lang)}>
-            {t('report', lang)}
           </button>
         </div>
         <div className="topbar-group">

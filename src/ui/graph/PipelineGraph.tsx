@@ -13,7 +13,7 @@ import TutorialOverlay from './TutorialOverlay'
 const nodeTypes: NodeTypes = { step: StepNode }
 
 function GraphInner() {
-  const { steps, lang, stepResults, tutorialFocusId } = usePipeline()
+  const { steps, lang, stepResults, tutorialFocusId, mode, openModeSelector } = usePipeline()
   const { nodes, edges } = useMemo(() => layoutSteps(steps), [steps])
   const { fitView, setCenter, getNode } = useReactFlow()
   const updateNodeInternals = useUpdateNodeInternals()
@@ -60,6 +60,12 @@ function GraphInner() {
           <li>{t('emptyPipelineRun', lang)}</li>
         </ol>
         <p className="pipeline-empty-note">{t('emptyPipelineTutorial', lang)}</p>
+        {mode === null && (
+          <button type="button" className="pipeline-empty-note pipeline-empty-mode" onClick={openModeSelector}>
+            {t('emptyPipelineChooseMode', lang)}
+          </button>
+        )}
+        <p className="pipeline-empty-terminal-warn">{t('emptyPipelineKeepTerminal', lang)}</p>
       </div>
     )
   }

@@ -122,7 +122,7 @@ try {
 
     const [reportDownload] = await Promise.all([
       page.waitForEvent('download'),
-      page.locator('.topbar-actions button', { hasText: 'Relatório' }).click(),
+      page.locator('.results-head button', { hasText: 'Relatório' }).click(),
     ])
     check('HTML report download triggered from UI', !!reportDownload)
 
