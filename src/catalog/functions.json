@@ -1,10 +1,221 @@
 [
  {
+  "name": "sus_census_join",
+  "stage": "integracao",
+  "family": "censo",
+  "title": "Add Census Socioeconomic variables to Health Data",
+  "description": "Enriches health data with socioeconomic indicators from Brazilian Census using\nthe `censobr` package. Provides aggregation of microdata to municipality level. Supports multiple census datasets (population, households,\nfamilies, mortality, emigration) with intelligent caching and optimized performance for large datasets using Arrow/Parquet format.",
+  "args": [
+   {
+    "name": "df",
+    "default": null,
+    "required": true,
+    "type": "text",
+    "options": [],
+    "doc": "A `data.frame` or `sf` object containing health data. Typically the output from `sus_spatial_join()` function."
+   },
+   {
+    "name": "dataset",
+    "default": "\"population\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "population",
+     "households",
+     "families",
+     "mortality",
+     "emigration",
+     "tracts"
+    ],
+    "doc": "Character string specifying the census dataset to use. Options:\n  \\itemize{\n    \\item `\"population\"` - Population microdata (default)\n    \\item `\"households\"` - Household microdata\n    \\item `\"families\"` - Family microdata\n    \\item `\"mortality\"` - Mortality microdata\n    \\item `\"emigration\"` - Emigration microdata\n    \\item `\"tracts\"` - Census tract aggregate data (setores censitarios).\n      Use"
+   },
+   {
+    "name": "tracts_dataset",
+    "default": "\"Basico\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "Basico",
+     "Domicilio01",
+     "Domicilio02",
+     "DomicilioRenda",
+     "Pessoa01",
+     "Pessoa13",
+     "ResponsavelRenda",
+     "ResponsavelRendaSexo"
+    ],
+    "doc": "Character string. Relevant only when `dataset = \"tracts\"`.\n  Selects which censobr tract table to download. Options: `\"Basico\"` (default),\n  `\"Domicilio01\"`, `\"Domicilio02\"`, `\"DomicilioRenda\"`,\n  `\"Pessoa01\"` through `\"Pessoa13\"`,\n  `\"ResponsavelRenda\"`, `\"ResponsavelRendaSexo\"`.\n  See `censobr::read_tracts()` for full variable listings per table."
+   },
+   {
+    "name": "year",
+    "default": "2010",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Integer specifying census year. Options: `2010` (default) or `2000`.\n  Note: Dataset availability varies by year."
+   },
+   {
+    "name": "census_vars",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character vector specifying census variables to add. Use `sus_census_select()` to select available variables.\n  If `NULL`, returns all available variables (not recommended for large datasets)."
+   },
+   {
+    "name": "aggregation_fun",
+    "default": "\"sum\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "sum",
+     "mean",
+     "median",
+     "min",
+     "max",
+     "sd",
+     "q25",
+     "q75",
+     "q95",
+     "q99"
+    ],
+    "doc": "Character. Method to aggregate microdata to municipality level:\n  \\itemize{\n    \\item `\"sum\"` - Sums the selected variables by municipality (e.g., for total population).\n    \\item `\"mean\"` - Averages the selected variables (e.g., for income).\n    \\item `\"median\"`, `\"min\"`, `\"max\"`, `\"sd\"`, `\"q25\"`, `\"q75\"`, `\"q95\"`, and `\"q99\"`.\n  }"
+   },
+   {
+    "name": "join_muni_col",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character string specifying the column in df containing the **6 or 7-digit IBGE municipality code**. If `NULL`, detects common SUS patterns (e.g., `code_muni`)."
+   },
+   {
+    "name": "use_cache",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), uses censobr's caching system to store\n  downloaded data locally for faster subsequent access."
+   },
+   {
+    "name": "cache_dir",
+    "default": "\"~/.climasus4r_cache/census\"",
+    "required": false,
+    "type": "text",
+    "options": [
+     "~/.climasus4r_cache/census"
+    ],
+    "doc": "Character string specifying cache directory path. Defaults to\n  `\"~/.climasus4r_cache/census\"`.The function automatically calls `censobr::set_censobr_cache_dir(cache_dir)` to ensure consistency across the ecosystem."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character string specifying language for messages. Options: `\"pt\"` (Portuguese, default), `\"en\"` (English), `\"es\"` (Spanish)."
+   },
+   {
+    "name": "translate_columns",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If TRUE, translates column names. Default is TRUE."
+   },
+   {
+    "name": "standardize_values",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If TRUE, standardizes categorical values. Default is TRUE."
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), prints progress messages and download progress bar."
+   }
+  ]
+ },
+ {
+  "name": "sus_census_select",
+  "stage": "integracao",
+  "family": "censo",
+  "title": "Interactive Census Variables Explorer",
+  "description": "Opens an interactive HTML interface to explore Brazilian Census variables\nand copy codes for use with sus_census_join().",
+  "args": [
+   {
+    "name": "dataset",
+    "default": "\"all\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "all",
+     "population",
+     "households",
+     "families",
+     "mortality",
+     "emigration",
+     "tracts"
+    ],
+    "doc": "Character string specifying the census dataset. Options:\n  \\itemize{\n    \\item `\"all\"` - All datasets (default)\n    \\item `\"population\"` - Population microdata\n    \\item `\"households\"` - Household microdata\n    \\item `\"families\"` - Family microdata\n    \\item `\"mortality\"` - Mortality microdata\n    \\item `\"emigration\"` - Emigration microdata\n    \\item `\"tracts\"` - Census tract aggregate data\n  }"
+   },
+   {
+    "name": "year",
+    "default": "2010",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Integer specifying census year. Options: `2010` (default) or `2000`."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character string specifying language. Options: `\"pt\"` (Portuguese,\n  default), `\"en\"` (English), `\"es\"` (Spanish)."
+   },
+   {
+    "name": "output",
+    "default": "\"browser\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "browser",
+     "console",
+     "codes"
+    ],
+    "doc": "Character string specifying output format. Options:\n  \\itemize{\n    \\item `\"browser\"` - Interactive HTML in web browser (default)\n    \\item `\"console\"` - Simple list in R console\n    \\item `\"codes\"` - Returns only variable codes as character vector\n  }"
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), prints informative messages."
+   }
+  ]
+ },
+ {
   "name": "sus_climate_aggregate",
   "stage": "integracao",
   "family": "climate",
   "title": "Integration of Climate and Health Data",
-  "description": "",
+  "description": "`sus_climate_aggregate()` aggregates meteorological data to DATASUS health data\nusing epidemiologically rigorous temporal strategies. The function links each\nhealth record to the nearest climate station (by Euclidean distance) and applies\nthe requested temporal window.",
   "args": [
    {
     "name": "health_data",
@@ -496,7 +707,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Compute Bioclimatic and Thermal Stress Indicators",
-  "description": "",
+  "description": "`sus_climate_compute_indicators()` calculates a comprehensive set of\nbioclimatic and thermal-stress indices from INMET station data (output of\n`sus_climate_inmet()` or `sus_climate_fill_inmet()`).\n\n**Scientific robustness highlights:**\n\\itemize{\n  \\item WBGT uses a dual wet-bulb estimate (Liljegren + Bernard/Pourmoghani)\n        averaged for numerical robustness; solar radiation `NA` treated as 0\n        (no solar load at night) so all hours yield a valid value.\n  \\item HI implements full Rothfusz (1990) regression with both NWS humidity\n        adjustments and a regionally adapted validity threshold.\n  \\item UTCI uses a Fiala-polynomial-inspired multi-term regression (vapour\n        pressure, logarithmic wind, radiation linear + non-linear,\n        wind vs radiation interaction).\n  \\item PET is based on a MEMI-style energy-balance approximation with\n        seasonal clothing adjustment and regional correction.\n  \\item Solar radiation undergoes optional physical consistency verification\n        against extraterrestrial radiation limits.\n  \\item Diurnal range is a true daily aggregate (Tmax - Tmin per calendar day)\n        broadcast to all hourly rows of that day.\n  \\item Multi-level confidence flags (`_flag_extreme`, `_flag_high`,\n        `_flag_low`) replace a single `_out_of_range` flag.\n  \\item Optional 200-simulation Monte Carlo uncertainty estimation.\n}\n\n**Available indicators:**\n\n| Code | Output column | Requires |\n| :--- | :--- | :--- |\n| `wbgt` | `wbgt_c` | T, RH, SR, WS |\n| `hi` | `hi_c` | T, RH |\n| `thi` | `thi_c` | T, RH |\n| `wcet` | `wcet_c` | T, WS |\n| `wct` | `wct_c` | T, WS |\n| `et` | `et_c` | T, RH, WS |\n| `utci` | `utci_c` | T, RH, WS, SR |\n| `pet` | `pet_c` | T, RH, WS, SR |\n| `cdd` | `cdd_c` | T |\n| `hdd` | `hdd_c` | T |\n| `gdd` | `gdd_c` | T |\n| `diurnal_range` | `diurnal_range_c` | T (daily agg.) |\n| `vapor_pressure` | `vapor_pressure_kpa` | T, RH |\n| `heat_stress_risk` | `heat_stress_risk` | T, RH, WS, SR |\n| `koppen_humidity` | `koppen_humidity` | RH |\n\n*(Where: T=`tair_dry_bulb_c`, RH=`rh_mean_porc`, SR=`sr_kj_m2`, WS=`ws_2_m_s`)*",
   "args": [
    {
     "name": "df",
@@ -643,7 +854,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Compute Standardized Precipitation-Evapotranspiration Index (SPEI)",
-  "description": "",
+  "description": "`sus_climate_compute_spei()` calculates the Standardized Precipitation-\nEvapotranspiration Index (SPEI; Vicente-Serrano et al., 2010) at multiple\ntimescales from monthly precipitation and potential evapotranspiration (PET)\nalready aggregated to municipalities.\n\nSPEI extends [sus_climate_compute_spi()] by accounting for atmospheric water\ndemand (temperature-driven evapotranspiration) in addition to precipitation\nsupply. It uses the climatic water balance `D = P - PET` and fits a\n3-parameter log-logistic distribution, making it sensitive to warming-\namplified drought. Health applications in Brazil:\n\\itemize{\n  \\item Drought (SPEI-3 to SPEI-12): malnutrition, diarrhoeal disease,\n    heat-amplified mortality, vector-borne diseases in the semi-arid\n    Northeast and Amazônia\n  \\item Wet spells (positive SPEI): leptospirosis, hepatitis A, dengue\n}\n\n**PET options (choose one):**\n\\itemize{\n  \\item `pet_method = \"column\"` (default): pass a pre-computed PET column\n    via `pet_var`. ERA5-Land potential evapotranspiration (`\"evap\"`) or the\n    FAO Penman-Monteith result are ideal.\n  \\item `pet_method = \"thornthwaite\"`: compute PET internally using only\n    monthly mean temperature (`temp_var`). Suitable when only temperature\n    data is available (e.g., INMET or ERA5 T2m).\n}",
   "args": [
    {
     "name": "df",
@@ -751,7 +962,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Compute Standardized Precipitation Index (SPI)",
-  "description": "",
+  "description": "`sus_climate_compute_spi()` calculates the Standardized Precipitation Index\n(SPI; McKee et al., 1993) at multiple timescales from monthly cumulative\nprecipitation already aggregated to municipalities.\n\nSPI is a dimensionless index of precipitation anomaly relative to a\nlong-term distribution: negative values indicate drought (SPI \\eqn{\\le}\n-1 = moderate, \\eqn{\\le} -1.5 = severe, \\eqn{\\le} -2 = extreme) and\npositive values indicate wet conditions. Multi-scale SPI is a leading\nindicator for several health outcomes in Brazil:\n\\itemize{\n  \\item Drought (SPI-3, SPI-6): diarrhoeal disease, malnutrition,\n    vector-borne diseases during water scarcity\n  \\item Wet spells (SPI-1, SPI-3): leptospirosis, hepatitis A, dengue\n}\n\nThe function requires **monthly** precipitation data (one row per\nmunicipality × month). The best upstream source is\n[sus_grid_chirps()] with `resolution = \"monthly\"` (0.05°, 1981–present).\nINMET-derived `rainfall_mm` from [sus_climate_aggregate()] also works.",
   "args": [
    {
     "name": "df",
@@ -828,7 +1039,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Import and Process INMET Meteorological Data",
-  "description": "",
+  "description": "`sus_climate_inmet()` downloads, imports, standardizes, and quality-controls\nBrazilian meteorological data from the National Institute of Meteorology (INMET).\n\nThe function implements a **comprehensive processing pipeline**:\n\\enumerate{\n  \\item **Download**: Multi-year data with automatic retry and backoff\n  \\item **Parsing**: Handles INMET's CSV format with metadata extraction\n  \\item **Standardization**: Renames columns to canonical names (see **Variables**)\n  \\item **Quality Control**: Physical consistency checks (see **QC Details**)\n  \\item **Caching**: Two-level (memory + disk) with Parquet format\n  \\item **Parallel Processing**: Both between and within years\n}",
   "args": [
    {
     "name": "years",
@@ -1039,7 +1250,7 @@
   "stage": "integracao",
   "family": "plot",
   "title": "Visualise Climate-Health Aggregate Data",
-  "description": "",
+  "description": "`sus_climate_plot_aggregate()` produces exploratory visualisations for the\noutput of [sus_climate_aggregate()]. Six complementary plot types cover the\nfull exploratory workflow before modelling: time-series overlay, scatter with\nsmooth, cross-correlation (CCF), distribution, correlation matrix, and\nseasonal patterns. Modelling-specific plots (DLNM surfaces, residual\ndiagnostics, RR tables) are deliberately excluded to avoid duplication with\nthe dedicated `sus_mod_plot_*` family.",
   "args": [
    {
     "name": "df",
@@ -1160,7 +1371,7 @@
   "stage": "integracao",
   "family": "plot",
   "title": "Plot and Analyze Coldwave Events",
-  "description": "",
+  "description": "Visualizes and analyzes the results from `sus_climate_compute_coldwaves()`.\nProvides multiple visualization types including a Gantt-style timeline of\nevents, a calendar heatmap, an intensity-vs-duration scatter plot, and an\nannual trend bar chart.",
   "args": [
    {
     "name": "cw_result",
@@ -1255,7 +1466,7 @@
   "stage": "integracao",
   "family": "plot",
   "title": "Visualise time-series gap-filling from sus_climate_fill()",
-  "description": "",
+  "description": "Unified visualisation for gap-filling outputs of the `climasus4r` pipeline.\nAutomatically detects **production mode** (filled tibble) vs **evaluation\nmode** (list with `data` and `metrics` components) and renders appropriate\ninteractive (plotly) or static (ggplot2) plots plus DT metric tables.\n\n**Production mode** displays:\n\\itemize{\n  \\item Time-series of observed (with gaps) vs imputed series.\n  \\item Imputed segments as distinct markers.  Consecutive imputed blocks are\n        connected by a dotted line; isolated single points appear as dots only.\n  \\item Interactive range-slider with zoom presets (plotly only).\n}\n\n**Evaluation mode** displays a 2×2 diagnostic dashboard:\n\\itemize{\n  \\item Observed vs Predicted scatter with 1:1 reference line.\n  \\item Residual distribution histogram.\n  \\item Residuals over time (temporal-autocorrelation diagnostic).\n  \\item Residuals vs observed (heteroscedasticity diagnostic).\n}",
   "args": [
    {
     "name": "df_filled",
@@ -1347,7 +1558,7 @@
   "stage": "integracao",
   "family": "plot",
   "title": "Plot and Analyze Heatwave Events",
-  "description": "",
+  "description": "Visualizes and analyzes the results from `sus_climate_compute_heatwaves()`.\nIt provides multiple visualization types including time series of events,\ncalendar heatmaps, intensity distributions, and annual summaries.",
   "args": [
    {
     "name": "hw_result",
@@ -1439,7 +1650,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Import UNIPLU-BR: Unified Brazilian Rainfall Dataset",
-  "description": "",
+  "description": "`sus_climate_uniplu()` downloads, caches, and imports data from the\n**Unified Brazilian Rainfall Dataset (UNIPLU-BR)** — the most comprehensive\nnational rainfall database for Brazil, covering **21,000+ gauges** from\nfive monitoring networks over **140 years (1885–2025)**.\n\nThe function implements a full processing pipeline:\n\\enumerate{\n  \\item **Download**: Single 1.6 GB ZIP from Zenodo (first call only)\n  \\item **Extraction**: Two Parquet files cached locally for instant re-use\n  \\item **Standardization**: Column names aligned with climasus4r conventions\n  \\item **Filtering**: By year, state (UF), and/or monitoring network\n  \\item **Aggregation**: Sub-daily data optionally aggregated to daily/monthly/yearly totals\n}",
   "args": [
    {
     "name": "years",
@@ -2389,7 +2600,7 @@
   "stage": "preparacao",
   "family": "plot",
   "title": "Plot Municipal Map of Aggregated Health Data",
-  "description": "",
+  "description": "Renders a bubble or choropleth map showing the spatial distribution of\nhealth events (counts or incidence rates) at the Brazilian municipal level.\nDesigned for data produced by [sus_data_aggregate()].\n\n**Bubble map** (`map_type = \"bubble\"`) places proportionally sized,\ncolour-encoded circles at each municipality centroid.  State boundaries are\ndrawn as a background polygon layer.\n\n**Choropleth map** (`map_type = \"choropleth\"`) fills municipality polygons\ndownloaded via [geobr::read_municipality()].  Requires `geobr` and `sf`.\nIf these packages are unavailable the function falls back to a bubble map\nwith a warning.",
   "args": [
    {
     "name": "df",
@@ -2531,7 +2742,7 @@
     "required": false,
     "type": "boolean",
     "options": [],
-    "doc": "Logical.  If `TRUE`, wraps the ggplot2 object with\n  `plotly::ggplotly()`.  Requires `plotly`.  Default `FALSE`."
+    "doc": "Logical.  If `TRUE`, returns a `leaflet` widget (pan,\n  zoom, click-for-popup) built from the same municipality data instead of\n  the static ggplot2 map.  Requires `leaflet` and, at view time, an\n  internet connection to load the basemap tiles.  Default `FALSE`."
    },
    {
     "name": "return_sf",
@@ -3405,7 +3616,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import CHIRPS Rainfall Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_chirps()` downloads CHIRPS v2.0 precipitation data, crops it to\nBrazil, spatially aggregates to municipalities, and returns a `climasus_df`\ncompatible with [sus_mod_dlnm()] and [sus_climate_anomaly()].\n\nCHIRPS (Climate Hazards Group InfraRed Precipitation with Station data) is a\nquasi-global, 0.05\\eqn{^\\circ} (~5 km) daily rainfall dataset from UCSB CHC\ncovering 1981 to present. It combines satellite imagery with station data and\nis considered the best freely available high-resolution rainfall product for\nBrazil -- particularly for leptospirosis, diarrheal disease, and dengue\nanalyses where precipitation is the key exposure.\n\nNo authentication is required.",
   "args": [
    {
     "name": "resolution",
@@ -3517,7 +3728,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import ERA5-Land Daily Climate Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_era5()` downloads pre-processed ERA5-Land daily climate aggregates\nfor Latin America from Zenodo and, optionally, spatially aggregates them to\nBrazilian municipalities. No API key is required.\n\nThe data source is the **ERA5-Land Daily Aggregates for Latin America** project\n(Saldanha, rfsaldanha.github.io), which provides NetCDF files (one per\nvariable x month x year) at ~10 km spatial resolution for 1950-2025.\nFiles are hosted on Zenodo under CC-BY 4.0.\n\nWhen `municipalities` is provided, the function returns a `climasus_df` at\n`stage = \"climate\"`, `type = \"era5_land\"` -- directly compatible with\n[sus_climate_anomaly()], [sus_climate_aggregate()], and [sus_mod_dlnm()].",
   "args": [
    {
     "name": "years",
@@ -3646,7 +3857,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import Fire Hotspot Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_fires()` downloads fire hotspot (active fire) data from INPE\nQueimadas or NASA FIRMS, optionally aggregates counts and Fire Radiative\nPower (FRP) to Brazilian municipalities, and returns a `climasus_df`\ncompatible with [sus_mod_dlnm()] and [sus_climate_anomaly()].\n\nFire data is critical for respiratory health analyses in Brazil: smoke from\nagricultural burning (cerrado, cana-de-acucar) and deforestation fires\n(Amazonia) are associated with acute respiratory outcomes in SIH/SINAN data.\n\n**Sources available:**\n\\itemize{\n  \\item `\"inpe\"` (default) — INPE Queimadas portal. No authentication.\n    Historical data from 1998 to present. Brazil only.\n    DOI: \\doi{10.2312/inpe.2022.009}\n  \\item `\"firms_modis\"` — NASA FIRMS MODIS Collection 6.1.\n    Requires a free MAP KEY from\n    \\url{https://firms.modaps.eosdis.nasa.gov/api/map_key/}.\n    Global, 1 km resolution, 2000 to present.\n  \\item `\"firms_viirs\"` — NASA FIRMS VIIRS SNPP.\n    Same key as FIRMS MODIS. 375 m resolution, 2012 to present.\n}",
   "args": [
    {
     "name": "years",
@@ -3779,7 +3990,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Join Gridded Environmental Data to Health Data",
-  "description": "",
+  "description": "`sus_grid_join()` merges the municipality × date output of any\n`sus_grid_*()` function (ERA5, CHIRPS, GHAP, CAMS, fires, PRODES, …) with\na health `climasus_df` produced by [sus_spatial_join()] or\n[sus_data_aggregate()]. The result is a single `climasus_df` at\n`stage = \"climate\"` ready for [sus_mod_dlnm()], [sus_climate_anomaly()],\nand [sus_mod_vulnerability_index()].\n\nThis function is the bridge between the gridded environmental pipeline\n(`sus_grid_*`) and the health pipeline (`sus_data_import` → … →\n`sus_spatial_join`), equivalent to the role [sus_climate_aggregate()] plays\nfor station-based INMET data.",
   "args": [
    {
     "name": "health_data",
@@ -3911,7 +4122,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import Palmer Drought Severity Index (PDSI) for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_pdsi()` downloads Palmer Drought Severity Index (PDSI) data,\ncrops it to Brazil, spatially aggregates to municipalities, and returns a\n`climasus_df` compatible with [sus_mod_dlnm()] and [sus_climate_anomaly()].\n\nPDSI (Palmer, 1965) quantifies cumulative moisture departures relative to\nlocal climate normals using a two-layer soil water balance model. Values\nrange from approximately -10 (extreme drought) to +10 (extreme wet), with\noperational categories at -2 (moderate drought) to -4 (extreme drought).\nHealth applications in Brazil:\n\\itemize{\n  \\item Drought (PDSI < -2): malnutrition, diarrheal disease, mental health\n    stress, vector-borne disease in semi-arid Northeast and Amazonia\n  \\item Wet periods (PDSI > 2): leptospirosis, hepatitis A, flooding\n}\n\n**Available sources:**\n\\itemize{\n  \\item `\"terraclimate\"` (default): TerraClimate monthly PDSI (Abatzoglou\n    et al., 2018; University of Idaho). Resolution 1/24deg (~4 km), 1950-2025,\n    WGS84, no authentication. One NetCDF file (~165 MB) per year.\n  \\item `\"noaa_psl\"`: Dai (2011) self-calibrated PDSI from NOAA Physical\n    Sciences Laboratory. Resolution 2.5deg, 1850-2018, single global file\n    (~40 MB). Coarser but longer record.\n}",
   "args": [
    {
     "name": "years",
@@ -4021,7 +4232,7 @@
   "stage": "integracao",
   "family": "plot",
   "title": "Plot a Raster Grid (GeoTIFF/NetCDF) as a Publication-Ready Map",
-  "description": "",
+  "description": "`sus_grid_plot()` renders a raster surface -- a `SpatRaster`, a single\nGeoTIFF/NetCDF file path, or the named vector of cached file paths\nreturned by the `sus_grid_*()` family (e.g. [sus_grid_chirps()],\n[sus_grid_era5()], [sus_grid_pdsi()], [sus_grid_pollution_ghap()],\n[sus_grid_pollution_merra2()]) when called with `municipalities = NULL`\nor `raster_area != FALSE` -- as a `ggplot2` map, following the same\npublication style used across the other `sus_*_plot_*()` functions.\n\nLarge rasters are automatically downsampled for plotting (see\n`max_cells`); the returned object always reflects the full data range\nof the (possibly downsampled) layer shown.",
   "args": [
    {
     "name": "x",
@@ -4189,7 +4400,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import CAMS Pollution Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_pollution_cams()` downloads pre-processed CAMS (Copernicus\nAtmosphere Monitoring Service) daily pollution data for Brazilian\nmunicipalities from Zenodo. No API key is required.\n\nData cover six pollutants — PM2.5, PM10, CO, O3, NO2 and SO2 — aggregated\nto daily means/maxima/minima per municipality from 2003 to 2024. Files are\nhosted on Zenodo (CC-BY) as Parquet and are downloaded once and cached\nlocally.\n\nThe return value is a `climasus_df` at `stage = \"climate\"`,\n`type = \"pollution_cams\"`, directly compatible with\n[sus_climate_anomaly()], [sus_climate_aggregate()], and [sus_mod_dlnm()].",
   "args": [
    {
     "name": "pollutants",
@@ -4273,7 +4484,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import GHAP High-Resolution Pollution Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_pollution_ghap()` downloads, crops, spatially aggregates, and\ncaches GHAP (GlobalHighAirPollutants) raster data to Brazilian\nmunicipalities. No API key is required.\n\nGHAP provides AI-generated, seamless ground-level air pollutant fields at\n1 km (PM2.5, CO) and 10 km (O3) resolution. Files are downloaded as NetCDF\nfrom Zenodo, cropped to Brazil, aggregated with area-weighted extraction,\nand the result is stored as a Parquet cache for fast subsequent access.\n\nAvailable pollutants and temporal coverage:\n\\itemize{\n  \\item **PM2.5** (`\"pm25\"`) -- daily, monthly & annual, 2017-2022, 1 km, \\eqn{\\mu g/m^3}\n  \\item **O3** (`\"o3\"`) -- annual only, 2000-2020, 10 km, ppb\n  \\item **CO** (`\"co\"`) -- annual only, 2019-2022, 1 km, mg/m\\eqn{^3}\n  \\item **NO2** (`\"no2\"`) -- data not yet publicly released\n}\n\nWhen `municipalities` is provided the function returns a `climasus_df` at\n`stage = \"climate\"`, `type = \"pollution_ghap\"`, compatible with\n[sus_climate_anomaly()], [sus_climate_aggregate()], and [sus_mod_dlnm()].",
   "args": [
    {
     "name": "pollutants",
@@ -4403,7 +4614,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import MERRA-2 Pollution Data for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_pollution_merra2()` downloads, spatially aggregates, and caches\nNASA MERRA-2 aerosol and air quality data for Brazilian municipalities.\n\nMERRA-2 (Modern-Era Retrospective Analysis for Research and Applications v2)\nfrom NASA GMAO provides global atmospheric reanalysis from **1980 to\npresent** at 0.625\\eqn{\\times}0.5\\eqn{^\\circ} (~55 km). It is the longest\navailable reanalysis record for aerosol and pollution studies, making it\nideal for historical trend analysis and cross-validation with higher-\nresolution products such as CAMS or GHAP.\n\nSupported variables:\n\\itemize{\n  \\item **PM2.5** (`\"pm25\"`) -- derived from aerosol mass components\n    (\\eqn{\\mu g/m^3}): `DUSMASS25 + SSSMASS25 + BCSMASS + 1.4*OCSMASS +\n    SO4SMASS`, each multiplied by 1\\eqn{\\times}10^9 to convert kg/m\\eqn{^3}\n    to \\eqn{\\mu g/m^3}.\n  \\item **AOD** (`\"aod\"`) -- Total aerosol optical depth at 550 nm\n    (`TOTEXTTAU`), dimensionless, proxy for total aerosol column.\n  \\item **SO2** (`\"so2\"`, experimental) -- sulfate surface mass concentration\n    from M2I3NVAER (\\eqn{\\mu g/m^3}).\n}",
   "args": [
    {
     "name": "pollutants",
@@ -4552,7 +4763,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import PRODES Deforestation Data from TerraBrasilis for Brazilian Municipalities",
-  "description": "",
+  "description": "`sus_grid_prodes()` downloads INPE PRODES annual deforestation data from the\nTerraBrasilis WFS API, spatially intersects deforestation polygons with\nmunicipality boundaries, and returns municipality-level annual deforestation\nareas as a `climasus_df` compatible with [sus_mod_dlnm()] and\n[sus_climate_anomaly()].\n\nPRODES (Projeto de Monitoramento do Desmatamento na Amazônia Legal por\nSatélite) is INPE's primary deforestation monitoring program. Deforestation\nexposure is a key driver of frontier malaria (SINAN), dengue, leishmaniasis,\nand respiratory disease from biomass burning in Brazil.",
   "args": [
    {
     "name": "years",
@@ -4638,7 +4849,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import Soil Moisture Volatility Index (SMVI / Flash Drought) Data",
-  "description": "",
+  "description": "`sus_grid_smvi()` downloads the global flash drought inventory based on\nthe Soil Moisture Volatility Index (SMVI; Osman et al., 2024), spatially\nassigns events to Brazilian municipalities, and returns annual or monthly\nflash drought statistics as a `climasus_df` compatible with\n[sus_mod_dlnm()] and [sus_mod_vulnerability_index()].\n\n**What is SMVI?** SMVI detects *flash droughts* — rapid, high-impact soil\nmoisture deficits that develop within days to weeks. Unlike SPI/SPEI/PDSI\n(which measure cumulative drought severity), SMVI captures the *speed* of\nsoil moisture decline by comparing a 5-day running average of root-zone\nsoil moisture (0–100 cm) against a 20-day running average. A flash drought\nevent begins when the 5-day average drops below the 20-day average AND\nreaches the 20th percentile deficit threshold.\n\n**Why SMVI is different from SPI/SPEI/PDSI:**\n\\itemize{\n  \\item SPI/SPEI/PDSI measure *how dry* a period is (severity)\n  \\item SMVI measures *how fast* a drought develops (onset speed) —\n    flash droughts can devastate crops, trigger wildfires, and\n    compromise water supply with little warning\n}\n\n**Health connections in Brazil:**\n\\itemize{\n  \\item **Malnutrition & food insecurity**: flash droughts destroy crops\n    within weeks; 1–3 month lag to increased child malnutrition in\n    semi-arid Northeast and Amazônia\n  \\item **Leptospirosis**: rapid soil rewetting after flash drought\n    events concentrates rodents near water, increasing transmission;\n    1–4 week lag\n  \\item **Leishmaniasis**: drought-driven human migration to water\n    sources increases sandfly contact; 2-year lag documented in Bahia\n  \\item **Waterborne disease**: water shortage during flash drought\n    increases dependence on unclean sources\n}\n\n**Data source**: Global Flash Drought Inventory (Osman et al., 2024).\nBased on NASA GLDAS-2 root-zone soil moisture (1990–2021). No\nauthentication required. Events file (109 MB) covers the full global\ndomain at 0.25° resolution and is downloaded once and cached.",
   "args": [
    {
     "name": "years",
@@ -6849,7 +7060,7 @@
   "stage": "modelagem",
   "family": "core",
   "title": "Bayesian Spatiotemporal Hierarchical Model with INLA",
-  "description": "",
+  "description": "Fits a full Bayesian spatiotemporal hierarchical model using INLA\n(Integrated Nested Laplace Approximation). The model decomposes disease\nrisk into structured spatial effects (BYM2, BYM, Besag, or IID), structured\ntemporal effects (RW1, RW2, AR1, or IID), and optionally a space-time\ninteraction following the four Knorr-Held (2000) interaction types.\nClimate and environmental covariates from a `climasus_df` can be included\nas fixed effects.",
   "args": [
    {
     "name": "df",
@@ -7050,7 +7261,7 @@
   "stage": "modelagem",
   "family": "core",
   "title": "Posterior Exceedance Probabilities from a Spatiotemporal Bayesian Model",
-  "description": "",
+  "description": "Given a fitted `climasus_spacetime_bayes` object, computes for each\nmunicipality \\eqn{\\times} time cell the posterior probability that the\nrelative risk (RR) exceeds one or more critical thresholds:\n\\eqn{P(RR > t \\mid \\text{data})}.\n\nExceedance probabilities are a cornerstone of Bayesian disease surveillance\nbecause they translate uncertain posterior estimates into decision-relevant\nquantities. For example, \\eqn{P(RR > 1.5) > 0.80} can trigger an alert for\na municipality in a given week, whereas the raw posterior mean alone may\nunderstate uncertainty.",
   "args": [
    {
     "name": "fit",
@@ -7116,7 +7327,7 @@
   "stage": "modelagem",
   "family": "core",
   "title": "Generate Predictions from a Fitted Space-Time Bayesian Model",
-  "description": "",
+  "description": "Produces approximate predictions at new or future space-time points from a\n`climasus_spacetime_bayes` object fitted by [sus_mod_spacetime_bayes()].\nThis function is designed for **disease surveillance projections** and\n**counterfactual scenario analysis** (e.g. \"what if temperature was 2 °C\nhigher?\").",
   "args": [
    {
     "name": "fit",
@@ -7193,7 +7404,7 @@
   "stage": "modelagem",
   "family": "core",
   "title": "Bayesian CAR / BYM Disease Mapping with Climate Covariates",
-  "description": "",
+  "description": "Fits a Bayesian hierarchical spatial model for disease mapping using\nConditional Autoregressive (CAR) priors implemented in the **CARBayes**\npackage, or the reparameterised BYM2 model via **INLA**. Four model\nspecifications are available: the Besag-York-Mollie (BYM) model with\nstructured and unstructured random effects, the Leroux model with a mixing\nparameter for spatial dependence, the independent random effects model\n(all via CARBayes/MCMC), and the BYM2 model (via INLA with penalised\ncomplexity priors). Climate and environmental covariates stored in a\n`climasus_df` can be passed directly as fixed effects.",
   "args": [
    {
     "name": "df",
@@ -7995,6 +8206,80 @@
     "type": "text",
     "options": [],
     "doc": "Optional character vector to filter by category. Use `NULL`\n  (default) to return all."
+   }
+  ]
+ },
+ {
+  "name": "sus_spatial_join",
+  "stage": "integracao",
+  "family": "spatial",
+  "title": "Spatially Link SUS Data to Brazilian Geographic Units",
+  "description": "Performs a spatial join between a data.frame containing SUS data\nand official Brazilian geographic boundaries (state, municipality, census tract)\nor geocodes postal codes (CEP). This function is the core spatial engine for the\nentire climasus4r package and serves as the foundation for all spatial analyses.",
+  "args": [
+   {
+    "name": "df",
+    "default": null,
+    "required": true,
+    "type": "text",
+    "options": [],
+    "doc": "A `data.frame` containing health data with a geographic identifier column.\n  The data frame should have a `system` column created by `detect_health_system()`."
+   },
+   {
+    "name": "level",
+    "default": "\"munic\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "munic",
+     "cep"
+    ],
+    "doc": "Character string specifying the geographic aggregation level. Default is `\"munic\"`.\n  Options: \n  \\itemize{\n    \\item \\strong{Administrative:} \"munic\" (municipality). Default. \n    \\item \\strong{Health:} \"health_region\", \"health_facilities\", \"school\"\n    \\item \\strong{Environmental:} \"amazon\", \"biomes\", \"conservation_units\", \n          \"disaster_risk_area\", \"semiarid\", \"indigenous_land\"\n    \\item "
+   },
+   {
+    "name": "join_col",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character string with the name of the column in `df` containing\n  the geographic identifier. If `NULL` (default), the function will automatically\n  detect the appropriate column based on the `level` and common SUS column patterns."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character string specifying the language for messages.\n  Options: `\"pt\"` (Portuguese, default), `\"en\"` (English), `\"es\"` (Spanish)."
+   },
+   {
+    "name": "use_cache",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), uses cached spatial data to avoid\n  re-downloads and improve performance."
+   },
+   {
+    "name": "cache_dir",
+    "default": "\"~/.climasus4r_cache/spatial\"",
+    "required": false,
+    "type": "text",
+    "options": [
+     "~/.climasus4r_cache/spatial"
+    ],
+    "doc": "Character string specifying the directory to store cached files.\n  Default is `\"~/.climasus4r_cache/spatial\"`."
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), prints detailed progress information\n  including cache status, download progress, and join statistics."
    }
   ]
  }

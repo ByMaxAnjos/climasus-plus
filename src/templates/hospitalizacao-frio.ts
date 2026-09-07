@@ -47,6 +47,16 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       },
     },
     {
+      id: 'frio-spatial',
+      fn: 'sus_spatial_join',
+      values: {},
+      explain: {
+        pt: 'Ligamos a série de saúde às fronteiras oficiais dos municípios brasileiros — necessário antes de cruzar com dados de clima por município.',
+        en: 'We link the health series to official Brazilian municipality boundaries — required before merging with climate data by municipality.',
+        es: 'Vinculamos la serie de salud a los límites oficiales de los municipios brasileños — necesario antes de cruzar con datos de clima por municipio.',
+      },
+    },
+    {
       id: 'frio-inmet',
       fn: 'sus_climate_inmet',
       // sus_climate_inmet has no `region` arg (catalog: years/uf/station_code/...) — select the
@@ -61,7 +71,7 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
     {
       id: 'frio-merged',
       fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('frio-health-agg'), climate_data: stepRef('frio-inmet'), time_unit: 'day' },
+      values: { health_data: stepRef('frio-spatial'), climate_data: stepRef('frio-inmet'), time_unit: 'day' },
       explain: {
         pt: 'Cruzamos a série diária de internações com a série diária de temperatura.',
         en: 'We cross the daily hospitalization series with the daily temperature series.',

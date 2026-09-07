@@ -59,13 +59,21 @@ export const DENGUE_CLIMA: TutorialDef = {
     {
       id: 'dengue-health-agg',
       fn: 'sus_data_aggregate',
-      // kept from round 1: sus_climate_aggregate's health_data doc also lists a code_muni
-      // requirement, so there's no confirmed-safe basis to drop this grouping key
-      values: { time_unit: 'week', group_by: 'codigo_municipio_residencia' },
+      values: { time_unit: 'week' },
       explain: {
         pt: 'Agregamos a série por semana — a unidade certa para dengue, mais fina que os meses usados no recorte respiratório.',
         en: 'We aggregate the series by week — the right unit for dengue, finer than the months used in the respiratory case study.',
         es: 'Agregamos la serie por semana — la unidad correcta para el dengue.',
+      },
+    },
+    {
+      id: 'dengue-spatial',
+      fn: 'sus_spatial_join',
+      values: {},
+      explain: {
+        pt: 'Ligamos a série de saúde às fronteiras oficiais dos municípios brasileiros — necessário antes de cruzar com dados de clima por município.',
+        en: 'We link the health series to official Brazilian municipality boundaries — required before merging with climate data by municipality.',
+        es: 'Vinculamos la serie de salud a los límites oficiales de los municipios brasileños — necesario antes de cruzar con datos de clima por municipio.',
       },
     },
     {
@@ -84,7 +92,7 @@ export const DENGUE_CLIMA: TutorialDef = {
     },
     {
       fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('dengue-health-agg'), climate_data: stepRef('dengue-inmet'), time_unit: 'week' },
+      values: { health_data: stepRef('dengue-spatial'), climate_data: stepRef('dengue-inmet'), time_unit: 'week' },
       explain: {
         pt: 'Cruzamos saúde e clima, agregados por semana.',
         en: 'We cross health and climate data, aggregated by week.',

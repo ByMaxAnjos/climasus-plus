@@ -55,6 +55,16 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
       },
     },
     {
+      id: 'resp-spatial',
+      fn: 'sus_spatial_join',
+      values: {},
+      explain: {
+        pt: 'Ligamos a série de saúde às fronteiras oficiais dos municípios brasileiros — necessário antes de cruzar com dados de clima por município.',
+        en: 'We link the health series to official Brazilian municipality boundaries — required before merging with climate data by municipality.',
+        es: 'Vinculamos la serie de salud a los límites oficiales de los municipios brasileños — necesario antes de cruzar con datos de clima por municipio.',
+      },
+    },
+    {
       id: 'resp-inmet',
       fn: 'sus_climate_inmet',
       values: { uf: 'c("SP", "RJ", "MG", "ES")', years: '2015:2019' },
@@ -66,7 +76,7 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
     },
     {
       fn: 'sus_climate_aggregate',
-      values: { health_data: stepRef('resp-health-agg'), climate_data: stepRef('resp-inmet'), time_unit: 'month' },
+      values: { health_data: stepRef('resp-spatial'), climate_data: stepRef('resp-inmet'), time_unit: 'month' },
       explain: {
         pt: 'Cruzamos saúde e clima, agregados por mês.',
         en: 'We cross health and climate data, aggregated by month.',
