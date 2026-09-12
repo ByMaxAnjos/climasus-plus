@@ -376,7 +376,9 @@ export const TEMPLATES: PipelineTemplate[] = [
     },
     vignetteUrl: `${PKGDOWN}/ec-04-hospitalizacoes-frio.html`,
     steps: [
-      { fn: 'sus_data_import', values: { system: 'SIH-RD', region: 'sul', year: '2010:2019' } },
+      // month is required for SIH/CNES/SIA systems; 1:12 (all months) matches the full-year
+      // percentile baseline the cold-wave detection step below needs.
+      { fn: 'sus_data_import', values: { system: 'SIH-RD', region: 'sul', year: '2010:2019', month: '1:12' } },
       { fn: 'sus_data_clean_encoding', values: {} },
       { fn: 'sus_data_standardize', values: {} },
       { fn: 'sus_data_filter_cid', values: { icd_codes: 'J09-J18', match_type: 'range' } },

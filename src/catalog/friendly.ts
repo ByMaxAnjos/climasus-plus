@@ -7,6 +7,16 @@ export interface FriendlyText { name: string; description: string }
 export type FriendlyEntry = { pt: FriendlyText; en: FriendlyText; es: FriendlyText }
 
 export const FRIENDLY: Record<string, FriendlyEntry> = {
+  "sus_census_join": {
+    pt: { name: "Adicionar variáveis do Censo", description: "Enriquece os dados de saúde já espacializados com indicadores socioeconômicos do Censo Brasileiro (população, domicílios, famílias, mortalidade, setores censitários), agregados ao nível de município." },
+    en: { name: "Add Census variables", description: "Enriches the already-spatialized health data with socioeconomic indicators from the Brazilian Census (population, households, families, mortality, census tracts), aggregated at the municipality level." },
+    es: { name: "Agregar variables del Censo", description: "Enriquece los datos de salud ya espacializados con indicadores socioeconómicos del Censo Brasileño (población, hogares, familias, mortalidad, sectores censales), agregados al nivel de municipio." },
+  },
+  "sus_census_select": {
+    pt: { name: "Explorar variáveis do Censo", description: "Abre uma consulta para explorar as variáveis disponíveis no Censo e selecionar os códigos que podem ser usados ao adicionar indicadores aos dados de saúde." },
+    en: { name: "Explore Census variables", description: "Opens a browser for exploring available Census variables and selecting codes to use when adding indicators to health data." },
+    es: { name: "Explorar variables del Censo", description: "Abre una consulta para explorar las variables disponibles del Censo y seleccionar códigos para agregar indicadores a los datos de salud." },
+  },
   "sus_climate_aggregate": {
     pt: { name: "Cruzar dados de saúde e clima", description: "Junta os registros de saúde com os dados climáticos ao longo do tempo, aplicando janelas, defasagens (lags) e limiares para preparar a base que vai alimentar a análise epidemiológica." },
     en: { name: "Combine health and climate data", description: "Merges health records with climate data over time, applying time windows, lags and thresholds to build the dataset used in the epidemiological analysis." },
@@ -386,5 +396,10 @@ export const FRIENDLY: Record<string, FriendlyEntry> = {
     pt: { name: "Consultar indicadores disponíveis", description: "Mostra a lista de indicadores socioeconômicos e de saúde disponíveis, com nome, categoria, colunas necessárias e método de incerteza, para escolher antes de calcular." },
     en: { name: "Browse available indicators", description: "Shows the list of available socioeconomic and health indicators, with their name, category, required columns and uncertainty method, to choose from before computing them." },
     es: { name: "Consultar indicadores disponibles", description: "Muestra la lista de indicadores socioeconómicos y de salud disponibles, con su nombre, categoría, columnas necesarias y método de incertidumbre, para elegir antes de calcularlos." },
+  },
+  "sus_spatial_join": {
+    pt: { name: "Juntar dados a limites geográficos", description: "Junta os dados de saúde a limites geográficos oficiais do Brasil (município, estado, setor censitário) ou geocodifica CEPs, adicionando uma coluna de geometria espacial pronta para mapas e análises espaciais." },
+    en: { name: "Join data to geographic boundaries", description: "Joins the health data to Brazil's official geographic boundaries (municipality, state, census tract) or geocodes postal codes, adding a spatial geometry column ready for maps and spatial analysis." },
+    es: { name: "Unir datos a límites geográficos", description: "Une los datos de salud a los límites geográficos oficiales de Brasil (municipio, estado, sector censal) o geocodifica códigos postales, agregando una columna de geometría espacial lista para mapas y análisis espaciales." },
   },
 }

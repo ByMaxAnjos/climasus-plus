@@ -114,7 +114,15 @@ run_step <- function(code, var, idx) {
   if (!is.null(err)) return(c(base, list(ok = FALSE, error = strip_ansi(err))))
 
   obj <- tryCatch(get(var, envir = state$env), error = function(e) NULL)
-  c(base, list(ok = TRUE), classify(obj, var, idx))
+  cls <- classify(obj, var, idx)
+  # fold classify()'s best-effort artifact-generation failures (ggsave/leaflet/plotly/
+  # saveWidget/webshot2 — see `diag` inside classify()) into the same console/"Aviso:" text the
+  # UI already renders per step, instead of leaving them invisible.
+  if (length(cls$diag)) {
+    base$console <- paste(c(console, cls$diag), collapse = "")
+    cls$diag <- NULL
+  }
+  c(base, list(ok = TRUE), cls)
 }
 
 is_tabular <- function(obj) {
@@ -148,6 +156,13 @@ table_preview <- function(obj, n = 100) {
 classify <- function(obj, var, idx) {
   if (is.null(obj)) return(list(kind = "object", class = "NULL", print = ""))
 
+  # collects best-effort artifact-generation failures (ggsave/leaflet/plotly/saveWidget/webshot2)
+  # that are otherwise silently ignored below — surfaced to the caller as "Aviso:" console lines,
+  # same convention run_step() already uses for R warnings, so a failure is diagnosable instead of
+  # invisible (this is what made a Windows-only "no plot at all" report impossible to root-cause
+  # without deliberately un-silencing it first).
+  diag <- character(0)
+
   # sus_mod_plot_*(output_type = "all") returns a plain, unclassed list like
   # list(plot = <ggplot/htmlwidget>, table = <gt_tbl>, data = ...) — no S3 class of its own, so it
   # would otherwise fall through every branch below to the generic "object" dump. Recurse into
@@ -167,14 +182,19 @@ classify <- function(obj, var, idx) {
         ggplot2::ggsave(file.path(ARTIFACT_DIR, svg_rel), obj, width = 9, height = 5.5, bg = "white")
       })
       TRUE
-    }, error = function(e) FALSE)
+    }, error = function(e) {
+      diag <<- c(diag, paste0("Aviso: falha ao gerar a imagem estática (PNG/SVG) do gráfico: ", strip_ansi(conditionMessage(e))))
+      FALSE
+    })
     if (ok) {
       artifacts <- list(png = png_rel, svg = svg_rel)
       # map-plot functions (e.g. sus_data_plot_aggregate_map) attach the sf they built the
       # map from as an attribute — a best-effort GeoPackage download alongside the plot
       spatial <- attr(obj, "climasus_sf")
       # best-effort interactive version — the static PNG/SVG above are what report/exports use;
-      # this is purely an extra artifact for the on-screen toggle, failure here is silently ignored.
+      # this is purely an extra artifact for the on-screen toggle. Failure here doesn't fail the
+      # step, but is recorded into `diag` (see below) so it shows up as an "Aviso:" console line
+      # instead of vanishing.
       # plotly::ggplotly() cannot convert coord_sf/geom_sf maps or patchwork multi-panels, so for
       # anything carrying map data build a leaflet widget straight from that instead.
       html_rel <- sprintf("step%d_%s.html", idx, var)
@@ -185,18 +205,27 @@ classify <- function(obj, var, idx) {
         interactive_ok <- tryCatch({
           suppressWarnings(suppressMessages({
             widget <- map_leaflet_widget(spatial)
-            htmlwidgets::saveWidget(widget, file.path(ARTIFACT_DIR, html_rel), selfcontained = TRUE)
+            # selfcontained = FALSE: no pandoc dependency (see note above); the artifact is only
+            # ever loaded via the local plumber /artifact HTTP mount, never as a standalone file,
+            # so the sibling *_files/ asset dir this writes resolves fine as a relative URL.
+            htmlwidgets::saveWidget(widget, file.path(ARTIFACT_DIR, html_rel), selfcontained = FALSE)
           }))
           TRUE
-        }, error = function(e) FALSE)
+        }, error = function(e) {
+          diag <<- c(diag, paste0("Aviso: versão interativa (mapa) não pôde ser gerada: ", strip_ansi(conditionMessage(e))))
+          FALSE
+        })
       } else if (requireNamespace("plotly", quietly = TRUE)) {
         interactive_ok <- tryCatch({
           suppressWarnings(suppressMessages({
             widget <- plotly::ggplotly(obj)
-            htmlwidgets::saveWidget(widget, file.path(ARTIFACT_DIR, html_rel), selfcontained = TRUE)
+            htmlwidgets::saveWidget(widget, file.path(ARTIFACT_DIR, html_rel), selfcontained = FALSE)
           }))
           TRUE
-        }, error = function(e) FALSE)
+        }, error = function(e) {
+          diag <<- c(diag, paste0("Aviso: versão interativa do gráfico não pôde ser gerada: ", strip_ansi(conditionMessage(e))))
+          FALSE
+        })
       }
       if (interactive_ok) artifacts$html <- html_rel
       if (!is.null(spatial) && inherits(spatial, "sf")) {
@@ -207,7 +236,7 @@ classify <- function(obj, var, idx) {
         }, error = function(e) FALSE)
         if (gpkg_ok) artifacts$gpkg <- gpkg_rel
       }
-      return(list(kind = "plot", class = "ggplot", artifacts = artifacts))
+      return(c(list(kind = "plot", class = "ggplot", artifacts = artifacts), if (length(diag)) list(diag = diag)))
     }
   }
 
@@ -226,10 +255,19 @@ classify <- function(obj, var, idx) {
     html_rel <- sprintf("step%d_%s.html", idx, var)
     html_path <- file.path(ARTIFACT_DIR, html_rel)
     ok <- tryCatch({
-      htmlwidgets::saveWidget(obj, html_path, selfcontained = TRUE)
+      # selfcontained = FALSE: avoids the pandoc dependency of htmlwidgets::saveWidget's
+      # selfcontained path (htmltools::save_html -> pandoc_self_contained_html) — pandoc is
+      # never bundled with the app on any OS, so selfcontained = TRUE silently failed here
+      # whenever the end user's machine had no system pandoc install. The artifact is only ever
+      # loaded via the local plumber /artifact HTTP mount (see ResultBody.tsx), never downloaded
+      # as a standalone file, so the sibling *_files/ asset dir this writes resolves fine.
+      htmlwidgets::saveWidget(obj, html_path, selfcontained = FALSE)
       TRUE
-    }, error = function(e) FALSE)
-    if (!ok) return(list(kind = "object", class = class(obj)[1], print = ""))
+    }, error = function(e) {
+      diag <<- c(diag, paste0("Aviso: não foi possível salvar o widget interativo: ", strip_ansi(conditionMessage(e))))
+      FALSE
+    })
+    if (!ok) return(c(list(kind = "object", class = class(obj)[1], print = ""), if (length(diag)) list(diag = diag)))
 
     artifacts <- list(html = html_rel)
 
@@ -246,11 +284,14 @@ classify <- function(obj, var, idx) {
         webshot2::webshot(html_path, file.path(ARTIFACT_DIR, png_rel),
                            vwidth = 1000, vheight = 700, zoom = 2, delay = 0.5, quiet = TRUE)
         TRUE
-      }, error = function(e) FALSE)
+      }, error = function(e) {
+        diag <<- c(diag, paste0("Aviso: não foi possível gerar a imagem estática do widget: ", strip_ansi(conditionMessage(e))))
+        FALSE
+      })
       if (snap_ok) artifacts$png <- png_rel
     }
 
-    return(list(kind = "widget", class = class(obj)[1], artifacts = artifacts))
+    return(c(list(kind = "widget", class = class(obj)[1], artifacts = artifacts), if (length(diag)) list(diag = diag)))
   }
 
   # gt tables (e.g. sus_data_quality_report(output_format = "gt")) — render to a
@@ -313,6 +354,15 @@ function(req, res) {
     res$status <- 403
     return(list(error = "origem não permitida"))
   }
+  plumber::forward()
+}
+
+#* Artifact paths (step<i>_<var>.png/svg/html/tif/gpkg) are deterministic per (step, var) and
+#* rewritten in place on every run — without this, a browser/webview can serve a stale cached
+#* file for an unchanged URL after a rerun.
+#* @filter no-cache-artifacts
+function(req, res) {
+  if (startsWith(req$PATH_INFO, "/artifact")) res$setHeader("Cache-Control", "no-store")
   plumber::forward()
 }
 
@@ -428,6 +478,9 @@ function(var, format = "csv", res) {
   )
   res$setHeader("Content-Disposition", sprintf('attachment; filename="%s.%s"', var, format))
   res$setHeader("Content-Type", "application/octet-stream")
+  # the URL is deterministic per (var, format), reused across reruns — without this the browser
+  # (or Tauri's webview) may serve a stale cached body for an unchanged URL after a rerun
+  res$setHeader("Cache-Control", "no-store")
   res$body <- readBin(path, "raw", file.info(path)$size)
   res
 }

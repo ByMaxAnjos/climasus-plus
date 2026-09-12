@@ -77,7 +77,7 @@ function useUndoRedoShortcut(undo: () => void, redo: () => void) {
 
 export default function TopBar() {
   const {
-    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline,
+    lang, setLang, theme, toggleTheme, clear, engineStatus, steps, runPipeline, stopPipeline,
     openHelp, openAbout, saveProject, openProject, startFromDataFile, startTutorial,
     undo, redo, past, future, mode, openModeSelector,
   } = usePipeline()
@@ -99,7 +99,6 @@ export default function TopBar() {
       <div className="brand-block">
         <div className="brand">
           <span className="brand-name">climasus<span className="brand-plus">+</span> <span className="brand-studio">Studio</span></span>
-          <span className="brand-sub">{t('subtitle', lang)}</span>
         </div>
       </div>
       <div className="topbar-actions">
@@ -110,6 +109,9 @@ export default function TopBar() {
         <div className="topbar-group topbar-group-run">
           <button className="btn btn-primary" disabled={!canRun} onClick={() => runPipeline()}>
             {engineStatus === 'busy' ? t('running', lang) : `▶ ${t('run', lang)}`}
+          </button>
+          <button className="btn" disabled={engineStatus !== 'busy'} onClick={() => stopPipeline()}>
+            ■ {t('stop', lang)}
           </button>
           <div
             className="settings-group"

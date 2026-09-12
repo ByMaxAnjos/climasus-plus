@@ -74,8 +74,7 @@ check('pipeline persists reload', await page.locator('.step-card').count() === 2
 await page.locator('.settings-toggle').click()
 await page.waitForSelector('.settings-menu')
 await page.locator('.lang-select').selectOption('en')
-const sub = await page.locator('.brand-sub').textContent()
-check('EN subtitle', sub === 'Studio module of the climaSUS ecosystem', sub ?? '')
+check('EN lang applied', await page.locator('.settings-row span').first().textContent() === 'Language')
 
 // 13. theme toggle
 await page.locator('.theme-toggle').click()

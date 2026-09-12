@@ -120,12 +120,6 @@ try {
     ])
     check('CSV download triggered from UI', !!download)
 
-    const [reportDownload] = await Promise.all([
-      page.waitForEvent('download'),
-      page.locator('.results-head button', { hasText: 'Relatório' }).click(),
-    ])
-    check('HTML report download triggered from UI', !!reportDownload)
-
     // editing an upstream step invalidates + re-running updates status
     await page.locator('.arg-field:has(label:has-text("time_unit"))').locator('select').selectOption('week')
     await page.locator('.topbar-actions .btn-primary').click()

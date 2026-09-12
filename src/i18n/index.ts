@@ -4,11 +4,6 @@ import type { StageId } from '../catalog'
 type Dict = Record<string, { pt: string; en: string; es: string }>
 
 const dict: Dict = {
-  subtitle: {
-    pt: 'Módulo Studio do ecossistema climaSUS',
-    en: 'Studio module of the climaSUS ecosystem',
-    es: 'Módulo Studio del ecosistema climaSUS',
-  },
   search: { pt: 'Buscar função…', en: 'Search function…', es: 'Buscar función…' },
   emptyCodeComment: {
     pt: '# Monte seu pipeline adicionando funções à esquerda',
@@ -78,6 +73,7 @@ const dict: Dict = {
   steps: { pt: 'passos', en: 'steps', es: 'pasos' },
   run: { pt: 'Executar', en: 'Run', es: 'Ejecutar' },
   running: { pt: 'Executando…', en: 'Running…', es: 'Ejecutando…' },
+  stop: { pt: 'Parar', en: 'Stop', es: 'Detener' },
   runUpToHere: { pt: 'Executar até aqui', en: 'Run up to here', es: 'Ejecutar hasta aquí' },
   moveStepUp: { pt: 'Mover passo para cima', en: 'Move step up', es: 'Mover paso hacia arriba' },
   moveStepDown: { pt: 'Mover passo para baixo', en: 'Move step down', es: 'Mover paso hacia abajo' },
@@ -207,6 +203,11 @@ const dict: Dict = {
     pt: '{fn}: valor não numérico em {arg}.',
     en: '{fn}: non-numeric value in {arg}.',
     es: '{fn}: valor no numérico en {arg}.',
+  },
+  missingMonthForSystem: {
+    pt: '{fn}: "month" é obrigatório para sistemas mensais (SIH, CNES, SIA). Formatos aceitos: um mês único (1), um intervalo (1:12) ou uma lista (c(1, 4, 6)).',
+    en: '{fn}: "month" is required for monthly systems (SIH, CNES, SIA). Accepted formats: a single month (1), a range (1:12), or a list (c(1, 4, 6)).',
+    es: '{fn}: "month" es obligatorio para sistemas mensuales (SIH, CNES, SIA). Formatos aceptados: un mes único (1), un rango (1:12) o una lista (c(1, 4, 6)).',
   },
   offlineHint: {
     pt: 'Motor offline — exporte o código da análise para executar em outro ambiente, ou reinicie o Motor.',

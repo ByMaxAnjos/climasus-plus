@@ -70,6 +70,7 @@ interface PipelineState {
   toggleExpand: (panel: 'graph' | 'output') => void
   runPipeline: (upToStepId?: string) => Promise<void>
   restartEngine: () => Promise<void>
+  stopPipeline: () => Promise<void>
   exportReport: () => Promise<void>
   startTutorial: (tutorial: TutorialDef) => void
   nextTutorialStep: () => void
@@ -324,6 +325,11 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     try { await engine.resetSession() } catch { /* offline */ }
     set({ stepRun: {}, stepResults: {}, runError: null, engineIssue: null })
   },
+  stopPipeline: async () => {
+    engine.abortRun()
+    await get().restartEngine()
+    set({ engineStatus: (await engine.health()) ? 'ready' : 'offline' })
+  },
   exportReport: async () => {
     try {
       const url = await engine.generateReport('Relatorio climasus+ Studio')
@@ -518,6 +524,15 @@ function validateSteps(steps: Step[], lang: Lang): PipelineIssue[] {
       const raw = (step.values[arg.name] ?? '').trim()
       if (!raw) {
         if (arg.required) issues.push({ stepId: step.id, fn: fn.name, arg: arg.name, message: tp('missingArg', lang, { fn: fn.name, arg: arg.name }) })
+        // sus_data_import hard-stops in the engine when `month` is missing for SIH/CNES/SIA
+        // systems (climasus4r's own required-arg check, not expressible as a static `required`
+        // flag since it depends on another arg's value) — catch it here instead of at Run time.
+        if (fn.name === 'sus_data_import' && arg.name === 'month') {
+          const system = (step.values.system ?? '').trim().split('-')[0].toUpperCase()
+          if (['SIH', 'CNES', 'SIA'].includes(system)) {
+            issues.push({ stepId: step.id, fn: fn.name, arg: arg.name, message: tp('missingMonthForSystem', lang, { fn: fn.name }) })
+          }
+        }
         continue
       }
       if (isStepRef(raw)) {

@@ -66,14 +66,24 @@ export async function health(): Promise<boolean> {
   }
 }
 
+let runController: AbortController | null = null
+
 export async function run(steps: { var: string; code: string }[]): Promise<RunResponse> {
+  runController = new AbortController()
   const r = await fetch(`${base}/run`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify({ steps }),
+    signal: runController.signal,
   })
   if (!r.ok) throw new Error(`engine /run ${r.status}`)
   return r.json()
+}
+
+// Stops the client from waiting on the in-flight /run request; R is synchronous and can't be
+// interrupted mid-eval, so the request may still complete server-side — its result is just ignored.
+export function abortRun(): void {
+  runController?.abort()
 }
 
 export async function resetSession(): Promise<void> {
@@ -96,7 +106,10 @@ export async function engineBootError(): Promise<string> {
   return bootError
 }
 
-export const downloadUrl = (variable: string, format: 'csv' | 'xlsx' | 'parquet') =>
-  `${base}/download?var=${encodeURIComponent(variable)}&format=${format}`
+// cacheKey (per-run nonce, see StepResult) busts the browser/webview cache for these otherwise
+// deterministic URLs — same var+format or same artifact filename is reused across reruns
+export const downloadUrl = (variable: string, format: 'csv' | 'xlsx' | 'parquet', cacheKey?: string) =>
+  `${base}/download?var=${encodeURIComponent(variable)}&format=${format}${cacheKey ? `&v=${encodeURIComponent(cacheKey)}` : ''}`
 
-export const artifactUrl = (rel: string) => `${base}/artifact/${rel}`
+export const artifactUrl = (rel: string, cacheKey?: string) =>
+  `${base}/artifact/${rel}${cacheKey ? `?v=${encodeURIComponent(cacheKey)}` : ''}`

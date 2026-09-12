@@ -34,44 +34,44 @@ export default function ResultActions({ result, lang, showConsole, onToggleConso
     <div className="results-actions">
       {result.ok && result.kind === 'table' && (
         <>
-          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'csv'), `${result.var}.csv`, 'csv')} disabled={downloading !== null}>
+          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'csv', result.cacheKey), `${result.var}.csv`, 'csv')} disabled={downloading !== null}>
             {downloading === 'csv' ? '...' : 'CSV'}
           </button>
-          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'xlsx'), `${result.var}.xlsx`, 'xlsx')} disabled={downloading !== null}>
+          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'xlsx', result.cacheKey), `${result.var}.xlsx`, 'xlsx')} disabled={downloading !== null}>
             {downloading === 'xlsx' ? '...' : 'XLSX'}
           </button>
-          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'parquet'), `${result.var}.parquet`, 'parquet')} disabled={downloading !== null}>
+          <button className="btn btn-sm" onClick={() => handleDownload(downloadUrl(result.var, 'parquet', result.cacheKey), `${result.var}.parquet`, 'parquet')} disabled={downloading !== null}>
             {downloading === 'parquet' ? '...' : 'Parquet'}
           </button>
         </>
       )}
       {result.ok && result.kind === 'plot' && artifacts && (
         <>
-          <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.png!), `${result.var}.png`, 'png')} disabled={downloading !== null}>
+          <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.png!, result.cacheKey), `${result.var}.png`, 'png')} disabled={downloading !== null}>
             {downloading === 'png' ? '...' : 'PNG'}
           </button>
-          <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.svg!), `${result.var}.svg`, 'svg')} disabled={downloading !== null}>
+          <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.svg!, result.cacheKey), `${result.var}.svg`, 'svg')} disabled={downloading !== null}>
             {downloading === 'svg' ? '...' : 'SVG'}
           </button>
         </>
       )}
       {result.ok && result.kind === 'widget' && artifacts && (
         <>
-          <a className="btn btn-sm" href={artifactUrl(artifacts.html!)} target="_blank" rel="noreferrer">HTML ↗</a>
+          <a className="btn btn-sm" href={artifactUrl(artifacts.html!, result.cacheKey)} target="_blank" rel="noreferrer">HTML ↗</a>
           {artifacts.png && (
-            <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.png!), `${result.var}.png`, 'map-png')} disabled={downloading !== null}>
+            <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.png!, result.cacheKey), `${result.var}.png`, 'map-png')} disabled={downloading !== null}>
               {downloading === 'map-png' ? '...' : t('saveMap', lang)}
             </button>
           )}
         </>
       )}
       {result.ok && result.kind === 'raster' && artifacts?.tif && (
-        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.tif!), `${result.var}.tif`, 'tif')} disabled={downloading !== null}>
+        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.tif!, result.cacheKey), `${result.var}.tif`, 'tif')} disabled={downloading !== null}>
           {downloading === 'tif' ? '...' : 'GeoTIFF'}
         </button>
       )}
       {result.ok && (result.kind === 'plot' || result.kind === 'table') && artifacts?.gpkg && (
-        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.gpkg!), `${result.var}.gpkg`, 'gpkg')} disabled={downloading !== null}>
+        <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.gpkg!, result.cacheKey), `${result.var}.gpkg`, 'gpkg')} disabled={downloading !== null}>
           {downloading === 'gpkg' ? '...' : 'GeoPackage'}
         </button>
       )}

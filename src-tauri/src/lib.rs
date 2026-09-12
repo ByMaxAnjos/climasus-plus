@@ -89,6 +89,10 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str) -> Option<(u16, Chi
         .arg(port.to_string())
         .env("CLIMASUS_BUNDLED", "1")
         .env("CLIMASUS_TOKEN", token)
+        // R's front-end mangles spaces in --file= paths (renders as "~+~"), which corrupts
+        // start.R's own commandArgs()-derived location whenever the app path has a space
+        // (e.g. "climasus+ Studio.app") — hand it the real resource_dir directly instead.
+        .env("CLIMASUS_RESOURCE_DIR", resource_dir)
         .env("PATH", path)
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit());

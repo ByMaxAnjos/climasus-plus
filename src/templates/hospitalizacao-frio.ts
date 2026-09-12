@@ -11,10 +11,12 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
   audience: 'both',
   steps: [
     // catalog's `region` enum is lowercase snake_case ('sul'), not the display form 'Sul'
-    { fn: 'sus_data_import', values: { region: 'sul', system: 'SIH-RD', year: '2010:2019' }, explain: {
-      pt: 'Importamos internações (SIH-RD) na região Sul, 2010 a 2019.',
-      en: 'We import hospitalizations (SIH-RD) in the Southern region, 2010 to 2019.',
-      es: 'Importamos internaciones (SIH-RD) en la región Sur, 2010 a 2019.',
+    // month: '1:12' (all months) — required for SIH/CNES/SIA systems, and the cold-wave
+    // percentile threshold below needs the full-year distribution, not just winter months.
+    { fn: 'sus_data_import', values: { region: 'sul', system: 'SIH-RD', year: '2010:2019', month: '1:12' }, explain: {
+      pt: 'Importamos internações (SIH-RD) na região Sul, 2010 a 2019, todos os meses — a detecção de ondas de frio por percentil precisa da distribuição do ano inteiro, não só do inverno.',
+      en: 'We import hospitalizations (SIH-RD) in the Southern region, 2010 to 2019, all months — the percentile-based cold-wave detection needs the full-year distribution, not just winter.',
+      es: 'Importamos internaciones (SIH-RD) en la región Sur, 2010 a 2019, todos los meses — la detección de olas de frío por percentil necesita la distribución del año completo.',
     } },
     { fn: 'sus_data_clean_encoding', values: {}, explain: {
       pt: 'Corrigimos acentos e caracteres que costumam vir quebrados.',

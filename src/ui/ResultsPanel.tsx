@@ -7,9 +7,8 @@ import ResultActions from './result/ResultActions'
 import MethodWarningBanner from './result/MethodWarningBanner'
 
 export default function ResultsPanel() {
-  const { steps, selectedStep, stepResults, stepRun, lang, mode, runError, validationIssues, engineIssue, engineStatus, exportReport } = usePipeline()
+  const { steps, selectedStep, stepResults, stepRun, lang, mode, runError, validationIssues, engineIssue, engineStatus } = usePipeline()
   const [showConsole, setShowConsole] = useState(false)
-  const canExportReport = engineStatus === 'ready' && Object.keys(stepResults).length > 0
 
   // show the selected step's result, else the last step that has one
   const step =
@@ -48,9 +47,6 @@ export default function ResultsPanel() {
         )}
         <span className="results-ms">{result.ms} ms</span>
         <ResultActions result={result} lang={lang} showConsole={showConsole} onToggleConsole={() => setShowConsole(!showConsole)} />
-        <button className="btn btn-sm" disabled={!canExportReport} onClick={exportReport} title={t('reportHint', lang)}>
-          {t('report', lang)}
-        </button>
       </div>
       <div className="results-body">
         <MethodWarningBanner consoleText={result.console} />
