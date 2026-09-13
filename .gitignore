@@ -20,3 +20,26 @@ tsconfig.tsbuildinfo
 
 # R runtime artifact
 Rplots.pdf
+
+# personal/internal material — stays on this machine only, not part of the shipped app
+# (minicurso book + lessons, planning notes, raw logo sources, internal engineering docs)
+book/
+lessons/
+lessons.zip
+reference/
+assets/
+logos/
+CONTEXT.md
+MISSION.md
+NOTES.md
+RESOURCES.md
+tests.md
+docs/publicacao/
+docs/referencia-tecnica/
+docs/superpowers/
+docs/release-audit-v1.0.0.md
+docs/release-macos-go-no-go.md
+docs/media/*.mp4
+docs/.DS_Store
+scripts/audit-prereview.mjs
+scripts/rebuild-reference-manual.mjs
