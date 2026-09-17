@@ -1,3 +1,4 @@
+use std::fs::File;
 use std::net::TcpListener;
 use std::process::{Child, Command, Stdio};
 use std::sync::Mutex;
@@ -5,6 +6,14 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 #[cfg(unix)]
 use std::os::unix::process::CommandExt;
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
+// tells CreateProcess not to allocate a console for the child — without it, spawning the
+// console-subsystem R.exe from this GUI-subsystem app makes Windows pop up a visible terminal
+// window (the one users keep asking about), and closing that window kills the R process with it.
+#[cfg(windows)]
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 use tauri::{Manager, RunEvent};
 
@@ -58,7 +67,7 @@ fn r_binary(resource_dir: &std::path::Path) -> std::path::PathBuf {
     }
 }
 
-fn spawn_engine(resource_dir: &std::path::Path, token: &str) -> Option<(u16, Child)> {
+fn spawn_engine(resource_dir: &std::path::Path, token: &str, log_file: Option<&std::path::Path>) -> Option<(u16, Child)> {
     let r_bin = r_binary(resource_dir);
     let start_r = resource_dir.join("engine").join("start.R");
     if !r_bin.exists() || !start_r.exists() {
@@ -93,9 +102,19 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str) -> Option<(u16, Chi
         // start.R's own commandArgs()-derived location whenever the app path has a space
         // (e.g. "climasus+ Studio.app") — hand it the real resource_dir directly instead.
         .env("CLIMASUS_RESOURCE_DIR", resource_dir)
-        .env("PATH", path)
-        .stdout(Stdio::inherit())
-        .stderr(Stdio::inherit());
+        .env("PATH", path);
+    // R's own stdout/stderr (boot messages, warnings, crash output) — captured to a file instead
+    // of inherited so the Windows console stays hidden but the diagnostics aren't just lost.
+    match log_file.and_then(|p| File::create(p).ok()).and_then(|out| out.try_clone().ok().map(|err| (out, err))) {
+        Some((out, err)) => {
+            cmd.stdout(Stdio::from(out)).stderr(Stdio::from(err));
+        }
+        None => {
+            cmd.stdout(Stdio::inherit()).stderr(Stdio::inherit());
+        }
+    }
+    #[cfg(windows)]
+    cmd.creation_flags(CREATE_NO_WINDOW);
     // Linux R is dynamically linked against libR.so via the system loader path (unlike macOS,
     // where bundle-r-relocate.sh rewrites Mach-O install names) — point it at the bundled lib.
     #[cfg(target_os = "linux")]
@@ -155,7 +174,13 @@ pub fn run() {
             } else {
                 String::new()
             };
-            let state = match spawn_engine(&resource_dir, &token) {
+            // R's stdout/stderr are captured here instead of shown in a console window (see
+            // spawn_engine) — kept on disk so a failed boot is still diagnosable.
+            let log_path = app.path().app_log_dir().ok().and_then(|dir| {
+                std::fs::create_dir_all(&dir).ok()?;
+                Some(dir.join("r-engine.log"))
+            });
+            let state = match spawn_engine(&resource_dir, &token, log_path.as_deref()) {
                 Some((port, child)) => EngineState { port, token, boot_error, child: Mutex::new(Some(child)) },
                 None => EngineState { token, boot_error: if boot_error.is_empty() {
                     "Não foi possível iniciar o motor embutido do climasus+.".into()
