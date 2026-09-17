@@ -91,18 +91,26 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str, log_file: Option<&s
         std::env::var("PATH").unwrap_or_default()
     );
     let mut cmd = Command::new(&r_bin);
-    cmd.arg("--no-echo")
+    cmd
+        // R's front-end mangles spaces in --file=<path> (renders as "~+~" on macOS; on Windows
+        // a user confirmed the bundled R.exe just exits immediately) — "climasus+ Studio" always
+        // has a space. Run from resource_dir and pass a plain relative path instead, so the
+        // space-bearing parent directory never appears inside an R argument at all.
+        .current_dir(resource_dir)
+        .arg("--no-echo")
         .arg("--no-restore")
-        .arg(format!("--file={}", start_r.display()))
+        .arg("--file=engine/start.R")
         .arg("--args")
         .arg(port.to_string())
         .env("CLIMASUS_BUNDLED", "1")
         .env("CLIMASUS_TOKEN", token)
-        // R's front-end mangles spaces in --file= paths (renders as "~+~"), which corrupts
-        // start.R's own commandArgs()-derived location whenever the app path has a space
-        // (e.g. "climasus+ Studio.app") — hand it the real resource_dir directly instead.
         .env("CLIMASUS_RESOURCE_DIR", resource_dir)
         .env("PATH", path);
+    // stdin must be a real, valid handle here: this GUI-subsystem app has no console of its own,
+    // so plain Stdio::inherit() (the implicit default) hands R.exe an invalid stdin handle once
+    // CREATE_NO_WINDOW (below) stops Windows from auto-allocating a console to paper over that —
+    // R's front-end then fails to start at all. Stdio::null() gives it a valid, empty handle.
+    cmd.stdin(Stdio::null());
     // R's own stdout/stderr (boot messages, warnings, crash output) — captured to a file instead
     // of inherited so the Windows console stays hidden but the diagnostics aren't just lost.
     match log_file.and_then(|p| File::create(p).ok()).and_then(|out| out.try_clone().ok().map(|err| (out, err))) {
@@ -110,7 +118,10 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str, log_file: Option<&s
             cmd.stdout(Stdio::from(out)).stderr(Stdio::from(err));
         }
         None => {
-            cmd.stdout(Stdio::inherit()).stderr(Stdio::inherit());
+            // no writable log dir — still must not be Stdio::inherit() here: combined with
+            // CREATE_NO_WINDOW below, inherited (invalid, GUI-parent) handles are exactly what
+            // broke the engine on Windows. Stdio::null() is a real, valid handle either way.
+            cmd.stdout(Stdio::null()).stderr(Stdio::null());
         }
     }
     #[cfg(windows)]
