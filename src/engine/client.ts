@@ -10,7 +10,6 @@ declare global {
 
 let base = 'http://127.0.0.1:8787'
 let token = ''
-let bootError = ''
 let initialized = false
 
 export async function initEngine(): Promise<void> {
@@ -21,7 +20,6 @@ export async function initEngine(): Promise<void> {
     const port = (await window.__TAURI__.core.invoke('engine_port')) as number
     if (port) base = `http://127.0.0.1:${port}`
     token = (await window.__TAURI__.core.invoke('engine_token')) as string
-    bootError = (await window.__TAURI__.core.invoke('engine_boot_error')) as string
   } catch {
     // stay on the default; health polling will just report offline
   }
@@ -103,7 +101,12 @@ export async function generateReport(title: string): Promise<string> {
 
 export async function engineBootError(): Promise<string> {
   await initEngine()
-  return bootError
+  if (!window.__TAURI__) return ''
+  try {
+    return (await window.__TAURI__.core.invoke('engine_boot_error')) as string
+  } catch {
+    return ''
+  }
 }
 
 // cacheKey (per-run nonce, see StepResult) busts the browser/webview cache for these otherwise

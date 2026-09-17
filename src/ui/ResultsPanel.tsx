@@ -22,7 +22,7 @@ export default function ResultsPanel() {
     return (
       <div className="results-empty">
         <div>⚠ {runError}</div>
-        {engineStatus === 'offline' && engineIssue && <div>{tp('offlineDetails', lang, { message: engineIssue })}</div>}
+        {engineStatus === 'offline' && engineIssue && <div className="panel-note">{tp('offlineDetails', lang, { message: engineIssue })}</div>}
         {validationIssues.length > 0 && (
           <ul className="validation-list">
             {validationIssues.map((issue) => (
@@ -34,7 +34,13 @@ export default function ResultsPanel() {
     )
   }
   if (running && !result) return <div className="results-empty spinner-hint">{t('running', lang)}</div>
-  if (!result || !fn) return <div className="results-empty">{t('noResults', lang)}</div>
+  if (!result || !fn) return (
+    <div className="results-empty">
+      {engineStatus === 'offline' && engineIssue
+        ? <div className="panel-note" role="status">{tp('offlineDetails', lang, { message: engineIssue })}</div>
+        : t('noResults', lang)}
+    </div>
+  )
 
   return (
     <div className="results">

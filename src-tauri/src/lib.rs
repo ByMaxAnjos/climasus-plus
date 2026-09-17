@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::net::TcpListener;
+use std::path::PathBuf;
 use std::process::{Child, Command, Stdio};
 use std::sync::Mutex;
 use std::time::{SystemTime, UNIX_EPOCH};
@@ -22,6 +23,7 @@ struct EngineState {
     port: u16,
     token: String,
     boot_error: String,
+    log_path: Option<PathBuf>,
     child: Mutex<Option<Child>>,
 }
 
@@ -37,6 +39,41 @@ fn engine_token(state: tauri::State<EngineState>) -> String {
 
 #[tauri::command]
 fn engine_boot_error(state: tauri::State<EngineState>) -> String {
+    if !state.boot_error.is_empty() {
+        return state.boot_error.clone();
+    }
+    if let Some(child) = state.child.lock().unwrap().as_mut() {
+        match child.try_wait() {
+            Ok(Some(status)) => {
+                let detail = state
+                    .log_path
+                    .as_ref()
+                    .and_then(|path| std::fs::read(path).ok())
+                    .map(|bytes| {
+                        let output = String::from_utf8_lossy(&bytes);
+                        output
+                            .lines()
+                            .rev()
+                            .take(12)
+                            .collect::<Vec<_>>()
+                            .into_iter()
+                            .rev()
+                            .collect::<Vec<_>>()
+                            .join("\n")
+                    })
+                    .filter(|output| !output.is_empty())
+                    .unwrap_or_else(|| "Nenhuma saída do R foi registrada.".into());
+                let location = state
+                    .log_path
+                    .as_ref()
+                    .map(|path| path.display().to_string())
+                    .unwrap_or_else(|| "indisponível".into());
+                return format!("O motor R encerrou ({status}).\n{detail}\nLog: {location}");
+            }
+            Err(error) => return format!("Não foi possível verificar o processo R: {error}"),
+            Ok(None) => {}
+        }
+    }
     state.boot_error.clone()
 }
 
@@ -54,12 +91,12 @@ fn gen_token() -> String {
 // R's binary layout differs by OS. macOS: CRAN's build hardcodes R_HOME in bin/Rscript with no
 // self-detection — bin/R is a patched shell script that DOES self-detect (see
 // scripts/bundle-r-relocate.sh), so we must launch via bin/R + --file=/--args, never bin/Rscript.
-// Windows: R is relocatable and exposes bin/x64/R.exe, which self-detects R_HOME with no patching.
+// Windows: use the bundled bin/Rscript.exe launcher, as verified from the installed app.
 fn r_binary(resource_dir: &std::path::Path) -> std::path::PathBuf {
     let bin = resource_dir.join("r").join("bin");
     #[cfg(windows)]
     {
-        bin.join("x64").join("R.exe")
+        bin.join("Rscript.exe")
     }
     #[cfg(not(windows))]
     {
@@ -67,49 +104,57 @@ fn r_binary(resource_dir: &std::path::Path) -> std::path::PathBuf {
     }
 }
 
-fn spawn_engine(resource_dir: &std::path::Path, token: &str, log_file: Option<&std::path::Path>) -> Option<(u16, Child)> {
+fn spawn_engine(
+    resource_dir: &std::path::Path,
+    token: &str,
+    log_file: Option<&std::path::Path>,
+) -> Result<(u16, Child), String> {
     let r_bin = r_binary(resource_dir);
     let start_r = resource_dir.join("engine").join("start.R");
     if !r_bin.exists() || !start_r.exists() {
-        log::warn!("bundled R engine not found at {r_bin:?} — running without it");
-        return None;
+        return Err(format!("Motor embutido não encontrado: {r_bin:?} ou {start_r:?}"));
     }
 
     // plumber/httpuv reject ports outside 1024..49151, unlike the OS's ephemeral range
     // (often 49152+) that binding port 0 would hand out — scan a fixed range instead.
-    let port = (8787..8887).find(|p| TcpListener::bind(("127.0.0.1", *p)).is_ok())?;
+    let port = (8787..8887)
+        .find(|p| TcpListener::bind(("127.0.0.1", *p)).is_ok())
+        .ok_or_else(|| "Nenhuma porta disponível entre 8787 e 8886.".to_string())?;
 
-    // prepend R's own bin dir (parent of the R binary) so it finds its shared libs:
-    // r/bin on macOS, r/bin/x64 (holds R.dll) on Windows. PATH separator differs too.
-    let r_bin = r_binary(resource_dir);
+    // Keep both the Windows launcher directory and its x64 DLL directory on PATH.
     let r_bin_dir = r_bin.parent().unwrap_or(resource_dir);
     let sep = if cfg!(windows) { ";" } else { ":" };
+    let extra_bin = if cfg!(windows) {
+        format!("{}{}", resource_dir.join("r/bin/x64").display(), sep)
+    } else {
+        String::new()
+    };
     let path = format!(
-        "{}{}{}",
+        "{}{}{}{}",
+        extra_bin,
         r_bin_dir.display(),
         sep,
         std::env::var("PATH").unwrap_or_default()
     );
     let mut cmd = Command::new(&r_bin);
-    cmd
-        // R's front-end mangles spaces in --file=<path> (renders as "~+~" on macOS; on Windows
-        // a user confirmed the bundled R.exe just exits immediately) — "climasus+ Studio" always
-        // has a space. Run from resource_dir and pass a plain relative path instead, so the
-        // space-bearing parent directory never appears inside an R argument at all.
-        .current_dir(resource_dir)
-        .arg("--no-echo")
+    cmd.current_dir(resource_dir);
+    #[cfg(windows)]
+    cmd.arg(".\\engine\\start.R").arg(port.to_string());
+    #[cfg(not(windows))]
+    cmd.arg("--no-echo")
         .arg("--no-restore")
         .arg("--file=engine/start.R")
         .arg("--args")
-        .arg(port.to_string())
+        .arg(port.to_string());
+    cmd
         .env("CLIMASUS_BUNDLED", "1")
         .env("CLIMASUS_TOKEN", token)
         .env("CLIMASUS_RESOURCE_DIR", resource_dir)
         .env("PATH", path);
     // stdin must be a real, valid handle here: this GUI-subsystem app has no console of its own,
-    // so plain Stdio::inherit() (the implicit default) hands R.exe an invalid stdin handle once
+    // so plain Stdio::inherit() (the implicit default) hands R an invalid stdin handle once
     // CREATE_NO_WINDOW (below) stops Windows from auto-allocating a console to paper over that —
-    // R's front-end then fails to start at all. Stdio::null() gives it a valid, empty handle.
+    // R can then fail to start at all. Stdio::null() gives it a valid, empty handle.
     cmd.stdin(Stdio::null());
     // R's own stdout/stderr (boot messages, warnings, crash output) — captured to a file instead
     // of inherited so the Windows console stays hidden but the diagnostics aren't just lost.
@@ -134,13 +179,10 @@ fn spawn_engine(resource_dir: &std::path::Path, token: &str, log_file: Option<&s
     // instead of leaving them as orphans holding the port after a kill() of just the parent
     #[cfg(unix)]
     cmd.process_group(0);
-    let child = cmd
-        .spawn()
-        .map_err(|e| log::error!("failed to spawn R engine: {e}"))
-        .ok()?;
+    let child = cmd.spawn().map_err(|e| format!("Falha ao abrir {}: {e}", r_bin.display()))?;
 
     log::info!("climasus+ R engine spawned on port {port}");
-    Some((port, child))
+    Ok((port, child))
 }
 
 #[cfg(unix)]
@@ -192,12 +234,8 @@ pub fn run() {
                 Some(dir.join("r-engine.log"))
             });
             let state = match spawn_engine(&resource_dir, &token, log_path.as_deref()) {
-                Some((port, child)) => EngineState { port, token, boot_error, child: Mutex::new(Some(child)) },
-                None => EngineState { token, boot_error: if boot_error.is_empty() {
-                    "Não foi possível iniciar o motor embutido do climasus+.".into()
-                } else {
-                    boot_error
-                }, ..EngineState::default() },
+                Ok((port, child)) => EngineState { port, token, boot_error, log_path, child: Mutex::new(Some(child)) },
+                Err(error) => EngineState { token, boot_error: if boot_error.is_empty() { error } else { boot_error }, log_path, ..EngineState::default() },
             };
             app.manage(state);
             Ok(())

@@ -93,6 +93,10 @@ jobs:
         shell: cmd
         run: Rscript scripts/bundle-r-windows.R
 
+      - name: Boot bundled engine from a path with spaces
+        shell: pwsh
+        run: ./scripts/smoke-windows-engine.ps1
+
       - name: Tauri build (NSIS installer)
         run: npx -y @tauri-apps/cli@^2 build --bundles nsis
 

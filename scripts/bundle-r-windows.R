@@ -1,7 +1,7 @@
 # Windows counterpart of scripts/bundle-r.R. Copies a self-contained R runtime + the exact
 # package closure the climasus+ engine needs into src-tauri/resources/r, for embedding in the
 # Tauri (NSIS/MSI) installer. Unlike macOS there is NO Mach-O relocation or codesigning step:
-# R for Windows is relocatable — copy R_HOME intact and bin/x64/R.exe self-detects R_HOME.
+# R for Windows is relocatable — copy R_HOME intact; bin/Rscript.exe runs the engine.
 # Run on a Windows machine/runner from repo root: Rscript scripts/bundle-r-windows.R
 
 R_HOME <- R.home()
