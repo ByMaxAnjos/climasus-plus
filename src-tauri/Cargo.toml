@@ -1,6 +1,6 @@
 [package]
 name = "app"
-version = "1.0.5"
+version = "1.0.6"
 description = "climasus+ Studio — visual pipeline studio for climasus4r"
 authors = ["Max Anjos"]
 license = "MIT"
