@@ -54,7 +54,7 @@ fn engine_boot_error(state: tauri::State<EngineState>) -> String {
                         output
                             .lines()
                             .rev()
-                            .take(12)
+                            .take(40)
                             .collect::<Vec<_>>()
                             .into_iter()
                             .rev()
@@ -215,7 +215,11 @@ pub fn run() {
                         .build(),
                 )?;
             }
-            let resource_dir = app.path().resource_dir()?;
+            // tauri's resource_dir() canonicalizes and comes back \\?\-prefixed on Windows;
+            // dunce::simplified() strips that prefix wherever the path is short enough (always,
+            // for an app install path) so every downstream use (env var, current_dir, R's own
+            // "/"-joined file.path()) sees an ordinary path instead of a verbatim one.
+            let resource_dir = dunce::simplified(&app.path().resource_dir()?).to_path_buf();
             let token = gen_token();
             let r_bin = r_binary(&resource_dir);
             let start_r = resource_dir.join("engine").join("start.R");
@@ -256,4 +260,28 @@ pub fn run() {
                 }
             }
         });
+}
+
+#[cfg(all(test, windows))]
+mod tests {
+    // regression test for the real failure: tauri's resource_dir() canonicalizes on Windows,
+    // which prefixes \\?\ — a form R's "/"-joined file.path() can't resolve into ("File does
+    // not exist" for a file that's really there). dunce::simplified() must strip it whenever
+    // the path is a plain, short local path (always true for an app install directory).
+    #[test]
+    fn dunce_strips_verbatim_prefix_from_canonicalized_path() {
+        let dir = std::env::temp_dir().join(format!("climasus-dunce-test-{}", std::process::id()));
+        std::fs::create_dir_all(&dir).unwrap();
+        let canonical = std::fs::canonicalize(&dir).unwrap();
+        assert!(
+            canonical.to_string_lossy().starts_with(r"\\?\"),
+            "test assumption failed: std::fs::canonicalize should verbatim-prefix on Windows"
+        );
+        let simplified = dunce::simplified(&canonical);
+        assert!(
+            !simplified.to_string_lossy().starts_with(r"\\?\"),
+            "dunce::simplified left the \\\\?\\ prefix in place: {simplified:?}"
+        );
+        std::fs::remove_dir_all(&dir).unwrap();
+    }
 }

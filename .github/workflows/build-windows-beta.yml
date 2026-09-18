@@ -93,6 +93,10 @@ jobs:
         shell: cmd
         run: Rscript scripts/bundle-r-windows.R
 
+      - name: Rust unit tests (path handling)
+        working-directory: src-tauri
+        run: cargo test
+
       - name: Boot bundled engine from a path with spaces
         shell: pwsh
         run: ./scripts/smoke-windows-engine.ps1

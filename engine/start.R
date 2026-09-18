@@ -27,6 +27,12 @@ if (!nzchar(Sys.getenv("CLIMASUS_BUNDLED"))) {
 # corrupted by R (spaces become "~+~") whenever the app is installed under a path with a
 # space, e.g. "climasus+ Studio.app"
 resource_dir <- Sys.getenv("CLIMASUS_RESOURCE_DIR")
+# Windows' \\?\ verbatim-path prefix (added by Rust's path canonicalization) forbids "/" inside
+# it, which file.path() below always uses — "engine/api.R" then fails to resolve even though the
+# file exists. normalizePath() re-resolves through the plain (non-verbatim) API and drops it.
+if (nzchar(resource_dir) && .Platform$OS.type == "windows") {
+  resource_dir <- normalizePath(resource_dir, winslash = "/", mustWork = FALSE)
+}
 if (!nzchar(resource_dir)) {
   api_file <- file.path(dirname(sub("--file=", "", grep("--file=", commandArgs(), value = TRUE))), "api.R")
   resource_dir <- normalizePath(file.path(dirname(api_file), ".."), mustWork = FALSE)
@@ -43,6 +49,17 @@ if (file.exists(seed_file) && !file.exists(cache_file)) {
 }
 
 api_file <- file.path(resource_dir, "engine", "api.R")
+# always logged, even on success — the last failure report ("file does not exist: Path")
+# was truncated by the caller's log-tail before the actual path, so print it unambiguously
+# up front instead of guessing again from a partial message.
+message("CLIMASUS_RESOURCE_DIR=", resource_dir)
+message("api_file=", api_file, " exists=", file.exists(api_file))
+if (!file.exists(api_file)) {
+  stop(sprintf(
+    "engine/api.R not found at '%s' (resource_dir='%s', working dir='%s'). CLIMASUS_RESOURCE_DIR raw='%s'.",
+    api_file, resource_dir, getwd(), Sys.getenv("CLIMASUS_RESOURCE_DIR")
+  ))
+}
 pr <- plumber::plumb(api_file)
 # serve artifact files (plots, widgets, report)
 pr$mount("/artifact", plumber::PlumberStatic$new(file.path(tempdir(), "climasus-artifacts")))
