@@ -55,6 +55,7 @@ interface PipelineState {
   mode: UsageMode | null // usage mode for this project; null = not chosen yet
   modeOpen: boolean // mode selector panel visibility
   addStep: (fn: string) => void
+  addSteps: (fns: string[]) => void
   removeStep: (id: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
   reorderStep: (id: string, beforeId: string) => void
@@ -174,6 +175,13 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     pushHistory(get, set)
     const step: Step = { id: uid(), fn, values: {} }
     set((s) => ({ steps: [...s.steps, step], selectedStep: step.id, inspectFn: null }))
+    persist(get)
+  },
+  // append a whole recipe at once — one history entry, so a single undo takes it all back
+  addSteps: (fns) => {
+    pushHistory(get, set)
+    const added: Step[] = fns.map((fn) => ({ id: uid(), fn, values: {} }))
+    set((s) => ({ steps: [...s.steps, ...added], selectedStep: added[0]?.id ?? s.selectedStep, inspectFn: null }))
     persist(get)
   },
   removeStep: (id) => {
@@ -494,7 +502,13 @@ function stepArgs(step: Step, fn: FnSpec, skipFirst: boolean, varByStepId: Recor
   for (const a of fn.args) {
     if (skipFirst && a.name === fn.args[0].name) continue
     const v = (step.values[a.name] ?? '').trim()
-    if (!v) continue
+    if (!v) {
+      // ponytail: some climasus4r functions default `parallel` to TRUE, which spawns
+      // future::multisession workers inside the bundled R runtime — slow to boot and they
+      // swallow their own errors. Pin it off unless the user explicitly types TRUE.
+      if (a.name === 'parallel') out.push('parallel = FALSE')
+      continue
+    }
     if (isStepRef(v)) {
       const refVar = varByStepId[stepRefId(v)]
       if (refVar) out.push(`${a.name} = ${refVar}`) // unquoted: a real R variable reference

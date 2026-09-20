@@ -55,9 +55,11 @@ export default function ResultActions({ result, lang, showConsole, onToggleConso
           </button>
         </>
       )}
+      {/* no HTML export: saveWidget(selfcontained = FALSE) writes a bare page that only works
+          served from the engine's /artifact mount (see api.R), and ResultBody already renders it
+          inline with the Estático/Interativo toggle — target="_blank" never opened in the webview */}
       {result.ok && result.kind === 'widget' && artifacts && (
         <>
-          <a className="btn btn-sm" href={artifactUrl(artifacts.html!, result.cacheKey)} target="_blank" rel="noreferrer">HTML ↗</a>
           {artifacts.png && (
             <button className="btn btn-sm" onClick={() => handleDownload(artifactUrl(artifacts.png!, result.cacheKey), `${result.var}.png`, 'map-png')} disabled={downloading !== null}>
               {downloading === 'map-png' ? '...' : t('saveMap', lang)}

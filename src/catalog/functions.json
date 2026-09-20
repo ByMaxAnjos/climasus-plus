@@ -1087,7 +1087,7 @@
    },
    {
     "name": "parallel",
-    "default": "TRUE",
+    "default": "FALSE",
     "required": false,
     "type": "boolean",
     "options": [],

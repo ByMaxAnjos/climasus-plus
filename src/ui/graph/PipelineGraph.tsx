@@ -5,6 +5,8 @@ import {
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { usePipeline } from '../../store/pipeline'
+import { byName, friendlyName } from '../../catalog'
+import { PREP_SEQUENCE, PREP_SEQUENCE_CID_ONLY, PREP_SEQUENCE_SINAN } from '../../pipelines/templates'
 import { t } from '../../i18n'
 import { layoutSteps } from './layout'
 import StepNode from './nodes/StepNode'
@@ -13,7 +15,7 @@ import TutorialOverlay from './TutorialOverlay'
 const nodeTypes: NodeTypes = { step: StepNode }
 
 function GraphInner() {
-  const { steps, lang, stepResults, tutorialFocusId, mode, openModeSelector } = usePipeline()
+  const { steps, lang, stepResults, tutorialFocusId, mode, openModeSelector, addSteps } = usePipeline()
   const { nodes, edges } = useMemo(() => layoutSteps(steps), [steps])
   const { fitView, setCenter, getNode } = useReactFlow()
   const updateNodeInternals = useUpdateNodeInternals()
@@ -59,13 +61,36 @@ function GraphInner() {
           <li>{t('emptyPipelineTune', lang)}</li>
           <li>{t('emptyPipelineRun', lang)}</li>
         </ol>
-        <p className="pipeline-empty-note">{t('emptyPipelineTutorial', lang)}</p>
         {mode === null && (
           <button type="button" className="pipeline-empty-note pipeline-empty-mode" onClick={openModeSelector}>
             {t('emptyPipelineChooseMode', lang)}
           </button>
         )}
-        <p className="pipeline-empty-terminal-warn">{t('emptyPipelineKeepTerminal', lang)}</p>
+        <section className="prep-recipe">
+          <h3 className="prep-recipe-title">{t('prepSequenceTitle', lang)}</h3>
+          <p className="prep-recipe-lede">{t('prepSequenceLede', lang)}</p>
+          <ol className="prep-recipe-chain">
+            {PREP_SEQUENCE.map((name, i) => {
+              const fn = byName.get(name)
+              if (!fn) return null
+              return (
+                <li key={name} className={name === PREP_SEQUENCE_CID_ONLY ? 'prep-recipe-item optional' : 'prep-recipe-item'} title={name}>
+                  <span className="prep-recipe-num">{i + 1}</span>
+                  <span className="prep-recipe-name">{friendlyName(fn, lang, mode)}</span>
+                  {name === PREP_SEQUENCE_CID_ONLY && <span className="prep-recipe-badge">{t('prepSequenceCidNote', lang)}</span>}
+                </li>
+              )
+            })}
+          </ol>
+          <div className="prep-recipe-actions">
+            <button type="button" className="btn btn-sm btn-primary" onClick={() => addSteps(PREP_SEQUENCE)}>
+              {t('prepSequenceUse', lang)}
+            </button>
+            <button type="button" className="btn btn-sm" onClick={() => addSteps(PREP_SEQUENCE_SINAN)}>
+              {t('prepSequenceUseSinan', lang)}
+            </button>
+          </div>
+        </section>
       </div>
     )
   }

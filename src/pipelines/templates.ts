@@ -19,6 +19,21 @@ export interface PipelineTemplate {
 
 const PKGDOWN = 'https://climasus.github.io/climasus4r/articles'
 
+// The preparation chain recommended for most DATASUS systems (SIM, SIH, SINASC, SIA, CNES),
+// shown in the empty Pipeline panel as a one-click starting point. SINAN has no ICD column to
+// filter on, so its variant drops sus_data_filter_cid.
+export const PREP_SEQUENCE = [
+  'sus_data_import',
+  'sus_data_clean_encoding',
+  'sus_data_standardize',
+  'sus_data_filter_cid',
+  'sus_data_create_variables',
+  'sus_data_filter_demographics',
+  'sus_data_aggregate',
+]
+export const PREP_SEQUENCE_CID_ONLY = 'sus_data_filter_cid'
+export const PREP_SEQUENCE_SINAN = PREP_SEQUENCE.filter((fn) => fn !== PREP_SEQUENCE_CID_ONLY)
+
 export const TEMPLATES: PipelineTemplate[] = [
   // --- Trilha do Pipeline em 9 etapas ------------------------------------------
   {

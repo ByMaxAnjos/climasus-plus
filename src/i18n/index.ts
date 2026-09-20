@@ -12,9 +12,9 @@ const dict: Dict = {
   },
   pipeline: { pt: 'Pipeline', en: 'Pipeline', es: 'Pipeline' },
   emptyPipeline: {
-    pt: 'Pipeline vazio. Escolha uma função à esquerda — a base recomendada é: Importar dados do DATASUS + Corrigir acentuação e caracteres + Padronizar nomes e valores.',
-    en: 'Empty pipeline. Pick a function on the left — the recommended base is: Import DATASUS data + Correct accents and characters + Standardize names and values.',
-    es: 'Pipeline vacío. Elija una función a la izquierda — la base recomendada es: Importar datos de DATASUS + Corregir acentos y caracteres + Estandarizar nombres y valores.',
+    pt: 'Pipeline vazio. Monte o seu em três passos:',
+    en: 'Empty pipeline. Build yours in three steps:',
+    es: 'Pipeline vacío. Arme el suyo en tres pasos:',
   },
   emptyPipelinePick: {
     pt: 'Escolha uma função na biblioteca.',
@@ -31,20 +31,35 @@ const dict: Dict = {
     en: 'Run the pipeline or export the R code.',
     es: 'Ejecute el pipeline o exporte el código R.',
   },
-  emptyPipelineTutorial: {
-    pt: 'Para testar sem configurar nada, use um modelo pronto no topo.',
-    en: 'To test without configuring anything, use a ready-made template in the topbar.',
-    es: 'Para probar sin configurar nada, use un modelo listo en la barra superior.',
-  },
   emptyPipelineChooseMode: {
     pt: '⚙ Antes de começar, escolha seu Modo de uso (Vigilância ou Pesquisa).',
     en: '⚙ Before you start, choose your Usage mode (Surveillance or Research).',
     es: '⚙ Antes de empezar, elija su Modo de uso (Vigilancia o Investigación).',
   },
-  emptyPipelineKeepTerminal: {
-    pt: '🟢 Mantenha aberta a janela de terminal que abriu junto com o aplicativo — é ela que mantém o motor R rodando. Se fechar, o indicador "R" no topo apaga e o Executar para de funcionar.',
-    en: '🟢 Keep the terminal window that opened alongside the app open — it keeps the R engine running. Closing it turns off the "R" indicator at the top and Run stops working.',
-    es: '🟢 Mantenga abierta la ventana de terminal que se abrió junto con la aplicación — es la que mantiene el motor R funcionando. Si la cierra, el indicador "R" arriba se apaga y Ejecutar deja de funcionar.',
+  prepSequenceTitle: {
+    pt: 'Sequência recomendada de preparação',
+    en: 'Recommended preparation sequence',
+    es: 'Secuencia recomendada de preparación',
+  },
+  prepSequenceLede: {
+    pt: 'Serve para a maior parte dos sistemas do DATASUS — SIM, SIH, SINASC, SIA e CNES.',
+    en: 'Works for most DATASUS systems — SIM, SIH, SINASC, SIA and CNES.',
+    es: 'Sirve para la mayoría de los sistemas del DATASUS — SIM, SIH, SINASC, SIA y CNES.',
+  },
+  prepSequenceCidNote: {
+    pt: 'pule no SINAN',
+    en: 'skip for SINAN',
+    es: 'omítalo en SINAN',
+  },
+  prepSequenceUse: {
+    pt: 'Usar esta sequência',
+    en: 'Use this sequence',
+    es: 'Usar esta secuencia',
+  },
+  prepSequenceUseSinan: {
+    pt: 'Versão SINAN (sem filtro CID)',
+    en: 'SINAN version (no ICD filter)',
+    es: 'Versión SINAN (sin filtro CIE)',
   },
   addToPipeline: { pt: '＋ Adicionar ao pipeline', en: '＋ Add to pipeline', es: '＋ Añadir al pipeline' },
   params: { pt: 'Parâmetros', en: 'Parameters', es: 'Parámetros' },

@@ -314,17 +314,71 @@
   font: inherit;
   text-align: left;
 }
-.pipeline-empty-terminal-warn {
-  width: fit-content;
-  margin: 0;
-  padding: 7px 10px;
-  border: 1px solid color-mix(in srgb, var(--warn-500) 45%, var(--border));
+.prep-recipe {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--env-500) 35%, var(--border));
   border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--env-500) 7%, transparent);
+}
+.prep-recipe-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--text-primary);
+}
+.prep-recipe-lede {
+  margin: -4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+.prep-recipe-chain {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  /* the rail sits under the number bubbles and reads as the pipe the sequence builds */
+  padding: 0 0 0 9px;
+  border-left: 2px solid color-mix(in srgb, var(--env-500) 28%, transparent);
+  list-style: none;
+}
+.prep-recipe-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  line-height: 1.35;
   color: var(--text-secondary);
-  background: color-mix(in srgb, var(--warn-500) 10%, transparent);
-  font-size: 12.5px;
-  line-height: 1.5;
-  max-width: 460px;
+}
+.prep-recipe-num {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--env-500) 22%, transparent);
+  color: var(--env-400);
+  font-size: 10px;
+  font-weight: 800;
+}
+.prep-recipe-item.optional .prep-recipe-name { opacity: 0.85; }
+.prep-recipe-badge {
+  padding: 1px 6px;
+  border: 1px dashed color-mix(in srgb, var(--warn-500) 55%, var(--border));
+  border-radius: 999px;
+  color: var(--warn-500);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+.prep-recipe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
 }
 .pipeline-empty-note {
   width: fit-content;

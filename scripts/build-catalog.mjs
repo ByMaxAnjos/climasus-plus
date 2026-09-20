@@ -188,7 +188,9 @@ for (const f of readdirSync(RDIR).filter((f) => f.endsWith('.R'))) {
       const forced = FORCE_DATA.has(key) ? 'data' : FORCE_TEXT.has(key) ? 'text' : null
       return {
         name: pname,
-        default: def ?? null,
+        // the Studio always emits `parallel = FALSE` (see stepArgs) — keep the catalog
+        // default in sync so the Inspector doesn't advertise a value we never send
+        default: pname === 'parallel' ? 'FALSE' : (def ?? null),
         required: eq === -1 && pname !== '...',
         type: forced ?? inferType(def, doc.options),
         options: forced ? [] : (doc.options.length > 1 ? doc.options : (parseSignatureEnum(def) ?? doc.options)),
