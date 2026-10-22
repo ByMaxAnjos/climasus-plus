@@ -37,6 +37,7 @@ try {
 
   check('5-step pipeline runs on offline testdata', res.results.every((r) => r.ok), JSON.stringify(res.results.map((r) => r.ok)))
   check('step 4 (aggregate) is a table with dims', res.results[3]?.kind === 'table' && res.results[3]?.dims?.ncol === 3)
+  const aggDims = res.results[3]?.dims // captured before `res` is reassigned by the incremental-edit run
   check('step 5 (plot) produced a PNG artifact', res.results[4]?.kind === 'plot' && !!res.results[4]?.artifacts?.png)
 
   const artUrl = `${ENGINE}/artifact/${res.results[4].artifacts.png}`
@@ -111,7 +112,9 @@ try {
 
     await page.locator('.step-card[data-fn="sus_data_aggregate"]').click()
     const detail = page.locator('.results')
-    check('table view shows dims', /738.*3|3.*738/.test((await detail.locator('.results-dims').textContent()) ?? ''))
+    // expect the row count the engine reported for step 4 (testdata-dependent, not a fixed 738)
+    const dimsText = (await detail.locator('.results-dims').textContent()) ?? ''
+    check('table view shows dims', dimsText.includes(`${aggDims?.nrow} × 3`), dimsText)
     check('table rows rendered', await detail.locator('[data-testid="result-table"] tbody tr').count() > 0)
 
     const [download] = await Promise.all([
