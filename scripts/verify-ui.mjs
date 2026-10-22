@@ -17,7 +17,7 @@ await page.waitForSelector('.stage-tab')
 await dismissModeSelector(page)
 
 // 1. no welcome screen — studio renders directly
-check('studio renders, no welcome', await page.locator('.workspace').count() === 1)
+check('studio renders (usage-mode modal dismissed)',await page.locator('.workspace').count() === 1)
 
 // 2. three stage tracks
 check('3 stage tracks', await page.locator('.stage-tab').count() === 3)
