@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path'
 import { makeChecker, dismissModeSelector } from './_verify-helpers.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
-const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/climasus4r/inst/testdata'
+const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/testdata'
 const TESTDATA = join(TESTDATA_ROOT, 'sim/SIM_DO_RO_2022.parquet')
 const APP_URL = 'http://localhost:1420/'
 

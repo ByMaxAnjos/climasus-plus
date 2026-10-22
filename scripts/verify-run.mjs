@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path'
 import { makeChecker, waitForHealth, spawnEngine, dismissModeSelector } from './_verify-helpers.mjs'
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)))
-const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/climasus4r/inst/testdata'
+const TESTDATA_ROOT = process.env.CLIMASUS4R_TESTDATA ?? '/Users/co2map/Documents/2026/CLIMASUS4r/testdata'
 const TESTDATA = join(TESTDATA_ROOT, 'sim/SIM_DO_RO_2022.parquet')
 const PORT = 8799 // dedicated port so this script never fights a dev engine on 8787
 const ENGINE = `http://127.0.0.1:${PORT}`
