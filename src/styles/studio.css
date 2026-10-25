@@ -1567,7 +1567,7 @@
   background: var(--surface-1);
 }
 .insert-picker .search { width: 100%; margin-bottom: 6px; }
-.insert-picker ul { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
+.insert-picker ul { list-style: none; margin: 0; padding: 0; max-height: 320px; overflow-y: auto; }
 .insert-picker li {
   display: flex;
   flex-direction: column;
@@ -1580,6 +1580,21 @@
 }
 .insert-picker li .mono { font-size: 10px; color: var(--text-muted); }
 .insert-picker li:hover { background: var(--surface-2); }
+.insert-picker li.insert-picker-stage {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-top: 4px;
+  border-left: none;
+  background: var(--surface-1);
+  color: var(--stage);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: default;
+}
+.insert-picker li.insert-picker-empty { border-left: none; color: var(--text-muted); cursor: default; }
 
 /* dragging a library function over the canvas */
 .graph-canvas.drop-target { box-shadow: inset 0 0 0 2px var(--env-400); }
