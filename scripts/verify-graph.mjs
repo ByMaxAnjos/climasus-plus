@@ -44,7 +44,9 @@ if (!engineUp) {
     await page.locator('.arg-field:has(label:has-text("time_unit"))').locator('select').selectOption('month')
     await addFn('sus_data_plot_aggregate_ts')
 
-    check('graph renders one node per step', await page.locator('.react-flow__node').count() === 5)
+    // nodes mount one effect after steps change (layout reads measured heights)
+    await page.waitForTimeout(300)
+    check('graph renders one node per step', await page.locator('.react-flow__node-step').count() === 5)
     // edges render one tick after nodes measure their handle positions
     await page.waitForTimeout(300)
     check('graph draws edges between chained steps', await page.locator('.react-flow__edge').count() === 4)
@@ -82,7 +84,7 @@ if (!engineUp) {
     await page.locator('.settings-menu .settings-row', { hasText: 'Mortalidade Respiratória — SP 2014-2019' }).click()
     await page.waitForSelector('.tutorial-overlay')
     await page.waitForFunction(() => document.querySelectorAll('.step-status-running').length === 0, { timeout: 60000 })
-    check('tutorial loads its full step sequence', await page.locator('.react-flow__node').count() === RESPIRATORIO_SP_STEPS)
+    check('tutorial loads its full step sequence', await page.locator('.react-flow__node-step').count() === RESPIRATORIO_SP_STEPS)
     check('tutorial auto-runs the first step', await page.locator('.step-status-ok').count() >= 1)
     check('first step is spotlighted, others dimmed', await page.locator('.graph-node-dimmed').count() === RESPIRATORIO_SP_STEPS - 1)
     check('focused node is highlighted', await page.locator('.tutorial-focus').count() === 1)
@@ -96,7 +98,7 @@ if (!engineUp) {
 
     await page.locator('.tutorial-close').click()
     check('exiting the tutorial removes the overlay', await page.locator('.tutorial-overlay').count() === 0)
-    check('exiting the tutorial keeps the built pipeline intact', await page.locator('.react-flow__node').count() === RESPIRATORIO_SP_STEPS)
+    check('exiting the tutorial keeps the built pipeline intact', await page.locator('.react-flow__node-step').count() === RESPIRATORIO_SP_STEPS)
 
     // --- case-study templates: node count + generated R code for the combiner steps ---------
     // these templates' first step downloads real DATASUS/INMET data over the network, which
@@ -118,11 +120,11 @@ if (!engineUp) {
       await page.waitForSelector('.settings-menu')
       await page.locator('.settings-menu .settings-row', { hasText: tpl.title }).click()
       await page.waitForFunction(
-        (n) => document.querySelectorAll('.react-flow__node').length === n,
+        (n) => document.querySelectorAll('.react-flow__node-step').length === n,
         tpl.nodes,
         { timeout: 5000 },
       ).catch(() => {})
-      check(`"${tpl.title}" loads its ${tpl.nodes} steps`, await page.locator('.react-flow__node').count() === tpl.nodes)
+      check(`"${tpl.title}" loads its ${tpl.nodes} steps`, await page.locator('.react-flow__node-step').count() === tpl.nodes)
       // runPipeline() (auto-triggered by startTutorial) switches to the results tab; the code
       // we want to inspect only renders under the code tab
       await page.locator('.output-tab', { hasText: 'Código' }).click()

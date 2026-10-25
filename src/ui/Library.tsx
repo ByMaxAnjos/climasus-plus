@@ -28,7 +28,7 @@ const STAGE_ICONS: Record<StageId, JSX.Element> = {
 }
 
 export default function Library() {
-  const { lang, mode, inspectFn, inspect, addStep } = usePipeline()
+  const { lang, mode, inspectFn, inspect, addStep, toggleCollapse } = usePipeline()
   const [stage, setStage] = useState<StageId>('preparacao')
   const [query, setQuery] = useState('')
 
@@ -45,6 +45,10 @@ export default function Library() {
 
   return (
     <aside className="library glass">
+      <div className="panel-head">
+        <span className="panel-head-title">{t('library', lang)}</span>
+        <button className="btn btn-sm panel-collapse" title={t('hidePanel', lang)} onClick={() => toggleCollapse('library')}>«</button>
+      </div>
       <div className="stage-tabs">
         {STAGES.map((s) => (
           <button

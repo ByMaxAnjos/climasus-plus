@@ -123,12 +123,15 @@ function FnDoc({ fn, lang, mode }: { fn: FnSpec; lang: 'pt' | 'en' | 'es'; mode?
 }
 
 export default function Inspector() {
-  const { steps, selectedStep, inspectFn, lang, mode, addStep, setValue, validationIssues } = usePipeline()
+  const { steps, selectedStep, inspectFn, lang, mode, addStep, setValue, validationIssues, toggleCollapse } = usePipeline()
   const stepIndex = steps.findIndex((s) => s.id === selectedStep)
   const step: Step | undefined = steps[stepIndex]
   const fn = step ? byName.get(step.fn) : inspectFn ? byName.get(inspectFn) : undefined
 
-  if (!fn) return <aside className="inspector glass"><p className="empty-hint">{t('selectFn', lang)}</p></aside>
+  const collapseBtn = (
+    <button className="btn btn-sm panel-collapse panel-collapse-float" title={t('hidePanel', lang)} onClick={() => toggleCollapse('inspector')}>»</button>
+  )
+  if (!fn) return <aside className="inspector glass">{collapseBtn}<p className="empty-hint">{t('selectFn', lang)}</p></aside>
 
   // first arg is auto-supplied from the previous step's result whenever this step chains
   // (same rule the pipeline builder uses — see pipeArg/buildSteps in store/pipeline.ts)
@@ -160,6 +163,7 @@ export default function Inspector() {
 
   return (
     <aside className="inspector glass">
+      {collapseBtn}
       <div className="insp-scroll">
         <FnDoc fn={fn} lang={lang} mode={mode} />
         {step && (

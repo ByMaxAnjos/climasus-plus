@@ -22,6 +22,8 @@ export default function App() {
     mode,
     steps,
     openModeSelector,
+    collapsed,
+    toggleCollapse,
   } = usePipeline()
 
   useEffect(() => {
@@ -67,13 +69,28 @@ export default function App() {
   return (
     <div className="app">
       <TopBar />
-      <main className="workspace" data-expanded={expandedPanel ?? undefined}>
-        <Library />
+      <main
+        className="workspace"
+        data-expanded={expandedPanel ?? undefined}
+        data-left={collapsed.library ? 'collapsed' : undefined}
+        data-right={collapsed.inspector ? 'collapsed' : undefined}
+      >
+        {collapsed.library ? (
+          <aside className="side-rail glass library">
+            <button className="btn btn-sm side-rail-btn" title={t('showLibrary', lang)} onClick={() => toggleCollapse('library')}>»</button>
+            <span className="side-rail-label">{t('library', lang)}</span>
+          </aside>
+        ) : <Library />}
         <div className="center">
           <PipelineGraph />
           {outputPanel}
         </div>
-        <Inspector />
+        {collapsed.inspector ? (
+          <aside className="side-rail glass inspector">
+            <button className="btn btn-sm side-rail-btn" title={t('showInspector', lang)} onClick={() => toggleCollapse('inspector')}>«</button>
+            <span className="side-rail-label">{t('params', lang)}</span>
+          </aside>
+        ) : <Inspector />}
       </main>
       <HelpPanel />
       <AboutPanel />

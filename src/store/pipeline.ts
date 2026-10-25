@@ -11,6 +11,7 @@ export interface Step {
   id: string
   fn: string
   values: Record<string, string> // raw user input per arg name; '' = use default
+  note?: string // free-text annotation; exported as `# ...` comments above the step's R code
 }
 
 export type Lang = 'pt' | 'en' | 'es'
@@ -43,6 +44,7 @@ interface PipelineState {
   engineIssue: string | null
   centerTab: 'code' | 'results'
   expandedPanel: 'graph' | 'output' | null // maximized panel, hiding the side columns
+  collapsed: { library: boolean; inspector: boolean } // side panels shrunk to a thin rail
   stepRun: Record<string, StepRunState>
   stepResults: Record<string, StepResult>
   runError: string | null
@@ -57,6 +59,8 @@ interface PipelineState {
   addStep: (fn: string) => void
   addSteps: (fns: string[]) => void
   removeStep: (id: string) => void
+  duplicateStep: (id: string) => void
+  setNote: (id: string, note: string) => void
   moveStep: (id: string, dir: -1 | 1) => void
   reorderStep: (id: string, beforeId: string) => void
   setValue: (id: string, arg: string, value: string) => void
@@ -69,6 +73,7 @@ interface PipelineState {
   clear: () => void
   setCenterTab: (t: 'code' | 'results') => void
   toggleExpand: (panel: 'graph' | 'output') => void
+  toggleCollapse: (side: 'library' | 'inspector') => void
   runPipeline: (upToStepId?: string) => Promise<void>
   restartEngine: () => Promise<void>
   stopPipeline: () => Promise<void>
@@ -115,6 +120,7 @@ function deserializeProject(raw: string): ProjectData {
       id: typeof s.id === 'string' ? s.id : uid(),
       fn: s.fn!,
       values: normalizeStepValues(s.values),
+      ...(typeof s.note === 'string' && s.note.trim() ? { note: s.note } : {}),
     })),
     lang: (['pt', 'en', 'es'] as const).includes(parsed.lang) ? parsed.lang : 'pt',
     theme: parsed.theme === 'light' ? 'light' : 'dark',
@@ -148,6 +154,17 @@ function load(): ProjectData {
   return { steps: [], lang: 'pt', theme: 'dark', mode: null }
 }
 
+// per-viewer UI prefs (not part of the project file)
+const UI_KEY = 'climasus-plus-ui'
+function loadCollapsed(): PipelineState['collapsed'] {
+  try {
+    const c = JSON.parse(localStorage.getItem(UI_KEY) ?? '{}')?.collapsed
+    return { library: c?.library === true, inspector: c?.inspector === true }
+  } catch {
+    return { library: false, inspector: false }
+  }
+}
+
 let seq = Date.now()
 const uid = () => `s${(seq++).toString(36)}`
 
@@ -161,6 +178,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   engineIssue: null,
   centerTab: 'code' as const,
   expandedPanel: null,
+  collapsed: loadCollapsed(),
   stepRun: {},
   stepResults: {},
   runError: null,
@@ -189,6 +207,30 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     set((s) => ({
       steps: s.steps.filter((x) => x.id !== id),
       selectedStep: s.selectedStep === id ? null : s.selectedStep,
+    }))
+    persist(get)
+  },
+  duplicateStep: (id) => {
+    const i = get().steps.findIndex((x) => x.id === id)
+    if (i < 0) return
+    pushHistory(get, set)
+    const src = get().steps[i]
+    const copy: Step = { ...src, id: uid(), values: { ...src.values } }
+    set((s) => ({ steps: [...s.steps.slice(0, i + 1), copy, ...s.steps.slice(i + 1)], selectedStep: copy.id }))
+    persist(get)
+  },
+  setNote: (id, note) => {
+    const key = `${id}:#note`
+    const now = Date.now()
+    if (key !== lastEditKey || now - lastEditAt > EDIT_COALESCE_MS) pushHistory(get, set)
+    lastEditKey = key
+    lastEditAt = now
+    set((s) => ({
+      steps: s.steps.map((x) => {
+        if (x.id !== id) return x
+        const { note: _old, ...rest } = x
+        return note.trim() ? { ...rest, note } : rest
+      }),
     }))
     persist(get)
   },
@@ -276,6 +318,10 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   },
   setCenterTab: (centerTab) => set({ centerTab }),
   toggleExpand: (panel) => set((s) => ({ expandedPanel: s.expandedPanel === panel ? null : panel })),
+  toggleCollapse: (side) => {
+    set((s) => ({ collapsed: { ...s.collapsed, [side]: !s.collapsed[side] } }))
+    try { localStorage.setItem(UI_KEY, JSON.stringify({ collapsed: get().collapsed })) } catch { /* storage blocked */ }
+  },
   runPipeline: async (upToStepId) => {
     const { steps, engineStatus, lang } = get()
     if (engineStatus !== 'ready' || !steps.length) return
@@ -641,7 +687,10 @@ export function generateR(steps: Step[], lang: Lang = 'pt'): string {
   const built = buildSteps(steps)
   if (!built.length) return `${t('emptyCodeComment', lang)}\nlibrary(climasus4r)\n`
   const lines: string[] = ['library(climasus4r)', '']
+  const noteOf = new Map(steps.map((s) => [s.id, s.note?.trim() ?? '']))
   built.forEach((b, idx) => {
+    const note = noteOf.get(b.stepId)
+    const comments = note ? note.split('\n').map((l) => `# ${l}`.trimEnd()) : []
     // non-chained step with input passes it as first argument: fig <- sus_x_plot(dados, ...)
     const callArgs = !b.chains && b.input ? [b.input, ...b.args] : b.args
     const call = callArgs.length
@@ -649,10 +698,10 @@ export function generateR(steps: Step[], lang: Lang = 'pt'): string {
       : `${b.fn.name}()`
     if (b.chains) {
       lines[lines.length - 1] += ' |>'
-      lines.push(`  ${call}`)
+      lines.push(...comments.map((c) => `  ${c}`), `  ${call}`)
     } else {
       if (idx > 0) lines.push('')
-      lines.push(`${b.var} <- ${call}`)
+      lines.push(...comments, `${b.var} <- ${call}`)
     }
   })
   return lines.join('\n') + '\n'

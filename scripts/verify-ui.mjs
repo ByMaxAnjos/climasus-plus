@@ -92,6 +92,7 @@ check('climate aggregate pipeline present', await page.locator('.help-card', { h
 // load a full case study to assert multi-step load
 await page.locator('.help-card', { hasText: 'Pediatric respiratory mortality' }).locator('.btn-primary').click()
 await page.waitForSelector('.help-panel', { state: 'detached' })
+await page.waitForTimeout(300)
 check('template loads steps + closes panel', (await page.locator('.step-card').count()) >= 5)
 
 // 15. project serialize/deserialize round-trip (the file-save/open payload) via the store

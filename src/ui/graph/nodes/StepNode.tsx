@@ -1,8 +1,8 @@
 import { memo, useState } from 'react'
-import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { Handle, NodeToolbar, Position, type NodeProps } from '@xyflow/react'
 import { byName, stageColor, friendlyName } from '../../../catalog'
 import { usePipeline } from '../../../store/pipeline'
-import { t } from '../../../i18n'
+import { t, tp } from '../../../i18n'
 import ResultBody from '../../result/ResultBody'
 import ResultActions from '../../result/ResultActions'
 import MethodWarningBanner from '../../result/MethodWarningBanner'
@@ -15,7 +15,7 @@ function StatusDot({ state }: { state: 'idle' | 'running' | 'ok' | 'error' | 'st
 }
 
 function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
-  const { step } = data
+  const { step, piped } = data
   const fn = byName.get(step.fn)
   const run = usePipeline((s) => s.stepRun[step.id])
   const result = usePipeline((s) => s.stepResults[step.id])
@@ -30,14 +30,21 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
   const mode = usePipeline((s) => s.mode)
   const select = usePipeline((s) => s.select)
   const removeStep = usePipeline((s) => s.removeStep)
+  const duplicateStep = usePipeline((s) => s.duplicateStep)
+  const setNote = usePipeline((s) => s.setNote)
   const moveStep = usePipeline((s) => s.moveStep)
   const reorderStep = usePipeline((s) => s.reorderStep)
   const runPipeline = usePipeline((s) => s.runPipeline)
   const [showConsole, setShowConsole] = useState(false)
   const [dragOver, setDragOver] = useState(false)
+  const [editingNote, setEditingNote] = useState(false)
+  // read straight from the store, not `data.step`: node data reaches us one effect later, which
+  // makes a controlled textarea drop keystrokes when typing fast
+  const note = usePipeline((s) => s.steps.find((x) => x.id === step.id)?.note)
 
   if (!fn) return null
   const setArgs = fn.args.filter((a) => (step.values[a.name] ?? '').trim())
+  const missing = fn.args.filter((a, i) => a.required && !(i === 0 && piped) && !(step.values[a.name] ?? '').trim())
 
   return (
     <div
@@ -56,6 +63,15 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
       data-run={run ?? 'idle'}
     >
       <Handle type="target" position={Position.Left} style={{ visibility: 'hidden' }} />
+      <Handle type="target" id="top" position={Position.Top} style={{ visibility: 'hidden' }} />
+      <NodeToolbar isVisible={selected} position={Position.Top} align="start" className="node-toolbar">
+        {engineStatus === 'ready' && (
+          <button onClick={() => runPipeline(step.id)}>▶ {t('runUpToHere', lang)}</button>
+        )}
+        <button onClick={() => { select(step.id); setEditingNote(true) }}>✎ {t('addNote', lang)}</button>
+        <button onClick={() => duplicateStep(step.id)}>⧉ {t('duplicateStep', lang)}</button>
+        <button className="danger" onClick={() => removeStep(step.id)}>✕ {t('removeStep', lang)}</button>
+      </NodeToolbar>
       <div className="node-header">
         <span
           className="step-drag-handle"
@@ -77,14 +93,29 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
           </span>
         </div>
         <div className="step-actions">
-          {engineStatus === 'ready' && (
-            <button title={t('runUpToHere', lang)} onClick={(e) => { e.stopPropagation(); runPipeline(step.id) }}>▶</button>
-          )}
-          <button title={t('moveStepUp', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, -1) }}>↑</button>
-          <button title={t('moveStepDown', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, 1) }}>↓</button>
-          <button title={t('removeStep', lang)} onClick={(e) => { e.stopPropagation(); removeStep(step.id) }}>✕</button>
+          <button title={t('moveStepUp', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, -1) }}>←</button>
+          <button title={t('moveStepDown', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, 1) }}>→</button>
         </div>
       </div>
+      {missing.length > 0 && run !== 'running' && (
+        <span className="node-missing" title={missing.map((a) => a.name).join(', ')}>
+          ⚠ {tp('requiredMissing', lang, { n: String(missing.length) })}
+        </span>
+      )}
+      {editingNote ? (
+        <textarea
+          className="node-note node-note-edit nodrag nowheel"
+          autoFocus
+          rows={3}
+          value={note ?? ''}
+          placeholder={t('notePlaceholder', lang)}
+          onChange={(e) => setNote(step.id, e.target.value)}
+          onBlur={() => setEditingNote(false)}
+          onKeyDown={(e) => { if (e.key === 'Escape') (e.target as HTMLTextAreaElement).blur() }}
+        />
+      ) : note ? (
+        <p className="node-note" onDoubleClick={() => setEditingNote(true)}>{note}</p>
+      ) : null}
       {result && (
         <div className="node-result">
           <MethodWarningBanner consoleText={result.console} />
@@ -94,6 +125,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
         </div>
       )}
       <Handle type="source" position={Position.Right} style={{ visibility: 'hidden' }} />
+      <Handle type="source" id="bottom" position={Position.Bottom} style={{ visibility: 'hidden' }} />
     </div>
   )
 }
