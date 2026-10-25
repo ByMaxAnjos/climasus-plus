@@ -3,6 +3,23 @@ import { usePipeline, generateR } from '../store/pipeline'
 import { t, tp } from '../i18n'
 import { saveTextFile } from '../project/io'
 
+// ponytail: regex tokenizer for the R we generate (comments, strings, numbers, constants, calls,
+// named args, operators) — not a full R grammar; swap for a real highlighter if arbitrary R is shown
+const TOKEN = /(#.*)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|\b(TRUE|FALSE|NULL|NA|Inf)\b|(\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?L?\b)|(\|>|<-|::)|([A-Za-z_.][\w.]*)(?=\s*\()|([A-Za-z_.][\w.]*)(?=\s*=(?!=))/g
+const CLS = ['', 'tok-comment', 'tok-string', 'tok-const', 'tok-number', 'tok-op', 'tok-fn', 'tok-arg']
+
+function highlightR(code: string) {
+  const out: (string | JSX.Element)[] = []
+  let last = 0
+  for (const m of code.matchAll(TOKEN)) {
+    if (m.index! > last) out.push(code.slice(last, m.index))
+    out.push(<span key={m.index} className={CLS[m.slice(1).findIndex(Boolean) + 1]}>{m[0]}</span>)
+    last = m.index! + m[0].length
+  }
+  out.push(code.slice(last))
+  return out
+}
+
 export default function CodePanel() {
   const { steps, lang, engineStatus, engineIssue } = usePipeline()
   const [copied, setCopied] = useState(false)
@@ -39,7 +56,7 @@ export default function CodePanel() {
         </div>
       )}
       {saveError && <div className="panel-note" role="alert">{saveError}</div>}
-      <pre className="code mono" data-testid="r-code">{code}</pre>
+      <pre className="code mono" data-testid="r-code">{highlightR(code)}</pre>
     </section>
   )
 }

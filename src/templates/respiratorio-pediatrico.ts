@@ -34,7 +34,7 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
       en: 'We keep only respiratory causes (ICD-10 chapter J).',
       es: 'Mantenemos solo las causas respiratorias (CIE-10 capítulo J).',
     } },
-    { fn: 'sus_data_create_variables', values: { age_breaks: 'c(0, 5, 15, 60, Inf)' }, explain: {
+    { fn: 'sus_data_create_variables', values: { age_breaks: 'c(0, 5, 15, 60, Inf)', create_calendar_vars: 'TRUE' }, explain: {
       pt: 'Criamos faixas etárias e variáveis de calendário.',
       en: 'We create age groups and calendar variables.',
       es: 'Creamos franjas etarias y variables de calendario.',
@@ -47,11 +47,14 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
     {
       id: 'resp-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'month', group_by: 'codigo_municipio_residencia' },
+      // Weekly resolution keeps the outcome compatible with the daily lag
+      // structure used below. Monthly aggregation + daily lags (the old default)
+      // made adjacent months' exposure windows overlap almost completely.
+      values: { time_unit: 'week', group_by: 'codigo_municipio_residencia', complete_dates: 'TRUE' },
       explain: {
-        pt: 'Agregamos a série por mês.',
-        en: 'We aggregate the series by month.',
-        es: 'Agregamos la serie por mes.',
+        pt: 'Agregamos a série por semana — resolução compatível com as defasagens em dias usadas no DLNM. A agregação mensal anterior deixava as janelas de meses vizinhos quase totalmente sobrepostas.',
+        en: 'We aggregate the series by week — a resolution compatible with the daily lags used in the DLNM. The previous monthly aggregation made adjacent months\' exposure windows overlap almost completely.',
+        es: 'Agregamos la serie por semana — una resolución compatible con los rezagos diarios usados en el DLNM.',
       },
     },
     {
@@ -76,29 +79,24 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
     },
     {
       fn: 'sus_climate_aggregate',
-      // temporal_strategy='distributed_lag' creates the tair_dry_bulb_c_lag0..N columns that
-      // sus_mod_dlnm requires (it aborts without them); climate_var is pinned to one variable so
-      // its climate_col auto-detection is unambiguous. lag_days is in DAYS and is capped by
-      // sus_mod_dlnm's own `n_obs >= lag_max + 10` check: this series is monthly (60 months for
-      // 2015-2019), so lag_max must stay well under 50. time_unit is deliberately left unset
-      // (default "day") — it only floors the CLIMATE series, and daily climate rows are what let
-      // every integer lag match the monthly health date instead of producing all-NA lag columns.
+      // The outcome is now weekly, so a 0–21 day lag is a genuine three-week
+      // exposure window instead of a 0–30 day lag on monthly data.
       values: {
         health_data: stepRef('resp-spatial'),
         climate_data: stepRef('resp-inmet'),
-        climate_var: 'tair_dry_bulb_c',
+        climate_var: 'all',
         temporal_strategy: 'distributed_lag',
-        lag_days: '30',
+        lag_days: '21',
       },
       explain: {
-        pt: 'Cruzamos saúde e clima criando as colunas de defasagem (temperatura de 0 a 30 dias antes de cada mês) exigidas pelo DLNM. A janela de 30 dias é um valor ILUSTRATIVO, não um parâmetro calibrado na literatura — ajuste-o para a sua pergunta.',
-        en: 'We cross health and climate data, creating the lag columns (temperature from 0 to 30 days before each month) that DLNM requires. The 30-day window is an ILLUSTRATIVE value, not a literature-calibrated parameter — adjust it for your question.',
-        es: 'Cruzamos salud y clima creando las columnas de rezago (temperatura de 0 a 30 días antes de cada mes) exigidas por el DLNM. La ventana de 30 días es un valor ILUSTRATIVO — ajústelo a su pregunta.',
+        pt: 'Cruzamos saúde semanal e clima diário criando as colunas de defasagem de 0 a 21 dias para as variáveis climáticas disponíveis (incluindo temperatura e umidade). A janela de três semanas é um ponto de partida; teste 7/14/21 dias como sensibilidade. A umidade entra como covariável no modelo (lag 0) para reduzir confundimento.',
+        en: 'We cross weekly health and daily climate, creating 0–21 day lag columns for the available climate variables (including temperature and humidity). The three-week window is a starting point; test 7/14/21 days as sensitivity. Humidity enters the model as a covariate (lag 0) to reduce confounding.',
+        es: 'Cruzamos salud semanal y clima diario, creando columnas de rezago de 0 a 21 días para temperatura y humedad.',
       },
     },
-    { id: 'resp-dlnm', fn: 'sus_mod_dlnm', values: {}, explain: {
-      pt: 'Ajustamos o modelo DLNM sobre a série integrada.',
-      en: 'We fit the DLNM model over the integrated series.',
+    { id: 'resp-dlnm', fn: 'sus_mod_dlnm', values: { climate_col: 'tair_dry_bulb_c', covariates: 'rh_mean_porc_lag0', dof_per_year: '2' }, explain: {
+      pt: 'Ajustamos o modelo DLNM sobre a série integrada. Reduzimos a flexibilidade da tendência (2 graus de liberdade por ano) para evitar sobreajuste em cinco anos de dados.',
+      en: 'We fit the DLNM model over the integrated series. We reduce trend flexibility (2 df per year) to avoid overfitting five years of data.',
       es: 'Ajustamos el modelo DLNM sobre la serie integrada.',
     } },
     // both plot and af consume the DLNM fit directly — an explicit stepRef is needed here because

@@ -91,6 +91,10 @@ export default function TopBar() {
   const [templatesOpen, setTemplatesOpen] = useState(false)
 
   const canRun = engineStatus === 'ready' && steps.length > 0
+  const engineLabel = t(
+    engineStatus === 'ready' ? 'engine_ready' : engineStatus === 'busy' ? 'engine_busy' : 'engine_offline',
+    lang,
+  )
   const applicableTemplates = CASE_TEMPLATES.filter(
     (tpl) => !tpl.audience || tpl.audience === 'both' || tpl.audience === mode,
   )
@@ -102,16 +106,16 @@ export default function TopBar() {
         </div>
       </div>
       <div className="topbar-actions">
-        <div className={`engine-status engine-${engineStatus}`} title={`R: ${engineStatus}`}>
+        <div className={`engine-status engine-${engineStatus}`} title={engineLabel}>
           <span className="engine-dot" aria-hidden="true" />
-          <span>R</span>
+          <span>{t('engine', lang)}</span>
         </div>
         <div className="topbar-group topbar-group-run">
           <button className="btn btn-primary" disabled={!canRun} onClick={() => runPipeline()}>
-            {engineStatus === 'busy' ? t('running', lang) : `▶ ${t('run', lang)}`}
+            {engineStatus === 'busy' ? t('running', lang) : t('run', lang)}
           </button>
           <button className="btn" disabled={engineStatus !== 'busy'} onClick={() => stopPipeline()}>
-            ■ {t('stop', lang)}
+            {t('stop', lang)}
           </button>
           <div
             className="settings-group"

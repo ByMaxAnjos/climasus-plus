@@ -181,6 +181,15 @@ const labels: Record<Lang, {
   teamTitle: string
   teamBody: string
   links: string
+  creditsTitle: string
+  citeLabel: string
+  dataLabel: string
+  dataBody: string
+  stackLabel: string
+  stackBody: string
+  licenseLabel: string
+  licenseLink: string
+  repoLabel: string
 }> = {
   pt: {
     eyebrow: 'Centro de Clima de Saúde de Rondônia · INCT-CONEXAO',
@@ -189,6 +198,15 @@ const labels: Record<Lang, {
     teamTitle: 'Equipe do núcleo',
     teamBody: 'Pesquisadores, desenvolvedores e comunicadores científicos envolvidos no desenvolvimento do ecossistema climaSUS.',
     links: 'Contatos e perfis',
+    creditsTitle: 'Créditos e citação',
+    citeLabel: 'Como citar',
+    dataLabel: 'Dados e serviços',
+    dataBody: 'DATASUS/MS (SIM, SINAN, SIH, SINASC, CNES), INMET, INPE, IBGE e CEMADEN.',
+    stackLabel: 'Tecnologia',
+    stackBody: 'climasus4r, R, React, Tauri e bibliotecas de código aberto.',
+    licenseLabel: 'Licença',
+    licenseLink: 'texto da licença',
+    repoLabel: 'Repositório',
   },
   en: {
     eyebrow: 'Rondônia Health Climate Center · INCT-CONEXAO',
@@ -197,6 +215,15 @@ const labels: Record<Lang, {
     teamTitle: 'Core team',
     teamBody: 'Researchers, developers and science communicators involved in the development of the climaSUS ecosystem.',
     links: 'Contacts and profiles',
+    creditsTitle: 'Credits and citation',
+    citeLabel: 'How to cite',
+    dataLabel: 'Data and services',
+    dataBody: 'DATASUS/MS (SIM, SINAN, SIH, SINASC, CNES), INMET, INPE, IBGE and CEMADEN.',
+    stackLabel: 'Technology',
+    stackBody: 'climasus4r, R, React, Tauri and open-source libraries.',
+    licenseLabel: 'License',
+    licenseLink: 'license text',
+    repoLabel: 'Repository',
   },
   es: {
     eyebrow: 'Centro de Clima de Salud de Rondônia · INCT-CONEXAO',
@@ -205,6 +232,15 @@ const labels: Record<Lang, {
     teamTitle: 'Equipo central',
     teamBody: 'Investigadores, desarrolladores y comunicadores científicos involucrados en el desarrollo del ecosistema climaSUS.',
     links: 'Contactos y perfiles',
+    creditsTitle: 'Créditos y citación',
+    citeLabel: 'Cómo citar',
+    dataLabel: 'Datos y servicios',
+    dataBody: 'DATASUS/MS (SIM, SINAN, SIH, SINASC, CNES), INMET, INPE, IBGE y CEMADEN.',
+    stackLabel: 'Tecnología',
+    stackBody: 'climasus4r, R, React, Tauri y bibliotecas de código abierto.',
+    licenseLabel: 'Licencia',
+    licenseLink: 'texto de la licencia',
+    repoLabel: 'Repositorio',
   },
 }
 
@@ -291,6 +327,29 @@ export default function AboutPanel() {
               </article>
             ))}
           </div>
+        </section>
+
+        <section className="about-section about-credits-section">
+          <h3>{copy.creditsTitle}</h3>
+          <dl className="about-credits-list">
+            <dt>{copy.citeLabel}</dt>
+            <dd>
+              <code>ANJOS, Max. climasus+ Studio. v1.1.0-beta.2. 2026. https://github.com/ByMaxAnjos/climasus-plus</code>
+            </dd>
+            <dt>{copy.dataLabel}</dt>
+            <dd>{copy.dataBody}</dd>
+            <dt>{copy.stackLabel}</dt>
+            <dd>{copy.stackBody}</dd>
+            <dt>{copy.licenseLabel}</dt>
+            <dd>
+              MIT · © 2026 Max Anjos ·{' '}
+              <a href="https://github.com/ByMaxAnjos/climasus-plus/blob/main/LICENSE" target="_blank" rel="noreferrer">{copy.licenseLink}</a>
+            </dd>
+            <dt>{copy.repoLabel}</dt>
+            <dd>
+              <a href="https://github.com/ByMaxAnjos/climasus-plus" target="_blank" rel="noreferrer">github.com/ByMaxAnjos/climasus-plus</a>
+            </dd>
+          </dl>
         </section>
       </div>
     </div>

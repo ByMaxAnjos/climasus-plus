@@ -392,13 +392,17 @@ function() {
 #* @post /run
 #* @serializer unboxedJSON
 function(req) {
-  steps <- fromJSON(req$postBody, simplifyDataFrame = FALSE)$steps
+  body <- fromJSON(req$postBody, simplifyDataFrame = FALSE)
+  steps <- body$steps
   codes <- vapply(steps, `[[`, "", "code")
   vars <- vapply(steps, `[[`, "", "var")
 
   # first index whose code differs from what the session already ran
   k <- 1L
   while (k <= length(state$codes) && k <= length(codes) && state$codes[k] == codes[k]) k <- k + 1L
+  # the client may hold no result for an already-cached step (e.g. after an app reload):
+  # `from` asks to re-run from that step so its preview comes back
+  if (!is.null(body$from)) k <- max(1L, min(k, as.integer(body$from)))
 
   # roll back bindings of invalidated steps (deepest first)
   if (k <= length(state$codes)) {

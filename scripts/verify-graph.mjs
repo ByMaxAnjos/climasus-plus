@@ -78,7 +78,7 @@ if (!engineUp) {
     const RESPIRATORIO_SP_STEPS = 9
     // the button reads "Templates" whenever more than one template applies to the current mode
     // (it falls back to "Tutorial guiado" only when a single one applies) — see TopBar.tsx
-    const openTemplatesMenu = () => page.locator('.topbar-actions button', { hasText: 'Templates' }).click()
+    const openTemplatesMenu = () => page.locator('.topbar-actions button', { hasText: /Modelos|Templates/ }).click()
     await openTemplatesMenu()
     await page.waitForSelector('.settings-menu')
     await page.locator('.settings-menu .settings-row', { hasText: 'Mortalidade Respiratória — SP 2014-2019' }).click()
@@ -110,10 +110,10 @@ if (!engineUp) {
     // merged climate data at all, so it has no sus_climate_aggregate step). `climateVar` is
     // asserted only where a climate frame is actually merged in.
     const CASE_STUDIES = [
-      { title: 'Dengue e clima — Nordeste 2015-2019', nodes: 10, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
+      { title: 'Dengue e graus-dia — Nordeste 2015-2019', nodes: 11, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
       { title: 'Mortalidade respiratória pediátrica e temperatura — Sudeste 2015-2019', nodes: 13, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
       { title: 'Mortalidade cardiovascular em idosos e ondas de calor — SP 2010-2019', nodes: 15, combiner: 'sus_climate_aggregate', healthVar: 'dados', climateVar: 'clima' },
-      { title: 'Hospitalizações respiratórias e frio extremo — Região Sul 2010-2019', nodes: 11, combiner: 'sus_mod_its', healthVar: 'dados', climateVar: null },
+      { title: 'Hospitalizações respiratórias e frio extremo — Região Sul 2010-2019', nodes: 12, combiner: 'sus_mod_its', healthVar: 'dados_2', climateVar: null },
     ]
     for (const tpl of CASE_STUDIES) {
       await openTemplatesMenu()

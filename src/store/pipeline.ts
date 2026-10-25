@@ -357,7 +357,8 @@ export const usePipeline = create<PipelineState>((set, get) => ({
       stepRun: Object.fromEntries(slice.map((s) => [s.id, 'running'])),
     })
     try {
-      const res = await engine.run(engineSteps.map(({ var: v, code }) => ({ var: v, code })))
+      const missing = slice.findIndex((s) => !get().stepResults[s.id])
+      const res = await engine.run(engineSteps.map(({ var: v, code }) => ({ var: v, code })), missing >= 0 ? missing + 1 : undefined)
       const stepRun: Record<string, StepRunState> = {}
       const stepResults = { ...get().stepResults }
       const runStamp = `${Date.now()}`
@@ -449,7 +450,7 @@ export const usePipeline = create<PipelineState>((set, get) => ({
   closeModeSelector: () => set({ modeOpen: false }),
   loadTemplate: (tpl) => {
     pushHistory(get, set)
-    const steps: Step[] = tpl.steps.map((s) => ({ id: uid(), fn: s.fn, values: { ...s.values } }))
+    const steps: Step[] = tpl.steps.map((s) => ({ id: s.id ?? uid(), fn: s.fn, values: { ...s.values } }))
     set({ ...freshRun, steps, selectedStep: steps[0]?.id ?? null })
     persist(get)
   },

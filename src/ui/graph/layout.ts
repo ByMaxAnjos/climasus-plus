@@ -110,7 +110,7 @@ export function layoutSteps(steps: Step[], heights: Record<string, number> = {},
         target: b.stepId,
         type: 'insert',
         ...(branch ? { sourceHandle: 'bottom', targetHandle: 'top' } : {}),
-        style: { stroke: stageColor(b.fn.stage), strokeWidth: 1.6, opacity: 0.75 },
+        style: { stroke: 'var(--edge)', strokeWidth: 1.5 }, // neutral: the cards carry the stage color
       }
     })
   return { nodes: [...lanes, ...nodes], edges }

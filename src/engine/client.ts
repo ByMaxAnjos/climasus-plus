@@ -66,12 +66,14 @@ export async function health(): Promise<boolean> {
 
 let runController: AbortController | null = null
 
-export async function run(steps: { var: string; code: string }[]): Promise<RunResponse> {
+// `from` (1-based): re-run from this step even if the engine has it cached — used when the UI has
+// no result to show for it (e.g. after a reload); omitted, the engine reuses its cache as before
+export async function run(steps: { var: string; code: string }[], from?: number): Promise<RunResponse> {
   runController = new AbortController()
   const r = await fetch(`${base}/run`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...authHeaders() },
-    body: JSON.stringify({ steps }),
+    body: JSON.stringify(from ? { steps, from } : { steps }),
     signal: runController.signal,
   })
   if (!r.ok) throw new Error(`engine /run ${r.status}`)

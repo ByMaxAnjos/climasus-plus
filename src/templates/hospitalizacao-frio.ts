@@ -41,7 +41,7 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
     {
       id: 'frio-health-agg',
       fn: 'sus_data_aggregate',
-      values: { time_unit: 'day', group_by: 'codigo_municipio_residencia' },
+      values: { time_unit: 'day', group_by: 'codigo_municipio_residencia', complete_dates: 'TRUE' },
       explain: {
         pt: 'Agregamos por dia.',
         en: 'We aggregate by day.',
@@ -79,11 +79,11 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       // There is deliberately NO sus_climate_aggregate step here: sus_mod_its takes no
       // climate_col argument and needs no climate columns merged in (sus_mod_its.R:245-250).
       fn: 'sus_climate_compute_coldwaves',
-      values: { method: 'WHO', percentile: '10' },
+      values: { method: 'WHO', percentile: '10', baseline_start: '"2010-01-01"', baseline_end: '"2015-12-31"' },
       explain: {
-        pt: 'Detectamos ondas de frio com a metodologia da OMS, percentil 10 como limiar — o espelho do percentil 90 usado para calor.',
-        en: 'We detect cold waves using the WHO methodology, 10th percentile as the threshold — the mirror of the 90th percentile used for heat.',
-        es: 'Detectamos olas de frío con la metodología de la OMS, percentil 10 como umbral.',
+        pt: 'Detectamos ondas de frio com a metodologia da OMS, percentil 10 como limiar — o espelho do percentil 90 usado para calor. O limiar usa um período de referência fixo (2010–2015), não a série inteira; cinco anos é uma base curta e deve ser declarada como limitação.',
+        en: 'We detect cold waves using the WHO methodology, 10th percentile as the threshold — the mirror of the 90th percentile used for heat. The threshold uses a fixed reference period (2010–2015), not the full series; five years is a short baseline and should be declared as a limitation.',
+        es: 'Detectamos olas de frío con la metodología de la OMS, percentil 10 como umbral. El umbral usa un período de referencia fijo (2010–2015).',
       },
     },
     {
@@ -96,6 +96,19 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       },
     },
     {
+      id: 'frio-city',
+      fn: 'sus_data_filter_demographics',
+      // ITS is a single-series design. Filtering to one municipality prevents
+      // sus_mod_its() from treating every municipality-day as an independent
+      // observation (pseudo-replication). Change the city to your study site.
+      values: { df: stepRef('frio-spatial'), city: '"Porto Alegre"' },
+      explain: {
+        pt: 'Restringimos a análise a um município (Porto Alegre) porque a série temporal interrompida é um desenho de série única. Sem esse filtro, cada linha município-dia seria tratada como observação independente, inflando o n e encolhendo os erros-padrão. Troque a cidade pelo seu local de estudo.',
+        en: 'We restrict the analysis to one municipality (Porto Alegre) because interrupted time series is a single-series design. Without this filter, every municipality-day row would be treated as an independent observation, inflating n and shrinking standard errors. Change the city to your study site.',
+        es: 'Restringimos el análisis a un municipio (Porto Alegre) porque la serie temporal interrumpida es un diseño de serie única.',
+      },
+    },
+    {
       fn: 'sus_mod_its',
       // `data` must point back at the health chain explicitly: the step immediately above is the
       // cold-wave plot, so without this override the model would be wired onto the climate branch.
@@ -104,11 +117,11 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       // a missing-argument error. Users must replace it with a real date before drawing conclusions.
       // SIH-RD counts hospitalizations, so sus_data_aggregate names the outcome column
       // "n_internacoes" (get_smart_column_name, sus_data_aggregate.R:1984-2018), not "n_obitos".
-      values: { data: stepRef('frio-spatial'), outcome_col: 'n_internacoes', interruption_dates: '2013-07-23' },
+      values: { data: stepRef('frio-city'), outcome_col: 'n_internacoes', interruption_dates: '2013-07-23' },
       explain: {
-        pt: 'Avaliamos com série interrompida se os períodos de onda de frio mudam o nível ou a tendência das internações (n_internacoes) — um desenho mais leve que o DLNM, indicado para perguntas sobre um evento específico. A data "2013-07-23" é apenas um EXEMPLO de formato, não um evento real verificado — substitua pela data real do evento que você quer avaliar antes de interpretar os resultados.',
-        en: 'We use an interrupted time series to assess whether cold-wave periods change the level or trend of hospitalizations (n_internacoes) — a lighter design than DLNM, suited to questions about a specific event. The date "2013-07-23" is only a placeholder EXAMPLE of the expected format, not a verified real event — replace it with the actual event date you want to evaluate before interpreting any results.',
-        es: 'Evaluamos con serie interrumpida si los períodos de ola de frío cambian el nivel o la tendencia de las internaciones (n_internacoes). La fecha "2013-07-23" es solo un EJEMPLO de formato, no un evento real verificado — reemplácela por la fecha real del evento que desea evaluar antes de interpretar los resultados.',
+        pt: 'Avaliamos com série interrompida se um evento de frio específico muda o nível ou a tendência das internações (n_internacoes) em Porto Alegre — um desenho indicado para um evento delimitado, não para ondas de frio recorrentes. A data "2013-07-23" é apenas um EXEMPLO de formato, não um evento real verificado — substitua pela data real do evento que você quer avaliar antes de interpretar os resultados.',
+        en: 'We use an interrupted time series to assess whether a specific cold event changes the level or trend of hospitalizations (n_internacoes) in Porto Alegre — a design suited to a bounded event, not recurring cold waves. The date "2013-07-23" is only a placeholder EXAMPLE of the expected format, not a verified real event — replace it with the actual event date you want to evaluate before interpreting any results.',
+        es: 'Evaluamos con serie interrumpida si un evento de frío específico cambia el nivel o la tendencia de las internaciones (n_internacoes) en Porto Alegre. La fecha "2013-07-23" es solo un EJEMPLO de formato, no un evento real verificado — reemplácela por la fecha real del evento que desea evaluar antes de interpretar los resultados.',
       },
     },
   ],

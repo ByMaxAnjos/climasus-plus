@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { byName, pipeArg, stageColor, friendlyName, friendlyDescription, friendlyArgDoc, type ArgSpec, type FnSpec } from '../catalog'
+import { byName, pipeArg, friendlyName, friendlyDescription, friendlyArgDoc, type ArgSpec, type FnSpec } from '../catalog'
 import { enumOptionLabel, nullDefaultHint } from '../catalog/enum-options'
 import { usePipeline, stepRef, isStepRef, stepRefId, type Step, type UsageMode } from '../store/pipeline'
 import { t, tp } from '../i18n'
@@ -115,7 +115,7 @@ function FnDoc({ fn, lang, mode }: { fn: FnSpec; lang: 'pt' | 'en' | 'es'; mode?
   return (
     <section className="insp-doc-block">
       <div className="label insp-doc-label">{t('aboutFunction', lang)}</div>
-      <h3 className="insp-title" style={{ color: stageColor(fn.stage) }}>{friendlyName(fn, lang, mode)}</h3>
+      <h3 className="insp-title">{friendlyName(fn, lang, mode)}</h3>
       <p className="insp-technical mono">{fn.name}()</p>
       <p className="insp-desc">{friendlyDescription(fn, lang, mode)}</p>
     </section>

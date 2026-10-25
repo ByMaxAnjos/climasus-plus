@@ -80,11 +80,11 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       // cardio-merged's `climate_data` reference reads.
       id: 'cardio-heatwave',
       fn: 'sus_climate_compute_heatwaves',
-      values: { df: stepRef('cardio-inmet'), method: 'WHO', percentile: '90' },
+      values: { df: stepRef('cardio-inmet'), method: 'WHO', percentile: '90', baseline_start: '"2010-01-01"', baseline_end: '"2015-12-31"' },
       explain: {
-        pt: 'Detectamos ondas de calor com a metodologia da OMS, percentil 90 como limiar.',
-        en: 'We detect heatwaves using the WHO methodology, 90th percentile as the threshold.',
-        es: 'Detectamos olas de calor con la metodología de la OMS, percentil 90 como umbral.',
+        pt: 'Detectamos ondas de calor com a metodologia da OMS, percentil 90 como limiar. O limiar usa um período de referência fixo (2010–2015), não a série inteira; são cinco anos, uma base curta que deve ser declarada como limitação.',
+        en: 'We detect heatwaves using the WHO methodology, 90th percentile as the threshold. The threshold uses a fixed reference period (2010–2015), not the full series; five years is a short baseline and should be declared as a limitation.',
+        es: 'Detectamos olas de calor con la metodología de la OMS, percentil 90 como umbral. El umbral usa un período de referencia fijo (2010–2015).',
       },
     },
     {
@@ -118,14 +118,14 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       },
     },
     { fn: 'sus_mod_dlnm', values: {}, explain: {
-      pt: 'Ajustamos o DLNM sobre a série diária — aqui a maior parte do efeito tende a aparecer nos primeiros dias após a exposição ao calor.',
-      en: 'We fit DLNM over the daily series — here most of the effect tends to show up in the first days after heat exposure.',
-      es: 'Ajustamos el DLNM sobre la serie diaria.',
+      pt: 'Ajustamos o DLNM sobre a série diária — aqui a maior parte do efeito tende a aparecer nos primeiros dias após a exposição ao calor. O template usa a mediana da temperatura como referência; para carga atribuível, substitua por uma temperatura de mortalidade mínima (MMT) ou um valor pré-especificado. A onda de calor detectada acima é um ramo descritivo: o modelo usa temperatura contínua, não o indicador de onda.',
+      en: 'We fit DLNM over the daily series — here most of the effect tends to show up in the first days after heat exposure. The template uses the median temperature as the reference; for attributable burden, replace it with a minimum-mortality temperature (MMT) or a prespecified value. The heatwave detected above is a descriptive branch: the model uses continuous temperature, not the heatwave indicator.',
+      es: 'Ajustamos el DLNM sobre la serie diaria. El template usa la mediana de temperatura como referencia; para la carga atribuible, use una temperatura de mortalidad mínima (MMT). La ola de calor es una rama descriptiva.',
     } },
     { fn: 'sus_mod_af', values: {}, explain: {
-      pt: 'Calculamos a fração e o número de óbitos atribuíveis ao calor extremo.',
-      en: 'We calculate the fraction and number of deaths attributable to extreme heat.',
-      es: 'Calculamos la fracción y el número de óbitos atribuibles al calor extremo.',
+      pt: 'Calculamos a fração e o número de óbitos atribuíveis ao calor extremo. O limiar calor/frio vem da referência do modelo (mediana, por padrão) — confira e substitua por MMT antes de interpretar a carga. Poluição do ar (PM2.5/O3) não é ajustada neste template; trate como limitação ou análise de sensibilidade.',
+      en: 'We calculate the fraction and number of deaths attributable to extreme heat. The heat/cold split comes from the model reference (median by default) — check it and replace with MMT before interpreting burden. Air pollution (PM2.5/O3) is not adjusted in this template; treat it as a limitation or sensitivity analysis.',
+      es: 'Calculamos la fracción y el número de óbitos atribuibles al calor extremo. El umbral calor/frío viene de la referencia del modelo (mediana por defecto). La contaminación del aire no se ajusta en este template.',
     } },
     { fn: 'sus_mod_plot_af', values: {}, explain: {
       pt: 'Visualizamos a fração atribuível em gráfico e tabela, prontos para comunicação.',

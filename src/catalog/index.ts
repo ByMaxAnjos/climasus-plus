@@ -52,9 +52,9 @@ export const searchFn = (query: string) => {
 }
 
 export const STAGES: { id: StageId; color: string }[] = [
-  { id: 'preparacao', color: 'var(--stage-blue)' },
-  { id: 'integracao', color: 'var(--stage-cyan)' },
-  { id: 'modelagem', color: 'var(--stage-magenta)' },
+  { id: 'preparacao', color: 'var(--stage-prep)' },
+  { id: 'integracao', color: 'var(--stage-int)' },
+  { id: 'modelagem', color: 'var(--stage-mod)' },
 ]
 
 export const stageColor = (id: StageId) => STAGES.find((s) => s.id === id)!.color

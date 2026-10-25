@@ -1,3 +1,32 @@
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-var.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-var-italic.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-var.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* climaSUS Aurora design tokens — dark default, light via [data-theme="light"] */
 
 :root {
@@ -22,12 +51,16 @@
   --health-cyan: #38bdf8;
 
   /* stage colors (from sus_welcome) */
-  --stage-blue: #4c6ef5;
-  --stage-green: #2f9e44;
-  --stage-cyan: #0ca678;
-  --stage-magenta: #7950f2;
-  --stage-yellow: #f08c00;
-  --stage-slate: #64748b;
+  /* estágios pelo domínio do dado:
+     Preparação = dados de SAÚDE (azul SUS) · Integração = CLIMA e AMBIENTE (verde-folha)
+     · Modelagem = RISCO/efeito estimado (laranja-calor). Matiz e luminosidade distintos. */
+  --stage-prep: #4a8ff0;
+  --stage-int: #3fb96a;
+  --stage-mod: #f0883e;
+  --edge: rgba(148, 163, 184, 0.45);
+  --surface-raised: #1a2430;
+  --accent-ink: #2dd4bf;
+  --warn-ink: #fbbf24;
 
   /* surfaces (dark) */
   --bg-base: #0a0f14;
@@ -44,14 +77,15 @@
   --text-on-accent: #04211d;
 
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-pill: 999px;
 
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.35), 0 6px 16px rgba(0, 0, 0, 0.22);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.55);
   --glow-teal: 0 0 24px rgba(45, 212, 191, 0.35);
 
@@ -67,10 +101,17 @@
   --surface-glass: rgba(255, 255, 255, 0.82);
   --border: rgba(15, 23, 42, 0.10);
   --border-strong: rgba(15, 23, 42, 0.22);
+  --stage-prep: #1f5fc8;
+  --stage-int: #1e8a46;
+  --stage-mod: #c4561a;
+  --edge: rgba(15, 23, 42, 0.28);
+  --surface-raised: #ffffff;
+  --accent-ink: #0f766e;
+  --warn-ink: #9a5b00;
   --text-primary: #0f172a;
   --text-secondary: #475569;
   --text-muted: #94a3b8;
-  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.12);
+  --shadow-md: 0 1px 2px rgba(15, 23, 42, 0.06), 0 4px 12px rgba(15, 23, 42, 0.06);
   --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.16);
 }
 
@@ -93,7 +134,9 @@ body {
   background: var(--bg-base);
   color: var(--text-primary);
   overflow: hidden;
-  font-size: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
 }
 
 button {
