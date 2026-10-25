@@ -107,7 +107,34 @@ check('project payload matches loaded pipeline',
   JSON.stringify(roundTrip.before) === JSON.stringify(roundTrip.parsedFns) && roundTrip.version === 4,
   `v${roundTrip.version}`)
 
-// 16. no page errors
+// 16. canvas UX: inline required params, note → R comment, "+" insert, library drop, shortcuts
+await page.evaluate(() => { const s = window.__store.getState(); s.clear(); s.addSteps(['sus_data_import', 'sus_data_clean_encoding', 'sus_data_aggregate']); s.select(null) })
+await page.waitForTimeout(400)
+const fnsNow = () => page.evaluate(() => window.__store.getState().steps.map((s) => s.fn))
+await page.locator('.react-flow__node-step').first().locator('.node-arg:has-text("year") input').fill('2022')
+check('required param editable on the card', await page.evaluate(() => window.__store.getState().steps[0].values.year) === '2022')
+await page.evaluate(() => { const s = window.__store.getState(); s.setNote(s.steps[1].id, 'linha 1\nlinha 2') })
+const noted = await page.evaluate(() => window.__generateR(window.__store.getState().steps))
+check('note exported as R comments inside the pipe', noted.includes('  # linha 1\n  # linha 2\n  sus_data_clean_encoding()'))
+await page.locator('.edge-add').first().click()
+await page.keyboard.type('standardize')
+await page.keyboard.press('Enter')
+await page.waitForTimeout(300)
+check('"+" on an edge inserts between the two cards', (await fnsNow())[1] === 'sus_data_standardize')
+await page.locator('.stage-tab[data-stage="preparacao"]').click()
+await page.locator('.fn-item', { hasText: 'sus_data_filter_cid' }).dragTo(page.locator('.react-flow__node-step').nth(1))
+await page.waitForTimeout(300)
+check('library drop onto a card inserts before it', (await fnsNow())[1] === 'sus_data_filter_cid')
+await page.locator('.react-flow__node-step').first().locator('.fn-name-text').click()
+await page.keyboard.press('ArrowRight')
+await page.keyboard.press(process.platform === 'darwin' ? 'Meta+d' : 'Control+d')
+await page.waitForTimeout(200)
+check('→ then ⌘D duplicates the next step', JSON.stringify((await fnsNow()).slice(1, 3)) === '["sus_data_filter_cid","sus_data_filter_cid"]')
+await page.keyboard.press('Delete')
+await page.waitForTimeout(200)
+check('Delete removes the selected step', (await fnsNow()).length === 5)
+
+// 17. no page errors
 check('no page errors', pageErrors.length === 0, pageErrors[0] ?? '')
 
 await browser.close()

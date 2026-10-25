@@ -30,21 +30,25 @@ export interface FnSpec {
 export const CATALOG = raw as FnSpec[]
 export const byName = new Map(CATALOG.map((f) => [f.name, f]))
 
+// ranked: name hits first, then title, keywords, description, and finally argument docs
 export const searchFn = (query: string) => {
   const q = query.trim().toLowerCase()
   if (!q) return CATALOG
-  return CATALOG.filter((f) => {
-    const hay = [
-      f.name,
-      f.title,
-      f.description,
-      f.family,
-      f.stage,
-      ...(f.keywords ?? []),
-      ...f.args.flatMap((a) => [a.name, a.doc, ...(a.options ?? [])]),
-    ].join(' ').toLowerCase()
-    return hay.includes(q)
-  })
+  const rank = (f: FnSpec) => {
+    const tiers = [
+      [f.name],
+      [f.title],
+      f.keywords ?? [],
+      [f.description, f.family, f.stage],
+      f.args.flatMap((a) => [a.name, a.doc, ...(a.options ?? [])]),
+    ]
+    const i = tiers.findIndex((tier) => tier.join(' ').toLowerCase().includes(q))
+    return i < 0 ? Infinity : i
+  }
+  return CATALOG.map((f) => [f, rank(f)] as const)
+    .filter(([, r]) => r !== Infinity)
+    .sort((a, b) => a[1] - b[1])
+    .map(([f]) => f)
 }
 
 export const STAGES: { id: StageId; color: string }[] = [

@@ -2,20 +2,22 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   ReactFlow, ReactFlowProvider, Background, Controls, MiniMap,
   useReactFlow, useUpdateNodeInternals, applyNodeChanges, getNodesBounds,
-  type Node, type NodeChange, type NodeTypes,
+  type Node, type NodeChange, type NodeTypes, type EdgeTypes,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import { usePipeline } from '../../store/pipeline'
 import { byName, friendlyName, stageColor } from '../../catalog'
 import { PREP_SEQUENCE, PREP_SEQUENCE_CID_ONLY, PREP_SEQUENCE_SINAN } from '../../pipelines/templates'
 import { t } from '../../i18n'
-import { layoutSteps } from './layout'
+import { layoutSteps, FN_DRAG_TYPE, COL_W } from './layout'
 import StepNode from './nodes/StepNode'
 import LaneNode from './nodes/LaneNode'
 import TutorialOverlay from './TutorialOverlay'
+import InsertEdge from './InsertEdge'
 
 const nodeTypes: NodeTypes = { step: StepNode, lane: LaneNode }
-const READABLE_ZOOM = 0.6 // auto-fit never shrinks cards below this; pan/zoom/minimap for the rest
+const edgeTypes: EdgeTypes = { insert: InsertEdge }
+const READABLE_ZOOM = 0.8 // auto-fit never shrinks cards below this; pan/zoom/minimap for the rest
 const FIT_PAD = 28
 
 function GraphInner() {
@@ -23,7 +25,21 @@ function GraphInner() {
   const { setCenter, getNode, setViewport } = useReactFlow()
   const updateNodeInternals = useUpdateNodeInternals()
   const prevResults = useRef<typeof stepResults>({})
-  const wrapRef = useRef<HTMLDivElement>(null)
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  // cards per row: as many as fit the canvas width at READABLE_ZOOM, so collapsing the side
+  // panels (or a wider window) reflows the pipeline instead of leaving it tiny or cut off
+  const [maxCols, setMaxCols] = useState(4)
+  const [wrapEl, setWrapEl] = useState<HTMLDivElement | null>(null)
+  wrapRef.current = wrapEl
+  useEffect(() => {
+    if (!wrapEl) return
+    const ro = new ResizeObserver(([entry]) => {
+      const fit = Math.floor((entry.contentRect.width / READABLE_ZOOM - 2 * FIT_PAD) / COL_W)
+      setMaxCols(Math.max(2, Math.min(8, fit)))
+    })
+    ro.observe(wrapEl)
+    return () => ro.disconnect()
+  }, [wrapEl])
 
   // nodes live in state so React Flow's measured sizes survive re-layouts (controlled mode drops
   // `measured` on fresh node objects → remeasure → relayout loop); layout reads those heights
@@ -34,8 +50,8 @@ function GraphInner() {
   const heightKey = rfNodes.filter((n) => n.type === 'step').map((n) => `${n.id}:${Math.round(n.measured?.height ?? 0)}`).join(',')
   const { nodes, edges } = useMemo(() => {
     const heights = Object.fromEntries(heightKey.split(',').filter(Boolean).map((p) => { const [id, v] = p.split(':'); return [id, Number(v)] }))
-    return layoutSteps(steps, heights)
-  }, [steps, heightKey])
+    return layoutSteps(steps, heights, maxCols)
+  }, [steps, heightKey, maxCols])
   useEffect(() => {
     setRfNodes((prev) => {
       const old = new Map(prev.map((n) => [n.id, n]))
@@ -71,7 +87,7 @@ function GraphInner() {
   useEffect(() => {
     const timeout = window.setTimeout(fitReadable, 120)
     return () => window.clearTimeout(timeout)
-  }, [structureKey, fitReadable])
+  }, [structureKey, maxCols, fitReadable])
 
   // ...and once more when a run finishes, since cards grow to show their results
   const busy = engineStatus === 'busy'
@@ -144,12 +160,13 @@ function GraphInner() {
   }
 
   return (
-    <div ref={wrapRef} className="graph-wrap">
+    <div ref={setWrapEl} className="graph-wrap">
       <ReactFlow
         nodes={rfNodes}
         edges={liveEdges}
         onNodesChange={onNodesChange}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         nodesDraggable={false}
         nodesConnectable={false}
         deleteKeyCode={null}
@@ -173,6 +190,7 @@ function GraphInner() {
             position="bottom-right"
             nodeColor={(n) => n.type === 'lane' ? 'transparent' : stageColor(byName.get((n.data as { step: { fn: string } }).step.fn)?.stage ?? 'preparacao')}
             nodeStrokeWidth={0}
+            style={{ width: 150, height: 96 }}
             maskColor="color-mix(in srgb, var(--bg-deep) 70%, transparent)"
           />
         )}
@@ -182,13 +200,15 @@ function GraphInner() {
 }
 
 export default function PipelineGraph() {
-  const { lang, steps, expandedPanel, toggleExpand } = usePipeline()
+  const { lang, steps, expandedPanel, toggleExpand, addStep } = usePipeline()
+  const [dropping, setDropping] = useState(false)
   return (
     <section className="canvas glass">
       <div className="canvas-head">
         <div className="canvas-head-title">
           <h2>{t('pipeline', lang)}</h2>
           <span className="canvas-count">{steps.length} {t('steps', lang)}</span>
+          <span className="canvas-shortcuts" title={t('shortcutsTitle', lang)} aria-label={t('shortcutsTitle', lang)}><kbd>⌘</kbd></span>
         </div>
         <button
           className="btn btn-sm expand-toggle"
@@ -198,7 +218,17 @@ export default function PipelineGraph() {
           {expandedPanel === 'graph' ? '⤡' : '⤢'}
         </button>
       </div>
-      <div className="graph-canvas">
+      <div
+        className={`graph-canvas ${dropping ? 'drop-target' : ''}`}
+        onDragOver={(e) => { if (e.dataTransfer.types.includes(FN_DRAG_TYPE)) { e.preventDefault(); setDropping(true) } }}
+        onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as globalThis.Node)) setDropping(false) }}
+        // capture phase: a drop on a card stops propagation, but the highlight must still clear
+        onDropCapture={() => setDropping(false)}
+        onDrop={(e) => {
+          const fn = e.dataTransfer.getData(FN_DRAG_TYPE)
+          if (fn) { e.preventDefault(); addStep(fn) }
+        }}
+      >
         <ReactFlowProvider>
           <GraphInner />
         </ReactFlowProvider>

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { CATALOG, STAGES, stageColor, searchFn, friendlyName, type StageId } from '../catalog'
 import { usePipeline } from '../store/pipeline'
 import { t, STAGE_LABELS, FAMILY_LABELS } from '../i18n'
+import { FN_DRAG_TYPE } from './graph/layout'
 
 const FAMILY_ORDER = ['core', 'spatial', 'censo', 'climate', 'grid', 'plot']
 
@@ -67,7 +68,7 @@ export default function Library() {
       </div>
       <input
         className="input search"
-        placeholder={t('search', lang)}
+        placeholder={t('focusSearchHint', lang)}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -82,6 +83,8 @@ export default function Library() {
                 style={{ ['--stage' as string]: stageColor(f.stage) }}
                 onClick={() => inspect(f.name)}
                 onDoubleClick={() => addStep(f.name)}
+                draggable
+                onDragStart={(e) => { e.dataTransfer.setData(FN_DRAG_TYPE, f.name); e.dataTransfer.effectAllowed = 'copy' }}
                 title={f.title}
               >
                 <span className="fn-friendly">

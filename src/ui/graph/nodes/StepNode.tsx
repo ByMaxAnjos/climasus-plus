@@ -1,17 +1,43 @@
 import { memo, useState } from 'react'
 import { Handle, NodeToolbar, Position, type NodeProps } from '@xyflow/react'
-import { byName, stageColor, friendlyName } from '../../../catalog'
+import { byName, stageColor, friendlyName, type ArgSpec } from '../../../catalog'
+import { enumOptionLabel } from '../../../catalog/enum-options'
 import { usePipeline } from '../../../store/pipeline'
 import { t, tp } from '../../../i18n'
 import ResultBody from '../../result/ResultBody'
 import ResultActions from '../../result/ResultActions'
 import MethodWarningBanner from '../../result/MethodWarningBanner'
-import type { StepNodeData } from '../layout'
+import { FN_DRAG_TYPE, type StepNodeData } from '../layout'
 
 function StatusDot({ state }: { state: 'idle' | 'running' | 'ok' | 'error' | 'stale' | undefined }) {
   if (!state || state === 'idle') return null
   const glyph = state === 'running' ? '⟳' : state === 'ok' ? '✓' : state === 'error' ? '✕' : '•'
   return <span className={`step-status step-status-${state}`}>{glyph}</span>
+}
+
+// required params editable right on the card; everything else stays in the Inspector.
+// Reads the value from the store, not node data (which lags one effect → dropped keystrokes).
+function InlineArg({ stepId, fnName, arg }: { stepId: string; fnName: string; arg: ArgSpec }) {
+  const value = usePipeline((s) => s.steps.find((x) => x.id === stepId)?.values[arg.name] ?? '')
+  const setValue = usePipeline((s) => s.setValue)
+  const empty = !value.trim()
+  const common = {
+    className: `input node-arg-input ${empty ? 'missing' : ''} nodrag`,
+    value,
+  }
+  return (
+    <label className="node-arg">
+      <span className="node-arg-name mono">{arg.name}<span className="req">*</span></span>
+      {arg.type === 'enum' ? (
+        <select {...common} onChange={(e) => setValue(stepId, arg.name, e.target.value)}>
+          <option value="">—</option>
+          {arg.options.map((o) => <option key={o} value={o}>{enumOptionLabel(fnName, arg.name, arg.doc, o)}</option>)}
+        </select>
+      ) : (
+        <input {...common} spellCheck={false} onChange={(e) => setValue(stepId, arg.name, e.target.value)} />
+      )}
+    </label>
+  )
 }
 
 function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
@@ -30,6 +56,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
   const mode = usePipeline((s) => s.mode)
   const select = usePipeline((s) => s.select)
   const removeStep = usePipeline((s) => s.removeStep)
+  const insertStep = usePipeline((s) => s.insertStep)
   const duplicateStep = usePipeline((s) => s.duplicateStep)
   const setNote = usePipeline((s) => s.setNote)
   const moveStep = usePipeline((s) => s.moveStep)
@@ -44,7 +71,10 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
 
   if (!fn) return null
   const setArgs = fn.args.filter((a) => (step.values[a.name] ?? '').trim())
-  const missing = fn.args.filter((a, i) => a.required && !(i === 0 && piped) && !(step.values[a.name] ?? '').trim())
+  const required = fn.args.filter((a, i) => a.required && !(i === 0 && piped))
+  // data-type args need the Inspector's step picker, so they only get the badge
+  const inline = required.filter((a) => a.type !== 'data')
+  const missing = required.filter((a) => a.type === 'data' && !(step.values[a.name] ?? '').trim())
 
   return (
     <div
@@ -55,9 +85,12 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
       onDragLeave={() => setDragOver(false)}
       onDrop={(e) => {
         e.preventDefault()
+        e.stopPropagation() // the canvas behind would otherwise also append a dropped library fn
         setDragOver(false)
+        const fnName = e.dataTransfer.getData(FN_DRAG_TYPE)
         const draggedId = e.dataTransfer.getData('text/plain')
-        if (draggedId) reorderStep(draggedId, step.id)
+        if (fnName) insertStep(fnName, step.id)
+        else if (draggedId) reorderStep(draggedId, step.id)
       }}
       data-fn={fn.name}
       data-run={run ?? 'idle'}
@@ -97,6 +130,11 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
           <button title={t('moveStepDown', lang)} onClick={(e) => { e.stopPropagation(); moveStep(step.id, 1) }}>→</button>
         </div>
       </div>
+      {inline.length > 0 && (
+        <div className="node-args">
+          {inline.map((a) => <InlineArg key={a.name} stepId={step.id} fnName={fn.name} arg={a} />)}
+        </div>
+      )}
       {missing.length > 0 && run !== 'running' && (
         <span className="node-missing" title={missing.map((a) => a.name).join(', ')}>
           ⚠ {tp('requiredMissing', lang, { n: String(missing.length) })}

@@ -2,9 +2,11 @@ import type { Node, Edge } from '@xyflow/react'
 import { buildSteps, type BuiltStep, type Step } from '../../store/pipeline'
 import { stageColor, type StageId } from '../../catalog'
 
+// dataTransfer type for dragging a function from the Library onto the canvas
+export const FN_DRAG_TYPE = 'application/x-climasus-fn'
+
 const NODE_W = 260
-const COL_W = 340 // 80px gutter leaves room for the row-count label on each edge
-const MAX_COLS = 4 // wrap long chains so big pipelines stay readable instead of shrinking
+export const COL_W = 340 // 80px gutter leaves room for the row-count label on each edge
 const DEFAULT_H = 64 // before React Flow has measured a node
 const PLOT_GAP = 36
 const ROW_GAP = 56
@@ -25,10 +27,10 @@ interface Line { main: BuiltStep[]; plots: { b: BuiltStep; col: number }[] }
 interface Segment { stage: StageId; lines: Line[] }
 
 // deterministic layout: consecutive steps of the same stage share a lane; inside a lane the
-// chain flows left→right and wraps every MAX_COLS; plot branches sit right below their input.
+// chain flows left→right and wraps every `maxCols` (sized to the canvas by the caller); plot branches sit right below their input.
 // `heights` are React Flow's measured node heights (nodes grow once a result arrives).
 // Positions are recomputed from `steps` every time — never persisted (no manual drag).
-export function layoutSteps(steps: Step[], heights: Record<string, number> = {}): { nodes: Node[]; edges: Edge[] } {
+export function layoutSteps(steps: Step[], heights: Record<string, number> = {}, maxCols = 4): { nodes: Node[]; edges: Edge[] } {
   const built = buildSteps(steps)
   const stepById = new Map(steps.map((s) => [s.id, s]))
   const segments: Segment[] = []
@@ -49,7 +51,7 @@ export function layoutSteps(steps: Step[], heights: Record<string, number> = {})
     let seg = segments[segments.length - 1]
     if (!seg || seg.stage !== b.fn.stage) segments.push((seg = { stage: b.fn.stage, lines: [] }))
     let line = seg.lines[seg.lines.length - 1]
-    if (!line || line.main.length >= MAX_COLS) seg.lines.push((line = { main: [], plots: [] }))
+    if (!line || line.main.length >= maxCols) seg.lines.push((line = { main: [], plots: [] }))
     colOf.set(b.stepId, line.main.length)
     line.main.push(b)
     lineOf.set(b.stepId, line)
@@ -106,8 +108,7 @@ export function layoutSteps(steps: Step[], heights: Record<string, number> = {})
         id: `${b.inputStepId}-${b.stepId}`,
         source: b.inputStepId!,
         target: b.stepId,
-        type: 'smoothstep',
-        pathOptions: { borderRadius: 14 },
+        type: 'insert',
         ...(branch ? { sourceHandle: 'bottom', targetHandle: 'top' } : {}),
         style: { stroke: stageColor(b.fn.stage), strokeWidth: 1.6, opacity: 0.75 },
       }

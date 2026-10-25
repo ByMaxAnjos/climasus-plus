@@ -1492,3 +1492,95 @@
     height: 60px;
   }
 }
+
+/* ---- UX phase 2 ---------------------------------------------------------- */
+.output-expand { padding: 4px 8px; font-size: 13px; line-height: 1; }
+.output-panel[data-collapsed] { height: auto; }
+:root[data-output-mode="results"] .output-panel[data-collapsed] { height: auto; }
+.output-panel[data-collapsed] > :not(.output-tabs) { display: none; }
+.output-panel[data-collapsed] .output-tabs { margin-bottom: 0; }
+.canvas-shortcuts { cursor: help; }
+.canvas-shortcuts kbd {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--text-muted);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  padding: 0 5px;
+}
+.inspector > .empty-hint { padding-right: 36px; }
+.output-tabs .expand-toggle { display: grid; place-items: center; }
+
+/* required params editable on the card */
+.node-args { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; cursor: default; }
+.node-arg { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: center; gap: 8px; }
+.node-arg-name { font-size: 11px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+.node-arg-input { padding: 4px 8px; font-size: 12px; min-width: 0; width: 100%; }
+.node-arg-input.missing { border-color: color-mix(in srgb, var(--alert-500) 60%, transparent); }
+
+/* "+" on each edge: insert a step between two cards */
+.edge-mid {
+  position: absolute;
+  pointer-events: all;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  z-index: 5;
+}
+.edge-mid.open { z-index: 1000; }
+.edge-rows {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  background: var(--surface-1);
+  padding: 0 4px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+.edge-add {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+.edge-mid:hover .edge-add, .edge-mid.open .edge-add { opacity: 1; color: var(--env-400); border-color: var(--env-400); transform: scale(1.1); }
+.insert-picker {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform-origin: top center;
+  width: 280px;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  background: var(--surface-1);
+}
+.insert-picker .search { width: 100%; margin-bottom: 6px; }
+.insert-picker ul { list-style: none; margin: 0; padding: 0; max-height: 260px; overflow-y: auto; }
+.insert-picker li {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px;
+  border-left: 2px solid var(--stage);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+.insert-picker li .mono { font-size: 10px; color: var(--text-muted); }
+.insert-picker li:hover { background: var(--surface-2); }
+
+/* dragging a library function over the canvas */
+.graph-canvas.drop-target { box-shadow: inset 0 0 0 2px var(--env-400); }
+.fn-item[draggable="true"] { cursor: grab; }

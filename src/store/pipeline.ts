@@ -44,7 +44,7 @@ interface PipelineState {
   engineIssue: string | null
   centerTab: 'code' | 'results'
   expandedPanel: 'graph' | 'output' | null // maximized panel, hiding the side columns
-  collapsed: { library: boolean; inspector: boolean } // side panels shrunk to a thin rail
+  collapsed: { library: boolean; inspector: boolean; output: boolean } // panels shrunk to a rail / tab strip
   stepRun: Record<string, StepRunState>
   stepResults: Record<string, StepResult>
   runError: string | null
@@ -58,6 +58,7 @@ interface PipelineState {
   modeOpen: boolean // mode selector panel visibility
   addStep: (fn: string) => void
   addSteps: (fns: string[]) => void
+  insertStep: (fn: string, beforeId: string) => void
   removeStep: (id: string) => void
   duplicateStep: (id: string) => void
   setNote: (id: string, note: string) => void
@@ -73,7 +74,7 @@ interface PipelineState {
   clear: () => void
   setCenterTab: (t: 'code' | 'results') => void
   toggleExpand: (panel: 'graph' | 'output') => void
-  toggleCollapse: (side: 'library' | 'inspector') => void
+  toggleCollapse: (side: 'library' | 'inspector' | 'output') => void
   runPipeline: (upToStepId?: string) => Promise<void>
   restartEngine: () => Promise<void>
   stopPipeline: () => Promise<void>
@@ -159,9 +160,9 @@ const UI_KEY = 'climasus-plus-ui'
 function loadCollapsed(): PipelineState['collapsed'] {
   try {
     const c = JSON.parse(localStorage.getItem(UI_KEY) ?? '{}')?.collapsed
-    return { library: c?.library === true, inspector: c?.inspector === true }
+    return { library: c?.library === true, inspector: c?.inspector === true, output: c?.output === true }
   } catch {
-    return { library: false, inspector: false }
+    return { library: false, inspector: false, output: false }
   }
 }
 
@@ -200,6 +201,15 @@ export const usePipeline = create<PipelineState>((set, get) => ({
     pushHistory(get, set)
     const added: Step[] = fns.map((fn) => ({ id: uid(), fn, values: {} }))
     set((s) => ({ steps: [...s.steps, ...added], selectedStep: added[0]?.id ?? s.selectedStep, inspectFn: null }))
+    persist(get)
+  },
+  // insert right before an existing step (the "+" on a graph edge, or a library drop onto a card)
+  insertStep: (fn, beforeId) => {
+    const i = get().steps.findIndex((x) => x.id === beforeId)
+    if (i < 0) return get().addStep(fn)
+    pushHistory(get, set)
+    const step: Step = { id: uid(), fn, values: {} }
+    set((s) => ({ steps: [...s.steps.slice(0, i), step, ...s.steps.slice(i)], selectedStep: step.id, inspectFn: null }))
     persist(get)
   },
   removeStep: (id) => {
