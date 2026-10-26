@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+
+<title>Estudo de caso: mortalidade respiratória pediátrica e temperatura – climasus+ Studio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./08-caso-dengue-clima.html" rel="next">
+<link href="./part-5-casos.html" rel="prev">
+<link href="./images/brand/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-9a023c9ade86a60361e96e3e3f11bc54.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f839f82759fd3875dd9bc5f608ae64ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+<meta name="author" content="Max Anjos · ecossistema climaSUS">
+<meta name="keywords" content="climasus, clima, saúde, Amazônia, DATASUS, SUS, Fiocruz, INCT-CONEXAO, análise espacial, epidemiologia">
+<meta property="og:title" content="Estudo de caso: mortalidade respiratória pediátrica e temperatura – climasus+ Studio">
+<meta property="og:description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+<meta property="og:type" content="book">
+<meta property="og:image" content="images/brand/capa-guia.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="2400">
+<meta property="og:image:alt" content="Capa do guia prático do climasus+ Studio, com o título Do dado à decisão em saúde e fotografia de crianças tembés na Amazônia.">
+<meta name="theme-color" content="#0B2420">
+
+<link rel="preload" href="theme/fonts/petrona-var.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="theme/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="theme/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin="">
+
+<script src="theme/guide.js" defer=""></script>
+
+
+<link rel="stylesheet" href="theme/guide.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-caso-respiratorio-pediatrico.html"><span class="chapter-title">Estudo de caso: mortalidade respiratória pediátrica e temperatura</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/brand/climasus.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">climasus+ Studio</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ByMaxAnjos/climasus-plus" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">climasus+ Studio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1-fundamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I · Fundamentos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por que isso importa: clima, saúde e o que os dados escondem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-etapa-preparacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Preparação: dados de saúde prontos antes de tudo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-etapa-integracao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Integração: clima, saúde e território na mesma análise</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-da-evidencia-a-acao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Da evidência à ação: usar resultados com responsabilidade</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-etapa-analise-modelagem.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Análise &amp; Modelagem: do padrão observado à evidência estatística</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-5-casos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte V · Estudos de caso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-caso-respiratorio-pediatrico.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Estudo de caso: mortalidade respiratória pediátrica e temperatura</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-caso-dengue-clima.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: dengue e graus-dia</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-caso-cardio-idosos-calor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: mortalidade cardiovascular em idosos e ondas de calor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-caso-hospitalizacoes-frio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: hospitalizações respiratórias e frio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./colofao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sobre esta edição</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Uma realização do ecossistema climaSUS<br><strong>Apoio: INCT-CONEXAO</strong></p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#o-pipeline-completo-etapa-por-etapa" id="toc-o-pipeline-completo-etapa-por-etapa" class="nav-link active" data-scroll-target="#o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</a></li>
+  <li><a href="#dados-usados" id="toc-dados-usados" class="nav-link" data-scroll-target="#dados-usados">Dados usados</a></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">Resultados</a>
+  <ul class="collapse">
+  <li><a href="#série-e-cobertura" id="toc-série-e-cobertura" class="nav-link" data-scroll-target="#série-e-cobertura">Série e cobertura</a></li>
+  <li><a href="#modelo-dlnm" id="toc-modelo-dlnm" class="nav-link" data-scroll-target="#modelo-dlnm">Modelo DLNM</a></li>
+  <li><a href="#fração-atribuível" id="toc-fração-atribuível" class="nav-link" data-scroll-target="#fração-atribuível">Fração atribuível</a></li>
+  </ul></li>
+  <li><a href="#interpretando-o-resultado" id="toc-interpretando-o-resultado" class="nav-link" data-scroll-target="#interpretando-o-resultado">Interpretando o resultado</a></li>
+  <li><a href="#numeros-ec01" id="toc-numeros-ec01" class="nav-link" data-scroll-target="#numeros-ec01">O que os números mostram</a></li>
+  <li><a href="#o-que-isso-significa-para-ação" id="toc-o-que-isso-significa-para-ação" class="nav-link" data-scroll-target="#o-que-isso-significa-para-ação">O que isso significa para ação</a></li>
+  <li><a href="#reproduzir" id="toc-reproduzir" class="nav-link" data-scroll-target="#reproduzir">Reproduzir</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/07-caso-respiratorio-pediatrico.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<a class="skip-link" href="#quarto-document-content">Pular para o conteúdo</a>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Estudo de caso: mortalidade respiratória pediátrica e temperatura</span></h1>
+<p class="subtitle lead">Capítulo 07 · Estudos de caso</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>No recorte de fumaça e qualidade do ar do Capítulo 0, apresentamos a ideia de que fumaça de queimada e má qualidade do ar podem se transformar em crise respiratória — com crianças pequenas entre os grupos mais vulneráveis. Este capítulo retoma o desfecho respiratório pediátrico em uma sequência completa, usando a temperatura como exposição principal e a umidade como covariável; fumaça e poluição entram como extensão do Pipeline. Vai do dado bruto do SIM-DO à fração atribuível, pelas três Etapas percorridas nos capítulos anteriores. Público principal: acadêmico e gestor técnico que já percorreram o piloto e querem ver um Pipeline inteiro montado, sem interrupção entre Etapas.</p>
+<section id="o-pipeline-completo-etapa-por-etapa" class="level2">
+<h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
+<p>Recorte: óbitos por causas respiratórias (CID-10, capítulo J) em crianças menores de 5 anos, no Sudeste (SP, RJ, MG, ES), 2015-2019, contra a temperatura do ar registrada pelas estações do INMET. O Modelo de catálogo <code>ec-01-respiratorio-pediatrico</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
+<p>O exemplo usa o Sudeste para manter continuidade com o caso ec-01. O mesmo Pipeline se aplica à Amazônia, onde a exposição principal pode ser MP2,5 ou fumaça e a série climática deve vir de grade; a lógica de Preparação, Integração e Modelagem é a mesma.</p>
+<p><a href="images/arco-ec01.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec01.svg" class="img-fluid"></a></p>
+<p><strong>Preparação</strong></p>
+<ol type="1">
+<li><strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>) — importa óbitos do sistema <code>SIM-DO</code>, UFs <code>SP</code>, <code>RJ</code>, <code>MG</code>, <code>ES</code>, anos de 2015 a 2019.</li>
+<li><strong>Corrigir acentuação e caracteres</strong> (<code>sus_data_clean_encoding</code>) — corrige encoding, herança comum de arquivos DATASUS antigos.</li>
+<li><strong>Padronizar nomes e valores</strong> (<code>sus_data_standardize</code>) — padroniza nomes de coluna e tipos.</li>
+<li><strong>Filtrar por CID-10 ou grupo de doença</strong> (<code>sus_data_filter_cid</code>) — filtra pelo grupo de doença respiratório.</li>
+<li><strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) — cria faixas etárias (<code>c(0, 5, 15, 60, Inf)</code>) e variáveis de calendário.</li>
+<li><strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) — recorta para a faixa etária <code>c(0, 5)</code>, isolando a população pediátrica.</li>
+<li><strong>Agregar dados em série temporal</strong> (<code>sus_data_aggregate</code>) — agrega a série por <strong>semana</strong>, com <code>complete_dates = TRUE</code>. A resolução semanal é compatível com as defasagens em dias usadas no DLNM e evita a sobreposição quase total das janelas mensais.</li>
+</ol>
+<p><strong>Integração</strong></p>
+<ol start="8" type="1">
+<li><strong>Juntar dados a limites geográficos</strong> (<code>sus_spatial_join</code>) — liga a série de saúde aos municípios, pré-requisito para o cruzamento com clima.</li>
+<li><strong>Importar dados das estações do INMET</strong> (<code>sus_climate_inmet</code>) — traz temperatura e umidade das estações INMET das mesmas UFs e anos.</li>
+<li><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>) — cria as colunas de defasagem de <strong>0 a 21 dias</strong> para as variáveis climáticas disponíveis, com <code>temporal_strategy = "distributed_lag"</code>. A umidade entra como covariável no modelo.</li>
+</ol>
+<p><strong>Análise &amp; Modelagem</strong></p>
+<ol start="11" type="1">
+<li><strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>) — ajusta o Modelo DLNM sobre a série semanal, com <code>outcome_col</code> apontando para a contagem de óbitos, <code>climate_col</code> para a temperatura e <code>covariates = "rh_mean_porc_lag0"</code> para ajustar pela umidade da semana. <code>dof_per_year = 2</code> reduz a flexibilidade da tendência em cinco anos de dados.</li>
+<li><strong>Visualizar resultados do DLNM</strong> (<code>sus_mod_plot_dlnm</code>) — Resultado gráfico da curva exposição–defasagem–risco.</li>
+<li><strong>Calcular fração atribuível</strong> (<code>sus_mod_af</code>) — calcula a fração e o número atribuível.</li>
+</ol>
+</section>
+<section id="dados-usados" class="level2">
+<h2 class="anchored" data-anchor-id="dados-usados">Dados usados</h2>
+<p><strong>Fonte:</strong> SIM-DO (DATASUS), óbitos por causas respiratórias (CID-10 capítulo J) em menores de 5 anos, em SP, RJ, MG e ES, 2015–2019. <strong>Recorte:</strong> série semanal por município; a exposição é a temperatura do ar na estação INMET mais próxima, com a umidade relativa como covariável. <strong>N:</strong> 187.330 linhas município-semana; 715 municípios; 262 semanas (2014-12-28 a 2019-12-29). O modelo agrega os municípios por semana: <strong>258 semanas</strong> e <strong>4.765 óbitos</strong> no período; após as defasagens, a AF usa <strong>4.715</strong> óbitos. <strong>Snapshot:</strong> <code>data/ec01/analytic.parquet</code> (MD5 <code>ebeb29b507eaff67a7cd051ccf7337a1</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec01/codebook.csv</code>. <strong>Avisos do Motor:</strong> dispersão moderada (1,68) e autocorrelação residual (Ljung-Box p &lt; 0,001).</p>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
+<section id="série-e-cobertura" class="level3">
+<h3 class="anchored" data-anchor-id="série-e-cobertura">Série e cobertura</h3>
+<div id="fig-ec01-serie" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ec01-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/results/ec01/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019."><img src="images/results/ec01/serie.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019.
+</figcaption>
+</figure>
+</div>
+<p><strong>Como ler:</strong> o eixo x é a semana; o eixo y é o número de óbitos notificados. A série tem sazonalidade e anos com picos diferentes; o modelo precisa separar essa sazonalidade da exposição climática. O gráfico descreve a série, não o efeito da temperatura.</p>
+</section>
+<section id="modelo-dlnm" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-dlnm">Modelo DLNM</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Medida</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RR no p75 de temperatura (24,1 °C) vs referência (22,6 °C)</td>
+<td style="text-align: right;">0,97 (IC95% 0,78–1,21)</td>
+</tr>
+<tr class="even">
+<td>Defasagem de pico</td>
+<td style="text-align: right;">0 dias</td>
+</tr>
+<tr class="odd">
+<td>Semanas no modelo</td>
+<td style="text-align: right;">258</td>
+</tr>
+<tr class="even">
+<td>Dispersão</td>
+<td style="text-align: right;">1,68 (moderada)</td>
+</tr>
+<tr class="odd">
+<td>Autocorrelação residual</td>
+<td style="text-align: right;">p &lt; 0,001</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Como ler:</strong> o intervalo de 0,78 a 1,21 inclui 1; não há evidência de associação no p75 versus a referência. O pico em lag 0 não significa efeito imediato: a curva é larga e o modelo tem autocorrelação residual, o que estreita artificialmente a incerteza. O resultado é compatível com ausência de efeito ou com um efeito pequeno que este recorte não consegue separar.</p>
+<div id="fig-ec01-dlnm" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ec01-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/results/ec01/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;14.2: Curva exposição-resposta cumulativa para temperatura e óbitos respiratórios pediátricos."><img src="images/results/ec01/dlnm_overall.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;14.2: Curva exposição-resposta cumulativa para temperatura e óbitos respiratórios pediátricos.
+</figcaption>
+</figure>
+</div>
+<p><strong>Como ler:</strong> o eixo x é a temperatura; o eixo y é o RR cumulativo. A curva é baixa nos extremos e máxima perto da referência, mas a faixa de confiança é ampla. Não leia o ponto de mínimo como “temperatura segura” individual.</p>
+</section>
+<section id="fração-atribuível" class="level3">
+<h3 class="anchored" data-anchor-id="fração-atribuível">Fração atribuível</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Componente</th>
+<th style="text-align: right;">AF (%)</th>
+<th style="text-align: right;">IC95%</th>
+<th style="text-align: right;">Número atribuível</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total</td>
+<td style="text-align: right;">-29,1</td>
+<td style="text-align: right;">-50,7 a -12,3</td>
+<td style="text-align: right;">-1.370</td>
+</tr>
+<tr class="even">
+<td>Calor</td>
+<td style="text-align: right;">-12,2</td>
+<td style="text-align: right;">-20,7 a -5,7</td>
+<td style="text-align: right;">-576</td>
+</tr>
+<tr class="odd">
+<td>Frio</td>
+<td style="text-align: right;">-16,8</td>
+<td style="text-align: right;">-29,8 a -6,2</td>
+<td style="text-align: right;">-794</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Como ler — e por que este resultado não vira manchete:</strong> a AF saiu <strong>negativa</strong>. Isso não significa que a temperatura “protege”; significa que a referência (mediana), a forma da curva e a instabilidade do modelo produzem uma conta que não é interpretável como carga atribuível. Quando a AF é negativa, o correto é <strong>não reportar</strong> “29% dos óbitos evitados pelo clima” e voltar ao modelo: revisar referência (MMT), especificação, dispersão e autocorrelação. Este é um exemplo real de por que a fração atribuível não deve ser lida isolada da curva e dos diagnósticos.</p>
+<div id="fig-ec01-af" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ec01-af-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="images/results/ec01/af_bar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;14.3: Fração atribuível por componente: as barras ficam abaixo de zero."><img src="images/results/ec01/af_bar.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-af-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;14.3: Fração atribuível por componente: as barras ficam abaixo de zero.
+</figcaption>
+</figure>
+</div>
+<p><strong>Como ler:</strong> as barras de AF total, calor e frio estão abaixo de zero. Isso é um sinal de diagnóstico, não de “proteção”: a referência e a curva produzem uma conta que não se sustenta como carga atribuível.</p>
+</section>
+</section>
+<section id="interpretando-o-resultado" class="level2">
+<h2 class="anchored" data-anchor-id="interpretando-o-resultado">Interpretando o resultado</h2>
+<p>O resultado real deste snapshot é um <strong>exemplo de modelo que não sustenta uma conclusão de carga</strong>. O RR no p75 inclui 1, a AF é negativa e os diagnósticos mostram autocorrelação residual e dispersão moderada. Isso não significa que a temperatura não importa; significa que este recorte — óbitos respiratórios em menores de 5 anos, 715 municípios, cinco anos, série semanal agregada — não é suficiente para estimar a relação com estabilidade.</p>
+<p>Antes de concluir qualquer coisa, o caminho é revisar o desenho:</p>
+<ul>
+<li>trocar a referência mediana por uma <strong>temperatura de mortalidade mínima (MMT)</strong> ou um valor pré-especificado;</li>
+<li>investigar a <strong>autocorrelação</strong> (harmônicos, <code>dof_per_year</code>, modelo com erro autorregressivo);</li>
+<li>testar <strong>agregação por estado/município</strong>, em vez de somar 715 municípios em uma série;</li>
+<li>adicionar <strong>poluição do ar</strong> e outras causas respiratórias;</li>
+<li><strong>não reportar a AF negativa</strong> como carga atribuível.</li>
+</ul>
+</section>
+<section id="numeros-ec01" class="level2">
+<h2 class="anchored" data-anchor-id="numeros-ec01">O que os números mostram</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pergunta</th>
+<th>Resposta neste snapshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A temperatura no p75 se associa a mais óbitos?</td>
+<td>Não; RR 0,97 (IC95% 0,78–1,21), intervalo inclui 1.</td>
+</tr>
+<tr class="even">
+<td>Qual é a fração atribuível?</td>
+<td>Negativa (-29,1%); não é interpretável como carga.</td>
+</tr>
+<tr class="odd">
+<td>O modelo está bem especificado?</td>
+<td>Não; há autocorrelação residual e dispersão 1,68.</td>
+</tr>
+<tr class="even">
+<td>O que a série mostra?</td>
+<td>Sazonalidade e picos anuais; isso não é o efeito da temperatura.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>O que não podemos concluir:</strong> que a temperatura não tenha efeito; que a AF negativa seja “proteção”; que uma criança específica tenha sido afetada. O resultado é compatível com ausência de efeito <strong>ou</strong> com um efeito que este desenho não consegue separar.</p>
+</section>
+<section id="o-que-isso-significa-para-ação" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
+<p>Este é um caso de <strong>resultado nulo/instável</strong>, não de sucesso. A ação responsável não é montar um alerta com a AF negativa; é revisar o desenho antes de usar o número: referência (MMT), autocorrelação, agregação por estado/município, poluição e definição de caso. Um resultado assim é útil porque mostra, com dados reais, por que a etapa de diagnóstico existe.</p>
+<p>Na Amazônia, o mesmo desenho pode ser estendido para fumaça, mas a exposição precisa ser medida por MP2,5 ou focos de calor, e o modelo precisa lidar com a sazonalidade da queima. Sem essa extensão, a temperatura sozinha não sustenta uma conclusão de carga.</p>
+<p>Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução automatizada semanal com dados atualizados — use <strong>Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando fontes, filtros, versões, referência e limitações.</p>
+</section>
+<section id="reproduzir" class="level2">
+<h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/01-run-ec01.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>O script grava a tabela analítica em <code>data/ec01/analytic.parquet</code>, as tabelas em <code>tables/results/ec01/</code>, as figuras em <code>images/results/ec01/</code> e os metadados em <code>results/ec01.json</code>. O snapshot usado neste capítulo foi gerado em 26/10/2026.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Verifique se ficou
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><strong>1. Por que este Pipeline usa a função Filtrar por características demográficas (<code>sus_data_filter_demographics</code>) com <code>age_range = c(0, 5)</code> depois de já ter criado faixas etárias mais largas com Criar variáveis derivadas (<code>sus_data_create_variables</code>)?</strong></p>
+<p><strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) cria a variável de faixa etária para toda a base (adequado se o Pipeline quisesse comparar faixas depois); <strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) é o Passo que efetivamente recorta a população de interesse (menores de 5 anos) para a análise deste capítulo.</p>
+<p><strong>2. O que o Resultado de Calcular fração atribuível (<code>sus_mod_af</code>) acrescenta que a curva de Visualizar resultados do DLNM (<code>sus_mod_plot_dlnm</code>), isoladamente, não mostra?</strong></p>
+<p>A curva DLNM mostra a forma da relação exposição-resposta e da defasagem; a fração atribuível traduz essa curva em uma proporção (e um número absoluto) de casos que podem ser atribuídos à exposição — o dado que efetivamente entra num argumento de política pública. <strong>Neste snapshot, porém, a AF saiu negativa</strong>, então a resposta correta é não usá-la como carga: primeiro é preciso revisar referência, dispersão e autocorrelação.</p>
+<p><strong>3. Se o gestor público quiser incluir queimadas na análise, além de temperatura, que Função do catálogo ele adicionaria ao Pipeline, e em qual Etapa?</strong></p>
+<p><strong>Importar focos de queimadas</strong> (<code>sus_grid_fires</code>), ou uma função de poluição como <strong>Importar poluição do ar de alta resolução (GHAP)</strong> (<code>sus_grid_pollution_ghap</code>) — com CAMS (<code>sus_grid_pollution_cams</code>) como checagem de sensibilidade —, na Etapa Integração. Depois, esses dados entram junto à série de saúde por <strong>Juntar dados ambientais por município</strong> (<code>sus_grid_join</code>), antes de seguir para a Etapa Análise &amp; Modelagem.</p>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/github\.com\/ByMaxAnjos\/climasus-plus");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./part-5-casos.html" class="pagination-link" aria-label="Parte V · Estudos de caso">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Parte V · Estudos de caso</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./08-caso-dengue-clima.html" class="pagination-link" aria-label="Estudo de caso: dengue e graus-dia">
+        <span class="nav-page-text"><span class="chapter-title">Estudo de caso: dengue e graus-dia</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>climasus+ Studio · Guia prático · 1ª edição, 2026</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Apoio: INCT-CONEXAO</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/07-caso-respiratorio-pediatrico.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>climasus4r · Fiocruz Rondônia · UFJF</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

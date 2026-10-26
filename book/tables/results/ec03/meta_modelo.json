@@ -1,0 +1,34 @@
+{
+  "climate_col": "tair_dry_bulb_c",
+  "outcome_col": "n_obitos",
+  "lag_max": 21,
+  "ref_value": 22.615,
+  "argvar": {
+    "fun": "ns",
+    "df": 4
+  },
+  "arglag": {
+    "fun": "ns",
+    "df": 3
+  },
+  "family": "quasipoisson",
+  "ns_df": 40,
+  "dof_per_year": 4,
+  "n": 3631,
+  "n_days": 3630,
+  "alpha": 0.05,
+  "pred_at": [0.25, 0.5, 0.75, 0.9, 0.95, 0.99],
+  "call_time": "2026-10-26 10:31:04",
+  "input_meta": {
+    "system": "SIM",
+    "stage": "climate",
+    "type": "distributed_lag",
+    "spatial": false,
+    "temporal": {},
+    "backend": "tibble",
+    "created": "2026-10-26 10:31:00",
+    "modified": "2026-10-26 10:31:00",
+    "history": "[2026-10-26 10:31:04] sus_mod_dlnm(): var=tair_dry_bulb_c; lag_max=21; family=quasipoisson; ns_df=40; n=3631; RR_p75=0.9755 [0.9570,0.9945]; lag_peak=0",
+    "user": []
+  }
+}

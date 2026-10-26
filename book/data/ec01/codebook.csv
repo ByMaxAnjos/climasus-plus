@@ -1,0 +1,7 @@
+variable,description,unit,source
+date,Data de referência da semana,date,SIM-DO / agregação
+code_muni,Código IBGE do município,código,geobr
+n_obitos,Óbitos respiratórios em menores de 5 anos,contagem,SIM-DO
+tair_dry_bulb_c,Temperatura do ar (bulbo seco),°C,INMET
+rh_mean_porc,Umidade relativa média,%,INMET
+rh_mean_porc_lag0,Umidade relativa na semana do desfecho,%,INMET

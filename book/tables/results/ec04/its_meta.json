@@ -1,0 +1,14 @@
+{
+  "outcome_col": "n_internacoes",
+  "date_col": "date",
+  "interruption_dates": "2011-07-03",
+  "n_interruptions": 1,
+  "harmonics": 2,
+  "family": "quasipoisson",
+  "covariates": {},
+  "alpha": 0.05,
+  "n_obs": 3810,
+  "n_pre": 716,
+  "disp_ratio": 1.824,
+  "call_time": "2026-10-26 11:20:38"
+}

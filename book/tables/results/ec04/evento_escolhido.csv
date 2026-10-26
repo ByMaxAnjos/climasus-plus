@@ -1,0 +1,2 @@
+station_code,method,start_date,end_date,duration_days,temp_mean,temp_peak,anomaly_mean,anomaly_cumulative,severity_index,ecf_peak,ecf_mean,region,federal_unit,station_name,zona_climatica,latitude,longitude,event_id,intensity_class,dist_km
+A801,WHO,2011-07-03,2011-07-09,7,2.9428571428571426,1.9,2.6142857142857143,18.299999999999997,18.3,NA,NA,S,NA,PORTO ALEGRE,NA,-30.05,-51.16666666,A801_WHO_463,NA,5.54

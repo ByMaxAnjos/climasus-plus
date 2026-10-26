@@ -1,0 +1,25 @@
+{
+  "case": "ec03",
+  "generated_at": "2026-10-26T10:35:08-0300",
+  "studio_version": "1.1.0-beta.1",
+  "climasus4r_version": "1.0.1",
+  "r_version": "R version 4.5.1 (2025-06-13)",
+  "params": {
+    "system": "SIM-DO",
+    "uf": "SP",
+    "years": "2010:2019",
+    "cid": "I",
+    "age_range": "60+",
+    "time_unit": "day",
+    "exposure": "tair_dry_bulb_c",
+    "lag_days": 21,
+    "dof_per_year": 4,
+    "heatwave_method": "WHO",
+    "heatwave_percentile": 90,
+    "heatwave_baseline": "2010-01-01/2015-12-31",
+    "af_nsim": 200
+  },
+  "n_records": 2355540,
+  "data_file": "data/ec03/analytic.parquet",
+  "data_checksum": "0ee2a03b96da684eeaff0a4a32442d26"
+}

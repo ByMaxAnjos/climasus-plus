@@ -1,0 +1,5 @@
+variable,description,unit,source
+date,Dia da internação,date,SIH-RD / agregação
+code_muni,Código IBGE do município,código,geobr
+n_internacoes,Internações por J09-J18,contagem,SIH-RD
+event_date,Início do evento de frio selecionado,date,INMET / ondas de frio

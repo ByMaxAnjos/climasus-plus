@@ -1,0 +1,10 @@
+{
+  "disp_ratio": 1.2523,
+  "disp_category": "adequate",
+  "autocorr_pval": 5.4545e-13,
+  "has_autocorr": true,
+  "aic_poisson": 30100.3212,
+  "deviance": 4480.858,
+  "null_deviance": 12181.4945,
+  "df_residual": 3578
+}

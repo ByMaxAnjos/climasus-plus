@@ -1,0 +1,28 @@
+% climasus+ Studio · Guia prático — ajustes de composição para o PDF (XeLaTeX)
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+
+\definecolor{climasus}{HTML}{0E7C6B}
+\definecolor{climasusink}{HTML}{0B2420}
+\definecolor{climasusochre}{HTML}{D99A2B}
+\definecolor{climasuspaper}{HTML}{F7F4EC}
+
+\setkomafont{disposition}{\sffamily\bfseries\color{climasusink}}
+\setkomafont{chapter}{\sffamily\bfseries\color{climasusink}}
+\setkomafont{section}{\sffamily\bfseries\color{climasus}}
+\setkomafont{subsection}{\sffamily\bfseries\color{climasusink}}
+
+\KOMAoptions{chapterprefix=true}
+\renewcommand*{\chapterformat}{\mbox{\color{climasus}\thechapter\autodot\enskip}}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\sffamily\color{gray}climasus+ Studio · Guia prático}
+\fancyhead[R]{\footnotesize\sffamily\color{gray}\leftmark}
+\fancyfoot[C]{\footnotesize\sffamily\color{gray}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{climasus}\leaders\hrule height \headrulewidth\hfill}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}

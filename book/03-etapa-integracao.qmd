@@ -1,0 +1,274 @@
+---
+title: "Etapa Integração: clima, saúde e território na mesma análise"
+subtitle: "Capítulo 03 · Etapas do pipeline"
+---
+
+No Capítulo 0 apresentamos a ideia de que o efeito do clima na saúde geralmente aparece
+com **defasagem** — o calor de hoje pode virar internação em poucos dias, a chuva de
+uma semana pode virar caso de dengue semanas depois. Até aqui, no Capítulo 2, você
+aprendeu a deixar uma série de saúde limpa, recortada e agregada. Falta uma peça: essa
+série de saúde, isoladamente, não permite estudar esse efeito — é preciso ter uma série de
+clima ao lado, casada no tempo e no espaço com os dados de saúde, e — na maioria dos
+casos — também uma medida do território em que isso acontece. É esse cruzamento
+que a Etapa **Integração** faz.
+
+O exemplo operacional deste capítulo usa dengue no Nordeste; a mesma lógica vale para a
+Amazônia, onde a grade costuma ser ainda mais necessária pela distribuição irregular das
+estações.
+
+Este capítulo mantém a régua operacional do Capítulo 2, mas inclui decisões
+metodológicas: qual fonte de clima usar, qual defasagem escolher. Essas escolhas
+reaparecem como Parâmetros concretos de uma Função, as mesmas
+ideias que o Capítulo 0 apresentou de forma leiga.
+
+## Por que juntar clima, saúde e território
+
+Descrever a série de óbitos respiratórios de uma região e descrever a série de
+temperatura da mesma região, separadamente, não é suficiente para responder "o calor
+está causando isso?". É preciso colocar as duas séries lado a lado, na mesma linha do
+tempo, e — quando o desfecho tem componente de vulnerabilidade social, como dengue ou
+doença cardiovascular em idosos — colocar também um indicador de território ao lado.
+Isso importa porque território pobre costuma estar ligado às duas pontas do problema ao
+mesmo tempo: à exposição (saneamento precário mantém água parada e lixo o ano inteiro,
+elevando a reprodução do mosquito independente da chuva desta semana; moradia precária
+expõe mais ao calor) e, de forma independente, ao próprio desfecho (menor cobertura de
+saúde e maior densidade populacional já elevam a transmissão e a gravidade dos casos,
+com ou sem chuva no período). Quando uma característica do território empurra as duas
+pontas dessa forma, ela é o que a epidemiologia chama de fator de confundimento — e, sem
+medi-la, o Pipeline pode atribuir ao clima um efeito que na verdade é (ou é também) de
+vulnerabilidade social e territorial. A Etapa Integração transforma esse cuidado metodológico em
+Passos do Pipeline.
+
+## As 32 Funções da Integração, em 4 grupos
+
+A Biblioteca reúne 32 ações na Etapa Integração, organizadas em quatro famílias:
+
+**(a) Clima por estação** — dados observados em estações meteorológicas do INMET.
+
+- **Importar dados das estações do INMET** (`sus_climate_inmet`) — importa e processa dados meteorológicos do INMET.
+- **Baixar normais climatológicas do INMET** (`sus_climate_normals`) — baixa normais climatológicas de 30 anos do INMET (três
+  períodos de referência disponíveis; o mais recente é 1991–2020), usadas como linha de base histórica.
+- **Consultar variáveis das normais climáticas** (`sus_climate_normals_meta`) — permite explorar o catálogo de variáveis das normais
+  antes de baixá-las.
+- **Calcular anomalias climáticas** (`sus_climate_anomaly`) — calcula anomalias climáticas por comparação entre dados observados do
+  INMET contra as normais de 30 anos.
+- **Detectar ondas de calor** (`sus_climate_compute_heatwaves`) e **Detectar ondas de
+  frio** (`sus_climate_compute_coldwaves`) — aplicam sete metodologias reconhecidas (OMS, OMM,
+  INMET, entre outras).
+- **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) — calcula indicadores bioclimáticos e de estresse
+  térmico.
+- **Calcular índice de seca por chuva (SPI)** (`sus_climate_compute_spi`) e **Calcular
+  índice de seca (SPEI)** (`sus_climate_compute_spei`) — caracterizam seca por
+  precipitação e por precipitação-evapotranspiração.
+- **Importar dados de chuva (UNIPLU-BR)** (`sus_climate_uniplu`) — importa o conjunto unificado de dados de chuva do Brasil
+  (UNIPLU-BR).
+- Visualizações dedicadas: **Visualizar dados de clima e saúde**
+  (`sus_climate_plot_aggregate`), **Visualizar ondas de calor**
+  (`sus_climate_plot_heatwaves`), **Visualizar ondas de frio**
+  (`sus_climate_plot_coldwaves`) e **Visualizar preenchimento de falhas climáticas**
+  (`sus_climate_plot_fill`).
+
+**(b) Clima e ambiente em grade** — dados de satélite ou reanálise, com cobertura do território
+de forma contínua, sem depender da existência de uma estação próxima.
+
+- **Importar clima por satélite (ERA5)** (`sus_grid_era5`) — dados climáticos diários de reanálise ERA5-Land.
+- **Importar chuva por satélite (CHIRPS)** (`sus_grid_chirps`) — dados de precipitação por satélite CHIRPS.
+- **Importar focos de queimadas** (`sus_grid_fires`) — focos de queimada.
+- Três fontes de poluição do ar em grade: **Importar poluição do ar (CAMS)**
+  (`sus_grid_pollution_cams`), **Importar poluição do ar de alta resolução (GHAP)**
+  (`sus_grid_pollution_ghap`) e **Importar poluição do ar (MERRA-2)**
+  (`sus_grid_pollution_merra2`).
+- **Importar índice de seca (PDSI)** (`sus_grid_pdsi`) — índice de severidade de seca de Palmer.
+- **Calcular seca-relâmpago (SMVI)** (`sus_grid_smvi`) — índice de volatilidade de umidade do solo (seca-relâmpago).
+- **Importar dados de desmatamento (PRODES)** (`sus_grid_prodes`) — dados de desmatamento do PRODES/TerraBrasilis.
+- **Classificar clima por Köppen** (`sus_grid_koppen`) — classificação climática de Köppen-Geiger por município.
+- **Juntar dados ambientais por município** (`sus_grid_join`) — junta qualquer dado ambiental em grade aos dados de saúde.
+- **Mapear uma grade ambiental** (`sus_grid_plot`) — visualiza um raster (GeoTIFF/NetCDF) como mapa pronto para publicação.
+
+**(c) Território, censo e vínculo espacial** — quem vive onde, em quais condições, e como
+o dado de saúde se liga ao mapa:
+
+- **Adicionar variáveis do Censo** (`sus_census_join`) — junta variáveis socioeconômicas do Censo aos dados de saúde já
+  vinculados ao território. É o caminho para levar renda, saneamento, alfabetização e
+  composição domiciliar para dentro da análise.
+- **Explorar variáveis do Censo** (`sus_census_select`) — abre uma interface interativa para consultar as variáveis do Censo
+  disponíveis e copiar os códigos usados em **Adicionar variáveis do Censo**.
+- **Calcular indicadores socioeconômicos e de saúde** (`sus_socio_compute_indicators`) — calcula indicadores socioeconômicos e
+  epidemiológicos padronizados a partir de colunas já presentes nos dados (demografia,
+  vulnerabilidade socioeconômica, entre outros).
+- **Consultar indicadores disponíveis** (`sus_socio_list_indicators`) — lista todos os indicadores disponíveis no catálogo, com
+  categoria e método de incerteza de cada um.
+- **Vincular dados do SUS às unidades geográficas** (`sus_spatial_join`) — associa cada registro de saúde ao município,
+  à região de saúde ou a outra unidade geográfica. É o Passo que dá endereço ao dado e
+  permite cruzá-lo com clima, Censo e vizinhança.
+
+**(d) A Função que amarra tudo** — o encontro entre saúde e clima:
+
+- **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — casa a série de saúde com a série de
+  clima (de estação ou de grade), a peça descrita na próxima seção.
+
+::: {.callout-tip}
+## Estação ou grade: quando usar cada uma
+Estação (INMET) é indicada quando há uma estação bem localizada perto da
+população estudada e você quer variáveis meteorológicas detalhadas (temperatura,
+umidade, índices de estresse térmico). Grade/satélite entra quando a área de estudo é
+grande, tem muitos municípios sem estação próxima, ou quando a variável
+não existe em estação — chuva acumulada de longo prazo (CHIRPS), queimadas (grade de
+fogo) ou poluição do ar (CAMS/GHAP/MERRA-2) são exemplos em que a grade costuma ser a
+fonte mais adequada.
+:::
+
+## Função-chave da Etapa: Cruzar dados de saúde e clima
+**Cruzar dados de saúde e clima** (`sus_climate_aggregate`) é uma das Funções com mais
+Parâmetros do catálogo porque define *como* clima e saúde se encontram no tempo. Recebe a série
+de saúde já preparada (Capítulo 2) e a série de clima (de estação ou de grade), e exige
+duas decisões centrais:
+
+- `climate_var` — qual variável climática usar (`"all"` para todas, ou uma específica
+  como `tair_dry_bulb_c` para temperatura do ar).
+- `time_unit` — a unidade de agregação temporal do clima antes do cruzamento (`day`,
+  `week`, `month`, `quarter`, `year`, `season`).
+
+A decisão mais importante, porém, é `temporal_strategy` — o Parâmetro que formaliza a
+defasagem apresentada de forma leiga no Capítulo 0. Ele responde à pergunta "quantos
+dias entre a exposição climática e o desfecho de saúde eu quero considerar, e de que
+jeito?". O catálogo oferece dez estratégias; as mais usadas no guia são:
+
+| `temporal_strategy` | Pergunta que responde | Exemplo de desfecho |
+|---|---|---|
+| `exact` | O desfecho reage no mesmo dia da exposição? | Calor de hoje × óbito cardiovascular agudo hoje |
+| `discrete_lag` | O desfecho reage num dia específico depois da exposição? | Temperatura de N dias atrás × óbito de hoje |
+| `moving_window` | O desfecho reage ao acúmulo de exposição numa janela de dias? | Chuva acumulada de 7–14 dias × casos de dengue |
+| `distributed_lag` | O efeito se distribui ao longo de vários dias e queremos estimar a curva? | Temperatura 0–21 dias × mortalidade respiratória |
+| `degree_days` | O desfecho responde ao acúmulo de energia térmica acima de uma base? | GDD base 11 °C × dengue |
+| `offset_window` | O acúmulo relevante começa depois de um atraso (ex.: incubação)? | Chuva de 2–5 semanas atrás × dengue |
+
+Para um estudo de calor extremo e mortalidade cardiovascular aguda, `exact` é um bom
+ponto de partida — o efeito do calor sobre eventos cardiovasculares agudos se concentra
+nos primeiros dias após a exposição. Mas o efeito pode se estender por até cerca de uma
+semana; uma análise completa deve testar também defasagens curtas, com `discrete_lag` ou
+com o DLNM do Capítulo 6 (`distributed_lag`).
+
+Para dengue, a exposição mais próxima da biologia do vetor é **graus-dia** (`degree_days`),
+com `temp_base = 11` para *Aedes aegypti* e um teto térmico (por exemplo, 35 °C). Se o
+Modelo precisar das colunas de defasagem que o DLNM exige, a alternativa é calcular
+`gdd_c` com **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) e
+usar `distributed_lag` sobre `gdd_c`; o template de dengue do Capítulo 8 faz exatamente
+isso. `moving_window` de chuva continua útil como exposição complementar — mas atenção:
+entre a chuva que forma o criadouro e o caso confirmado passam tipicamente várias
+semanas, então a janela de acúmulo de chuva normalmente deve ficar deslocada algumas
+semanas *antes* da data do caso, não colada a ela. Quando esse deslocamento importa, use
+`offset_window`.
+
+## Exercício guiado: saúde + clima + território em um só Pipeline
+
+Vamos continuar o arco de **dengue e clima** (`ec-02-dengue-clima`) aberto no recorte de
+chuva, enchente e vetores do Capítulo 0. A exposição principal do Modelo é **graus-dia
+(GDD)**, porque a transmissão depende do acúmulo de energia térmica ao longo do ciclo do
+vetor; chuva acumulada e umidade entram como extensão. O Modelo de catálogo
+`clima-aggregate-exposicao` traz o esqueleto desse cruzamento — uma série de saúde diária
+ou semanal, estações INMET e defasagens de 0 a 21 dias — e pode ser carregado no Centro de
+Pipelines para conferência. Aqui explicamos como adaptar esse esqueleto ao desfecho e ao
+território.
+
+![](images/integracao-flow.svg)
+
+![Pipeline de Integração no Studio: a série de saúde preparada é combinada com o clima das estações e transformada em colunas de defasagem para a modelagem.](images/screenshots/studio-integracao-pipeline.png){fig-alt="Captura do canvas do climasus+ Studio mostrando um Pipeline de Integração com série de saúde, vínculo municipal, estações INMET, cruzamento saúde-clima com defasagem distribuída e visualização."}
+
+::: {.callout-tip}
+## Parâmetros que merecem atenção
+Na Integração, os Parâmetros centrais são os que definem **exposição** e **defasagem**:
+`climate_var` escolhe a variável climática, `time_unit` harmoniza a escala temporal,
+`temporal_strategy` define como o clima entra no tempo, e `window_days`, `lag_days` ou
+`offset_days` controlam quantos dias de exposição entram no cruzamento. Para dengue,
+`temp_base` (11 °C) e o teto térmico definem o GDD. São esses Parâmetros que mudam a
+leitura epidemiológica do Resultado.
+:::
+
+### Passo a passo
+
+1. **Ponto de partida** — a série de saúde já preparada no Capítulo 2. Para dengue, use a
+   série **semanal por primeiros sintomas**; para desfechos agudos, a série diária. A
+   resolução do desfecho precisa ser compatível com a resolução da defasagem.
+
+2. **Trazer o clima** — use **Importar dados das estações do INMET**
+   (`sus_climate_inmet`) quando houver boa cobertura de estação, com `years` cobrindo o
+   período de estudo e `uf` do estado ou da região de interesse. Para dengue, acrescente
+   **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) com
+   `indicators = "gdd"` e `custom_thresholds = list(gdd_base = 11, gdd_upper = 35)` para
+   obter `gdd_c`. Se a área for grande ou tiver baixa cobertura de estação, use
+   **Importar chuva por satélite (CHIRPS)** (`sus_grid_chirps`) com
+   `resolution = "daily"` como exposição complementar — nunca mensal para defasagens
+   semanais.
+
+3. **Trazer o território** — use **Calcular indicadores socioeconômicos e de saúde**
+   (`sus_socio_compute_indicators`) para gerar indicadores como saneamento e renda a
+   partir dos dados já ligados ao território dos municípios em estudo. O template de
+   integração não inclui esse passo; ele é uma extensão.
+
+4. **Integrar** — Função **Cruzar dados de saúde e clima** (`sus_climate_aggregate`).
+   Para dengue, os Parâmetros-chave são `climate_var = "gdd_c"`,
+   `temporal_strategy = "distributed_lag"` e `lag_days = 84` (12 semanas). Para um
+   desfecho agudo, use temperatura com `distributed_lag` de 0–21 dias. Para chuva
+   acumulada, use `moving_window` com uma janela de 2–6 semanas e, se necessário,
+   `offset_window` para deslocar a janela antes da data do caso. O Resultado é uma única
+   série temporal com saúde, clima e território lado a lado, na mesma linha do tempo.
+
+   Atenção à resolução: uma janela de 7 dias só tem significado se o dado for diário; uma
+   janela de 12 semanas só tem significado se a exposição e o desfecho estiverem na mesma
+   escala. Misturar clima mensal com janela em dias produz exposição `NA` ou
+   interpretação incorreta.
+
+5. **Visualizar** — Função **Visualizar dados de clima e saúde** (`sus_climate_plot_aggregate`), que produz um Resultado gráfico
+   da série integrada, adequada para uma primeira leitura antes de qualquer modelagem.
+
+O Modelo de catálogo `ec-02-dengue-clima` retoma esse cruzamento e segue até a curva de
+risco; a fração atribuível não faz parte deste caso, pelas razões discutidas no Capítulo 8.
+Neste capítulo, o objetivo é mostrar a etapa intermediária: a construção da série
+integrada que será usada na modelagem.
+
+## Cuidado: correlação não é o mesmo que causa
+
+O Resultado que sai de **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) é uma série integrada — não é ainda um
+modelo, e não prova causa. Ele deixa saúde, clima e território comparáveis lado a lado;
+transformar essa comparação em evidência estatística exige modelagem, controle de
+confundimento e medida de incerteza. Essa é a função da Etapa Análise & Modelagem. Para o
+gestor público, a fronteira é importante: uma série integrada ajuda a levantar hipótese e
+comunicar um problema, mas não prova, isoladamente, que uma ação sobre o clima reduzirá o
+desfecho de saúde.
+
+::: {.callout-note collapse="true"}
+## Verifique se ficou
+
+**1. Você quer estudar o efeito de uma onda de calor de 1 dia sobre óbitos
+cardiovasculares no mesmo dia. Qual `temporal_strategy` faz mais sentido, `exact` ou
+`moving_window`? Por quê?**
+
+`exact` — o desfecho cardiovascular agudo reage no mesmo dia da exposição ao calor;
+`moving_window` serviria melhor para exposições que se acumulam ao longo de dias, como
+chuva e dengue. Para o efeito no mesmo dia, `exact` é adequado; uma análise completa deve
+testar também defasagens curtas, porque o efeito pode se estender por até cerca de uma
+semana.
+
+**2. Por que a Etapa Integração inclui uma Função de indicadores socioeconômicos, e não
+só dados de clima?**
+
+Porque território pobre costuma estar ligado tanto à exposição (saneamento precário
+mantém água parada o ano inteiro, elevando a reprodução do mosquito independente da
+chuva desta semana) quanto, de forma independente, ao próprio desfecho (menor cobertura
+de saúde já eleva a transmissão e a gravidade dos casos, com ou sem chuva no período) —
+é o que a epidemiologia chama de fator de confundimento. Sem um indicador de território
+(renda, saneamento, infraestrutura), o Pipeline corre o risco de atribuir ao clima um
+efeito que na verdade é (ou é também) de vulnerabilidade social e territorial.
+
+**3. Qual a diferença entre clima "por estação" e clima "em grade", e me dê um exemplo
+de quando cada um seria a escolha certa?**
+
+Clima por estação, importado por **Importar dados das estações do INMET**
+(`sus_climate_inmet`), vem de pontos de medição do INMET — indicado quando há estação
+bem localizada perto da população estudada. Clima em grade, como **Importar clima por
+satélite (ERA5)** (`sus_grid_era5`) ou **Importar chuva por satélite (CHIRPS)**
+(`sus_grid_chirps`), vem de satélite/reanálise e cobre o território de forma contínua —
+indicado quando a área é grande, tem municípios sem estação próxima, ou a variável
+(queimada, poluição) não existe em estação.
+:::

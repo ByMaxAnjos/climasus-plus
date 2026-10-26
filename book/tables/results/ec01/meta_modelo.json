@@ -1,0 +1,41 @@
+{
+  "climate_col": "tair_dry_bulb_c",
+  "outcome_col": "n_obitos",
+  "lag_max": 21,
+  "ref_value": 22.636,
+  "argvar": {
+    "fun": "ns",
+    "df": 4
+  },
+  "arglag": {
+    "fun": "ns",
+    "df": 3
+  },
+  "family": "quasipoisson",
+  "ns_df": 10,
+  "dof_per_year": 2,
+  "n": 258,
+  "n_days": 1799,
+  "alpha": 0.05,
+  "pred_at": [0.25, 0.5, 0.75, 0.9, 0.95, 0.99],
+  "call_time": "2026-10-26 09:40:28",
+  "input_meta": {
+    "system": "SIM",
+    "stage": "climate",
+    "type": "distributed_lag",
+    "spatial": true,
+    "temporal": {
+      "start": "2014-12-28",
+      "end": "2019-12-29",
+      "unit": "week"
+    },
+    "backend": "tibble",
+    "created": "2026-10-26 09:37:12",
+    "modified": "2026-10-26 09:40:27",
+    "history": ["[2026-10-26 09:37:12] Imported via Arrow out-of-core (climasus4r)", "[2026-10-26 09:37:13] Encoding check (lazy Arrow): 0 column(s) flagged", "[2026-10-26 09:38:29] Standardized column names and types", "[2026-10-26 09:38:29] Filtered by disease group: respiratory", "[2026-10-26 09:38:30] Create variables (Arrow optimized)", "[2026-10-26 09:38:31] Filtered by demographics [age: 0-5]", "[2026-10-26 09:38:31] Temporal Data aggregated [Time unit: week | Aggregation: count | Value column: record count | Grouped by: codigo_municipio_residencia | Completed missing dates | Date column: data_obito]", "[2026-10-26 09:38:38] Spatial Data aggregated [%s]", "[2026-10-26 09:40:27] Climate aggregation [Strategy: distributed_lag | Variables: tair_dry_bulb_c, rh_mean_porc | Climate region: temperate (Temperate (South)) | Max lag: 21 day(s) | Hourly data aggregated to daily]", "[2026-10-26 09:40:28] sus_mod_dlnm(): var=tair_dry_bulb_c; lag_max=21; family=quasipoisson; ns_df=10; n=258; RR_p75=0.9726 [0.7843,1.2060]; lag_peak=0"],
+    "user": [],
+    "n_files": 20,
+    "n_failed": 0,
+    "cache_dir": "/Users/co2map/.climasus4r_cache/data/raw"
+  }
+}

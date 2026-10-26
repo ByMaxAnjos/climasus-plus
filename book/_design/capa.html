@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:"Fraunces";src:url("../theme/fonts/fraunces-600.woff2") format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"Fraunces";src:url("../theme/fonts/fraunces-400i.woff2") format("woff2");font-weight:400;font-style:italic;font-display:block}
+@font-face{font-family:"Inter";src:url("../theme/fonts/inter-400.woff2") format("woff2");font-weight:400;font-display:block}
+@font-face{font-family:"Inter";src:url("../theme/fonts/inter-600.woff2") format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"Inter";src:url("../theme/fonts/inter-700.woff2") format("woff2");font-weight:700;font-display:block}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{width:1600px;height:2400px;background:#0B2420;color:#F7F4EC;font-family:"Inter",sans-serif;position:relative;overflow:hidden}
+.contour{position:absolute;inset:0;background:url("../images/illustrations/contorno.svg") 50% 76%/1100px auto no-repeat;opacity:.55}
+.copy{position:relative;z-index:2;padding:118px 112px 0}
+.kicker{display:flex;align-items:center;gap:18px;font-size:19px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#D99A2B}
+.kicker::before{content:"";display:block;width:64px;height:3px;background:#D99A2B}
+h1{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:172px;line-height:.92;letter-spacing:-6px;margin:34px 0 38px;max-width:1250px}
+h1 em{font-style:italic;color:#A7F3E4}
+.sub{font-family:"Fraunces",Georgia,serif;font-size:54px;line-height:1.34;color:rgba(247,244,236,.84);max-width:1160px;margin:0}
+.photo{position:absolute;left:0;right:0;top:930px;height:1067px;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:grayscale(1) contrast(1.06)}
+.photo::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#0B2420 0%,rgba(11,36,32,.45) 12%,rgba(11,36,32,.05) 40%,rgba(11,36,32,.25) 72%,#0B2420 100%),linear-gradient(120deg,rgba(14,124,107,.18),rgba(217,154,43,.12));mix-blend-mode:multiply}
+.photo::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(160deg,rgba(14,124,107,.2),rgba(217,154,43,.12));mix-blend-mode:color}
+.credit{position:absolute;right:26px;bottom:14px;z-index:3;font-size:13px;color:rgba(247,244,236,.62);writing-mode:vertical-rl;transform:rotate(180deg)}
+.bottom{position:absolute;left:112px;right:112px;bottom:92px;z-index:4}
+.rule{height:1px;background:rgba(247,244,236,.2);margin-bottom:30px}
+.meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:26px;font-size:17px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,244,236,.62)}
+.meta strong{color:#D99A2B;font-weight:600}
+.logos{display:flex;align-items:center;gap:18px}
+.chip{display:inline-flex;align-items:center;justify-content:center;background:#F7F4EC;border-radius:10px;padding:10px 14px;min-height:66px;box-shadow:0 10px 26px rgba(0,0,0,.18)}
+.chip img{display:block;max-height:44px;width:auto}
+.chip.inct img{max-height:58px}
+.chip.round{width:66px;height:66px;padding:4px;border-radius:50%}
+.chip.round img{max-height:56px;border-radius:50%}
+.labels{display:flex;align-items:center;gap:12px;margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(247,244,236,.55)}
+.labels .dot{width:5px;height:5px;border-radius:50%;background:#D99A2B}
+</style>
+</head>
+<body>
+<div class="contour"></div>
+<div class="copy">
+  <div class="kicker">Guia prático · clima, saúde e Amazônia</div>
+  <h1>Do dado à <em>decisão</em> em saúde</h1>
+  <p class="sub">climasus+ Studio: um guia visual para montar análises de saúde, clima e território sem precisar programar.</p>
+</div>
+<div class="photo">
+  <img src="../images/photos/capa-amazonia.jpg" alt="">
+  <span class="credit">Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens</span>
+</div>
+<div class="bottom">
+  <div class="rule"></div>
+  <div class="meta">
+    <span><strong>1ª edição</strong> · 2026</span>
+    <span>Apoio: INCT-CONEXAO</span>
+  </div>
+  <div class="logos">
+    <span class="chip round"><img src="../images/brand/climasus.png" alt="climasus+ Studio"></span>
+    <span class="chip inct"><img src="../images/brand/inct-conexao.png" alt="INCT-CONEXAO"></span>
+    <span class="chip"><img src="../images/brand/fiocruz-rondonia.png" alt="Fiocruz Rondônia"></span>
+    <span class="chip"><img src="../images/brand/cnpq.png" alt="CNPq"></span>
+    <span class="chip"><img src="../images/brand/ufjf.png" alt="UFJF"></span>
+    <span class="labels"><span>Realização</span><span class="dot"></span><span>Apoio</span><span class="dot"></span><span>Rede</span></span>
+  </div>
+</div>
+</body>
+</html>

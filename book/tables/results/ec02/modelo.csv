@@ -1,0 +1,2 @@
+variable,n,family,lag_max,ref_value,exposure_p75,rr,lo,hi,lag_peak,disp_ratio,aic_poisson
+gdd_c,248,quasipoisson,84,347.334,365.299,0.7115605928296761,0.5277222450185718,0.9594412250904859,84,95.601,23888.2

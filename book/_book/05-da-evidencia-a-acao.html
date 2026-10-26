@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+
+<title>Da evidência à ação: usar resultados com responsabilidade – climasus+ Studio</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./part-4-pesquisador.html" rel="next">
+<link href="./04-modelos-vigilancia.html" rel="prev">
+<link href="./images/brand/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-9a023c9ade86a60361e96e3e3f11bc54.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f839f82759fd3875dd9bc5f608ae64ec.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+<meta name="author" content="Max Anjos · ecossistema climaSUS">
+<meta name="keywords" content="climasus, clima, saúde, Amazônia, DATASUS, SUS, Fiocruz, INCT-CONEXAO, análise espacial, epidemiologia">
+<meta property="og:title" content="Da evidência à ação: usar resultados com responsabilidade – climasus+ Studio">
+<meta property="og:description" content="Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia.">
+<meta property="og:type" content="book">
+<meta property="og:image" content="images/brand/capa-guia.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="2400">
+<meta property="og:image:alt" content="Capa do guia prático do climasus+ Studio, com o título Do dado à decisão em saúde e fotografia de crianças tembés na Amazônia.">
+<meta name="theme-color" content="#0B2420">
+
+<link rel="preload" href="theme/fonts/petrona-var.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="theme/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="theme/fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin="">
+
+<script src="theme/guide.js" defer=""></script>
+
+
+<link rel="stylesheet" href="theme/guide.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-da-evidencia-a-acao.html"><span class="chapter-title">Da evidência à ação: usar resultados com responsabilidade</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/brand/climasus.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">climasus+ Studio</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ByMaxAnjos/climasus-plus" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">climasus+ Studio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-1-fundamentos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte I · Fundamentos</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por que isso importa: clima, saúde e o que os dados escondem</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-etapa-preparacao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Preparação: dados de saúde prontos antes de tudo</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-etapa-integracao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Integração: clima, saúde e território na mesma análise</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-da-evidencia-a-acao.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Da evidência à ação: usar resultados com responsabilidade</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-etapa-analise-modelagem.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Etapa Análise &amp; Modelagem: do padrão observado à evidência estatística</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./part-5-casos.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte V · Estudos de caso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-caso-respiratorio-pediatrico.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: mortalidade respiratória pediátrica e temperatura</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-caso-dengue-clima.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: dengue e graus-dia</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-caso-cardio-idosos-calor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: mortalidade cardiovascular em idosos e ondas de calor</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-caso-hospitalizacoes-frio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estudo de caso: hospitalizações respiratórias e frio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./colofao.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Sobre esta edição</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+<div class="quarto-sidebar-footer"><div class="sidebar-footer-item">
+<p>Uma realização do ecossistema climaSUS<br><strong>Apoio: INCT-CONEXAO</strong></p>
+</div></div></nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#a-pergunta-de-gestão-vem-antes-do-modelo" id="toc-a-pergunta-de-gestão-vem-antes-do-modelo" class="nav-link active" data-scroll-target="#a-pergunta-de-gestão-vem-antes-do-modelo">A pergunta de gestão vem antes do modelo</a></li>
+  <li><a href="#ler-resultados" id="toc-ler-resultados" class="nav-link" data-scroll-target="#ler-resultados">Como ler os Resultados de um Pipeline</a>
+  <ul class="collapse">
+  <li><a href="#primeiro-o-que-representa-cada-linha" id="toc-primeiro-o-que-representa-cada-linha" class="nav-link" data-scroll-target="#primeiro-o-que-representa-cada-linha">Primeiro: o que representa cada linha?</a></li>
+  <li><a href="#segundo-os-dados-estão-completos" id="toc-segundo-os-dados-estão-completos" class="nav-link" data-scroll-target="#segundo-os-dados-estão-completos">Segundo: os dados estão completos?</a></li>
+  <li><a href="#terceiro-o-que-as-estatísticas-resumem" id="toc-terceiro-o-que-as-estatísticas-resumem" class="nav-link" data-scroll-target="#terceiro-o-que-as-estatísticas-resumem">Terceiro: o que as estatísticas resumem?</a></li>
+  <li><a href="#quarto-qual-é-a-comparação-do-modelo" id="toc-quarto-qual-é-a-comparação-do-modelo" class="nav-link" data-scroll-target="#quarto-qual-é-a-comparação-do-modelo">Quarto: qual é a comparação do modelo?</a></li>
+  <li><a href="#quinto-o-que-olhar-no-gráfico" id="toc-quinto-o-que-olhar-no-gráfico" class="nav-link" data-scroll-target="#quinto-o-que-olhar-no-gráfico">Quinto: o que olhar no gráfico?</a></li>
+  <li><a href="#sexto-como-escrever-a-conclusão" id="toc-sexto-como-escrever-a-conclusão" class="nav-link" data-scroll-target="#sexto-como-escrever-a-conclusão">Sexto: como escrever a conclusão?</a></li>
+  </ul></li>
+  <li><a href="#o-que-um-resultado-pode-e-não-pode-afirmar" id="toc-o-que-um-resultado-pode-e-não-pode-afirmar" class="nav-link" data-scroll-target="#o-que-um-resultado-pode-e-não-pode-afirmar">O que um resultado pode e não pode afirmar</a></li>
+  <li><a href="#critérios-mínimos-para-uma-decisão-do-sus" id="toc-critérios-mínimos-para-uma-decisão-do-sus" class="nav-link" data-scroll-target="#critérios-mínimos-para-uma-decisão-do-sus">Critérios mínimos para uma decisão do SUS</a></li>
+  <li><a href="#quatro-frentes-de-uso-no-sus" id="toc-quatro-frentes-de-uso-no-sus" class="nav-link" data-scroll-target="#quatro-frentes-de-uso-no-sus">Quatro frentes de uso no SUS</a></li>
+  <li><a href="#como-incorporar-a-justiça-climática" id="toc-como-incorporar-a-justiça-climática" class="nav-link" data-scroll-target="#como-incorporar-a-justiça-climática">Como incorporar a justiça climática</a></li>
+  <li><a href="#prioridades-para-as-próximas-versões-do-studio" id="toc-prioridades-para-as-próximas-versões-do-studio" class="nav-link" data-scroll-target="#prioridades-para-as-próximas-versões-do-studio">Prioridades para as próximas versões do Studio</a></li>
+  <li><a href="#perigo-exposição-vulnerabilidade-e-resposta" id="toc-perigo-exposição-vulnerabilidade-e-resposta" class="nav-link" data-scroll-target="#perigo-exposição-vulnerabilidade-e-resposta">Perigo, exposição, vulnerabilidade e resposta</a></li>
+  <li><a href="#saúde-e-qualidade-da-informação" id="toc-saúde-e-qualidade-da-informação" class="nav-link" data-scroll-target="#saúde-e-qualidade-da-informação">Saúde e qualidade da informação</a></li>
+  <li><a href="#roteiro-de-decisão" id="toc-roteiro-de-decisão" class="nav-link" data-scroll-target="#roteiro-de-decisão">Roteiro de decisão</a></li>
+  <li><a href="#modelo-de-ficha-para-decisão" id="toc-modelo-de-ficha-para-decisão" class="nav-link" data-scroll-target="#modelo-de-ficha-para-decisão">Modelo de ficha para decisão</a></li>
+  <li><a href="#leituras-orientadoras" id="toc-leituras-orientadoras" class="nav-link" data-scroll-target="#leituras-orientadoras">Leituras orientadoras</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/05-da-evidencia-a-acao.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<a class="skip-link" href="#quarto-document-content">Pular para o conteúdo</a>
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Da evidência à ação: usar resultados com responsabilidade</span></h1>
+<p class="subtitle lead">Capítulo 05 · Da evidência à ação</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Uma análise de clima e saúde não é uma política pública pronta. Ela é uma peça de evidência que precisa ser combinada com vigilância, capacidade da rede, participação social, orçamento e conhecimento do território. Este capítulo apresenta um roteiro para transformar um resultado do Studio em uma decisão verificável.</p>
+<section id="a-pergunta-de-gestão-vem-antes-do-modelo" class="level2">
+<h2 class="anchored" data-anchor-id="a-pergunta-de-gestão-vem-antes-do-modelo">A pergunta de gestão vem antes do modelo</h2>
+<p>Comece definindo a decisão que pode mudar. Exemplos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Decisão</th>
+<th>Evidência útil</th>
+<th>Janela de resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Emitir alerta de calor</td>
+<td>Exposição prevista ou observada, grupos vulneráveis e aumento esperado de atendimentos</td>
+<td>Horas a dias</td>
+</tr>
+<tr class="even">
+<td>Reforçar vigilância de arboviroses</td>
+<td>Chuva acumulada, temperatura, tendência de notificações e capacidade de controle vetorial</td>
+<td>Semanas</td>
+</tr>
+<tr class="odd">
+<td>Planejar a rede para extremos</td>
+<td>Frequência, duração e distribuição territorial de ondas de calor, secas, enchentes e agravos</td>
+<td>Meses a anos</td>
+</tr>
+<tr class="even">
+<td>Priorizar adaptação</td>
+<td>Exposição, vulnerabilidade social e territorial, população exposta e acesso ao cuidado</td>
+<td>Anos</td>
+</tr>
+</tbody>
+</table>
+<p>Uma pergunta operacional é delimitada por território, população, período, desfecho, exposição e decisão. “O clima afeta a saúde?” é amplo demais; “Quais municípios precisam de reforço de vigilância respiratória após cinco dias de calor, considerando idosos e capacidade assistencial?” é uma pergunta que pode orientar um Pipeline e uma ação.</p>
+</section>
+<section id="ler-resultados" class="level2">
+<h2 class="anchored" data-anchor-id="ler-resultados">Como ler os Resultados de um Pipeline</h2>
+<p>Depois de <strong>Executar</strong>, acompanhe os Resultados dos Passos na ordem do Pipeline. Comece pela tabela preparada, confira o encontro entre saúde e clima e só então leia as estimativas do modelo. Um número final só faz sentido quando sabemos quais dados chegaram até ele.</p>
+<p>No Nó, a tabela mostra uma prévia curta; o painel de Resultados permite uma leitura mais ampla. Mesmo essa prévia pode mostrar apenas parte das linhas. Para conferir a base completa, use os botões <strong>CSV</strong> ou <strong>XLSX</strong>, quando disponíveis. Gráficos podem oferecer <strong>PNG</strong>, <strong>SVG</strong> e alternância entre <strong>Estático</strong> e <strong>Interativo</strong>, conforme o Resultado produzido. Nem todo Passo apresenta os mesmos formatos.</p>
+<section id="primeiro-o-que-representa-cada-linha" class="level3">
+<h3 class="anchored" data-anchor-id="primeiro-o-que-representa-cada-linha">Primeiro: o que representa cada linha?</h3>
+<p>Uma linha pode representar uma pessoa registrada, um município em um dia ou um município em um mês. Depois de agregar, a contagem já resume vários registros. Somar de novo uma contagem repetida após uma junção pode inflar o total.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Resultado a conferir</th>
+<th>O que procurar</th>
+<th>Como explicar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dados preparados</td>
+<td>Desfecho, idade, território, datas e filtros</td>
+<td>“Estes são os registros que atendem ao recorte da pergunta.”</td>
+</tr>
+<tr class="even">
+<td>Série agregada</td>
+<td>Unidade de cada linha e contagem por período</td>
+<td>“Cada linha resume os eventos de um município naquele período.”</td>
+</tr>
+<tr class="odd">
+<td>Saúde e clima integrados</td>
+<td>Mesmas datas e territórios; unidade da exposição; valores ausentes</td>
+<td>“Agora podemos comparar saúde e exposição no mesmo recorte.”</td>
+</tr>
+<tr class="even">
+<td>Modelo ajustado</td>
+<td>Comparação de referência, estimativa, intervalo e defasagem</td>
+<td>“O modelo estima o tamanho da associação e sua incerteza.”</td>
+</tr>
+<tr class="odd">
+<td>Fração e número atribuível</td>
+<td>Cenário de exposição, período e total de eventos utilizado</td>
+<td>“Esta é a parcela estimada sob o cenário definido.”</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled" title="Os números a seguir são didáticos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Os números a seguir são didáticos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As tabelas numéricas <strong>desta seção</strong> são simuladas para ensinar a interpretação. Não são Resultados de uma execução dos Modelos nem estimativas sobre as regiões citadas. Os títulos das colunas foram simplificados para leitura; os nomes e formatos apresentados pelo Studio podem variar conforme a Função. Já os Capítulos 7 a 10 mostram <strong>resultados reais</strong> de um snapshot executado em 26/10/2026, com fonte, N, figuras e scripts. Use os Resultados da sua execução para preencher um relatório real.</p>
+</div>
+</div>
+</section>
+<section id="segundo-os-dados-estão-completos" class="level3">
+<h3 class="anchored" data-anchor-id="segundo-os-dados-estão-completos">Segundo: os dados estão completos?</h3>
+<p>Imagine uma série diária de um município, com 100 dias previstos para análise.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Conferência didática</th>
+<th style="text-align: right;">Valor</th>
+<th>Leitura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dias esperados</td>
+<td style="text-align: right;">100</td>
+<td>É a extensão do calendário analisado.</td>
+</tr>
+<tr class="even">
+<td>Dias com exposição disponível</td>
+<td style="text-align: right;">92</td>
+<td>Há medição de clima em 92 dias.</td>
+</tr>
+<tr class="odd">
+<td>Dias sem exposição</td>
+<td style="text-align: right;">8</td>
+<td>Faltam dados em 8% do calendário.</td>
+</tr>
+<tr class="even">
+<td>Dias com zero evento e registro confirmado</td>
+<td style="text-align: right;">12</td>
+<td>Zero é um valor observado, diferente de informação ausente.</td>
+</tr>
+</tbody>
+</table>
+<p>A conta de ausência é simples: 8 ÷ 100 × 100 = <strong>8%</strong>. Esse percentual, sozinho, não diz se a série serve para o estudo: oito dias ausentes durante o evento extremo podem comprometer mais a análise do que oito dias dispersos. Confira onde estão as lacunas e registre como foram tratadas. Uma data que não aparece na tabela não deve ser preenchida com zero sem verificar a cobertura do registro.</p>
+</section>
+<section id="terceiro-o-que-as-estatísticas-resumem" class="level3">
+<h3 class="anchored" data-anchor-id="terceiro-o-que-as-estatísticas-resumem">Terceiro: o que as estatísticas resumem?</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Medida</th>
+<th>Exemplo didático</th>
+<th>Como ler</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Total</td>
+<td>100 internações em cinco dias</td>
+<td>Soma dos eventos no período. Não é o número de pessoas únicas.</td>
+</tr>
+<tr class="even">
+<td>Média</td>
+<td>20 internações por dia</td>
+<td>Total dividido pelo número de dias: 100 ÷ 5.</td>
+</tr>
+<tr class="odd">
+<td>Mediana</td>
+<td>10 internações por dia</td>
+<td>Valor central da sequência ordenada; metade dos dias fica de cada lado.</td>
+</tr>
+<tr class="even">
+<td>Mínimo e máximo</td>
+<td>8 e 60 internações por dia</td>
+<td>Mostram os extremos, mas não descrevem todos os dias.</td>
+</tr>
+<tr class="odd">
+<td>Taxa</td>
+<td>100 internações em 50.000 habitantes: 200 por 100 mil</td>
+<td>Contagem dividida pela população compatível, multiplicada por 100.000.</td>
+</tr>
+</tbody>
+</table>
+<p>Para conferir média e mediana, use a sequência simulada <strong>8, 10, 12, 10 e 60</strong>. Ela soma 100; a média é 20. Ao ordenar — <strong>8, 10, 10, 12 e 60</strong> — a mediana é 10. O dia com 60 internações eleva a média; ela não descreve um dia típico dessa sequência.</p>
+<p>Esses resumos podem ser calculados a partir da tabela completa; não são campos obrigatórios de todo Resultado. Para comparar taxas, mantenha o mesmo período e confira se o denominador corresponde à população estudada. Uma contagem de internações permite reinternações; por isso, não equivale à probabilidade individual de adoecer.</p>
+</section>
+<section id="quarto-qual-é-a-comparação-do-modelo" class="level3">
+<h3 class="anchored" data-anchor-id="quarto-qual-é-a-comparação-do-modelo">Quarto: qual é a comparação do modelo?</h3>
+<p>O <strong>risco relativo (RR)</strong> compara o risco estimado em uma exposição com o risco na referência escolhida. RR igual a 1 indica igualdade nessa comparação. RR de 1,20 corresponde a uma estimativa 20% maior: (1,20 − 1) × 100. RR de 0,90 corresponde a uma estimativa 10% menor. Sempre diga qual exposição foi comparada com qual referência e em qual janela de defasagem.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 30%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">RR simulado</th>
+<th>Intervalo de confiança de 95%</th>
+<th>Leitura possível</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1,20</td>
+<td>1,05 a 1,37</td>
+<td>Estimativa 20% maior; o intervalo fica acima de 1.</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1,20</td>
+<td>0,92 a 1,56</td>
+<td>Mesma estimativa central, com incerteza que inclui redução e aumento.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0,90</td>
+<td>0,82 a 0,99</td>
+<td>Estimativa 10% menor; o intervalo fica abaixo de 1.</td>
+</tr>
+</tbody>
+</table>
+<p>O intervalo ajuda a perceber a precisão da estimativa sob os pressupostos do modelo. Um intervalo que inclui 1 não demonstra ausência de associação. Um intervalo que fica acima de 1 também não prova causalidade nem diz, sozinho, se o efeito é relevante para a gestão. Se houver valor de <em>p</em>, leia-o junto ao tamanho do efeito, ao intervalo e ao desenho do estudo; ele não é a probabilidade de a hipótese ser verdadeira.</p>
+</section>
+<section id="quinto-o-que-olhar-no-gráfico" class="level3">
+<h3 class="anchored" data-anchor-id="quinto-o-que-olhar-no-gráfico">Quinto: o que olhar no gráfico?</h3>
+<p>Antes de interpretar uma curva, leia os eixos e a legenda. No DLNM, identifique a unidade da exposição, a referência do RR e a unidade da defasagem. <strong>Defasagem é contada na unidade temporal da série</strong>: em uma série mensal, três unidades representam três meses, não três dias. Uma curva acumulada resume a janela informada; uma curva em uma defasagem específica mostra outro recorte e não deve ser descrita como o efeito total.</p>
+<p>Procure a faixa de incerteza, quando disponível. Uma curva que sobe nas exposições extremas, onde há poucas observações e intervalos amplos, pede uma leitura diferente de uma elevação bem estimada em uma faixa com muitos dados. A forma esperada pela literatura é uma hipótese a comparar com o Resultado, não um achado automático do Pipeline.</p>
+</section>
+<section id="sexto-como-escrever-a-conclusão" class="level3">
+<h3 class="anchored" data-anchor-id="sexto-como-escrever-a-conclusão">Sexto: como escrever a conclusão?</h3>
+<p>Use uma frase com <strong>recorte + comparação + estimativa + incerteza + limite</strong>:</p>
+<blockquote class="blockquote">
+<p>“Neste exemplo simulado, para a população e o período definidos, o risco estimado foi 20% maior na exposição comparada à referência (RR 1,20; IC95%: 1,05 a 1,37), na janela de defasagem analisada. A associação depende dos dados e dos ajustes usados.”</p>
+</blockquote>
+<p>As seções “O que os números mostram” dos <a href="./07-caso-respiratorio-pediatrico.html#numeros-ec01">casos respiratórios</a>, <a href="./08-caso-dengue-clima.html#numeros-ec02">dengue</a>, <a href="./09-caso-cardio-idosos-calor.html#numeros-ec03">calor</a> e <a href="./10-caso-hospitalizacoes-frio.html#numeros-ec04">frio</a> aplicam esse roteiro a perguntas diferentes, usando os resultados reais do snapshot.</p>
+</section>
+</section>
+<section id="o-que-um-resultado-pode-e-não-pode-afirmar" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-um-resultado-pode-e-não-pode-afirmar">O que um resultado pode e não pode afirmar</h2>
+<p>O Studio trabalha, em geral, com dados observacionais. Um aumento associado a calor, chuva, fumaça ou frio não prova sozinho que aquela exposição causou cada caso. Confundimento, tendência, sazonalidade, mudanças na notificação, acesso ao serviço e qualidade da medição podem influenciar o resultado.</p>
+<p>Use uma linguagem proporcional à evidência:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Evite afirmar</th>
+<th>Prefira escrever</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“O calor causou todos os óbitos.”</td>
+<td>“Observou-se associação entre calor e mortalidade no período estudado.”</td>
+</tr>
+<tr class="even">
+<td>“O mapa mostra os bairros mais vulneráveis.”</td>
+<td>“O mapa indica maior combinação de exposição e indicadores de vulnerabilidade disponíveis.”</td>
+</tr>
+<tr class="odd">
+<td>“A chuva provocará dengue.”</td>
+<td>“A chuva foi associada a aumento posterior de notificações, dentro das condições observadas.”</td>
+</tr>
+<tr class="even">
+<td>“O modelo prevê o que acontecerá.”</td>
+<td>“O cenário estima uma faixa de risco sob os pressupostos e dados utilizados.”</td>
+</tr>
+</tbody>
+</table>
+<p>Fração atribuível, excesso de óbitos e risco relativo são estimativas. Sempre apresente período, população, definição do desfecho, exposição, incerteza, principais escolhas analíticas e limitações.</p>
+</section>
+<section id="critérios-mínimos-para-uma-decisão-do-sus" class="level2">
+<h2 class="anchored" data-anchor-id="critérios-mínimos-para-uma-decisão-do-sus">Critérios mínimos para uma decisão do SUS</h2>
+<p>Antes de recomendar uma ação, confira cinco dimensões:</p>
+<ol type="1">
+<li><strong>Validade</strong>: a pergunta, a população, o território e o período estão bem definidos?</li>
+<li><strong>Qualidade</strong>: há completude, atraso, mudança de cobertura ou sub-registro nos dados?</li>
+<li><strong>Equidade</strong>: o resultado considera raça/cor, idade, sexo, renda, deficiência, trabalho, moradia e acesso ao cuidado quando pertinentes?</li>
+<li><strong>Viabilidade</strong>: a rede consegue executar a resposta no prazo e na escala indicados?</li>
+<li><strong>Monitoramento</strong>: qual indicador mostrará se a ação foi realizada e se produziu o efeito esperado?</li>
+</ol>
+<p>Um resultado estatisticamente consistente pode não justificar uma intervenção se a resposta for inviável ou aumentar desigualdades. Da mesma forma, uma associação incerta pode justificar precaução quando o dano potencial é alto, desde que a decisão seja explicitamente apresentada como preventiva e seja acompanhada por avaliação.</p>
+</section>
+<section id="quatro-frentes-de-uso-no-sus" class="level2">
+<h2 class="anchored" data-anchor-id="quatro-frentes-de-uso-no-sus">Quatro frentes de uso no SUS</h2>
+<p>O resultado do Studio deve entrar em um ciclo institucional, e não terminar em um gráfico. Uma organização prática é relacioná-lo a quatro frentes do setor saúde:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frente</th>
+<th>Como o resultado pode contribuir</th>
+<th>Pergunta de gestão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Vigilância em saúde</strong></td>
+<td>Identificar exposição, tendência, grupos e territórios prioritários</td>
+<td>O que precisa ser monitorado e com que antecedência?</td>
+</tr>
+<tr class="even">
+<td><strong>Atenção à saúde</strong></td>
+<td>Preparar equipes, fluxos, insumos e continuidade do cuidado</td>
+<td>Como a rede responderá antes, durante e depois da emergência?</td>
+</tr>
+<tr class="odd">
+<td><strong>Promoção e educação em saúde</strong></td>
+<td>Apoiar comunicação compreensível e ações protetoras</td>
+<td>Qual mensagem é adequada para cada grupo e território?</td>
+</tr>
+<tr class="even">
+<td><strong>Pesquisa e avaliação</strong></td>
+<td>Testar hipóteses, comparar alternativas e medir resultados</td>
+<td>A ação funcionou, para quem e em quais condições?</td>
+</tr>
+</tbody>
+</table>
+<p>Essa organização é compatível com a orientação do Ministério da Saúde para integrar vigilância, gestão, assistência e comunicação diante dos riscos climáticos. Ela também ajuda a localizar o limite do Studio: o sistema apoia a produção e a leitura da evidência, mas não substitui o plano de contingência, a decisão sanitária ou a participação das equipes e comunidades.</p>
+</section>
+<section id="como-incorporar-a-justiça-climática" class="level2">
+<h2 class="anchored" data-anchor-id="como-incorporar-a-justiça-climática">Como incorporar a justiça climática</h2>
+<p>Uma análise pode estar tecnicamente correta e ainda ser insuficiente para uma decisão justa. Antes de concluir que um município, bairro ou grupo é “mais vulnerável”, verifique quais componentes foram medidos: perigo, exposição, sensibilidade, capacidade de resposta e acesso ao cuidado. Use “população em maior risco nas condições analisadas” quando o índice não contemplar todas essas dimensões.</p>
+<p>Sempre que possível, apresente resultados estratificados ou descreva as limitações para populações indígenas, quilombolas, ribeirinhas, rurais, periféricas, pessoas com deficiência, trabalhadores expostos e pessoas em situação de rua. A falta de dado desagregado deve ser tratada como uma limitação de vigilância e uma prioridade de qualificação, não como evidência de que a desigualdade não existe. Na Amazônia, o tempo de deslocamento fluvial e o isolamento de comunidades devem entrar na leitura de acesso, não como detalhe logístico.</p>
+</section>
+<section id="prioridades-para-as-próximas-versões-do-studio" class="level2">
+<h2 class="anchored" data-anchor-id="prioridades-para-as-próximas-versões-do-studio">Prioridades para as próximas versões do Studio</h2>
+<p>A leitura da literatura e das necessidades de gestão indica oportunidades que podem orientar o desenvolvimento do produto:</p>
+<ol type="1">
+<li>integrar ondas de calor, secas, enchentes, fumaça e interrupção de serviços;</li>
+<li>ampliar análises de fumaça, qualidade do ar, saúde mental, nutrição e saúde do trabalhador;</li>
+<li>apoiar alertas precoces e avaliação de intervenções, além de estimar associações;</li>
+<li>oferecer indicadores de equidade e camadas territoriais que ajudem a priorizar ações;</li>
+<li>registrar melhor versões, fontes, limiares, incertezas e decisões tomadas;</li>
+<li>produzir saídas diferentes para análise técnica, reunião de gestão e comunicação comunitária.</li>
+</ol>
+<p>Essas são prioridades de evolução, não funções já disponíveis. O guia deve manter essa distinção para conservar a confiança de quem usa o Studio no planejamento público.</p>
+</section>
+<section id="perigo-exposição-vulnerabilidade-e-resposta" class="level2">
+<h2 class="anchored" data-anchor-id="perigo-exposição-vulnerabilidade-e-resposta">Perigo, exposição, vulnerabilidade e resposta</h2>
+<p>Separe quatro perguntas que costumam ser misturadas:</p>
+<ul>
+<li><strong>Perigo climático</strong>: qual processo físico ocorreu ou pode ocorrer — onda de calor, chuva intensa, seca, fumaça ou friagem?</li>
+<li><strong>Exposição</strong>: quem esteve em contato com esse perigo, por quanto tempo e em qual intensidade?</li>
+<li><strong>Vulnerabilidade</strong>: quais condições aumentam o dano ou dificultam a resposta — biológicas (idade, doença prévia), sociais (renda, trabalho, racismo), territoriais (moradia, saneamento, distância) e institucionais (capacidade de vigilância e de assistência)?</li>
+<li><strong>Desfecho e resposta</strong>: qual efeito foi medido — óbito, internação, atendimento, notificação ou interrupção de tratamento — e qual ação pode reduzi-lo?</li>
+</ul>
+<p>Uma estação meteorológica, uma grade de reanálise e um satélite não medem exatamente a exposição de cada pessoa. São aproximações territoriais. Informe a fonte, a resolução, a distância ou método de agregação e o período de validade. Quando usar limiar de onda de calor ou de frio, explique se ele é relativo à distribuição histórica local ou um valor absoluto.</p>
+</section>
+<section id="saúde-e-qualidade-da-informação" class="level2">
+<h2 class="anchored" data-anchor-id="saúde-e-qualidade-da-informação">Saúde e qualidade da informação</h2>
+<p>Registros do DATASUS são essenciais para vigilância e planejamento, mas podem ter atraso, campos ignorados, mudanças de definição, diferenças de acesso e sub-registro. Um aumento de notificações pode refletir mudança na busca por atendimento ou na capacidade de registrar, além de mudança real na ocorrência.</p>
+<p>Antes de interpretar:</p>
+<ul>
+<li>confira se o desfecho é óbito, internação, atendimento ou notificação;</li>
+<li>registre o sistema de origem, o código CID-10, a população e o denominador;</li>
+<li>verifique duplicidades, dados ausentes, mudanças de cobertura e datas;</li>
+<li>evite comparar contagens brutas entre municípios com populações muito diferentes;</li>
+<li>use taxas ou padronização quando a comparação exigir denominadores compatíveis;</li>
+<li>não trate um registro administrativo como diagnóstico individual completo;</li>
+<li>suprima ou agregue resultados que possam permitir reidentificação.</li>
+</ul>
+</section>
+<section id="roteiro-de-decisão" class="level2">
+<h2 class="anchored" data-anchor-id="roteiro-de-decisão">Roteiro de decisão</h2>
+<ol type="1">
+<li><strong>Formule a pergunta</strong> com território, população, período, exposição e decisão.</li>
+<li><strong>Monte o Pipeline</strong> nas três etapas: Preparação, Integração e Análise &amp; Modelagem.</li>
+<li><strong>Verifique os dados</strong> e registre fontes, filtros, perdas e escolhas.</li>
+<li><strong>Compare alternativas</strong> de período, limiar, defasagem, fonte climática e especificação.</li>
+<li><strong>Leia a incerteza</strong> e procure resultados que mudam quando os pressupostos mudam.</li>
+<li><strong>Confronte com a realidade local</strong>: equipes de vigilância, atenção primária, assistência, defesa civil e comunidade.</li>
+<li><strong>Defina a ação, o responsável, o prazo e o indicador de acompanhamento</strong>.</li>
+<li><strong>Salve o projeto e exporte o <code>.R</code></strong> para manter a análise auditável.</li>
+</ol>
+</section>
+<section id="modelo-de-ficha-para-decisão" class="level2">
+<h2 class="anchored" data-anchor-id="modelo-de-ficha-para-decisão">Modelo de ficha para decisão</h2>
+<p>Use este registro junto ao Resultado exportado:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Campo</th>
+<th>Preenchimento</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pergunta e decisão</td>
+<td>O que será decidido e por quem?</td>
+</tr>
+<tr class="even">
+<td>População e território</td>
+<td>Quem foi incluído e onde?</td>
+</tr>
+<tr class="odd">
+<td>Período e fonte</td>
+<td>Quando e de quais bases vieram os dados?</td>
+</tr>
+<tr class="even">
+<td>Desfecho e exposição</td>
+<td>Como foram definidos e medidos?</td>
+</tr>
+<tr class="odd">
+<td>Resultado principal</td>
+<td>Estimativa, intervalo de incerteza e unidade.</td>
+</tr>
+<tr class="even">
+<td>Sensibilidade</td>
+<td>O que aconteceu com outros limiares, atrasos ou fontes?</td>
+</tr>
+<tr class="odd">
+<td>Limitações</td>
+<td>O que os dados não permitem concluir?</td>
+</tr>
+<tr class="even">
+<td>Ação</td>
+<td>Medida, responsável, prazo e população priorizada.</td>
+</tr>
+<tr class="odd">
+<td>Monitoramento</td>
+<td>Indicador de processo e indicador de resultado.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled" title="Importante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O Studio apoia a análise e a transparência do caminho percorrido. A decisão sanitária continua sendo uma responsabilidade institucional, construída com as equipes locais e com as pessoas afetadas.</p>
+</div>
+</div>
+</section>
+<section id="leituras-orientadoras" class="level2">
+<h2 class="anchored" data-anchor-id="leituras-orientadoras">Leituras orientadoras</h2>
+<p>As fontes abaixo ajudam a aprofundar o raciocínio apresentado neste guia:</p>
+<ul>
+<li><a href="https://www.ncbi.nlm.nih.gov/books/NBK525226/">Ebi, Hess e Watkiss, <em>Health Risks and Costs of Climate Variability and Change</em></a>, para os caminhos de efeito, vulnerabilidade e custos em saúde.</li>
+<li><a href="https://doi.org/10.1016/S0140-6736(14)62114-0">Gasparrini et al., <em>Mortality risk attributable to high and low ambient temperature</em></a>, para a interpretação de risco, defasagem e fração atribuível em estudos com cidades de vários países.</li>
+<li><a href="https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/guias-e-manuais/2026/mudancas-climaticas-para-profissionais-de-saude-guia-de-bolso.pdf">Ministério da Saúde, <em>Mudanças climáticas para profissionais de saúde: guia de bolso</em></a>, para a articulação entre prática clínica, vigilância, gestão e comunicação no SUS.</li>
+<li><a href="https://lancetcountdown.org/">Lancet Countdown, indicadores e prioridades de saúde e clima</a>, para acompanhar exposição, adaptação e co-benefícios no Brasil e no mundo.</li>
+<li><a href="https://www.gov.br/mma/pt-br/composicao/smc/plano-clima">Plano Clima, Ministério do Meio Ambiente</a>, para a relação entre adaptação, mitigação e planejamento nacional.</li>
+</ul>
+<hr>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/github\.com\/ByMaxAnjos\/climasus-plus");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+          // default icon
+          link.classList.add("external");
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./04-modelos-vigilancia.html" class="pagination-link" aria-label="Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./part-4-pesquisador.html" class="pagination-link" aria-label="Parte IV · Módulo Pesquisador">
+        <span class="nav-page-text"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>climasus+ Studio · Guia prático · 1ª edição, 2026</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Apoio: INCT-CONEXAO</p>
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/05-da-evidencia-a-acao.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>climasus4r · Fiocruz Rondônia · UFJF</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

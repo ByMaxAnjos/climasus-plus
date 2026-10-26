@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Folha</title>
+  <path d="M53 10C35 12 19 22 15 38c-2 7 2 13 9 14 16 1 27-16 29-42Z" fill="none" stroke="#0E7C6B" stroke-width="2.4" stroke-linejoin="round"/>
+  <path d="M49 14C36 26 27 38 21 51" fill="none" stroke="#0E7C6B" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M37 26c4-1 8-2 11-4M31 35c-1 4-2 8-2 11" fill="none" stroke="#0E7C6B" stroke-width="1.6" stroke-linecap="round" opacity=".7"/>
+</svg>

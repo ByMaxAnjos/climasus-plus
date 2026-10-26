@@ -1,0 +1,22 @@
+{
+  "case": "ec01",
+  "generated_at": "2026-10-26T09:45:48-0300",
+  "studio_version": "1.1.0-beta.1",
+  "climasus4r_version": "1.0.1",
+  "r_version": "R version 4.5.1 (2025-06-13)",
+  "params": {
+    "system": "SIM-DO",
+    "uf": ["SP", "RJ", "MG", "ES"],
+    "years": "2015:2019",
+    "cid": "respiratory",
+    "age_range": "0-5",
+    "time_unit": "week",
+    "exposure": "tair_dry_bulb_c",
+    "covariates": "rh_mean_porc_lag0",
+    "lag_days": 21,
+    "dof_per_year": 2
+  },
+  "n_records": 187330,
+  "data_file": "data/ec01/analytic.parquet",
+  "data_checksum": "ebeb29b507eaff67a7cd051ccf7337a1"
+}

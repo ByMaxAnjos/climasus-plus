@@ -22,8 +22,12 @@ tsconfig.tsbuildinfo
 Rplots.pdf
 
 # personal/internal material — stays on this machine only, not part of the shipped app
-# (minicurso book + lessons, planning notes, raw logo sources, internal engineering docs)
-book/
+# (lessons, planning notes, raw logo sources, internal engineering docs)
+# the Guia Prático (book/) is published: sources + rendered _book/, but not the analytic
+# data tables or LaTeX build leftovers
+book/data/**/*.parquet
+book/index.tex
+book/Rplots.pdf
 lessons/
 lessons.zip
 reference/

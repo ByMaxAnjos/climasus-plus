@@ -1,0 +1,6 @@
+variable,description,unit,source
+date,Dia do óbito,date,SIM-DO / agregação
+code_muni,Código IBGE do município,código,geobr
+n_obitos,Óbitos cardiovasculares em pessoas de 60+ anos,contagem,SIM-DO
+tair_dry_bulb_c,Temperatura do ar (bulbo seco),°C,INMET
+tair_dry_bulb_c_lag0,Temperatura no dia do desfecho,°C,integração

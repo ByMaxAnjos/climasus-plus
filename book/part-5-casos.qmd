@@ -1,0 +1,32 @@
+---
+title: "Parte V · Estudos de caso"
+number-sections: false
+toc: false
+---
+
+```{=html}
+<div class="part-opener part-opener--group">
+<div class="part-copy">
+  <div class="part-number">V</div>
+  <div class="part-kicker">Parte cinco · quatro recortes</div>
+  <h1>Uma lógica, quatro casos</h1>
+  <p class="part-standfirst">Respiratório pediátrico, dengue, cardiovascular em idosos e hospitalizações por frio. Cada caso retoma um arco do catálogo (ec-01 a ec-04) e mostra a mesma sequência: pergunta, Pipeline, leitura do resultado e ação possível.</p>
+  <ul class="part-list">
+    <li><a href="07-caso-respiratorio-pediatrico.html"><span class="part-ch">ec-01</span> Respiratório pediátrico e temperatura</a></li>
+    <li><a href="08-caso-dengue-clima.html"><span class="part-ch">ec-02</span> Dengue e graus-dia</a></li>
+    <li><a href="09-caso-cardio-idosos-calor.html"><span class="part-ch">ec-03</span> Cardiovascular em idosos e calor</a></li>
+    <li><a href="10-caso-hospitalizacoes-frio.html"><span class="part-ch">ec-04</span> Hospitalizações e frio</a></li>
+  </ul>
+</div>
+<div class="part-photo">
+  <img src="images/photos/capa-amazonia.jpg" alt="Crianças tembés brincam puxando os braços de um homem sentado em um tronco, na Aldeia Turé Mariquita, em Tomé-Açu (PA).">
+  <span class="photo-credit">Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens</span>
+</div>
+</div>
+```
+
+::: {.pdf-only}
+Respiratório pediátrico, dengue, cardiovascular em idosos e hospitalizações por frio. Cada caso retoma um arco do catálogo (ec-01 a ec-04) e mostra a mesma sequência: pergunta, Pipeline, leitura do resultado e ação possível.
+
+![Crianças tembés brincam puxando os braços de um homem sentado em um tronco. Aldeia Turé Mariquita, Tomé-Açu (PA), 2009. Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens.](images/photos/capa-amazonia.jpg)
+:::

@@ -1,0 +1,41 @@
+{
+  "climate_col": "gdd_c",
+  "outcome_col": "n_casos",
+  "lag_max": 84,
+  "ref_value": 347.3337,
+  "argvar": {
+    "fun": "ns",
+    "df": 4
+  },
+  "arglag": {
+    "fun": "ns",
+    "df": 3
+  },
+  "family": "quasipoisson",
+  "ns_df": 9,
+  "dof_per_year": 2,
+  "n": 248,
+  "n_days": 1729,
+  "alpha": 0.05,
+  "pred_at": [0.25, 0.5, 0.75, 0.9, 0.95, 0.99],
+  "call_time": "2026-10-26 09:25:57",
+  "input_meta": {
+    "system": "SINAN",
+    "stage": "climate",
+    "type": "distributed_lag",
+    "spatial": true,
+    "temporal": {
+      "start": "2015-01-04",
+      "end": "2019-12-22",
+      "unit": "week"
+    },
+    "backend": "tibble",
+    "created": "2026-10-26 09:20:47",
+    "modified": "2026-10-26 09:25:55",
+    "history": ["[2026-10-26 09:20:47] Imported via Arrow out-of-core (climasus4r)", "[2026-10-26 09:20:49] Encoding check (lazy Arrow): 0 column(s) flagged", "[2026-10-26 09:21:06] Standardized column names and types", "[2026-10-26 09:21:07] Create variables (Arrow optimized)", "[2026-10-26 09:21:07] Temporal Data aggregated [Time unit: week | Aggregation: count | Value column: record count | Grouped by: codigo_municipio_residencia | Completed missing dates | Date column: data_primeiros_sintomas]", "[2026-10-26 09:21:18] Spatial Data aggregated [%s]", "[2026-10-26 09:25:55] Climate aggregation [Strategy: distributed_lag | Variables: gdd_c | Climate region: subtropical (Subtropical (Center-West, Southeast)) | Max lag: 84 day(s) | Hourly data aggregated to daily]", "[2026-10-26 09:25:57] sus_mod_dlnm(): var=gdd_c; lag_max=84; family=quasipoisson; ns_df=9; n=248; RR_p75=0.7116 [0.5277,0.9594]; lag_peak=84"],
+    "user": [],
+    "n_files": 5,
+    "n_failed": 0,
+    "cache_dir": "/Users/co2map/.climasus4r_cache/data/raw"
+  }
+}

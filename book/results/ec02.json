@@ -1,0 +1,22 @@
+{
+  "case": "ec02",
+  "generated_at": "2026-10-26T09:37:00-0300",
+  "studio_version": "1.1.0-beta.1",
+  "climasus4r_version": "1.0.1",
+  "r_version": "R version 4.5.1 (2025-06-13)",
+  "params": {
+    "system": "SINAN-DENGUE",
+    "uf": ["CE", "PE", "BA", "MA"],
+    "years": "2015:2019",
+    "time_unit": "week",
+    "date_anchor": "data_primeiros_sintomas",
+    "exposure": "gdd_c",
+    "gdd_base": 11,
+    "gdd_upper": 35,
+    "lag_days": 84,
+    "dof_per_year": 2
+  },
+  "n_records": 353080,
+  "data_file": "data/ec02/analytic.parquet",
+  "data_checksum": "89f86931dd8e77e36bc3ed2fd2bd5eff"
+}

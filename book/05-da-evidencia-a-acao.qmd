@@ -1,0 +1,309 @@
+---
+title: "Da evidência à ação: usar resultados com responsabilidade"
+subtitle: "Capítulo 05 · Da evidência à ação"
+---
+
+Uma análise de clima e saúde não é uma política pública pronta. Ela é uma
+peça de evidência que precisa ser combinada com vigilância, capacidade da
+rede, participação social, orçamento e conhecimento do território. Este
+capítulo apresenta um roteiro para transformar um resultado do Studio em
+uma decisão verificável.
+
+## A pergunta de gestão vem antes do modelo
+
+Comece definindo a decisão que pode mudar. Exemplos:
+
+| Decisão | Evidência útil | Janela de resposta |
+|---|---|---|
+| Emitir alerta de calor | Exposição prevista ou observada, grupos vulneráveis e aumento esperado de atendimentos | Horas a dias |
+| Reforçar vigilância de arboviroses | Chuva acumulada, temperatura, tendência de notificações e capacidade de controle vetorial | Semanas |
+| Planejar a rede para extremos | Frequência, duração e distribuição territorial de ondas de calor, secas, enchentes e agravos | Meses a anos |
+| Priorizar adaptação | Exposição, vulnerabilidade social e territorial, população exposta e acesso ao cuidado | Anos |
+
+Uma pergunta operacional é delimitada por território, população, período,
+desfecho, exposição e decisão. “O clima afeta a saúde?” é amplo demais;
+“Quais municípios precisam de reforço de vigilância respiratória após cinco
+dias de calor, considerando idosos e capacidade assistencial?” é uma pergunta
+que pode orientar um Pipeline e uma ação.
+
+## Como ler os Resultados de um Pipeline {#ler-resultados}
+
+Depois de **Executar**, acompanhe os Resultados dos Passos na ordem do Pipeline.
+Comece pela tabela preparada, confira o encontro entre saúde e clima e só então leia
+as estimativas do modelo. Um número final só faz sentido quando sabemos quais dados
+chegaram até ele.
+
+No Nó, a tabela mostra uma prévia curta; o painel de Resultados permite uma leitura
+mais ampla. Mesmo essa prévia pode mostrar apenas parte das linhas. Para conferir a
+base completa, use os botões **CSV** ou **XLSX**, quando disponíveis. Gráficos podem
+oferecer **PNG**, **SVG** e alternância entre **Estático** e **Interativo**, conforme o
+Resultado produzido. Nem todo Passo apresenta os mesmos formatos.
+
+### Primeiro: o que representa cada linha?
+
+Uma linha pode representar uma pessoa registrada, um município em um dia ou um
+município em um mês. Depois de agregar, a contagem já resume vários registros.
+Somar de novo uma contagem repetida após uma junção pode inflar o total.
+
+| Resultado a conferir | O que procurar | Como explicar |
+|---|---|---|
+| Dados preparados | Desfecho, idade, território, datas e filtros | “Estes são os registros que atendem ao recorte da pergunta.” |
+| Série agregada | Unidade de cada linha e contagem por período | “Cada linha resume os eventos de um município naquele período.” |
+| Saúde e clima integrados | Mesmas datas e territórios; unidade da exposição; valores ausentes | “Agora podemos comparar saúde e exposição no mesmo recorte.” |
+| Modelo ajustado | Comparação de referência, estimativa, intervalo e defasagem | “O modelo estima o tamanho da associação e sua incerteza.” |
+| Fração e número atribuível | Cenário de exposição, período e total de eventos utilizado | “Esta é a parcela estimada sob o cenário definido.” |
+
+::: {.callout-note title="Os números a seguir são didáticos"}
+As tabelas numéricas **desta seção** são simuladas para ensinar a interpretação. Não são
+Resultados de uma execução dos Modelos nem estimativas sobre as regiões citadas. Os
+títulos das colunas foram simplificados para leitura; os nomes e formatos apresentados
+pelo Studio podem variar conforme a Função. Já os Capítulos 7 a 10 mostram **resultados
+reais** de um snapshot executado em 26/10/2026, com fonte, N, figuras e scripts. Use os
+Resultados da sua execução para preencher um relatório real.
+:::
+
+### Segundo: os dados estão completos?
+
+Imagine uma série diária de um município, com 100 dias previstos para análise.
+
+| Conferência didática | Valor | Leitura |
+|---|---:|---|
+| Dias esperados | 100 | É a extensão do calendário analisado. |
+| Dias com exposição disponível | 92 | Há medição de clima em 92 dias. |
+| Dias sem exposição | 8 | Faltam dados em 8% do calendário. |
+| Dias com zero evento e registro confirmado | 12 | Zero é um valor observado, diferente de informação ausente. |
+
+A conta de ausência é simples: 8 ÷ 100 × 100 = **8%**. Esse percentual, sozinho, não
+diz se a série serve para o estudo: oito dias ausentes durante o evento extremo podem
+comprometer mais a análise do que oito dias dispersos. Confira onde estão as lacunas e
+registre como foram tratadas. Uma data que não aparece na tabela não deve ser
+preenchida com zero sem verificar a cobertura do registro.
+
+### Terceiro: o que as estatísticas resumem?
+
+| Medida | Exemplo didático | Como ler |
+|---|---|---|
+| Total | 100 internações em cinco dias | Soma dos eventos no período. Não é o número de pessoas únicas. |
+| Média | 20 internações por dia | Total dividido pelo número de dias: 100 ÷ 5. |
+| Mediana | 10 internações por dia | Valor central da sequência ordenada; metade dos dias fica de cada lado. |
+| Mínimo e máximo | 8 e 60 internações por dia | Mostram os extremos, mas não descrevem todos os dias. |
+| Taxa | 100 internações em 50.000 habitantes: 200 por 100 mil | Contagem dividida pela população compatível, multiplicada por 100.000. |
+
+Para conferir média e mediana, use a sequência simulada **8, 10, 12, 10 e 60**. Ela soma
+100; a média é 20. Ao ordenar — **8, 10, 10, 12 e 60** — a mediana é 10. O dia com
+60 internações eleva a média; ela não descreve um dia típico dessa sequência.
+
+Esses resumos podem ser calculados a partir da tabela completa; não são campos
+obrigatórios de todo Resultado. Para comparar taxas, mantenha o mesmo período e confira
+se o denominador corresponde à população estudada. Uma contagem de internações permite
+reinternações; por isso, não equivale à probabilidade individual de adoecer.
+
+### Quarto: qual é a comparação do modelo?
+
+O **risco relativo (RR)** compara o risco estimado em uma exposição com o risco na
+referência escolhida. RR igual a 1 indica igualdade nessa comparação. RR de 1,20
+corresponde a uma estimativa 20% maior: (1,20 − 1) × 100. RR de 0,90 corresponde a uma
+estimativa 10% menor. Sempre diga qual exposição foi comparada com qual referência e
+em qual janela de defasagem.
+
+| RR simulado | Intervalo de confiança de 95% | Leitura possível |
+|---:|---|---|
+| 1,20 | 1,05 a 1,37 | Estimativa 20% maior; o intervalo fica acima de 1. |
+| 1,20 | 0,92 a 1,56 | Mesma estimativa central, com incerteza que inclui redução e aumento. |
+| 0,90 | 0,82 a 0,99 | Estimativa 10% menor; o intervalo fica abaixo de 1. |
+
+O intervalo ajuda a perceber a precisão da estimativa sob os pressupostos do modelo.
+Um intervalo que inclui 1 não demonstra ausência de associação. Um intervalo que fica
+acima de 1 também não prova causalidade nem diz, sozinho, se o efeito é relevante para a
+gestão. Se houver valor de *p*, leia-o junto ao tamanho do efeito, ao intervalo e ao
+desenho do estudo; ele não é a probabilidade de a hipótese ser verdadeira.
+
+### Quinto: o que olhar no gráfico?
+
+Antes de interpretar uma curva, leia os eixos e a legenda. No DLNM, identifique a
+unidade da exposição, a referência do RR e a unidade da defasagem. **Defasagem é contada
+na unidade temporal da série**: em uma série mensal, três unidades representam três
+meses, não três dias. Uma curva acumulada resume a janela informada; uma curva em uma
+defasagem específica mostra outro recorte e não deve ser descrita como o efeito total.
+
+Procure a faixa de incerteza, quando disponível. Uma curva que sobe nas exposições
+extremas, onde há poucas observações e intervalos amplos, pede uma leitura diferente
+de uma elevação bem estimada em uma faixa com muitos dados. A forma esperada pela
+literatura é uma hipótese a comparar com o Resultado, não um achado automático do
+Pipeline.
+
+### Sexto: como escrever a conclusão?
+
+Use uma frase com **recorte + comparação + estimativa + incerteza + limite**:
+
+> “Neste exemplo simulado, para a população e o período definidos, o risco estimado
+> foi 20% maior na exposição comparada à referência (RR 1,20; IC95%: 1,05 a 1,37),
+> na janela de defasagem analisada. A associação depende dos dados e dos ajustes usados.”
+
+As seções “O que os números mostram” dos [casos respiratórios](07-caso-respiratorio-pediatrico.qmd#numeros-ec01),
+[dengue](08-caso-dengue-clima.qmd#numeros-ec02),
+[calor](09-caso-cardio-idosos-calor.qmd#numeros-ec03) e
+[frio](10-caso-hospitalizacoes-frio.qmd#numeros-ec04) aplicam esse roteiro a
+perguntas diferentes, usando os resultados reais do snapshot.
+
+## O que um resultado pode e não pode afirmar
+
+O Studio trabalha, em geral, com dados observacionais. Um aumento associado
+a calor, chuva, fumaça ou frio não prova sozinho que aquela exposição causou
+cada caso. Confundimento, tendência, sazonalidade, mudanças na notificação,
+acesso ao serviço e qualidade da medição podem influenciar o resultado.
+
+Use uma linguagem proporcional à evidência:
+
+| Evite afirmar | Prefira escrever |
+|---|---|
+| “O calor causou todos os óbitos.” | “Observou-se associação entre calor e mortalidade no período estudado.” |
+| “O mapa mostra os bairros mais vulneráveis.” | “O mapa indica maior combinação de exposição e indicadores de vulnerabilidade disponíveis.” |
+| “A chuva provocará dengue.” | “A chuva foi associada a aumento posterior de notificações, dentro das condições observadas.” |
+| “O modelo prevê o que acontecerá.” | “O cenário estima uma faixa de risco sob os pressupostos e dados utilizados.” |
+
+Fração atribuível, excesso de óbitos e risco relativo são estimativas. Sempre
+apresente período, população, definição do desfecho, exposição, incerteza,
+principais escolhas analíticas e limitações.
+
+## Critérios mínimos para uma decisão do SUS
+
+Antes de recomendar uma ação, confira cinco dimensões:
+
+1. **Validade**: a pergunta, a população, o território e o período estão bem definidos?
+2. **Qualidade**: há completude, atraso, mudança de cobertura ou sub-registro nos dados?
+3. **Equidade**: o resultado considera raça/cor, idade, sexo, renda, deficiência, trabalho, moradia e acesso ao cuidado quando pertinentes?
+4. **Viabilidade**: a rede consegue executar a resposta no prazo e na escala indicados?
+5. **Monitoramento**: qual indicador mostrará se a ação foi realizada e se produziu o efeito esperado?
+
+Um resultado estatisticamente consistente pode não justificar uma intervenção
+se a resposta for inviável ou aumentar desigualdades. Da mesma forma, uma
+associação incerta pode justificar precaução quando o dano potencial é alto,
+desde que a decisão seja explicitamente apresentada como preventiva e seja
+acompanhada por avaliação.
+
+## Quatro frentes de uso no SUS
+
+O resultado do Studio deve entrar em um ciclo institucional, e não terminar em um
+gráfico. Uma organização prática é relacioná-lo a quatro frentes do setor saúde:
+
+| Frente | Como o resultado pode contribuir | Pergunta de gestão |
+|---|---|---|
+| **Vigilância em saúde** | Identificar exposição, tendência, grupos e territórios prioritários | O que precisa ser monitorado e com que antecedência? |
+| **Atenção à saúde** | Preparar equipes, fluxos, insumos e continuidade do cuidado | Como a rede responderá antes, durante e depois da emergência? |
+| **Promoção e educação em saúde** | Apoiar comunicação compreensível e ações protetoras | Qual mensagem é adequada para cada grupo e território? |
+| **Pesquisa e avaliação** | Testar hipóteses, comparar alternativas e medir resultados | A ação funcionou, para quem e em quais condições? |
+
+Essa organização é compatível com a orientação do Ministério da Saúde para integrar
+vigilância, gestão, assistência e comunicação diante dos riscos climáticos. Ela também
+ajuda a localizar o limite do Studio: o sistema apoia a produção e a leitura da
+evidência, mas não substitui o plano de contingência, a decisão sanitária ou a
+participação das equipes e comunidades.
+
+## Como incorporar a justiça climática
+
+Uma análise pode estar tecnicamente correta e ainda ser insuficiente para uma decisão
+justa. Antes de concluir que um município, bairro ou grupo é “mais vulnerável”, verifique
+quais componentes foram medidos: perigo, exposição, sensibilidade, capacidade de
+resposta e acesso ao cuidado. Use “população em maior risco nas condições analisadas”
+quando o índice não contemplar todas essas dimensões.
+
+Sempre que possível, apresente resultados estratificados ou descreva as limitações para
+populações indígenas, quilombolas, ribeirinhas, rurais, periféricas, pessoas com
+deficiência, trabalhadores expostos e pessoas em situação de rua. A falta de dado
+desagregado deve ser tratada como uma limitação de vigilância e uma prioridade de
+qualificação, não como evidência de que a desigualdade não existe. Na Amazônia, o tempo
+de deslocamento fluvial e o isolamento de comunidades devem entrar na leitura de acesso,
+não como detalhe logístico.
+
+## Prioridades para as próximas versões do Studio
+
+A leitura da literatura e das necessidades de gestão indica oportunidades que podem
+orientar o desenvolvimento do produto:
+
+1. integrar ondas de calor, secas, enchentes, fumaça e interrupção de serviços;
+2. ampliar análises de fumaça, qualidade do ar, saúde mental, nutrição e saúde do trabalhador;
+3. apoiar alertas precoces e avaliação de intervenções, além de estimar associações;
+4. oferecer indicadores de equidade e camadas territoriais que ajudem a priorizar ações;
+5. registrar melhor versões, fontes, limiares, incertezas e decisões tomadas;
+6. produzir saídas diferentes para análise técnica, reunião de gestão e comunicação comunitária.
+
+Essas são prioridades de evolução, não funções já disponíveis. O guia deve manter essa
+distinção para conservar a confiança de quem usa o Studio no planejamento público.
+
+## Perigo, exposição, vulnerabilidade e resposta
+
+Separe quatro perguntas que costumam ser misturadas:
+
+- **Perigo climático**: qual processo físico ocorreu ou pode ocorrer — onda de calor, chuva intensa, seca, fumaça ou friagem?
+- **Exposição**: quem esteve em contato com esse perigo, por quanto tempo e em qual intensidade?
+- **Vulnerabilidade**: quais condições aumentam o dano ou dificultam a resposta — biológicas (idade, doença prévia), sociais (renda, trabalho, racismo), territoriais (moradia, saneamento, distância) e institucionais (capacidade de vigilância e de assistência)?
+- **Desfecho e resposta**: qual efeito foi medido — óbito, internação, atendimento, notificação ou interrupção de tratamento — e qual ação pode reduzi-lo?
+
+Uma estação meteorológica, uma grade de reanálise e um satélite não medem
+exatamente a exposição de cada pessoa. São aproximações territoriais. Informe
+a fonte, a resolução, a distância ou método de agregação e o período de
+validade. Quando usar limiar de onda de calor ou de frio, explique se ele é
+relativo à distribuição histórica local ou um valor absoluto.
+
+## Saúde e qualidade da informação
+
+Registros do DATASUS são essenciais para vigilância e planejamento, mas podem
+ter atraso, campos ignorados, mudanças de definição, diferenças de acesso e
+sub-registro. Um aumento de notificações pode refletir mudança na busca por
+atendimento ou na capacidade de registrar, além de mudança real na ocorrência.
+
+Antes de interpretar:
+
+- confira se o desfecho é óbito, internação, atendimento ou notificação;
+- registre o sistema de origem, o código CID-10, a população e o denominador;
+- verifique duplicidades, dados ausentes, mudanças de cobertura e datas;
+- evite comparar contagens brutas entre municípios com populações muito diferentes;
+- use taxas ou padronização quando a comparação exigir denominadores compatíveis;
+- não trate um registro administrativo como diagnóstico individual completo;
+- suprima ou agregue resultados que possam permitir reidentificação.
+
+## Roteiro de decisão
+
+1. **Formule a pergunta** com território, população, período, exposição e decisão.
+2. **Monte o Pipeline** nas três etapas: Preparação, Integração e Análise & Modelagem.
+3. **Verifique os dados** e registre fontes, filtros, perdas e escolhas.
+4. **Compare alternativas** de período, limiar, defasagem, fonte climática e especificação.
+5. **Leia a incerteza** e procure resultados que mudam quando os pressupostos mudam.
+6. **Confronte com a realidade local**: equipes de vigilância, atenção primária, assistência, defesa civil e comunidade.
+7. **Defina a ação, o responsável, o prazo e o indicador de acompanhamento**.
+8. **Salve o projeto e exporte o `.R`** para manter a análise auditável.
+
+## Modelo de ficha para decisão
+
+Use este registro junto ao Resultado exportado:
+
+| Campo | Preenchimento |
+|---|---|
+| Pergunta e decisão | O que será decidido e por quem? |
+| População e território | Quem foi incluído e onde? |
+| Período e fonte | Quando e de quais bases vieram os dados? |
+| Desfecho e exposição | Como foram definidos e medidos? |
+| Resultado principal | Estimativa, intervalo de incerteza e unidade. |
+| Sensibilidade | O que aconteceu com outros limiares, atrasos ou fontes? |
+| Limitações | O que os dados não permitem concluir? |
+| Ação | Medida, responsável, prazo e população priorizada. |
+| Monitoramento | Indicador de processo e indicador de resultado. |
+
+::: {.callout-important title="Importante"}
+O Studio apoia a análise e a transparência do caminho percorrido. A decisão
+sanitária continua sendo uma responsabilidade institucional, construída com
+as equipes locais e com as pessoas afetadas.
+:::
+
+## Leituras orientadoras
+
+As fontes abaixo ajudam a aprofundar o raciocínio apresentado neste guia:
+
+- [Ebi, Hess e Watkiss, *Health Risks and Costs of Climate Variability and Change*](https://www.ncbi.nlm.nih.gov/books/NBK525226/), para os caminhos de efeito, vulnerabilidade e custos em saúde.
+- [Gasparrini et al., *Mortality risk attributable to high and low ambient temperature*](https://doi.org/10.1016/S0140-6736(14)62114-0), para a interpretação de risco, defasagem e fração atribuível em estudos com cidades de vários países.
+- [Ministério da Saúde, *Mudanças climáticas para profissionais de saúde: guia de bolso*](https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/guias-e-manuais/2026/mudancas-climaticas-para-profissionais-de-saude-guia-de-bolso.pdf), para a articulação entre prática clínica, vigilância, gestão e comunicação no SUS.
+- [Lancet Countdown, indicadores e prioridades de saúde e clima](https://lancetcountdown.org/), para acompanhar exposição, adaptação e co-benefícios no Brasil e no mundo.
+- [Plano Clima, Ministério do Meio Ambiente](https://www.gov.br/mma/pt-br/composicao/smc/plano-clima), para a relação entre adaptação, mitigação e planejamento nacional.
+
+---

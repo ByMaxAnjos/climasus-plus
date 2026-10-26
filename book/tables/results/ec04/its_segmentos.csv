@@ -1,0 +1,3 @@
+segment,start_date,end_date,n_days,mean_observed,mean_predicted,mean_counterfactual
+Pre-interruption,2009-07-17,2011-07-02,716,10.9,10.9,10.9
+Post-interruption,2011-07-03,2019-12-21,3094,9.87,9.87,513.81

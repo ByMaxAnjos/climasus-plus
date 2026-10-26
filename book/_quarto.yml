@@ -1,0 +1,111 @@
+project:
+  type: book
+  output-dir: _book
+  resources:
+    - theme/fonts
+    - theme/guide.css
+    - theme/guide.js
+    - images
+
+book:
+  title: "climasus+ Studio"
+  subtitle: "Guia prático sobre clima, saúde e Amazônia"
+  author: "Max Anjos · ecossistema climaSUS"
+  date: "2026-10-25"
+  language: pt
+  description: "Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia."
+  cover-image: images/brand/capa-guia.jpg
+  favicon: images/brand/favicon.png
+  site-url: "https://github.com/ByMaxAnjos/climasus-plus"
+  repo-url: "https://github.com/ByMaxAnjos/climasus-plus"
+  repo-actions: [edit, issue]
+  sharing: [twitter, linkedin]
+  page-footer:
+    left: "climasus+ Studio · Guia prático · 1ª edição, 2026"
+    center: "Apoio: INCT-CONEXAO"
+    right: "climasus4r · Fiocruz Rondônia · UFJF"
+  sidebar:
+    logo: images/brand/climasus.png
+    logo-alt: "climasus+ Studio"
+    search: true
+    style: docked
+    collapse-level: 2
+    footer: "Uma realização do ecossistema climaSUS<br><strong>Apoio: INCT-CONEXAO</strong>"
+  chapters:
+    - index.qmd
+    - part-1-fundamentos.qmd
+    - 00-clima-saude.qmd
+    - 01-conhecendo-o-studio.qmd
+    - part-2-pipeline.qmd
+    - 02-etapa-preparacao.qmd
+    - 03-etapa-integracao.qmd
+    - part-3-gestor.qmd
+    - 04-modelos-vigilancia.qmd
+    - 05-da-evidencia-a-acao.qmd
+    - part-4-pesquisador.qmd
+    - 06-etapa-analise-modelagem.qmd
+    - part-5-casos.qmd
+    - 07-caso-respiratorio-pediatrico.qmd
+    - 08-caso-dengue-clima.qmd
+    - 09-caso-cardio-idosos-calor.qmd
+    - 10-caso-hospitalizacoes-frio.qmd
+    - 11-glossario.qmd
+    - 12-parametros-avancados.qmd
+    - colofao.qmd
+
+format:
+  html:
+    theme: cosmo
+    lang: pt
+    date-format: "MMMM [de] YYYY"
+    css: theme/guide.css
+    toc: true
+    toc-depth: 3
+    toc-location: right
+    number-sections: false
+    appendix-style: plain
+    code-copy: true
+    code-overflow: wrap
+    code-line-numbers: false
+    highlight-style: github-dark
+    lightbox: true
+    fig-align: center
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    link-external-icon: true
+    link-external-newwindow: true
+    anchor-sections: true
+    smooth-scroll: true
+    include-in-header: theme/head.html
+    include-before-body: theme/before-body.html
+    grid:
+      sidebar-width: 302px
+      body-width: 880px
+      margin-width: 240px
+      gutter-width: 1.4rem
+  pdf:
+    lang: pt
+    date-format: "MMMM [de] YYYY"
+    documentclass: scrreprt
+    papersize: a4
+    geometry:
+      - top=2.5cm
+      - bottom=2.4cm
+      - left=2.3cm
+      - right=2.3cm
+    mainfont: "TeX Gyre Pagella"
+    sansfont: "TeX Gyre Heros"
+    monofont: "DejaVu Sans Mono"
+    fontsize: 10.5pt
+    linestretch: 1.15
+    colorlinks: true
+    linkcolor: "0E7C6B"
+    urlcolor: "0B5D52"
+    toccolor: "0B2420"
+    toc: true
+    toc-depth: 3
+    lof: true
+    lot: true
+    number-sections: false
+    pdf-engine: xelatex
+    include-in-header: theme/pdf-header.tex

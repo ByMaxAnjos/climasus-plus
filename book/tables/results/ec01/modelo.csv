@@ -1,0 +1,2 @@
+variable,n,family,lag_max,ref_value,exposure_p75,rr,lo,hi,lag_peak,disp_ratio,aic_poisson
+tair_dry_bulb_c,258,quasipoisson,21,22.636,24.107,0.9726006379704694,0.7843494636573196,1.2060338469152674,0,1.679,1643.1

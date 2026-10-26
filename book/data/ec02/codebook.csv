@@ -1,0 +1,7 @@
+variable,description,unit,source
+date,Semana epidemiológica (primeiro dia),date,SINAN / agregação
+code_muni,Código IBGE do município,código,geobr
+n_casos,Casos notificados de dengue,contagem,SINAN-DENGUE
+gdd_c,"Graus-dia de desenvolvimento (base 11 °C, teto 35 °C)",°C·dia,INMET / indicadores
+gdd_c_lag0,GDD no dia da semana do desfecho,°C·dia,integração
+data_primeiros_sintomas,Data dos primeiros sintomas,date,SINAN-DENGUE

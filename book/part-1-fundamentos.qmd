@@ -1,0 +1,30 @@
+---
+title: "Parte I · Fundamentos"
+number-sections: false
+toc: false
+---
+
+```{=html}
+<div class="part-opener">
+<div class="part-copy">
+  <div class="part-number">I</div>
+  <div class="part-kicker">Parte um · o problema</div>
+  <h1>Clima, saúde e o ponto de partida</h1>
+  <p class="part-standfirst">Antes de montar qualquer Pipeline, o guia situa o problema: por que o clima afeta a saúde, como o efeito aparece com defasagem e por que a vulnerabilidade é social e territorial. Depois, apresenta o Studio e o seu modelo mental.</p>
+  <ul class="part-list">
+    <li><a href="00-clima-saude.html"><span class="part-ch">00</span> Por que isso importa: clima, saúde e o que os dados escondem</a></li>
+    <li><a href="01-conhecendo-o-studio.html"><span class="part-ch">01</span> Conhecendo o climasus+ Studio</a></li>
+  </ul>
+</div>
+<div class="part-photo">
+  <img src="images/photos/amazonia-ritual.jpg" alt="Homem ashaninka observa pedras aquecidas no interior de uma panela ao fogo, em ritual de purificação na floresta, no Acre.">
+  <span class="photo-credit">Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens</span>
+</div>
+</div>
+```
+
+::: {.pdf-only}
+Antes de montar qualquer Pipeline, o guia situa o problema: por que o clima afeta a saúde, como o efeito aparece com defasagem e por que a vulnerabilidade é social e territorial. Depois, apresenta o Studio e o seu modelo mental.
+
+![Ritual de purificação ashaninka na floresta, Aldeia Apiwtxa, Marechal Thaumaturgo (AC), 2018. Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens.](images/photos/amazonia-ritual.jpg)
+:::

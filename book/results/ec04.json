@@ -1,0 +1,23 @@
+{
+  "case": "ec04",
+  "generated_at": "2026-10-26T11:20:39-0300",
+  "studio_version": "1.1.0-beta.1",
+  "climasus4r_version": "1.0.1",
+  "r_version": "R version 4.5.1 (2025-06-13)",
+  "params": {
+    "system": "SIH-RD",
+    "region": "sul",
+    "years": "2010:2019",
+    "month": "1:12",
+    "cid": "J09-J18",
+    "time_unit": "day",
+    "city": "Porto Alegre",
+    "station": "A801",
+    "exposure": "cold event (WHO p10)",
+    "event_date": "2011-07-03",
+    "baseline": "2010-01-01/2015-12-31"
+  },
+  "n_records": 3810,
+  "data_file": "data/ec04/analytic.parquet",
+  "data_checksum": "cee0f28d72809b5365961b13c5e7ff91"
+}
