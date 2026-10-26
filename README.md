@@ -2,6 +2,24 @@
 
 Estúdio visual para montar e executar análises de saúde, clima e ambiente do DATASUS — encadeando as funções do pacote [climasus4r](https://github.com/ByMaxAnjos/climasus4r) como um pipeline, **sem precisar saber R**. O motor de análise já vem embutido no aplicativo.
 
+## Guia prático
+
+<a href="https://bymaxanjos.github.io/climasus-plus/"><img src="book/images/brand/capa-guia.jpg" alt="Capa do guia prático do climasus+ Studio: Do dado à decisão em saúde — um guia visual para montar análises de saúde, clima e território sem precisar programar." width="230" align="left"></a>
+
+### Do dado à decisão em saúde
+
+O **guia completo** do climasus+ Studio, para gestores públicos, pesquisadores e comunidade, com ênfase na Amazônia:
+
+- **Fundamentos** — clima e saúde, e como o Studio está organizado
+- **O pipeline** — preparação dos dados do DATASUS e integração com clima e ambiente
+- **Para gestores** — modelos de vigilância e como ir da evidência à ação
+- **Para pesquisadores** — análise e modelagem (DLNM, fração atribuível e outros)
+- **Estudos de caso** — respiratório pediátrico, dengue, cardiovascular e calor, hospitalizações e frio
+
+**[Ler o guia online →](https://bymaxanjos.github.io/climasus-plus/)**
+
+<br clear="left">
+
 ## Visão geral
 
 O climasus+ Studio organiza a análise em uma área de trabalho visual: a Biblioteca fica à esquerda, o Pipeline no centro, o Código/Resultados abaixo e o Inspetor de parâmetros à direita.
