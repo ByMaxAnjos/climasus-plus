@@ -1,0 +1,34 @@
+name: pages-guia
+
+# Publica o Guia Prático (book/_book, já renderizado no repositório) no GitHub Pages.
+# Para atualizar: renderize localmente (`cd book && quarto render --to html`), faça commit
+# de book/_book e push na main.
+on:
+  push:
+    branches: [main]
+    paths: ["book/_book/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: book/_book
+      - id: deployment
+        uses: actions/deploy-pages@v4

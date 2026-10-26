@@ -1,1 +1,1 @@
-Sitemap: https://github.com/ByMaxAnjos/climasus-plus/sitemap.xml
+Sitemap: https://bymaxanjos.github.io/climasus-plus/sitemap.xml

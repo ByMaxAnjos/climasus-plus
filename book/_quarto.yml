@@ -16,8 +16,10 @@ book:
   description: "Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia."
   cover-image: images/brand/capa-guia.jpg
   favicon: images/brand/favicon.png
-  site-url: "https://github.com/ByMaxAnjos/climasus-plus"
+  site-url: "https://bymaxanjos.github.io/climasus-plus/"
   repo-url: "https://github.com/ByMaxAnjos/climasus-plus"
+  repo-subdir: book
+  repo-branch: main
   repo-actions: [edit, issue]
   sharing: [twitter, linkedin]
   page-footer:
