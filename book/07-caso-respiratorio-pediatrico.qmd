@@ -23,7 +23,7 @@ O exemplo usa o Sudeste para manter continuidade com o caso ec-01. O mesmo Pipel
 aplica à Amazônia, onde a exposição principal pode ser MP2,5 ou fumaça e a série climática
 deve vir de grade; a lógica de Preparação, Integração e Modelagem é a mesma.
 
-![](images/arco-ec01.svg)
+![](images/arco-ec01.svg){fig-alt="Arco do caso ec-01 em quatro etapas — preparação no SIM-DO, integração com temperatura e umidade, modelagem DLNM e impacto com fração atribuível. À direita, a ficha do estudo com fonte, CID, população, território e período; abaixo, a curva em U do risco relativo por temperatura com o mínimo de mortalidade."}
 
 **Preparação**
 

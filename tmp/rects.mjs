@@ -1,0 +1,15 @@
+import { chromium } from 'playwright'
+const browser = await chromium.launch()
+const page = await browser.newPage({ viewport: { width: 1800, height: 1100 } })
+await page.goto('http://localhost:1420/')
+await page.evaluate(() => localStorage.clear()); await page.reload(); await page.waitForSelector('.stage-tab')
+if (await page.locator('.about-backdrop').count() > 0) await page.keyboard.press('Escape')
+await page.locator('.topbar-actions .btn', { hasText: 'Pipelines' }).click()
+await page.waitForSelector('.help-panel'); await page.locator('.help-search').fill('Mortalidade respiratória pediátrica')
+await page.locator('.help-card').first().locator('.btn-primary').click(); await page.waitForSelector('.help-panel',{state:'detached'}); await page.waitForTimeout(800)
+await page.evaluate(() => window.__store.getState().select(null))
+const expand = page.locator('.canvas-head .expand-toggle'); if (await expand.count()) { await expand.click(); await page.waitForTimeout(400) }
+const rects = await page.locator('.react-flow__node-step').evaluateAll(els => els.map(e => { const r=e.getBoundingClientRect(); return {text:e.textContent.slice(0,30), x:r.x, y:r.y, w:r.width, h:r.height} }))
+console.log(rects)
+const vp = await page.locator('.react-flow__viewport').boundingBox(); console.log('viewport', vp)
+await browser.close()

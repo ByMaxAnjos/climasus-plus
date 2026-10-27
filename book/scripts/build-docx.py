@@ -22,6 +22,7 @@ from docx.text.paragraph import Paragraph
 ROOT = Path(__file__).resolve().parent.parent
 BOOK = ROOT / "_book"
 REFERENCE = ROOT / "theme" / "reference.docx"
+TEXT_W = 6.5  # inches: A4 (21 cm) minus 2 x 2.2 cm margins
 
 INK = RGBColor(0x0B, 0x24, 0x20)
 TEAL = RGBColor(0x0E, 0x7C, 0x6B)
@@ -154,6 +155,8 @@ def table_borders(table):
 
 def set_table_width(table):
     tbl_pr = table._tbl.tblPr
+    for old in tbl_pr.findall(qn("w:tblW")):  # one tblW only, or Word may reject the file
+        tbl_pr.remove(old)
     width = OxmlElement("w:tblW")
     width.set(qn("w:type"), "pct")
     width.set(qn("w:w"), "5000")
@@ -163,6 +166,13 @@ def set_table_width(table):
 def style_tables(doc: Document):
     for table in doc.tables:
         table.alignment = WD_TABLE_ALIGNMENT.CENTER
+        # figure tables (Pandoc's image + caption layout): no borders or shading, but as wide
+        # as the text block (Pandoc's 5.5in grid is narrower than the resized image)
+        if table._tbl.xpath(".//w:drawing"):
+            set_table_width(table)
+            for col in table._tbl.tblGrid.findall(qn("w:gridCol")):
+                col.set(qn("w:w"), str(int(TEXT_W * 1440)))
+            continue
         table.autofit = True
         set_table_width(table)
         cell_margins(table)
@@ -277,7 +287,7 @@ def resize_images(doc: Document):
             target_w = 0.7 if descr == "INCT-CONEXAO" else 0.55
             target_h = target_w * old_cy / old_cx
         else:
-            target_w = 6.3
+            target_w = TEXT_W
             target_h = target_w * old_cy / old_cx
             if target_h > 8.5:
                 target_h = 8.5
@@ -285,6 +295,11 @@ def resize_images(doc: Document):
 
         extent.set("cx", str(int(target_w * EMU)))
         extent.set("cy", str(int(target_h * EMU)))
+        # the picture's own size must match the frame, or some readers render the old one
+        for ext in inline.iter(qn("a:ext")):
+            if ext.get("cx"):
+                ext.set("cx", str(int(target_w * EMU)))
+                ext.set("cy", str(int(target_h * EMU)))
 
 
 def style_paragraphs(doc: Document):

@@ -21,7 +21,7 @@ partir da temperatura das estações INMET. O Modelo de catálogo
 Pipelines. A série analisada é de **um único município**; a detecção de ondas de frio é
 feita para o Sul e serve como contexto climático.
 
-![](images/arco-ec04.svg)
+![](images/arco-ec04.svg){fig-alt="Arco do caso ec-04 em quatro etapas — preparação no SIH-RD para J09-J18 em Porto Alegre, integração com ondas de frio, modelo de série interrompida e ação em leitos e alertas. À direita, a ficha do estudo; abaixo, a série observada e a tendência contrafactual, com a mudança de nível após o evento de frio."}
 
 **Preparação**
 

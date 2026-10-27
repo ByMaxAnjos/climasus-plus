@@ -1,0 +1,23 @@
+import { chromium } from 'playwright'
+const browser = await chromium.launch()
+const page = await browser.newPage({ viewport: { width: 1800, height: 1100 }, deviceScaleFactor: 2 })
+await page.goto('http://localhost:1420/')
+await page.evaluate(() => localStorage.clear())
+await page.reload()
+await page.waitForSelector('.stage-tab')
+if (await page.locator('.about-backdrop').count() > 0) await page.keyboard.press('Escape')
+await page.evaluate(() => { document.documentElement.dataset.theme = 'light' })
+await page.locator('.topbar-actions .btn', { hasText: 'Pipelines' }).click()
+await page.waitForSelector('.help-panel')
+await page.locator('.help-search').fill('Mortalidade respiratória pediátrica')
+await page.locator('.help-card').first().locator('.btn-primary').click()
+await page.waitForSelector('.help-panel', { state: 'detached' })
+await page.waitForTimeout(700)
+await page.evaluate(() => window.__store.getState().select(null))
+const expand = page.locator('.canvas-head .expand-toggle'); if (await expand.count()) { await expand.click(); await page.waitForTimeout(400) }
+for (let i=0;i<2;i++) { await page.locator('.react-flow__controls-button[title="Zoom Out"]').click(); await page.waitForTimeout(300) }
+await page.waitForTimeout(500)
+const box = await page.locator('.react-flow__nodes').boundingBox()
+console.log('box after zoom', box)
+await page.screenshot({ path: 'tmp/shots/zoom-test.png', clip: { x: Math.max(0,box.x-20), y: Math.max(0,box.y-20), width: Math.min(1800,box.width+40), height: Math.min(1100,box.height+40) } })
+await browser.close()

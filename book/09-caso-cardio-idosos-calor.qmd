@@ -23,7 +23,7 @@ considerar calor úmido — por exemplo, WBGT ou UTCI, índices que combinam tem
 umidade e ventilação — e a definição de onda de calor precisa ser revista; temperatura do
 ar isolada pode subestimar o risco.
 
-![](images/arco-ec03.svg)
+![](images/arco-ec03.svg){fig-alt="Arco do caso ec-03 em quatro etapas — preparação no SIM-DO para idosos, integração com ondas de calor de São Paulo, modelagem DLNM de efeito agudo e impacto com fração e número atribuível. À direita, a ficha do estudo; abaixo, a série de óbitos diários com pico durante a onda de calor e déficit posterior por efeito colheita."}
 
 **Preparação**
 

@@ -241,7 +241,7 @@ Em Manaus ou em outras cidades amazônicas, o mesmo desenho se aplica, mas a exp
 deve ser definida com calor úmido — por exemplo, WBGT ou UTCI — e a escolha do limiar
 precisa ser revista; temperatura do ar isolada pode subestimar o risco.
 
-![](images/modelagem-flow.svg)
+![](images/modelagem-flow.svg){fig-alt="Quatro etapas da modelagem: entrada da tabela integrada, DLNM com superfície de exposição por defasagem, impacto com fração atribuível e número atribuível, e decisão para a gestão. Uma faixa escura traz a equação do modelo; abaixo, o que o modelo controla e o que ele não prova."}
 
 ![Pipeline de Análise & Modelagem no Studio: a tabela integrada alimenta o DLNM, a visualização da curva e o cálculo da fração atribuível.](images/screenshots/studio-modelagem-pipeline.png){fig-alt="Captura do canvas do climasus+ Studio mostrando um Pipeline de Análise e Modelagem com leitura da tabela, modelo DLNM, visualização do DLNM, fração atribuível e visualização da fração atribuível."}
 

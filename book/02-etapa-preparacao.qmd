@@ -106,7 +106,7 @@ Acre —, mudando `uf` e, quando necessário, a fonte climática. O Modelo de ca
 dessa sequência — você pode carregá-lo no Centro de Pipelines para conferir, embora aqui
 a gente monte a versão completa, com o recorte demográfico que o Modelo básico não inclui.
 
-![](images/pipeline-flow.svg)
+![](images/pipeline-flow.svg){fig-alt="Diagrama da Etapa Preparação em sete Passos: importar dados do DATASUS, corrigir encoding, padronizar nomes e tipos, filtrar por CID-10, criar variáveis, filtrar perfil demográfico e agregar em série semanal. Abaixo, o contraste entre registros individuais e a série semanal, as decisões que mudam a pergunta e a verificação de qualidade."}
 
 ![Pipeline de Preparação no Studio: a sequência começa importando dados do DATASUS, passa por correção, padronização e filtro por CID, e termina com agregação semanal e relatório de qualidade.](images/screenshots/studio-preparacao-pipeline.png){fig-alt="Captura do canvas do climasus+ Studio mostrando um Pipeline de Preparação com importação, correção de caracteres, padronização, filtro por CID, criação de variáveis, agregação e relatório de qualidade."}
 

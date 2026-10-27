@@ -19,7 +19,7 @@ Recorte: casos notificados de dengue (SINAN) em **Ceará, Pernambuco, Bahia e Ma
 estações INMET. O Modelo de catálogo `ec-02-dengue-clima` traz este Pipeline pronto para
 carregar no Centro de Pipelines.
 
-![](images/arco-ec02.svg)
+![](images/arco-ec02.svg){fig-alt="Arco do caso ec-02 em quatro etapas — preparação no SINAN-DENGUE por semana epidemiológica, integração com graus-dia e chuva, modelagem DLNM com defasagem longa e gestão com janela de ação. À direita, a ficha do estudo; abaixo, a curva de acúmulo de graus-dia e a janela de transmissão."}
 
 **Preparação**
 

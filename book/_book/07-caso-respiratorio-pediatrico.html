@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
 <p>Recorte: óbitos por causas respiratórias (CID-10, capítulo J) em crianças menores de 5 anos, no Sudeste (SP, RJ, MG, ES), 2015-2019, contra a temperatura do ar registrada pelas estações do INMET. O Modelo de catálogo <code>ec-01-respiratorio-pediatrico</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
 <p>O exemplo usa o Sudeste para manter continuidade com o caso ec-01. O mesmo Pipeline se aplica à Amazônia, onde a exposição principal pode ser MP2,5 ou fumaça e a série climática deve vir de grade; a lógica de Preparação, Integração e Modelagem é a mesma.</p>
-<p><a href="images/arco-ec01.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec01.svg" class="img-fluid"></a></p>
+<p><a href="images/arco-ec01.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec01.svg" class="img-fluid" alt="Arco do caso ec-01 em quatro etapas — preparação no SIM-DO, integração com temperatura e umidade, modelagem DLNM e impacto com fração atribuível. À direita, a ficha do estudo com fonte, CID, população, território e período; abaixo, a curva em U do risco relativo por temperatura com o mínimo de mortalidade."></a></p>
 <p><strong>Preparação</strong></p>
 <ol type="1">
 <li><strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>) — importa óbitos do sistema <code>SIM-DO</code>, UFs <code>SP</code>, <code>RJ</code>, <code>MG</code>, <code>ES</code>, anos de 2015 a 2019.</li>
