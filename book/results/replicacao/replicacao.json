@@ -1,0 +1,407 @@
+{
+  "meta": {
+    "date": "2026-10-27",
+    "r": "R version 4.5.1 (2025-06-13)",
+    "dlnm": "2.4.10"
+  },
+  "ec03": {
+    "label": "ec03 São Paulo cidade · DLNM 0-21d · DOW+feriados · MMT",
+    "n": 3636,
+    "events": 184893,
+    "mmt": 23.09712,
+    "mmt_percentile": 0.76375,
+    "p01": {
+      "fit": 1.66504,
+      "lo": 1.49557,
+      "hi": 1.85371
+    },
+    "p05": {
+      "fit": 1.31048,
+      "lo": 1.22918,
+      "hi": 1.39717
+    },
+    "p10": {
+      "fit": 1.19727,
+      "lo": 1.12849,
+      "hi": 1.27024
+    },
+    "p50": {
+      "fit": 1.04671,
+      "lo": 0.99807,
+      "hi": 1.09772
+    },
+    "p90": {
+      "fit": 1.03429,
+      "lo": 1.01244,
+      "hi": 1.05661
+    },
+    "p95": {
+      "fit": 1.08728,
+      "lo": 1.04044,
+      "hi": 1.13623
+    },
+    "p99": {
+      "fit": 1.20857,
+      "lo": 1.09617,
+      "hi": 1.33249
+    },
+    "af_total": 0.07923,
+    "af_total_lo": 0.04978,
+    "af_total_hi": 0.10779,
+    "af_heat": 0.01093,
+    "af_heat_lo": 0.00496,
+    "af_heat_hi": 0.01608,
+    "af_cold": 0.0683,
+    "af_cold_lo": 0.04187,
+    "af_cold_hi": 0.09544,
+    "dispersion": 1.08105,
+    "ljung_box_p": 0.01444,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + dow +     hol"
+  },
+  "ec01": {
+    "label": "ec01 São Paulo cidade · semanal 0-3s · MMT",
+    "n": 259,
+    "events": 757,
+    "mmt": 16.61343,
+    "mmt_percentile": 0.10425,
+    "p01": {
+      "fit": 0.66317,
+      "lo": 0.4345,
+      "hi": 1.01219
+    },
+    "p05": {
+      "fit": 0.86059,
+      "lo": 0.74882,
+      "hi": 0.98903
+    },
+    "p10": {
+      "fit": 0.99327,
+      "lo": 0.98754,
+      "hi": 0.99904
+    },
+    "p50": {
+      "fit": 2.48956,
+      "lo": 1.71957,
+      "hi": 3.60432
+    },
+    "p90": {
+      "fit": 2.43492,
+      "lo": 1.47695,
+      "hi": 4.01426
+    },
+    "p95": {
+      "fit": 2.1642,
+      "lo": 1.252,
+      "hi": 3.74102
+    },
+    "p99": {
+      "fit": 1.42304,
+      "lo": 0.61469,
+      "hi": 3.29441
+    },
+    "af_total": 0.41621,
+    "af_total_lo": 0.28692,
+    "af_total_hi": 0.50373,
+    "af_heat": 0.44166,
+    "af_heat_lo": 0.30661,
+    "af_heat_hi": 0.5451,
+    "af_cold": -0.02545,
+    "af_cold_lo": -0.06242,
+    "af_cold_hi": -0.00081,
+    "dispersion": 1.18864,
+    "ljung_box_p": 0.02232,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + rh_lag0"
+  },
+  "ec02": {
+    "label": "ec02 Recife · semanal 0-12s · MMT",
+    "n": 217,
+    "events": 38974,
+    "mmt": 97.07095,
+    "mmt_percentile": 0.29493,
+    "p01": {
+      "fit": 2.15216,
+      "lo": 0.47862,
+      "hi": 9.67745
+    },
+    "p05": {
+      "fit": 1.7287,
+      "lo": 0.55906,
+      "hi": 5.34543
+    },
+    "p10": {
+      "fit": 1.3448,
+      "lo": 0.67704,
+      "hi": 2.67116
+    },
+    "p50": {
+      "fit": 1.3267,
+      "lo": 0.80808,
+      "hi": 2.17817
+    },
+    "p90": {
+      "fit": 1.07185,
+      "lo": 0.31587,
+      "hi": 3.6371
+    },
+    "p95": {
+      "fit": 0.93265,
+      "lo": 0.25463,
+      "hi": 3.41603
+    },
+    "p99": {
+      "fit": 0.48697,
+      "lo": 0.08421,
+      "hi": 2.8159
+    },
+    "af_total": 0.148,
+    "af_total_lo": -1.30503,
+    "af_total_hi": 0.55184,
+    "af_heat": 0.12611,
+    "af_heat_lo": -1.34167,
+    "af_heat_hi": 0.534,
+    "af_cold": 0.02189,
+    "af_cold_lo": -0.04299,
+    "af_cold_hi": 0.05179,
+    "dispersion": 7.54797,
+    "ljung_box_p": 3.59091e-08,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + month"
+  },
+  "ec02_nomonth": {
+    "label": "ec02 Recife · semanal 0-12s · sem mês",
+    "n": 217,
+    "events": 38974,
+    "mmt": 114.80841,
+    "mmt_percentile": 0.89401,
+    "p01": {
+      "fit": 11.79115,
+      "lo": 2.29944,
+      "hi": 60.46312
+    },
+    "p05": {
+      "fit": 12.72503,
+      "lo": 2.99703,
+      "hi": 54.02896
+    },
+    "p10": {
+      "fit": 13.48314,
+      "lo": 3.66788,
+      "hi": 49.56407
+    },
+    "p50": {
+      "fit": 4.97748,
+      "lo": 1.84781,
+      "hi": 13.40792
+    },
+    "p90": {
+      "fit": 0.98576,
+      "lo": 0.96896,
+      "hi": 1.00285
+    },
+    "p95": {
+      "fit": 0.85,
+      "lo": 0.69269,
+      "hi": 1.04303
+    },
+    "p99": {
+      "fit": 0.48731,
+      "lo": 0.17388,
+      "hi": 1.36577
+    },
+    "af_total": 0.42379,
+    "af_total_lo": 0.18733,
+    "af_total_hi": 0.46957,
+    "af_heat": -0.09122,
+    "af_heat_lo": -0.44221,
+    "af_heat_hi": 0.01829,
+    "af_cold": 0.51501,
+    "af_cold_lo": 0.30163,
+    "af_cold_hi": 0.65586,
+    "dispersion": 12.23099,
+    "ljung_box_p": 5.77316e-15,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df)"
+  },
+  "ec02_temp": {
+    "label": "ec02 Recife · temperatura semanal 0-12s · MMT",
+    "n": 217,
+    "events": 38974,
+    "mmt": 27.39766,
+    "mmt_percentile": 0.8894,
+    "p01": {
+      "fit": 1.51018,
+      "lo": 0.2955,
+      "hi": 7.71803
+    },
+    "p05": {
+      "fit": 1.64031,
+      "lo": 0.38843,
+      "hi": 6.92684
+    },
+    "p10": {
+      "fit": 1.92482,
+      "lo": 0.55942,
+      "hi": 6.6228
+    },
+    "p50": {
+      "fit": 1.96935,
+      "lo": 0.8966,
+      "hi": 4.32561
+    },
+    "p90": {
+      "fit": 0.9911,
+      "lo": 0.97346,
+      "hi": 1.00906
+    },
+    "p95": {
+      "fit": 0.91802,
+      "lo": 0.76481,
+      "hi": 1.10193
+    },
+    "p99": {
+      "fit": 0.67912,
+      "lo": 0.25974,
+      "hi": 1.77564
+    },
+    "af_total": 0.25423,
+    "af_total_lo": -0.03616,
+    "af_total_hi": 0.39024,
+    "af_heat": -0.04082,
+    "af_heat_lo": -0.21754,
+    "af_heat_hi": 0.03869,
+    "af_cold": 0.29505,
+    "af_cold_lo": -0.01795,
+    "af_cold_hi": 0.46792,
+    "dispersion": 7.07867,
+    "ljung_box_p": 1.07175e-06,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + month"
+  },
+  "ec02_fortaleza": {
+    "label": "ec02 Fortaleza · semanal 0-12s · MMT",
+    "n": 225,
+    "events": 73834,
+    "mmt": 121.85585,
+    "mmt_percentile": 0.89778,
+    "p01": {
+      "fit": 10.56177,
+      "lo": 3.70904,
+      "hi": 30.07542
+    },
+    "p05": {
+      "fit": 10.98854,
+      "lo": 4.31638,
+      "hi": 27.97438
+    },
+    "p10": {
+      "fit": 10.40625,
+      "lo": 4.18719,
+      "hi": 25.86221
+    },
+    "p50": {
+      "fit": 3.55103,
+      "lo": 1.98995,
+      "hi": 6.33674
+    },
+    "p90": {
+      "fit": 0.99907,
+      "lo": 0.99821,
+      "hi": 0.99994
+    },
+    "p95": {
+      "fit": 1.32133,
+      "lo": 0.75656,
+      "hi": 2.30769
+    },
+    "p99": {
+      "fit": 3.57399,
+      "lo": 0.97238,
+      "hi": 13.13622
+    },
+    "af_total": 0.62342,
+    "af_total_lo": 0.43875,
+    "af_total_hi": 0.70234,
+    "af_heat": 0.0493,
+    "af_heat_lo": -0.01792,
+    "af_heat_hi": 0.07899,
+    "af_cold": 0.57412,
+    "af_cold_lo": 0.38538,
+    "af_cold_hi": 0.64888,
+    "dispersion": 15.46469,
+    "ljung_box_p": 6.16885e-11,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + month"
+  },
+  "ec04_its": {
+    "label": "ec04 Porto Alegre · ITS · DOW + 4 harmônicos",
+    "level_ratio": 0.86813,
+    "lo": 0.81936,
+    "hi": 0.91981,
+    "p": 1.64146e-06,
+    "slope_annual": 1.04208,
+    "n": 3639,
+    "window": "full",
+    "dispersion": 1.25301
+  },
+  "ec04_its_local": {
+    "label": "ec04 Porto Alegre · ITS janela ±365d",
+    "level_ratio": 1.0095,
+    "lo": 0.82496,
+    "hi": 1.23533,
+    "p": 0.92686,
+    "slope_annual": 1.07162,
+    "n": 731,
+    "window": "365",
+    "dispersion": 1.24243
+  },
+  "ec04_dlnm": {
+    "label": "ec04 Porto Alegre · DLNM 0-21d · DOW+feriados · MMT",
+    "n": 3639,
+    "events": 37969,
+    "mmt": 22.67083,
+    "mmt_percentile": 0.67656,
+    "p01": {
+      "fit": 1.52173,
+      "lo": 1.23582,
+      "hi": 1.87379
+    },
+    "p05": {
+      "fit": 1.43296,
+      "lo": 1.23187,
+      "hi": 1.66688
+    },
+    "p10": {
+      "fit": 1.3634,
+      "lo": 1.17942,
+      "hi": 1.57608
+    },
+    "p50": {
+      "fit": 1.03766,
+      "lo": 0.95213,
+      "hi": 1.13087
+    },
+    "p90": {
+      "fit": 1.10304,
+      "lo": 1.00587,
+      "hi": 1.20959
+    },
+    "p95": {
+      "fit": 1.18849,
+      "lo": 1.05565,
+      "hi": 1.33805
+    },
+    "p99": {
+      "fit": 1.42077,
+      "lo": 1.16062,
+      "hi": 1.73925
+    },
+    "af_total": 0.12675,
+    "af_total_lo": 0.07293,
+    "af_total_hi": 0.16884,
+    "af_heat": 0.02153,
+    "af_heat_lo": 0.00491,
+    "af_heat_hi": 0.03598,
+    "af_cold": 0.10522,
+    "af_cold_lo": 0.05194,
+    "af_cold_hi": 0.15395,
+    "dispersion": 1.16597,
+    "ljung_box_p": 0.72277,
+    "formula": "y ~ cb + splines::ns(as.numeric(date), df = time_df) + dow +     hol"
+  }
+}

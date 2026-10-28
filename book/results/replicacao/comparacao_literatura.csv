@@ -1,0 +1,16 @@
+caso,desfecho,metrica,studio,corrigido,literatura,fonte
+ec-01,óbitos respiratórios <5a,RR p75 vs referência,"0,97 [0,78-1,21]",—,sem benchmark direto,snapshot do Studio
+ec-01,óbitos respiratórios <5a,RR p90 vs MMT,—,2.43 [1.48-4.01] (instável),não estimável com 757 eventos,replicação
+ec-01,óbitos respiratórios <5a,AF total,"-29,1% [-50,7;-12,3]",41.6% [28.7;50.4] (não interpretável),—,replicação
+ec-02,casos de dengue,RR p75 vs mediana (GDD),"0,71 [0,53-0,96]",—,—,snapshot do Studio
+ec-02,casos de dengue,RR p90 vs MMT (GDD),—,1.07 [0.32-3.64],"hospitalização, p95: 3,47 [2,88-4,19]",replicação; Environ Res 2024
+ec-02,casos de dengue,RR p90 vs MMT (temperatura),—,0.99 [0.97-1.01],"Lowe 2021: chuva 1,56 (1 mês); seca 1,43 (4 meses)",replicação; Lancet Planet Health 2021
+ec-02,casos de dengue,AF total,não calculado,14.8% [-130.5;55.2] (instável),—,replicação
+ec-03,óbitos cardiovasculares 60+,RR p75 vs referência,"0,98 [0,96-0,99]",—,—,snapshot do Studio
+ec-03,óbitos cardiovasculares 60+,RR p99 (calor) vs MMT,—,1.21 [1.10-1.33],"Son 2016: +6,1% (p99 vs p90, todas as causas)",replicação
+ec-03,óbitos cardiovasculares 60+,RR p01 (frio) vs MMT,—,1.67 [1.50-1.85],"Son 2016: +8,6% (p1 vs p10, todas as causas)",replicação
+ec-03,óbitos cardiovasculares 60+,AF total (frio/calor),"4,36% [3,24;5,39] (2,25/2,12)",7.9% [5.0;10.8] (6.8/1.1),"Gasparrini 2015, São Paulo: 4,62% (3,93/0,69)",replicação; Lancet 2015
+ec-04,internações respiratórias,ITS: razão de nível,"0,62 [0,58-0,66]","0,87 [0,82-0,92] (janela total); 1,01 [0,83-1,24] (±365d)",sem benchmark ITS,replicação
+ec-04,internações respiratórias,RR p01 (frio) vs MMT,—,1.52 [1.24-1.87],"Environ Res 2023: 1,07 [1,01-1,14] (respiratório, Brasil)",replicação
+ec-04,internações respiratórias,AF total,—,12.7% [7.3;16.9],—,replicação
+ec-02,casos de dengue (Fortaleza),RR p90/p01 vs MMT (GDD),—,p90 1.00 [1.00-1.00]; p01 10.56 [3.71-30.08],GDD não recupera o sinal; usar chuva/PDSI,replicação

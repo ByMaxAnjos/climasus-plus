@@ -381,11 +381,11 @@ def fig_modelagem():
             b += rect(gx, gy + 16, 210 * 0.31, 30, r=7, fill=CLAY, shadow=False)
             b += text(gx + 8, gy + 36, "atribuível", size=10, fill=WHITE,
                       weight=700)
-            b += text(gx + 210 - 8, gy + 36, "referência (MMT)", size=10,
+            b += text(gx + 210 - 8, gy + 36, "referência", size=10,
                       fill=INK2, anchor="end")
             b += text(gx, gy + 74, "AF", size=11, fill=CLAY, weight=700,
                       family=MONO)
-            b += text(gx + 30, gy + 74, "fração acima do mínimo de risco",
+            b += text(gx + 30, gy + 74, "fração acima da referência",
                       size=10.5, fill=MUTED)
             b += text(gx, gy + 100, "número atribuível", size=10.5, fill=MUTED)
             b += text(gx, gy + 122, "AF × total", size=12, fill=CLAY,
@@ -428,7 +428,7 @@ def fig_modelagem():
 
     py, ph = 556, 150
     b += rect(48, py, 540, ph, r=15, fill=WHITE, stroke=LINE)
-    b += section_label(70, py + 30, "O que o modelo controla", color=FOREST)
+    b += section_label(70, py + 30, "O que o modelo precisa controlar", color=FOREST)
     ctrl = [("Sazonalidade", "harmônicos anuais"),
             ("Tendência", "tempo de longa duração"),
             ("Dia da semana", "padrão semanal de atendimento")]

@@ -6,15 +6,16 @@ subtitle: "Capítulo 09 · Estudos de caso"
 No recorte de calor e frio do Capítulo 0, usado como exemplo principal da Etapa Análise &
 Modelagem (Capítulo 6), apresentamos o arco de calor extremo e doença cardiovascular em
 idosos — um caso de efeito agudo, com defasagem curta. Este capítulo acompanha o recorte
-do dado bruto do SIM-DO à carga atribuível ao calor. Público
+do dado bruto do SIM-DO à carga atribuível ao calor **e ao frio**. Público
 principal: acadêmico e gestor técnico responsável por planos de contingência para ondas
-de calor. O exemplo usa São Paulo; o mesmo Pipeline vale para a Amazônia, com as
-adaptações de exposição descritas adiante.
+de calor. O exemplo usa a capital paulista; o snapshot original agregou o Estado inteiro,
+e a replicação cidade-específica corrige essa unidade de análise. O mesmo Pipeline vale
+para a Amazônia, com as adaptações de exposição descritas adiante.
 
 ## O pipeline completo, etapa por etapa
 
-Recorte: óbitos cardiovasculares (CID-10, capítulo I) em idosos (60 anos ou mais) em São
-Paulo, 2010-2019, contra ondas de calor detectadas a partir da temperatura das estações
+Recorte: óbitos cardiovasculares (CID-10, capítulo I) em idosos (60 anos ou mais) no
+município de São Paulo (código 355030), 2010-2019, contra a temperatura das estações
 INMET. O Modelo de catálogo `ec-03-cardio-idosos-calor` traz este Pipeline pronto para
 carregar no Centro de Pipelines.
 
@@ -60,8 +61,8 @@ ar isolada pode subestimar o risco.
 
 13. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série diária,
     com `outcome_col` apontando para a contagem de óbitos. O template usa a mediana da
-    temperatura como referência; para carga atribuível, substitua por uma temperatura de
-    mortalidade mínima (MMT) ou um valor pré-especificado.
+    temperatura como referência; a replicação usa o **MMT estimado** (23,1 °C) e reporta as
+    caudas p99 (calor) e p01 (frio).
 14. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número atribuível
     ao calor extremo, usando o limiar de referência definido no modelo.
 15. **Visualizar fração atribuível** (`sus_mod_plot_af`) — Resultado gráfico/tabela pronto para comunicação.
@@ -70,26 +71,32 @@ ar isolada pode subestimar o risco.
 
 **Fonte:** SIM-DO (DATASUS), óbitos por causas cardiovasculares (CID-10 capítulo I) em
 pessoas de 60 anos ou mais, em São Paulo, 2010–2019.
-**Recorte:** série diária por município; temperatura do ar da estação INMET mais próxima;
-ondas de calor detectadas com método WHO, percentil 90, baseline 2010–2015.
-**N:** 2.355.540 linhas município-dia; 645 municípios; 3.652 dias. Total de **659.351
-óbitos**; média de 0,28 por município-dia; máximo de 89 em um único município-dia. A AF
-usa **656.228** óbitos após as defasagens.
-**Modelo:** 3.631 dias após as defasagens; 0–21 dias.
+
+**O que o snapshot fez:** o Pipeline importou a UF `SP` e não filtrou o município. Como
+`sus_mod_dlnm()` agrega todas as linhas por data, o modelo do snapshot é uma série
+**estadual**: 645 municípios, 659.351 óbitos e 3.631 dias após as defasagens. O capítulo
+chamava isso de “São Paulo”, mas o número não descreve a capital.
+
+**O que a replicação fez:** filtrou o município de São Paulo (código 355030) e usou a
+estação A701 (Mirante), com 99% de cobertura diária em 2010–2019. Série de 3.636 dias e
+**184.893 óbitos** cardiovasculares em 60+. Modelo diário com dia da semana, feriados,
+7 df/ano de tendência, defasagem 0–21 dias e referência no **MMT**.
+
 **Snapshot:** `data/ec03/analytic.parquet` (MD5 `0ee2a03b96da684eeaff0a4a32442d26`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec03/codebook.csv`.
-**Avisos do Motor:** dispersão 1,25 (adequada) e autocorrelação residual (Ljung-Box
-p < 0,001); o baseline de 2010–2015 tem apenas cinco anos.
+**Avisos do Motor (snapshot):** dispersão 1,25 (adequada) e autocorrelação residual
+(Ljung-Box p < 0,001); o baseline de 2010–2015 tem apenas cinco anos.
+**Replicação:** dispersão 1,08; Ljung-Box p = 0,014.
 
 ## Resultados
 
-### Série e cobertura
+### Série e cobertura (snapshot)
 
-![Série semanal de óbitos cardiovasculares em idosos em São Paulo, 2010–2019.](images/results/ec03/serie.png){#fig-ec03-serie}
+![Série de óbitos cardiovasculares em idosos no Estado de São Paulo, 2010–2019 (snapshot).](images/results/ec03/serie.png){#fig-ec03-serie}
 
-**Como ler:** o eixo x é o dia; o eixo y é o número de óbitos. A série tem sazonalidade e
-tendência; o modelo precisa separar esses componentes da temperatura. O gráfico descreve
-a série, não o efeito do calor.
+**Como ler:** o eixo x é o tempo; o eixo y é o número de óbitos. A série tem sazonalidade e
+tendência; o modelo precisa separar esses componentes da temperatura. A figura é do
+snapshot estadual; a réplica cidade-específica está na tabela adiante.
 
 ### Ondas de calor detectadas
 
@@ -99,92 +106,108 @@ a série, não o efeito do calor.
 baseline 2010–2015) em uma estação de referência. A detecção é **descritiva**; o DLNM
 abaixo usa temperatura contínua, não o indicador binário de onda.
 
-### Modelo DLNM
+### Modelo DLNM: snapshot e replicação
 
-| Medida | Valor |
-|---|---:|
-| RR no p75 de temperatura (24,3 °C) vs referência (22,6 °C) | 0,98 (IC95% 0,96–0,99) |
-| Defasagem de pico | 0 dias |
-| Dias no modelo | 3.631 |
-| Dispersão | 1,25 (adequada) |
-| Autocorrelação residual | p < 0,001 |
+| Medida | Snapshot (Estado de SP) | Replicação (cidade de SP) |
+|---|---:|---:|
+| Unidade de análise | 645 municípios agregados | 1 município (355030) |
+| Óbitos no modelo | 659.351 | 184.893 |
+| Dias | 3.631 | 3.636 |
+| Referência | mediana (22,6 °C) | **MMT 23,1 °C (p76)** |
+| RR no p75 vs referência | 0,98 (0,96–0,99) | — |
+| RR no p99 (calor) vs MMT | — | **1,21 (1,10–1,33)** |
+| RR no p01 (frio) vs MMT | — | **1,67 (1,50–1,85)** |
+| Defasagem de pico | 0 dias | 0 dias |
+| Dispersão | 1,25 | 1,08 |
+| Autocorrelação residual | p < 0,001 | p = 0,014 |
 
-**Como ler:** o RR no p75 é ligeiramente abaixo de 1, mas o p75 fica **perto do mínimo da
-curva** — não é o ponto que representa "calor extremo". O RR pontual não deve ser lido
-como "calor protege"; a carga de calor está na cauda acima da referência e é resumida pela
-AF de calor.
+**Como ler:** o RR no p75 do snapshot (0,98) não é um contraste de calor extremo: 24,3 °C
+fica perto do mínimo da curva. O contraste correto é o das caudas — p99 para calor e p01
+para frio, ambos contra o MMT. A replicação mostra **calor moderado** (RR 1,21) e **frio
+forte** (RR 1,67), com MMT em 23,1 °C.
 
-![Curva exposição-resposta cumulativa para temperatura e óbitos cardiovasculares.](images/results/ec03/dlnm_overall.png){#fig-ec03-dlnm}
+![Curva exposição-resposta cumulativa do snapshot (referência mediana); a replicação mantém a forma em U, com MMT em 23,1 °C.](images/results/ec03/dlnm_overall.png){#fig-ec03-dlnm}
 
-**Como ler:** o eixo x é a temperatura; o eixo y é o RR cumulativo. A curva é mais alta
-no frio (RR ~1,45 perto de 13 °C), mínima perto de 24 °C e sobe novamente no calor
-extremo (RR ~1,14 perto de 28 °C). O padrão é **dominado pelo frio**, com um componente
-de calor menor. A referência é a mediana (22,6 °C); para carga atribuível, o ideal é MMT.
+**Como ler:** o eixo x é a temperatura; o eixo y é o RR cumulativo. A curva é mais alta no
+frio (RR ~1,45 perto de 13 °C), mínima perto de 24 °C e sobe novamente no calor extremo
+(RR ~1,14 perto de 28 °C). O padrão é **dominado pelo frio**, com um componente de calor
+menor. A figura é do snapshot (referência mediana); a replicação confirma a forma e estima
+o MMT em 23,1 °C.
 
-### Fração atribuível
+### Fração atribuível: snapshot e replicação
 
-| Componente | AF (%) | IC95% | Número atribuível |
-|---|---:|---:|---:|
-| Total | 4,36 | 3,24–5,39 | 28.630 |
-| Calor | 2,12 | 1,57–2,61 | 13.907 |
-| Frio | 2,25 | 1,67–2,79 | 14.735 |
+| Componente | Snapshot (Estado) | Replicação (cidade) |
+|---|---:|---:|
+| Total | 4,36% (3,24–5,39) | **7,9% (5,0–10,8)** |
+| Calor | 2,12% (1,57–2,61) | **1,1%** |
+| Frio | 2,25% (1,67–2,79) | **6,8%** |
+| Óbitos atribuíveis | 28.630 | ≈ 14.600 |
 
-**Como ler:** no período, o modelo estima **4,36%** dos óbitos cardiovasculares em idosos
-como atribuíveis à temperatura fora da referência; **2,12%** ao calor e **2,25%** ao frio.
-O componente de frio é ligeiramente maior. A AF de calor não é o RR no p75: ela integra a
-cauda de calor acima da referência. O número atribuível é uma estimativa populacional,
-não uma contagem individual.
+**Como ler:** no snapshot, calor e frio eram quase iguais (2,12% vs 2,25%). Na replicação, o
+frio responde por **6,8%** e o calor por **1,1%**. A mudança não é “o frio ficou maior”: é
+que o snapshot agregava o Estado, usava a mediana e não controlava o dia da semana. O sinal
+de calor não desaparece — RR p99 1,21 —, mas a carga de calor é menor que a de frio.
 
-![Fração atribuível por componente.](images/results/ec03/af_bar.png){#fig-ec03-af}
-
-**Como ler:** as barras mostram AF total, calor e frio, com intervalos de 95%. O intervalo
-do total não cruza zero; os componentes de calor e frio são positivos, mas pequenos.
-
-
+**Comparação com a literatura.** Em São Paulo, Gasparrini et al. (2015) estimaram AF total
+de 4,62% para todas as causas (frio 3,93%; calor 0,69%), com MMT em 21,5 °C; Son et al.
+(2016) encontraram +6,1% no p99 vs p90 (calor) e +8,6% no p1 vs p10 (frio), também para
+todas as causas. A réplica é qualitativamente consistente — U, frio dominante, calor
+moderado — e maior em magnitude porque o desfecho é cardiovascular e restrito a 60+.
 
 ## Interpretando o resultado
 
-Neste snapshot, o DLNM mostra um padrão em **U dominado pelo frio**: RR mais alto perto
-de 13 °C, mínimo perto de 24 °C e nova subida no calor extremo. O pico de lag é 0, mas a
-maior carga estimada está no frio (2,25%) e não no calor (2,12%). A fração atribuível de
-**Calcular fração atribuível** (`sus_mod_af`) responde à pergunta de gestão — que
-proporção dos óbitos é atribuível ao calor e ao frio sob o cenário definido — e precisa
-ser conferida antes de associá-la ao limiar de onda de calor detectado.
+O resultado corrigido sustenta três afirmações e desfaz uma leitura errada:
 
-**Detectar ondas de calor** (`sus_climate_compute_heatwaves`) oferece sete metodologias de detecção de
-onda de calor (OMS, OMM, INMET, entre outras) — o Capítulo 3 não detalhou essa escolha
-metodológica; para um estudo publicável, recomenda-se repetir a análise com mais de uma
-metodologia, com **Comparar sensibilidade entre grupos** (`sus_mod_sensitivity`), e reportar se a conclusão se mantém estável.
-Não há limiar universal de onda de calor: o percentil 90 é relativo à distribuição local e
-precisa ser informado junto com o período de referência. O template usa uma referência
-fixa de 2010–2015; cinco anos é uma base curta e deve ser declarada como limitação.
+1. **Há efeito de calor**, mas ele é modesto no contraste de cauda: RR 1,21 no p99.
+2. **O frio pesa mais** neste recorte: RR 1,67 no p01 e AF de 6,8% contra 1,1% do calor.
+3. **O p75 não serve para decidir**: 24,3 °C está perto do MMT; um RR de 0,98 nesse ponto
+   não significa que o calor protege.
+4. **O snapshot estadual não é a cidade**: a agregação de 645 municípios, a ausência de dia
+   da semana e a referência na mediana produziam uma AF de calor de 2,12% que não se
+   reproduz na capital.
 
-O ramo de **Detectar ondas de calor** é descritivo: o DLNM ajustado em seguida usa
-temperatura contínua, não o indicador binário de onda de calor. Se a pergunta for
-"quantos óbitos a mais ocorrem especificamente nos dias de onda de calor", é preciso um
-modelo com esse indicador (ou uma análise de excesso), não apenas a curva contínua. Além
-disso, o template **não ajusta poluição do ar** (PM2.5/O3); calor e poluição são
-correlacionados, e a ausência desse ajuste deve ser tratada como limitação ou análise de
-sensibilidade.
+O que ainda limita a conclusão: o modelo não ajusta poluição do ar (PM2,5/O3), não
+estratifica por sexo ou causa específica, usa uma única estação para representar a cidade e
+tem autocorrelação residual moderada (p = 0,014). A AF é uma estimativa populacional, não
+uma contagem individual. A definição de onda de calor (WHO, p90) é descritiva e não entra
+como regressor; para uma pergunta sobre dias de onda, é preciso um modelo com indicador
+binário ou análise de excesso.
 
 ## O que os números mostram {#numeros-ec03}
 
-| Pergunta | Resposta neste snapshot |
-|---|---|
-| O RR no p75 mostra efeito do calor? | Não diretamente; RR 0,98 (0,96–0,99), mas o p75 fica perto do mínimo da curva. |
-| Qual é a carga de calor? | AF de calor 2,12% (IC95% 1,57–2,61). |
-| Qual é a carga de frio? | AF de frio 2,25% (1,67–2,79), ligeiramente maior. |
-| Qual é a carga total? | AF total 4,36% (3,24–5,39) dos óbitos no período. |
-| O que a curva mostra? | Padrão em U dominado pelo frio: RR ~1,45 perto de 13 °C, mínimo perto de 24 °C, RR ~1,14 perto de 28 °C. |
+| Pergunta | Snapshot (Estado) | Replicação (cidade) |
+|---|---|---|
+| O calor aumenta o risco? | RR no p75 0,98, mas o p75 está perto do mínimo | **Sim: RR p99 1,21 (1,10–1,33)** |
+| O frio aumenta o risco? | AF de frio 2,25% | **Sim: RR p01 1,67 (1,50–1,85); AF 6,8%** |
+| Qual componente pesa mais? | Quase empate (2,12% vs 2,25%) | **Frio (6,8% vs 1,1%)** |
+| Qual é a carga total? | 4,36% (3,24–5,39) | **7,9% (5,0–10,8)** |
+| Onde está o MMT? | Não estimado (mediana = 22,6 °C) | **23,1 °C (p76)** |
 
-**O que não podemos concluir:** que o calor "protege" porque o RR no p75 é menor que 1;
-que a AF de calor seja 2,12% para cada pessoa; que os dias de onda de calor, isoladamente,
-expliquem toda a carga de calor. A AF integra a cauda acima da referência; o RR no p75 é
-apenas um ponto da curva.
+**O que não podemos concluir:** que o calor “protege” porque o RR no p75 é menor que 1; que
+a AF de calor seja 1,1% para cada pessoa; que os dias de onda de calor, isoladamente,
+expliquem toda a carga. A AF integra a cauda acima do MMT; o RR no p75 é apenas um ponto da
+curva. Também não podemos transferir o número para Manaus sem rever a exposição (calor
+úmido, WBGT/UTCI) e a definição de onda.
 
-**Antes de concluir:** use MMT em vez da mediana, teste outra definição de onda de calor e
-considere PM2.5/O3. A autocorrelação residual (p < 0,001) indica que a incerteza pode estar
-subestimada.
+**Antes de concluir:** teste outra definição de onda de calor, considere PM2,5/O3 e
+estratifique por sexo e causa. A autocorrelação residual (p = 0,014) indica que a incerteza
+pode estar levemente subestimada.
+
+## O que isso significa para ação
+
+A carga estimada é **7,9%** dos óbitos cardiovasculares em idosos no período, com **6,8%**
+atribuíveis ao frio e **1,1%** ao calor. Isso não justifica um plano de contingência
+dimensionado apenas pelo calor: no recorte de São Paulo, o frio também pesa — e mais. A ação
+responsável é usar as duas componentes, adotar o MMT como referência, testar as definições
+de onda e considerar poluição do ar antes de transformar a AF em meta de programa.
+
+Em Manaus e em outras cidades amazônicas, o plano deve considerar calor úmido e noites
+quentes; só a temperatura máxima diurna pode subestimar o risco. A mesma cautela vale para o
+frio: friagem e moradias sem isolamento térmico não aparecem na temperatura média da cidade.
+
+Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
+automatizada a cada nova temporada de calor — use **Salvar projeto** e **Exportar `.R`**,
+sempre registrando fontes, versões e limitações.
 
 ## Reproduzir
 
@@ -192,25 +215,15 @@ subestimada.
 Rscript book/scripts/03-run-ec03.R
 # ou, para reaproveitar o parquet já gerado e rodar a AF com 200 simulações:
 Rscript book/scripts/03b-ec03-af.R
+# replicação cidade-específica (São Paulo, A701, MMT, DOW):
+Rscript book/scripts/90-replicacao/00-build-city-climate.R
+python3 book/scripts/90-replicacao/prep_city_series.py
+Rscript book/scripts/90-replicacao/01-fit-replicacao.R
 ```
 
 O script grava a tabela analítica em `data/ec03/analytic.parquet`, as tabelas em
 `tables/results/ec03/`, as figuras em `images/results/ec03/` e os metadados em
 `results/ec03.json`. O snapshot usado neste capítulo foi gerado em 26/10/2026.
-
-## O que isso significa para ação
-
-A carga de calor estimada é **modesta** (2,12% dos óbitos no período), e a de frio é
-ligeiramente maior (2,25%). Isso não justifica um plano de contingência dimensionado
-apenas pelo calor: o resultado sugere que, neste recorte, o frio também pesa. A ação
-responsável é usar as duas componentes, testar MMT e outras definições de onda, e
-considerar poluição do ar antes de transformar a AF em meta de programa.
-
-Em Manaus e em outras cidades amazônicas, o plano deve considerar calor úmido e noites
-quentes; só a temperatura máxima diurna pode subestimar o risco.
-
-Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
-automatizada a cada nova temporada de calor — use **Salvar projeto** e **Exportar `.R`**, sempre registrando fontes, versões e limitações.
 
 ::: {.callout-note collapse="true"}
 ## Verifique se ficou
@@ -240,4 +253,12 @@ e cada uma pode gerar limiares distintos; repetir a análise com mais de uma e c
 os resultados com **Comparar sensibilidade entre grupos** (`sus_mod_sensitivity`) é a forma
 indicada no Capítulo 6 para verificar se a conclusão se mantém quando a escolha
 metodológica muda.
+
+**4. Por que o snapshot estimou 4,36% e a replicação 7,9%?**
+
+Por quatro decisões diferentes: o snapshot agregava 645 municípios (série estadual), usava a
+mediana como referência, não incluía dia da semana e controlava a tendência com 4 df/ano. A
+replicação usa a cidade de São Paulo, referência no MMT, dia da semana/feriados e 7 df/ano.
+O efeito de calor diminui (2,12% → 1,1%) e o de frio aumenta (2,25% → 6,8%) — o total sobe
+porque a carga de frio passa a ser corretamente atribuída.
 :::
