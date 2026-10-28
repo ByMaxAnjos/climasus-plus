@@ -65,10 +65,11 @@ map_openfreemap <- function(m) {
     add('link', {rel: 'stylesheet', href: 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css'});
     script('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js', function() {
       script('https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js', function() {
-        L.maplibreGL({
-          style: 'https://tiles.openfreemap.org/styles/positron',
-          attribution: '&copy; <a href=\"https://openfreemap.org\" target=\"_blank\">OpenFreeMap</a> &copy; <a href=\"https://openmaptiles.org/\" target=\"_blank\">OpenMapTiles</a> Data from <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>'
-        }).addTo(map);
+        var attr = '&copy; <a href=\"https://openfreemap.org\" target=\"_blank\">OpenFreeMap</a> &copy; <a href=\"https://openmaptiles.org/\" target=\"_blank\">OpenMapTiles</a> Data from <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>';
+        function base(name) { return L.maplibreGL({style: 'https://tiles.openfreemap.org/styles/' + name, attribution: attr}); }
+        var bases = {Positron: base('positron'), Liberty: base('liberty'), Bright: base('bright'), Dark: base('dark'), Fiord: base('fiord')};
+        bases.Positron.addTo(map);
+        L.control.layers(bases, null, {position: 'topright'}).addTo(map);
       });
     });
   }")
