@@ -46,7 +46,14 @@ function ArgField({ arg, fnName, value, onChange, lang, issue, priorSteps, autoD
   // signature default, but the effective default is always its first element — showing the
   // whole vector ("Usando padrão: c("overall", "lag", "surface", ...)") is exactly the kind of
   // technical noise this is meant to avoid
-  const enumDefault = arg.type === 'enum' && arg.options.length > 0 ? arg.options[0] : null
+  // — but ONLY for that idiom: a NULL default (e.g. region) means "not set", not options[0], and a
+  // quoted scalar default (e.g. lang = "pt") must show that literal even when it isn't listed first
+  const scalarDefault = arg.default?.match(/^"(.*)"$/)?.[1]
+  const enumDefault =
+    arg.type !== 'enum' || arg.options.length === 0 ? null
+    : arg.default?.startsWith('c(') ? arg.options[0]
+    : scalarDefault != null && arg.options.includes(scalarDefault) ? scalarDefault
+    : null
   const defaultDisplay = enumDefault != null ? enumOptionLabel(fnName, arg.name, arg.doc, enumDefault) : (nullHint ?? arg.default)
   const hint = arg.default != null ? `${t('defaultHint', lang)}: ${defaultDisplay}` : ''
   // an auto-piped first arg is never "missing" — it's always filled from the previous step

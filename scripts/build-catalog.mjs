@@ -151,7 +151,16 @@ const FORCE_TEXT = new Set([
   // "code_muni"/"date", which is what the new signature-vector enum heuristic below would
   // otherwise conclude from the same c("...", "...") shape a real match.arg() enum has
   'sus_grid_join.by',
+  // doc scrape picked up another parameter's quoted values (n_iter: the `model` names; fits: the
+  // "Stratum 1" example label; koppen_sf: Köppen class codes) — none is a closed vocabulary
+  'sus_mod_spatial_bayes.n_iter', 'sus_mod_sensitivity.fits', 'sus_grid_koppen.koppen_sf',
 ])
+
+// quoted words in these params' docs that are NOT valid values (belong to a sibling parameter)
+const DROP_OPTIONS = {
+  'sus_data_plot_aggregate_ts.smooth_method': ['epidemic'],
+  'sus_data_plot_demographics.var': ['bar', 'table'],
+}
 
 // args that expect an object produced by an EARLIER pipeline step (sf boundary, climasus_df,
 // spatial weights, a data.frame of covariates) rather than typed text — these are the only
@@ -173,6 +182,13 @@ const FORCE_DATA = new Set([
   'sus_mod_spatial_scan.municipalities',
 ])
 
+// signature vector wins, EXCEPT when the doc lists a strict superset: then the vector is just a
+// default SUBSET of a multi-select vocabulary (era5 `vars = c("t2m", "tp")`), not the closed list
+function pickOptions(sig, docOpts) {
+  if (!sig) return docOpts
+  return docOpts.length > sig.length && sig.every((o) => docOpts.includes(o)) ? docOpts : sig
+}
+
 const catalog = []
 for (const f of readdirSync(RDIR).filter((f) => f.endsWith('.R'))) {
   for (const { name, rox, sig } of parseFile(join(RDIR, f))) {
@@ -193,7 +209,10 @@ for (const f of readdirSync(RDIR).filter((f) => f.endsWith('.R'))) {
         default: pname === 'parallel' ? 'FALSE' : (def ?? null),
         required: eq === -1 && pname !== '...',
         type: forced ?? inferType(def, doc.options),
-        options: forced ? [] : (doc.options.length > 1 ? doc.options : (parseSignatureEnum(def) ?? doc.options)),
+        // a match.arg() vector in the signature is authoritative (and its FIRST element is the
+        // effective default, which the Inspector relies on) — doc scrape is only the fallback
+        options: forced ? [] : pickOptions(parseSignatureEnum(def), doc.options)
+          .filter((o) => !DROP_OPTIONS[key]?.includes(o)),
         doc: doc.doc,
       }
     }).filter((a) => a.name !== '...')

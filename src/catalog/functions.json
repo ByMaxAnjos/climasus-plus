@@ -1095,7 +1095,7 @@
    },
    {
     "name": "workers",
-    "default": "4",
+    "default": "2",
     "required": false,
     "type": "number",
     "options": [],
@@ -2889,7 +2889,6 @@
     "required": false,
     "type": "enum",
     "options": [
-     "epidemic",
      "loess",
      "gam",
      "lm"
@@ -3096,8 +3095,6 @@
     "required": false,
     "type": "enum",
     "options": [
-     "bar",
-     "table",
      "sex",
      "race",
      "age_group",
@@ -3342,6 +3339,25 @@
      "html"
     ],
     "doc": "Character. File path for `\"markdown\"` and `\"html\"`\n  formats. Defaults to a timestamped filename in the working directory."
+   },
+   {
+    "name": "save_file",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [
+     "markdown",
+     "html"
+    ],
+    "doc": "Logical. For `\"markdown\"` and `\"html\"` formats, whether to\n  write the report to disk. Default `TRUE`. Set to `FALSE` to only compute\n  and return the metrics (e.g. `$score`) without creating a file."
+   },
+   {
+    "name": "open_file",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. When `output_format = \"html\"` and `save_file =\n  TRUE`, automatically open the saved report in the system's default\n  browser (via [utils::browseURL()]). Default `TRUE`. Only triggers in\n  interactive sessions."
    },
    {
     "name": "check_icd",
@@ -4106,11 +4122,8 @@
     "name": "koppen_sf",
     "default": "NULL",
     "required": false,
-    "type": "enum",
-    "options": [
-     "Af",
-     "Am"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "An `sf` polygon object with a column named `koppen`\n  containing the zone codes (`\"Af\"`, `\"Am\"`, etc.). Required when\n  `mode = \"exact\"`. The Alvares et al. (2013) shapefile is available at\n  <https://doi.org/10.1127/0941-2948/2013/0507>. Ignored for\n  `mode = \"approx\"`."
    },
    {
@@ -7026,11 +7039,8 @@
     "name": "fits",
     "default": null,
     "required": true,
-    "type": "enum",
-    "options": [
-     "Stratum 1",
-     "Stratum 2"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "A named list of `climasus_dlnm` objects, one per stratum.\n  All fits must use the same `climate_col` and were produced by\n  `sus_mod_dlnm()`. If the list is unnamed, strata are labelled\n  `\"Stratum 1\"`, `\"Stratum 2\"`, etc."
    },
    {
@@ -7507,12 +7517,8 @@
     "name": "n_iter",
     "default": "10000L",
     "required": false,
-    "type": "enum",
-    "options": [
-     "bym",
-     "leroux",
-     "independent"
-    ],
+    "type": "text",
+    "options": [],
     "doc": "Positive integer. Total number of MCMC iterations\n  (including burn-in). Used only for CARBayes models (`\"bym\"`, `\"leroux\"`,\n  `\"independent\"`). Default `10000`. Ignored for `model = \"bym2\"`."
    },
    {
@@ -7975,9 +7981,9 @@
     "required": false,
     "type": "enum",
     "options": [
+     "both",
      "numeric",
-     "categorical",
-     "both"
+     "categorical"
     ],
     "doc": "Character. Which score types to compute:\n  `\"numeric\"` (0–100), `\"categorical\"` (cut-point labels), or\n  `\"both\"` (default)."
    },
