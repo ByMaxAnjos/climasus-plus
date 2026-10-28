@@ -75,6 +75,7 @@ const dict: Dict = {
   running: { pt: 'Executando…', en: 'Running…', es: 'Ejecutando…' },
   stop: { pt: 'Parar', en: 'Stop', es: 'Detener' },
   runUpToHere: { pt: 'Executar até aqui', en: 'Run up to here', es: 'Ejecutar hasta aquí' },
+  runUpToHereHint: { pt: 'Executa este passo. Os anteriores só rodam se ainda não tiverem resultado; os seguintes não rodam.', en: 'Runs this step. Earlier steps only run if they have no result yet; later steps do not run.', es: 'Ejecuta este paso. Los anteriores solo se ejecutan si aún no tienen resultado; los siguientes no se ejecutan.' },
   moveStepUp: { pt: 'Mover para antes', en: 'Move earlier', es: 'Mover antes' },
   moveStepDown: { pt: 'Mover para depois', en: 'Move later', es: 'Mover después' },
   dragToReorder: { pt: 'Arraste para reordenar', en: 'Drag to reorder', es: 'Arrastre para reordenar' },

@@ -426,8 +426,10 @@ function(req) {
   # `from` asks to re-run from that step so its preview comes back
   if (!is.null(body$from)) k <- max(1L, min(k, as.integer(body$from)))
 
-  # roll back bindings of invalidated steps (deepest first)
-  if (k <= length(state$codes)) {
+  # roll back bindings of invalidated steps (deepest first). Only when the incoming list actually
+  # diverges (k <= length(codes)): a pure PREFIX ("run up to here" on an earlier card) must keep the
+  # deeper steps cached, otherwise a later full run recomputes them for nothing
+  if (k <= length(state$codes) && k <= length(codes)) {
     for (j in rev(seq(k, length(state$codes)))) {
       v <- state$vars[j]
       p <- state$prev[[j]]

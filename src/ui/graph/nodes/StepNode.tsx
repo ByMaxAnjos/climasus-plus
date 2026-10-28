@@ -99,7 +99,7 @@ function StepNodeInner({ data }: NodeProps & { data: StepNodeData }) {
       <Handle type="target" id="top" position={Position.Top} style={{ visibility: 'hidden' }} />
       <NodeToolbar isVisible={selected} position={Position.Top} align="start" className="node-toolbar">
         {engineStatus === 'ready' && (
-          <button onClick={() => runPipeline(step.id)}>▶ {t('runUpToHere', lang)}</button>
+          <button title={t('runUpToHereHint', lang)} onClick={() => runPipeline(step.id)}>▶ {t('runUpToHere', lang)}</button>
         )}
         <button onClick={() => { select(step.id); setEditingNote(true) }}>✎ {t('addNote', lang)}</button>
         <button onClick={() => duplicateStep(step.id)}>⧉ {t('duplicateStep', lang)}</button>
