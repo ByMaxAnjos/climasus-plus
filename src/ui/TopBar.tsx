@@ -241,9 +241,9 @@ export default function TopBar() {
         </div>
       </div>
       <div className="brand-orgs" title={t('institutions', lang)} aria-label={t('institutions', lang)}>
-        <img src="/logos/tb-inct.png" alt="INCT-CONEXAO" style={{ height: 36 }} />
-        <img src="/logos/tb-fiocruz.png" alt="Fiocruz Rondônia" style={{ height: 26 }} />
-        <img src="/logos/tb-ufjf.png" alt="UFJF" style={{ height: 34 }} />
+        <img src="/logos/tb-inct.png" alt="INCT-CONEXAO" style={{ height: 40 }} />
+        <img src="/logos/tb-fiocruz.png" alt="Fiocruz Rondônia" style={{ height: 28 }} />
+        <img src="/logos/tb-ufjf.png" alt="UFJF" style={{ height: 38 }} />
         </div>
     </header>
   )
