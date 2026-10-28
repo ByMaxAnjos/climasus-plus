@@ -77,12 +77,7 @@ const dict: Dict = {
   runUpToHere: { pt: 'Executar até aqui', en: 'Run up to here', es: 'Ejecutar hasta aquí' },
   runUpToHereHint: { pt: 'Executa este passo. Os anteriores só rodam se ainda não tiverem resultado; os seguintes não rodam.', en: 'Runs this step. Earlier steps only run if they have no result yet; later steps do not run.', es: 'Ejecuta este paso. Los anteriores solo se ejecutan si aún no tienen resultado; los siguientes no se ejecutan.' },
   fileMenu: { pt: 'Arquivo', en: 'File', es: 'Archivo' },
-  startHint: {
-    pt: 'Comece por aqui: preencha os campos marcados com * no primeiro passo e clique em Executar. O resultado de cada passo aparece no próprio card.',
-    en: 'Start here: fill in the fields marked * in the first step, then click Run. Each step shows its result right on its card.',
-    es: 'Empiece aquí: complete los campos marcados con * en el primer paso y haga clic en Ejecutar. Cada paso muestra su resultado en su propia tarjeta.',
-  },
-  startHintDismiss: { pt: 'Entendi', en: 'Got it', es: 'Entendido' },
+  guidedBadge: { pt: 'Guiado', en: 'Guided', es: 'Guiado' },
   institutions: { pt: 'Instituições responsáveis', en: 'Responsible institutions', es: 'Instituciones responsables' },
   moveStepUp: { pt: 'Mover para antes', en: 'Move earlier', es: 'Mover antes' },
   moveStepDown: { pt: 'Mover para depois', en: 'Move later', es: 'Mover después' },

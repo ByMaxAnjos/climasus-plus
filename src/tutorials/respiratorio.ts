@@ -13,6 +13,8 @@ export interface TutorialDef {
   id: string
   title: Record<Lang, string>
   audience?: TemplateAudience
+  /** the offline, step-by-step walkthrough — highlighted in the Modelos menu */
+  guided?: boolean
   steps: TutorialStepDef[]
 }
 
@@ -22,6 +24,7 @@ export interface TutorialDef {
 // pipeline still walks through cleaning, standardisation, age filtering, aggregation and plots.
 export const RESPIRATORIO_SP: TutorialDef = {
   id: 'respiratorio-sp',
+  guided: true,
   title: {
     pt: 'Mortalidade Respiratória — SP 2014-2019',
     en: 'Respiratory Mortality — SP 2014-2019',

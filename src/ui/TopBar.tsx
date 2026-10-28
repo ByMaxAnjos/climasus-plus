@@ -107,11 +107,6 @@ export default function TopBar() {
           <img className="brand-badge" src="/logos/tb-climasus.png" alt="climaSUS" />
           <span className="brand-name"><span className="brand-plus">+</span> <span className="brand-studio">Studio</span></span>
         </div>
-        <div className="brand-orgs" title={t('institutions', lang)} aria-label={t('institutions', lang)}>
-          <img src="/logos/tb-inct.png" alt="INCT-CONEXAO" style={{ height: 36 }} />
-          <img src="/logos/tb-fiocruz.png" alt="Fiocruz Rondônia" style={{ height: 26 }} />
-          <img src="/logos/tb-ufjf.png" alt="UFJF" style={{ height: 34 }} />
-        </div>
       </div>
       <div className="topbar-actions">
         <div className={`engine-status engine-${engineStatus}`} title={engineLabel}>
@@ -150,10 +145,11 @@ export default function TopBar() {
                 {applicableTemplates.map((tpl) => (
                   <button
                     key={tpl.id}
-                    className="btn settings-row"
+                    className={`btn settings-row ${tpl.guided ? 'template-guided' : ''}`}
                     onClick={() => { startTutorial(tpl); setTemplatesOpen(false) }}
                   >
                     {tpl.title[lang]}
+                    {tpl.guided && <span className="guided-badge">{t('guidedBadge', lang)}</span>}
                   </button>
                 ))}
               </div>
@@ -162,6 +158,7 @@ export default function TopBar() {
           <button className="btn" onClick={openHelp}>
             <span className="btn-icon">{ICON.pipelines}</span>{t('help', lang)}
           </button>
+          <button className="btn" onClick={clear}>{t('clearAll', lang)}</button>
         </div>
         <div className="topbar-group">
           <button className="btn" disabled={!past.length} onClick={undo} title={t('undoHint', lang)} aria-label={t('undo', lang)}>
@@ -192,7 +189,6 @@ export default function TopBar() {
               <button className="btn settings-row" onClick={startFromDataFile} title={t('openDataHint', lang)}>
                 <span className="btn-icon">{ICON.importData}</span>{t('openData', lang)}
               </button>
-              <button className="btn settings-row" onClick={clear}>{t('clearAll', lang)}</button>
             </div>
           )}
         </div>
@@ -244,6 +240,11 @@ export default function TopBar() {
           )}
         </div>
       </div>
+      <div className="brand-orgs" title={t('institutions', lang)} aria-label={t('institutions', lang)}>
+        <img src="/logos/tb-inct.png" alt="INCT-CONEXAO" style={{ height: 36 }} />
+        <img src="/logos/tb-fiocruz.png" alt="Fiocruz Rondônia" style={{ height: 26 }} />
+        <img src="/logos/tb-ufjf.png" alt="UFJF" style={{ height: 34 }} />
+        </div>
     </header>
   )
 }
