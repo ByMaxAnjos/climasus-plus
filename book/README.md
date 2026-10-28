@@ -168,7 +168,7 @@ LaTeX. O `format.pdf` do Quarto/XeLaTeX continua como fallback de texto.
 
 O texto foi auditado contra o catálogo em 22/10/2026 e atualizado em 25/10/2026:
 
-- 79 funções: 15 Preparação, 32 Integração, 32 Análise & Modelagem.
+- 80 funções: 15 Preparação, 33 Integração, 32 Análise & Modelagem.
 - Integração documenta `sus_census_join`, `sus_census_select`,
   `sus_spatial_join` e `sus_grid_plot`.
 - `sus_data_import` exige `month` para SIH, CNES e SIA.

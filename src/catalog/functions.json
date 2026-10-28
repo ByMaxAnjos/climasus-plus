@@ -1035,6 +1035,119 @@
   ]
  },
  {
+  "name": "sus_climate_fill_inmet",
+  "stage": "integracao",
+  "family": "climate",
+  "title": "Fill gaps in INMET climate time series using XGBoost",
+  "description": "`sus_climate_fill_inmet()` imputes missing values in **INMET automatic station data**\nusing station-wise XGBoost models with automated feature engineering.\n\n**Key features:**\n\\itemize{\n  \\item **Multi-target support**: Impute one, many, or ALL numeric variables in a single call\n  \\item **Station-wise modeling**: Separate model per station per variable\n  \\item **Temporal features**: Automatic creation of lags and rolling statistics\n  \\item **Quality control**: Stations with >`quality_threshold` missing are excluded\n  \\item **Parallel processing**: Stations processed in parallel; workers resolved once and\n        reused across all variable iterations\n  \\item **Evaluation mode**: Assess accuracy by creating artificial gaps\n}\n**Important: This function is designed exclusively for data imported by\n`sus_climate_inmet()` and works with the standard INMET variable set.**",
+  "args": [
+   {
+    "name": "df",
+    "default": null,
+    "required": true,
+    "type": "text",
+    "options": [],
+    "doc": "A data frame (or tibble) containing climate data, typically from `sus_climate_inmet()`.\n  Must contain:\n  \\itemize{\n    \\item A datetime column (POSIXct or convertible)\n    \\item A station identifier column\n    \\item The target numeric column(s) to be imputed\n  }"
+   },
+   {
+    "name": "target_var",
+    "default": null,
+    "required": true,
+    "type": "text",
+    "options": [
+     "all"
+    ],
+    "doc": "Character vector of column name(s) to impute, **or** the special string `\"all\"`\n  to impute every numeric column that is not the datetime or station column.\n  Examples:\n  \\itemize{\n    \\item Single variable: `target_var = \"tair_dry_bulb_c\"`\n    \\item Multiple variables: `target_var = c(\"tair_dry_bulb_c\", \"rh_pct\", \"ws_2_m_s\")`\n    \\item All numeric variables: `target_var = \"all\"`\n  }"
+   },
+   {
+    "name": "datetime_col",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Name of the datetime column. If `NULL` (default), auto-detected."
+   },
+   {
+    "name": "station_col",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Name of the station identifier column. If `NULL`, auto-detected."
+   },
+   {
+    "name": "quality_threshold",
+    "default": "0.4",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Numeric (0-1). Maximum allowed missing proportion per station.\n  Stations exceeding this are excluded. Default: `0.4` (40%)."
+   },
+   {
+    "name": "run_evaluation",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE`, runs in evaluation mode:\n  \\itemize{\n    \\item Creates artificial MCAR gaps in observed data\n    \\item Imputes and compares predictions with true values\n    \\item Returns metrics by station\n  }\n  Default: `FALSE` (production mode)."
+   },
+   {
+    "name": "gap_percentage",
+    "default": "0.2",
+    "required": false,
+    "type": "number",
+    "options": [
+     "MCAR"
+    ],
+    "doc": "Numeric (0-1). Proportion of data to set as missing in evaluation mode. The `\"MCAR\"` Missing Completely At Random is used as default.\n  Default: `0.2` (20%)."
+   },
+   {
+    "name": "keep_features",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE`, retains engineered features (lags, rolling stats).\n  Default: `FALSE` (returns only original columns + `is_imputed`)."
+   },
+   {
+    "name": "parallel",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), processes stations in parallel using `furrr`."
+   },
+   {
+    "name": "workers",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Integer. Number of parallel workers. If `NULL`, uses `max(1, availableCores() - 1)`.\n  The value is resolved **once** at the start and reused across all variable iterations,\n  avoiding repeated plan switches."
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), prints progress messages."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character. Message language: `\"pt\"` (Portuguese), `\"en\"` (English), or `\"es\"` (Spanish).\n  Default: `\"pt\"`."
+   }
+  ]
+ },
+ {
   "name": "sus_climate_inmet",
   "stage": "integracao",
   "family": "climate",
@@ -1480,7 +1593,7 @@
     "name": "df_original",
     "default": "NULL",
     "required": false,
-    "type": "text",
+    "type": "data",
     "options": [],
     "doc": "Raw data before gap filling, e.g. from `sus_climate_inmet()`.\n  Required in production mode; ignored in evaluation mode."
    },

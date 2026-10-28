@@ -25,7 +25,7 @@ function family(name) {
 }
 
 function stripRox(line) {
-  return line.replace(/^#'\s?/, '')
+  return line.replace(/^\s*#'\s?/, '')
 }
 
 function parseFile(path) {
@@ -34,14 +34,15 @@ function parseFile(path) {
   const fns = []
   // find exported roxygen blocks followed by `name <- function(`
   for (let i = 0; i < lines.length; i++) {
-    const m = lines[i].match(/^([a-zA-Z0-9_.]+)\s*<-\s*function\s*\(/)
+    // leading whitespace allowed: some files (sus_climate_fill_gap.R) indent the definition
+    const m = lines[i].match(/^\s*([a-zA-Z0-9_.]+)\s*<-\s*function\s*\(/)
     if (!m) continue
     const name = m[1]
     if (!name.startsWith('sus_')) continue
     // walk back to collect the contiguous roxygen block
     const rox = []
-    for (let j = i - 1; j >= 0 && /^(#'|\s*$)/.test(lines[j]); j--) {
-      if (/^#'/.test(lines[j])) rox.unshift(stripRox(lines[j]))
+    for (let j = i - 1; j >= 0 && /^(\s*#'|\s*$)/.test(lines[j]); j--) {
+      if (/^\s*#'/.test(lines[j])) rox.unshift(stripRox(lines[j]))
     }
     if (!rox.some((l) => l.startsWith('@export'))) continue
     // signature: from the `function(` to its matching `)`
@@ -169,7 +170,7 @@ const DROP_OPTIONS = {
 // text field (a plain "year" or "city" filter included) is noise for functions that never need
 // a second wired input, which is most of the catalog.
 const FORCE_DATA = new Set([
-  'sus_climate_aggregate.climate_data', 'sus_climate_anomaly.normals',
+  'sus_climate_aggregate.climate_data', 'sus_climate_anomaly.normals', 'sus_climate_plot_fill.df_original',
   'sus_grid_chirps.municipalities', 'sus_grid_era5.municipalities',
   'sus_grid_fires.municipalities', 'sus_grid_join.grid_data',
   'sus_grid_pdsi.municipalities', 'sus_grid_plot.municipalities',

@@ -52,6 +52,11 @@ export const FRIENDLY: Record<string, FriendlyEntry> = {
     en: { name: "Calculate rainfall drought index (SPI)", description: "Calculates the Standardized Precipitation Index (SPI), which uses rainfall alone to measure drought intensity at different time scales." },
     es: { name: "Calcular índice de sequía por lluvia (SPI)", description: "Calcula el Índice Estandarizado de Precipitación (SPI), que utiliza solo la lluvia para medir la intensidad de la sequía en distintas escalas de tiempo." },
   },
+  "sus_climate_fill_inmet": {
+    pt: { name: "Preencher falhas nos dados do INMET", description: "Completa os valores ausentes das séries das estações automáticas do INMET (temperatura, umidade, chuva, vento etc.), estimando cada lacuna com um modelo de aprendizado de máquina (XGBoost) treinado por estação. Rode depois de importar os dados do INMET e antes de agregar o clima aos dados de saúde." },
+    en: { name: "Fill gaps in INMET data", description: "Completes the missing values in INMET automatic-station series (temperature, humidity, rainfall, wind, etc.), estimating each gap with a machine-learning model (XGBoost) trained per station. Run it after importing the INMET data and before joining the climate to the health data." },
+    es: { name: "Rellenar vacíos en los datos del INMET", description: "Completa los valores faltantes de las series de las estaciones automáticas del INMET (temperatura, humedad, lluvia, viento, etc.), estimando cada vacío con un modelo de aprendizaje automático (XGBoost) entrenado por estación. Ejecútelo tras importar los datos del INMET y antes de unir el clima a los datos de salud." },
+  },
   "sus_climate_inmet": {
     pt: { name: "Importar dados das estações do INMET", description: "Baixa e organiza os dados meteorológicos das estações do INMET (Instituto Nacional de Meteorologia) para os anos e estados escolhidos, prontos para cruzar com dados de saúde." },
     en: { name: "Import INMET station data", description: "Downloads and organizes meteorological data from INMET (Brazil's National Institute of Meteorology) weather stations for the chosen years and states, ready to combine with health data." },

@@ -47,7 +47,7 @@ Desenvolvimento articulado ao **Centro de Clima de Saúde de Rondônia**, à **F
 
 Esta edição foi conferida contra o catálogo e o código do Studio em **22 de outubro de 2026**. As mudanças editoriais e de conteúdo em relação à versão anterior são:
 
-- Catálogo confirmado em **79 funções**: 15 na Preparação, 32 na Integração e 32 na Análise & Modelagem.
+- Catálogo confirmado em **80 funções**: 15 na Preparação, 33 na Integração e 32 na Análise & Modelagem.
 - A Etapa Integração passa a documentar as funções de censo e vínculo espacial **`sus_census_join`**, **`sus_census_select`** e **`sus_spatial_join`**, além de **`sus_grid_plot`**.
 - **`sus_data_import`**: o parâmetro `month` é obrigatório para sistemas mensais (SIH, CNES e SIA) e aceita `1`, `1:12` ou combinações como `c(1, 4, 6)`.
 - **`sus_climate_inmet`**: o padrão de `parallel` passou a ser `FALSE`; `TRUE` explícito continua permitido.
@@ -59,6 +59,7 @@ Atualização de **28 de outubro de 2026** (Studio v1.1.0-beta.2, instaladores r
 - Nova barra superior: o menu **Arquivo** reúne Salvar projeto, Abrir projeto e Importar dados; **Limpar** fica ao lado de Pipelines; logotipos das instituições no canto direito.
 - O botão **Executar até aqui** de cada Nó roda só aquele Passo e os anteriores sem Resultado; **Executar** continua rodando tudo.
 - O Tutorial **Mortalidade Respiratória — SP 2014-2019** passou a ter o selo **Guiado** no menu Modelos.
+- Nova função **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`), na Integração: completa valores ausentes das estações com XGBoost, antes de cruzar o clima com a saúde.
 - **`sus_data_import`**: `region` começa vazio (`NULL`) e é opcional.
 - **`sus_data_filter_cid`**: a ajuda de `icd_codes` lista os formatos aceitos (código, lista, faixa, capítulo e categoria).
 - Mapas interativos passaram a usar o mapa-base **OpenFreeMap**, com seletor de cinco estilos.

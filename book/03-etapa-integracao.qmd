@@ -46,6 +46,7 @@ A Biblioteca reúne 32 ações na Etapa Integração, organizadas em quatro fam�
 **(a) Clima por estação** — dados observados em estações meteorológicas do INMET.
 
 - **Importar dados das estações do INMET** (`sus_climate_inmet`) — importa e processa dados meteorológicos do INMET.
+- **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) — completa os valores ausentes das séries das estações (temperatura, umidade, chuva, vento...), estimando cada lacuna com um modelo de aprendizado de máquina treinado por estação. Rode depois de importar o INMET e antes de cruzar o clima com a saúde. Use `run_evaluation = TRUE` para testar a qualidade do preenchimento antes de confiar nele; o gráfico de conferência é **Visualizar preenchimento de falhas climáticas** (`sus_climate_plot_fill`).
 - **Baixar normais climatológicas do INMET** (`sus_climate_normals`) — baixa normais climatológicas de 30 anos do INMET (três
   períodos de referência disponíveis; o mais recente é 1991–2020), usadas como linha de base histórica.
 - **Consultar variáveis das normais climáticas** (`sus_climate_normals_meta`) — permite explorar o catálogo de variáveis das normais

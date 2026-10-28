@@ -55,10 +55,10 @@ Função e Passo não são a mesma coisa. Função é a definição disponível 
 
 ## A Biblioteca e as Etapas
 
-O catálogo do Studio tem **79 ações**. Para facilitar a escolha, elas são agrupadas em três **Etapas**, que correspondem às fases do trabalho analítico:
+O catálogo do Studio tem **80 ações**. Para facilitar a escolha, elas são agrupadas em três **Etapas**, que correspondem às fases do trabalho analítico:
 
 - **Preparação** (15 Funções) — organiza os dados de saúde brutos: importar, corrigir, filtrar, agregar.
-- **Integração** (32 Funções) — cruza esses dados de saúde já preparados com clima, ambiente e território.
+- **Integração** (33 Funções) — cruza esses dados de saúde já preparados com clima, ambiente e território.
 - **Análise & Modelagem** (32 Funções) — transforma tudo isso em evidência estatística: existe um efeito real, ou é ruído?
 
 Essa divisão segue a ordem de trabalho. Primeiro os dados de saúde precisam ser preparados; depois podem ser integrados a clima, ambiente e território; só então faz sentido aplicar modelos estatísticos. Cada Etapa tem uma cor na Biblioteca, o que ajuda a reconhecer a função de cada Nó em um Pipeline montado.
