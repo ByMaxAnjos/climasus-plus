@@ -1966,3 +1966,25 @@ body { font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv11" 1, "ss03" 1; 
 .prep-recipe-alt:hover { color: var(--text-primary); }
 .prep-recipe-actions .btn-primary { background: transparent; color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent-ink) 50%, transparent); }
 .prep-recipe-actions .btn-primary:hover { background: color-mix(in srgb, var(--accent-ink) 10%, transparent); }
+
+/* brand: [climaSUS badge] + Studio, institutions chip on a light pill so the dark-ink logos read in both themes */
+.brand-block { flex-direction: row; align-items: center; gap: 14px; min-width: 0; }
+.brand { align-items: center; gap: 8px; flex-wrap: nowrap; }
+.brand-badge { width: 40px; height: 40px; border-radius: 50%; display: block; flex: none; }
+.brand-orgs {
+  display: flex; align-items: center; gap: 12px;
+  padding: 5px 12px; border-radius: 12px;
+  background: #fff; border: 1px solid var(--border);
+}
+.brand-orgs img { width: auto; display: block; object-fit: contain; }
+@media (max-width: 1180px) { .brand-orgs { display: none; } }
+
+/* first-use hint above the canvas */
+.start-hint {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 0 12px 8px; padding: 8px 12px; border-radius: 10px;
+  font-size: 12.5px; line-height: 1.4; color: var(--text-secondary);
+  background: rgba(20, 184, 166, 0.10); border: 1px solid rgba(20, 184, 166, 0.35);
+}
+.start-hint .btn { flex: none; }
+.file-menu .settings-row { justify-content: flex-start; text-align: left; }

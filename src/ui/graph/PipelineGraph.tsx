@@ -19,6 +19,7 @@ const nodeTypes: NodeTypes = { step: StepNode, lane: LaneNode }
 const edgeTypes: EdgeTypes = { insert: InsertEdge }
 const READABLE_ZOOM = 0.8 // auto-fit never shrinks cards below this; pan/zoom/minimap for the rest
 const FIT_PAD = 28
+const HINT_KEY = 'climasus-plus-start-hint'
 
 function GraphInner() {
   const { steps, lang, stepResults, stepRun, tutorialFocusId, mode, openModeSelector, addSteps, select, engineStatus } = usePipeline()
@@ -194,7 +195,13 @@ function GraphInner() {
 
 export default function PipelineGraph() {
   const { lang, steps, expandedPanel, toggleExpand, addStep } = usePipeline()
+  const hasResults = usePipeline((s) => Object.keys(s.stepResults).length > 0)
+  const tutorialActive = usePipeline((s) => s.activeTutorialId != null)
   const [dropping, setDropping] = useState(false)
+  const [hintDismissed, setHintDismissed] = useState(() => {
+    try { return localStorage.getItem(HINT_KEY) === '1' } catch { return false }
+  })
+  const showHint = !hintDismissed && !hasResults && !tutorialActive && steps.length > 0
   return (
     <section className="canvas glass">
       <div className="canvas-head">
@@ -211,6 +218,17 @@ export default function PipelineGraph() {
           {expandedPanel === 'graph' ? '⤡' : '⤢'}
         </button>
       </div>
+      {showHint && (
+        <div className="start-hint" role="note">
+          <span>{t('startHint', lang)}</span>
+          <button
+            className="btn btn-sm"
+            onClick={() => { setHintDismissed(true); try { localStorage.setItem(HINT_KEY, '1') } catch { /* storage blocked */ } }}
+          >
+            {t('startHintDismiss', lang)}
+          </button>
+        </div>
+      )}
       <div
         className={`graph-canvas ${dropping ? 'drop-target' : ''}`}
         onDragOver={(e) => { if (e.dataTransfer.types.includes(FN_DRAG_TYPE)) { e.preventDefault(); setDropping(true) } }}

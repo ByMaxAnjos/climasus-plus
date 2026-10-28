@@ -89,6 +89,7 @@ export default function TopBar() {
   useUndoRedoShortcut(undo, redo)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [templatesOpen, setTemplatesOpen] = useState(false)
+  const [fileOpen, setFileOpen] = useState(false)
 
   const canRun = engineStatus === 'ready' && steps.length > 0
   const engineLabel = t(
@@ -101,8 +102,15 @@ export default function TopBar() {
   return (
     <header className="topbar">
       <div className="brand-block">
+        {/* the badge already spells "ClimaSUS", so the wordmark only continues it: [badge] + Studio */}
         <div className="brand">
-          <span className="brand-name">climasus<span className="brand-plus">+</span> <span className="brand-studio">Studio</span></span>
+          <img className="brand-badge" src="/logos/tb-climasus.png" alt="climaSUS" />
+          <span className="brand-name"><span className="brand-plus">+</span> <span className="brand-studio">Studio</span></span>
+        </div>
+        <div className="brand-orgs" title={t('institutions', lang)} aria-label={t('institutions', lang)}>
+          <img src="/logos/tb-inct.png" alt="INCT-CONEXAO" style={{ height: 36 }} />
+          <img src="/logos/tb-fiocruz.png" alt="Fiocruz Rondônia" style={{ height: 26 }} />
+          <img src="/logos/tb-ufjf.png" alt="UFJF" style={{ height: 34 }} />
         </div>
       </div>
       <div className="topbar-actions">
@@ -154,7 +162,6 @@ export default function TopBar() {
           <button className="btn" onClick={openHelp}>
             <span className="btn-icon">{ICON.pipelines}</span>{t('help', lang)}
           </button>
-          <button className="btn" onClick={clear}>{t('clearAll', lang)}</button>
         </div>
         <div className="topbar-group">
           <button className="btn" disabled={!past.length} onClick={undo} title={t('undoHint', lang)} aria-label={t('undo', lang)}>
@@ -164,18 +171,30 @@ export default function TopBar() {
             <span className="btn-icon">{ICON.redo}</span>
           </button>
         </div>
-        <div className="topbar-group">
-          <button className="btn" onClick={saveProject} title={t('saveProjectHint', lang)}>
-            <span className="btn-icon">{ICON.save}</span>{t('saveProject', lang)}
+        <div
+          className="topbar-group settings-group"
+          tabIndex={-1}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFileOpen(false)
+          }}
+        >
+          <button className="btn" onClick={() => setFileOpen((o) => !o)} aria-expanded={fileOpen}>
+            <span className="btn-icon">{ICON.save}</span>{t('fileMenu', lang)} ▾
           </button>
-          <button className="btn" onClick={openProject} title={t('openProjectHint', lang)}>
-            <span className="btn-icon">{ICON.open}</span>{t('openProject', lang)}
-          </button>
-        </div>
-        <div className="topbar-group">
-          <button className="btn" onClick={startFromDataFile} title={t('openDataHint', lang)}>
-            <span className="btn-icon">{ICON.importData}</span>{t('openData', lang)}
-          </button>
+          {fileOpen && (
+            <div className="settings-menu file-menu glass" onClick={() => setFileOpen(false)}>
+              <button className="btn settings-row" onClick={saveProject} title={t('saveProjectHint', lang)}>
+                <span className="btn-icon">{ICON.save}</span>{t('saveProject', lang)}
+              </button>
+              <button className="btn settings-row" onClick={openProject} title={t('openProjectHint', lang)}>
+                <span className="btn-icon">{ICON.open}</span>{t('openProject', lang)}
+              </button>
+              <button className="btn settings-row" onClick={startFromDataFile} title={t('openDataHint', lang)}>
+                <span className="btn-icon">{ICON.importData}</span>{t('openData', lang)}
+              </button>
+              <button className="btn settings-row" onClick={clear}>{t('clearAll', lang)}</button>
+            </div>
+          )}
         </div>
         <div className="topbar-group">
           <button className="btn mode-badge" onClick={openModeSelector}>
