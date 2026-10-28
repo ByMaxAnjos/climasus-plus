@@ -53,6 +53,27 @@ capture_print <- function(obj) {
   }, error = function(e) "")
 }
 
+# OpenFreeMap (no API key) vector basemap for a leaflet widget. Leaflet itself only draws raster
+# tiles, and OpenFreeMap serves vector tiles only, so maplibre-gl + its leaflet bridge are loaded
+# from a CDN when the widget opens (the basemap needs internet anyway; polygons still draw
+# without it).
+map_openfreemap <- function(m) {
+  htmlwidgets::onRender(m, "function(el, x) {
+    var map = this;
+    function add(tag, attrs) { var e = document.createElement(tag); for (var k in attrs) e[k] = attrs[k]; document.head.appendChild(e); return e; }
+    function script(src, cb) { add('script', {src: src, onload: cb}); }
+    add('link', {rel: 'stylesheet', href: 'https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css'});
+    script('https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js', function() {
+      script('https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js', function() {
+        L.maplibreGL({
+          style: 'https://tiles.openfreemap.org/styles/positron',
+          attribution: '&copy; <a href=\"https://openfreemap.org\" target=\"_blank\">OpenFreeMap</a> &copy; <a href=\"https://openmaptiles.org/\" target=\"_blank\">OpenMapTiles</a> Data from <a href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a>'
+        }).addTo(map);
+      });
+    });
+  }")
+}
+
 # generic leaflet widget for any climasus_sf attribute carrying fill_var (continuous, e.g.
 # sus_data_plot_aggregate_map's bubble/choropleth) or fill_class (discrete, quantile_choropleth) —
 # ggplotly() can't render this data's ggplot (coord_sf/geom_sf), so build directly from the sf data
@@ -76,7 +97,7 @@ map_leaflet_widget <- function(spatial) {
   )
 
   m <- leaflet::leaflet(spatial) |>
-    leaflet::addProviderTiles(leaflet::providers$CartoDB.Positron)
+    map_openfreemap()
 
   m <- if (is_point) {
     m |> leaflet::addCircleMarkers(radius = 6, stroke = FALSE, fillOpacity = 0.8,
