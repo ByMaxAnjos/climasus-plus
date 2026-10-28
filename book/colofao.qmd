@@ -54,6 +54,15 @@ Esta edição foi conferida contra o catálogo e o código do Studio em **22 de 
 - **`sus_data_plot_aggregate_ts`**: o padrão de `plot_type` passou a ser `epidemic`, preservando as demais opções.
 - Nova identidade visual: capa, aberturas de parte, paleta amazônica, tipografia editorial e fotografias do acervo Fiocruz Imagens.
 
+Atualização de **28 de outubro de 2026** (Studio v1.1.0-beta.2, instaladores refeitos):
+
+- Nova barra superior: o menu **Arquivo** reúne Salvar projeto, Abrir projeto e Importar dados; **Limpar** fica ao lado de Pipelines; logotipos das instituições no canto direito.
+- O botão **Executar até aqui** de cada Nó roda só aquele Passo e os anteriores sem Resultado; **Executar** continua rodando tudo.
+- O Tutorial **Mortalidade Respiratória — SP 2014-2019** passou a ter o selo **Guiado** no menu Modelos.
+- **`sus_data_import`**: `region` começa vazio (`NULL`) e é opcional.
+- **`sus_data_filter_cid`**: a ajuda de `icd_codes` lista os formatos aceitos (código, lista, faixa, capítulo e categoria).
+- Mapas interativos passaram a usar o mapa-base **OpenFreeMap**, com seletor de cinco estilos.
+
 Os itens acima foram verificados por leitura do catálogo (`src/catalog/functions.json`) e do código do motor; não substituem um teste de execução em cada sistema operacional.
 
 ## Fotografias
@@ -81,6 +90,10 @@ As fotografias deste guia vêm do **Fiocruz Imagens** e são usadas para fins ed
 <figcaption>Fiocruz Rondônia, Porto Velho (RO). Foto: Rodrigo Méxas | Acervo Fiocruz Imagens.</figcaption>
 </figure>
 ```
+
+## Mapas
+
+O fundo dos mapas interativos é fornecido pelo **OpenFreeMap**, e o aplicativo exibe a atribuição exigida em cada mapa: © OpenFreeMap · © OpenMapTiles · Dados do OpenStreetMap (<https://openfreemap.org>).
 
 ## Tipografia e identidade
 

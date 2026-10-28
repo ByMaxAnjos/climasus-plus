@@ -6,11 +6,13 @@ subtitle: "Capítulo 08 · Estudos de casos"
 No recorte de chuva, enchente e vetores do Capítulo 0, retomado na Etapa Integração
 (Capítulo 3), apresentamos o arco de dengue e clima. A pergunta central é: **quanto do
 risco de dengue acompanha o acúmulo de calor favorável ao vetor, e com que atraso?**
-Este capítulo fecha esse arco, do dado bruto do SINAN ao Modelo DLNM ajustado. Público
+Este capítulo fecha esse arco, do dado bruto do SINAN ao Modelo DLNM ajustado. A conclusão
+é tão importante quanto o método: em cidade única, o GDD **não é identificável** como
+exposição principal; a resposta exige chuva/PDSI e escala multicidade. Público
 principal: acadêmico e gestor técnico responsável por vigilância de arboviroses. O
-exemplo usa quatro estados do Nordeste; a mesma lógica vale para a Amazônia, onde a
-cobertura irregular de estações torna a checagem da distância estação–município ainda
-mais importante.
+snapshot usa quatro estados do Nordeste; a replicação testa Recife e Fortaleza
+separadamente. A mesma lógica vale para a Amazônia, onde a cobertura irregular de estações
+torna a checagem da distância estação–município ainda mais importante.
 
 ## O pipeline completo, etapa por etapa
 
@@ -44,8 +46,8 @@ carregar no Centro de Pipelines.
    **GDD com base 11 °C e teto 35 °C**, a faixa biológica do *Aedes aegypti*. O Parâmetro
    `custom_thresholds` fixa esses valores; sem ele, a função usaria a base regional.
 9. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
-   defasagem de **0 a 84 dias (12 semanas)** do GDD, com
-   `temporal_strategy = "distributed_lag"`.
+   defasagem do GDD, com `temporal_strategy = "distributed_lag"`. O snapshot usou 0–84
+   **dias**; como o desfecho é semanal, a replicação usa 0–12 **semanas**.
 
 **Análise & Modelagem**
 
@@ -60,15 +62,18 @@ térmica para completar o ciclo larval, e o vírus precisa de tempo de incubaç�
 no vetor. **Graus-dia** resumem esse acúmulo. A base 11 °C é o limiar de desenvolvimento
 do *Aedes aegypti*; o teto de 35 °C evita contar calor extremo que suprime o
 desenvolvimento. Uma curva de temperatura diária com defasagem é uma aproximação
-diferente — útil, mas não substitui o GDD quando a pergunta é o ciclo do vetor.
+diferente — útil, mas não substitui o GDD quando a pergunta é o ciclo do vetor. Em cidades
+tropicais com temperatura alta o ano todo, porém, o GDD pode não ser o fator limitante: a
+replicação mostra que chuva, umidade e imunidade precisam entrar no desenho.
 :::
 
 ::: {.callout-note title="Por que 0–84 dias?"}
 O ciclo relevante soma desenvolvimento larval (cerca de 7–10 dias), incubação extrínseca
 do vírus (cerca de 8–12 dias a 28 °C), incubação humana e atraso de notificação. Uma
-janela de 0–28 dias trunca essa cauda. O Modelo usa 0–84 dias como ponto de partida
-biológico; **28, 56 e 84 dias devem ser testados como sensibilidade**, porque a janela
-certa depende do clima local, da qualidade da série e da pergunta.
+janela de 0–28 dias trunca essa cauda. O Modelo usa 0–12 **semanas** (0–84 dias) como ponto de partida
+biológico; **4, 8 e 12 semanas devem ser testadas como sensibilidade**, porque a janela
+certa depende do clima local, da qualidade da série e da pergunta. O snapshot manteve 84
+lags **diários** sobre um desfecho semanal — a replicação corrige a unidade.
 :::
 
 ::: {.callout-note title="O que este Modelo não inclui"}
@@ -84,127 +89,144 @@ não deve ser usado para essa pergunta.
 **Fonte:** SINAN-DENGUE (DATASUS), casos notificados em CE, PE, BA e MA, 2015–2019.
 **Recorte:** semana epidemiológica, data de primeiros sintomas, município de residência;
 GDD com base 11 °C e teto 35 °C, calculado a partir das estações INMET dos mesmos estados.
-**N:** 353.080 linhas município-semana; 1.358 municípios; 260 semanas (2015-01-04 a
-2019-12-22). Total de **638.616 casos notificados**; média de 1,81 caso por
-município-semana; máximo de 2.721 em uma única linha.
-**Modelo:** 248 semanas após as defasagens; 0–84 dias.
+
+**O que o snapshot fez:** manteve 1.358 municípios e deixou `sus_mod_dlnm()` agregar tudo por
+semana. O modelo tem **248 semanas e 638.616 casos** — uma série regional. As colunas de
+defasagem são **84 dias** aplicados a um desfecho **semanal**, e o GDD está em unidade
+horária (a soma de 24 horas), não em °C·dia.
+
+**O que a replicação fez:** testou duas cidades separadamente — **Recife** (estação A301;
+217 semanas; 38.974 casos) e **Fortaleza** (A305; 225 semanas; 73.834 casos) —, com GDD
+semanal em °C·dia (soma de 7 dias) e defasagens em **semanas** (0–12). Modelo com mês,
+3 df de exposição e 3 df de defasagem. Também testou temperatura semanal no lugar do GDD.
+O filtro municipal é feito no script de replicação; o template do catálogo importa as UFs.
+
 **Snapshot:** `data/ec02/analytic.parquet` (MD5 `89f86931dd8e77e36bc3ed2fd2bd5eff`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec02/codebook.csv`.
-**Avisos do Motor:** dispersão **95,6** (alta) e autocorrelação residual (Ljung-Box
-p = 0).
+**Avisos do Motor (snapshot):** dispersão **95,6** (alta) e autocorrelação residual
+(Ljung-Box p = 0).
+**Replicação:** dispersão 7,55 (Recife) e 15,46 (Fortaleza); Ljung-Box p < 0,001.
 
 ## Resultados
 
-### Série e cobertura
+### Série e cobertura (snapshot)
 
-![Série semanal de casos de dengue nos quatro estados, 2015–2019.](images/results/ec02/serie.png){#fig-ec02-serie}
+![Série semanal de casos de dengue nos quatro estados, 2015–2019 (snapshot).](images/results/ec02/serie.png){#fig-ec02-serie}
 
 **Como ler:** o eixo x é a semana; o eixo y é o número de casos notificados. A série tem
 picos epidêmicos em 2015, 2016, 2017 e 2019, com anos de vale entre eles. A série é
-agregada por município e depois somada por semana no modelo; ela descreve o padrão
+agregada por município e depois somada por semana no snapshot; ela descreve o padrão
 regional, não a transmissão de um município específico.
 
-### Modelo DLNM
+### Modelo DLNM: snapshot e replicação em duas cidades
 
-| Medida | Valor |
-|---|---:|
-| RR no p75 de GDD (365,3 °C·dia) vs referência (347,3 °C·dia) | 0,71 (IC95% 0,53–0,96) |
-| Defasagem de pico | 84 dias (limite da janela) |
-| Semanas no modelo | 248 |
-| Dispersão | 95,6 (alta) |
-| Autocorrelação residual | p = 0 |
+| Medida | Snapshot (4 estados) | Recife (PE) | Fortaleza (CE) |
+|---|---:|---:|---:|
+| Unidade | 1.358 municípios agregados | 1 município | 1 município |
+| Casos no modelo | 638.616 | 38.974 | 73.834 |
+| Semanas | 248 | 217 | 225 |
+| GDD | °C·hora, 0–84 **dias** | °C·dia, 0–12 **semanas** | °C·dia, 0–12 **semanas** |
+| Referência | mediana (347,3) | MMT 97,1 (p29) | MMT 121,9 (p90) |
+| RR no p75 vs referência | 0,71 (0,53–0,96) | — | — |
+| RR no p90 vs MMT | — | 1,07 (0,32–3,64) | 1,00 (referência) |
+| RR no p99 vs MMT | — | 0,49 (0,08–2,82) | 3,57 (0,97–13,14) |
+| RR no p01 vs MMT | — | 2,15 (0,48–9,68) | 10,56 (3,71–30,08) |
+| Dispersão | 95,6 | 7,55 | 15,46 |
+| Autocorrelação residual | p = 0 | p < 0,001 | p < 0,001 |
 
-**Como ler — com cautela:** o RR pontual abaixo de 1 **não** significa que o GDD
-protege contra dengue. A dispersão é altíssima, o pico de lag cai no limite de 84 dias e
-a curva de exposição é não monotônica. Esses três sinais juntos indicam que o modelo,
-como especificado, **não estima uma relação estável**. O intervalo estreito é enganoso
-quando a dispersão é 95,6.
+**Como ler — com muita cautela:** nenhuma das duas cidades produz uma curva interpretável.
+Em Recife, o MMT cai no p29, o RR no p90 é 1,07 (IC 0,32–3,64) e o no p01 sobe a 2,15; em
+Fortaleza, o MMT cai no p90 e o RR no p01 chega a 10,56. Esses padrões não descrevem a
+transmissão de dengue — descrevem um modelo que não consegue separar GDD, estação e
+imunidade. A dispersão (7,55 e 15,46) confirma que o quasi-Poisson não é adequado.
 
-![Curva exposição-resposta cumulativa para GDD e casos de dengue.](images/results/ec02/dlnm_overall.png){#fig-ec02-dlnm}
+**Teste com temperatura.** Em Recife, substituir GDD por temperatura semanal também não
+recupera o sinal: RR no p90 0,99 (0,97–1,01), RR no p01 1,51 (0,30–7,72), dispersão 7,08.
+Ou seja, o problema não é apenas a unidade do GDD: em uma cidade tropical com temperatura
+alta o ano todo, a temperatura não é o fator limitante da transmissão.
+
+![Curva exposição-resposta cumulativa do snapshot para GDD e casos de dengue.](images/results/ec02/dlnm_overall.png){#fig-ec02-dlnm}
 
 **Como ler:** o eixo x é o GDD acumulado; o eixo y é o RR cumulativo. A curva cai até
 cerca de 370 °C·dia e volta a subir perto de 400, com intervalo muito largo no extremo
-superior. Não interprete o ponto de mínimo como "GDD ideal" nem o trecho final como
-"proteção"; a forma é compatível com instabilidade e com a alta colinearidade do GDD
-acumulado.
+superior. A figura é do snapshot; as réplicas cidade-específicas (tabela) também não
+estabilizam. Não interprete o ponto de mínimo como “GDD ideal” nem o trecho final como
+“proteção”.
 
-![Curva lag-resposta para GDD no percentil 75.](images/results/ec02/dlnm_lag.png){#fig-ec02-lag}
+![Curva lag-resposta do snapshot para GDD no percentil 75.](images/results/ec02/dlnm_lag.png){#fig-ec02-lag}
 
 **Como ler:** a linha cheia é o RR específico por lag; a tracejada é o acumulado. O
-acumulado cai de 1,0 para cerca de 0,7 até o lag 84. O "pico" em 84 dias é o **limite da
-janela**, não um pico biológico; uma janela maior ou uma especificação diferente pode
-mudar o resultado. Não use este gráfico para afirmar que o efeito aparece em 12 semanas.
+acumulado cai de 1,0 para cerca de 0,7 até o lag 84. O “pico” em 84 dias é o **limite da
+janela diária**, não um pico biológico; a replicação usa 12 semanas e também não encontra
+um pico estável.
 
 ## Interpretando o resultado
 
-O resultado real deste snapshot **não reproduz o padrão positivo esperado** entre GDD e
-dengue. Isso pode ter várias explicações, e nenhuma delas deve ser escolhida por
-conveniência:
+O resultado do snapshot **não é um caso de GDD que “não funciona” por acaso**. É um caso de
+exposição mal-especificada e de escala errada. Três fatos se somam:
 
-- **GDD acumulado é altamente colinear** entre dias consecutivos; a curva e a defasagem
-  ficam instáveis.
-- **Quatro estados agregados** misturam imunidade, transmissão e clima; o modelo soma
-  municípios e calcula uma exposição média.
-- **Dispersão 95,6** viola a suposição de quasi-Poisson; os intervalos podem estar
-  estreitos demais.
-- **Defasagem no limite** (84 dias) sugere que a janela ou a forma da crossbasis precisa
-  ser revista.
-- **Notificação** e sorotipo/immunidade não entram no modelo.
+1. **GDD acumulado é altamente colinear** entre dias consecutivos; usar 84 lags diários
+   sobre uma série semanal cria dezenas de variáveis quase duplicadas.
+2. **Quatro estados agregados** misturam imunidade, sorotipo, transmissão e clima; a
+   exposição média não representa nenhum território.
+3. **Em cidades tropicais, a temperatura é alta o ano todo.** O GDD pode não ser o fator
+   limitante: chuva, umidade, criadouros, imunidade e sorotipo dominam a sazonalidade.
 
-O caminho responsável é: (a) ajustar por estado ou município e combinar com
-`sus_mod_pool`; (b) testar janelas 28/56/84 e bases 11/regional; (c) usar uma
-especificação com GDD semanal/anomalia, não GDD diário acumulado; (d) reportar a
-dispersão e não usar a AF (não calculada aqui) como carga.
+A replicação em Recife e Fortaleza mostra que o problema não é específico de uma cidade.
+O desenho publicado que recupera o sinal (Lowe et al., 2021) usa **PDSI/chuva**, 558
+microrregiões e um modelo espaço-temporal bayesiano — não GDD em cidade única. Um desenho
+brasileiro de temperatura e internação por dengue (2024) encontra RR 3,47 no p95 com efeito
+imediato (lag 0–2), mas em escala nacional e com desfecho de hospitalização, não de
+notificação.
 
-
-
-Diferente do recorte respiratório pediátrico (Capítulo 7), este Pipeline **não** segue até
-**Calcular fração atribuível** (`sus_mod_af`). Para dengue, a fração atribuível ao clima é
-apenas parte da decisão de gestão: imunidade acumulada, anos epidêmicos, saneamento,
-infraestrutura de água parada e mobilidade também determinam o risco. Um Pipeline mais
-completo somaria **Calcular indicadores socioeconômicos e de saúde**
-(`sus_socio_compute_indicators`) e trabalharia com **uma série por estado ou município**,
-combinando os resultados com **Combinar DLNM entre cidades** (`sus_mod_pool`) em vez de
-agregar os quatro estados em uma única série.
+O caminho responsável é: (a) usar **chuva/PDSI** como exposição principal e GDD como
+covariável; (b) ajustar por município e combinar com `sus_mod_pool`, ou usar um modelo
+espaço-temporal; (c) incluir saneamento, imunidade e sorotipo; (d) não calcular AF de dengue
+com este desenho.
 
 ## O que os números mostram {#numeros-ec02}
 
-| Pergunta | Resposta neste snapshot |
-|---|---|
-| O GDD no p75 se associa a mais casos? | Não; RR 0,71 (IC95% 0,53–0,96). |
-| Qual é o pico de defasagem? | 84 dias — o limite da janela, não um pico biológico. |
-| O modelo está estável? | Não; dispersão 95,6, autocorrelação residual e curva não monotônica. |
-| O que a série mostra? | Picos epidêmicos em 2015, 2016, 2017 e 2019; isso não é o efeito do GDD. |
+| Pergunta | Snapshot (4 estados) | Replicação (Recife/Fortaleza) |
+|---|---|---|
+| O GDD no p75 se associa a mais casos? | Não; RR 0,71 (0,53–0,96) | Não estimável |
+| Qual é o pico de defasagem? | 84 dias — limite da janela | Sem pico estável em 0–12 semanas |
+| O modelo está estável? | Não; dispersão 95,6 | Não; dispersão 7,55/15,46 |
+| A temperatura funciona melhor? | Não testada | Não; RR p90 0,99 (0,97–1,01) |
+| O que usar? | Revisar o desenho | **Chuva/PDSI + escala multicidade** |
 
 **O que não podemos concluir:** que o GDD proteja contra dengue; que o efeito apareça em
 12 semanas; que o número de casos de um município específico seja atribuível ao GDD. O
-resultado é compatível com instabilidade do modelo e com a forma como o GDD acumulado foi
-construído, não com uma conclusão biológica.
+resultado é compatível com **exposição inadequada e instabilidade do modelo**, não com uma
+conclusão biológica.
 
-**Antes de concluir:** teste janelas 28/56/84, base 11 °C versus regional, GDD semanal ou
-anomalia de GDD, e ajuste por estado/município com `sus_mod_pool`. Se o resultado mudar
-de forma relevante, ele não deve sustentar uma decisão. Veja o
+**Antes de concluir:** teste chuva acumulada (2–6 semanas), PDSI, umidade, GDD como
+covariável, e ajuste por município/estado com `sus_mod_pool` ou modelo espaço-temporal. Se
+o resultado mudar de forma relevante, ele não deve sustentar uma decisão. Veja o
 [roteiro de interpretação](05-da-evidencia-a-acao.qmd#ler-resultados).
 
 ## O que isso significa para ação
 
 Este resultado **não sustenta** um limiar operacional de GDD para vigilância. A ação
-responsável é revisar o desenho antes de usar o número: ajustar por estado, reduzir a
-colinearidade do GDD, reportar a dispersão e testar a sensibilidade da janela e da base
-térmica. Um resultado assim é útil porque mostra, com dados reais, por que a etapa de
-diagnóstico e a especificação do modelo existem.
+responsável é revisar o desenho antes de usar o número: chuva/PDSI como exposição
+principal, GDD como covariável, escala multicidade e controle de imunidade/sorotipo. Um
+resultado assim é útil porque mostra, com dados reais, por que a escolha da exposição e a
+escala de análise importam.
 
 O GDD não substitui a chuva. Em municípios com estação distante ou séries incompletas,
 combine GDD de estação com chuva de satélite diária e trate a distância
 estação–município como uma limitação explícita. Para levar este Pipeline além do Studio —
 relatório técnico, publicação ou execução automatizada a cada semana epidemiológica — use
-**Salvar projeto** e **Exportar `.R`**, registrando a semana epidemiológica, as fontes, a
+**Arquivo → Salvar projeto** e **Exportar `.R`**, registrando a semana epidemiológica, as fontes, a
 distância das estações e os atrasos considerados.
 
 ## Reproduzir
 
 ```bash
 Rscript book/scripts/02-run-ec02.R
+# replicação cidade-específica (Recife A301 e Fortaleza A305, lags semanais):
+Rscript book/scripts/90-replicacao/00-build-city-climate.R
+python3 book/scripts/90-replicacao/prep_city_series.py
+Rscript book/scripts/90-replicacao/01-fit-replicacao.R
 ```
 
 O script grava a tabela analítica em `data/ec02/analytic.parquet`, as tabelas em
@@ -220,7 +242,9 @@ O script grava a tabela analítica em `data/ec02/analytic.parquet`, as tabelas e
 Porque a dengue responde ao **acúmulo de energia térmica** ao longo do ciclo do vetor, não
 à temperatura de um dia isolado. O GDD com base 11 °C e teto 35 °C representa essa
 acumulação de forma mais próxima da biologia do *Aedes aegypti*. A temperatura diária com
-defasagem é uma aproximação alternativa, não equivalente.
+defasagem é uma aproximação alternativa, não equivalente. A replicação mostra, porém, que
+em cidade única o GDD não basta: chuva/PDSI, imunidade e escala multicidade precisam entrar
+no desenho.
 
 **2. Por que a série de saúde é agregada por semana e a data usada é a de primeiros
 sintomas, não a de notificação?**
@@ -245,4 +269,12 @@ Chuva acumulada e umidade (além do GDD), indicadores de território/saneamento
 um desenho que lide com imunidade e anos epidêmicos. Sem isso, o Pipeline corre o risco
 de atribuir ao clima um efeito que também tem componente de vulnerabilidade social e
 territorial.
+
+**5. Por que o GDD falha em Recife e Fortaleza, mas funciona na literatura?**
+
+Porque a literatura que recupera o sinal não usa GDD em cidade única: usa chuva/PDSI,
+centenas de microrregiões e um modelo espaço-temporal bayesiano (Lowe et al., 2021). Em
+cidades tropicais, a temperatura é alta o ano todo e deixa de ser o fator limitante; chuva,
+umidade, criadouros e imunidade passam a dominar. O GDD é biologicamente motivado, mas
+insuficiente como exposição principal em uma série municipal curta.
 :::

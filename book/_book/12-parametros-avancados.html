@@ -268,6 +268,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#preparação" id="toc-preparação" class="nav-link active" data-scroll-target="#preparação">Preparação</a></li>
   <li><a href="#integração" id="toc-integração" class="nav-link" data-scroll-target="#integração">Integração</a></li>
   <li><a href="#análise-modelagem" id="toc-análise-modelagem" class="nav-link" data-scroll-target="#análise-modelagem">Análise &amp; Modelagem</a></li>
+  <li><a href="#três-parâmetros-que-costumam-gerar-dúvida" id="toc-três-parâmetros-que-costumam-gerar-dúvida" class="nav-link" data-scroll-target="#três-parâmetros-que-costumam-gerar-dúvida">Três parâmetros que costumam gerar dúvida</a></li>
   <li><a href="#preservar-e-compartilhar-uma-análise" id="toc-preservar-e-compartilhar-uma-análise" class="nav-link" data-scroll-target="#preservar-e-compartilhar-uma-análise">Preservar e compartilhar uma análise</a></li>
   <li><a href="#regra-prática" id="toc-regra-prática" class="nav-link" data-scroll-target="#regra-prática">Regra prática</a></li>
   </ul>
@@ -337,9 +338,9 @@ Como ler as tabelas
 <tbody>
 <tr class="odd">
 <td><strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>)</td>
-<td><code>system</code>, <code>uf</code>, <code>year</code>, <code>month</code></td>
-<td>Sistema de origem, território e período dos dados de saúde.</td>
-<td>Sempre que mudar sistema, estado, ano ou recorte temporal.</td>
+<td><code>system</code>, <code>uf</code>, <code>region</code>, <code>year</code>, <code>month</code></td>
+<td>Sistema de origem, território (estados ou uma região predefinida, opcional) e período dos dados de saúde.</td>
+<td>Sempre que mudar sistema, estado, região, ano ou recorte temporal.</td>
 </tr>
 <tr class="even">
 <td><strong>Ler dados exportados</strong> (<code>sus_data_read</code>)</td>
@@ -542,6 +543,59 @@ Como ler as tabelas
 </tbody>
 </table>
 </section>
+<section id="três-parâmetros-que-costumam-gerar-dúvida" class="level2">
+<h2 class="anchored" data-anchor-id="três-parâmetros-que-costumam-gerar-dúvida">Três parâmetros que costumam gerar dúvida</h2>
+<p><strong><code>region</code> (em Importar dados do DATASUS).</strong> É opcional e começa <strong>vazio</strong> (<code>NULL</code>): vazio significa “use os estados informados em <code>uf</code>”. Quando você escolhe uma região (por exemplo <code>norte</code>, <code>nordeste</code> ou <code>amazonia_legal</code>), ela <strong>prevalece sobre <code>uf</code></strong>, e o Studio importa todos os estados do grupo. No menu do parâmetro, a primeira opção, em branco, é a escolha “sem região”.</p>
+<p><strong><code>icd_codes</code> (em Filtrar por CID-10 ou grupo de doença).</strong> Aceita vários formatos, que podem ser misturados:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Formato</th>
+<th>Exemplo</th>
+<th>O que seleciona</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Um código</td>
+<td><code>"J18.9"</code></td>
+<td>Pneumonia não especificada.</td>
+</tr>
+<tr class="even">
+<td>Vários códigos</td>
+<td><code>c("I10", "I11.0")</code></td>
+<td>Cada código da lista.</td>
+</tr>
+<tr class="odd">
+<td>Uma faixa</td>
+<td><code>"J09-J18"</code></td>
+<td>Todos os códigos de J09 a J18.</td>
+</tr>
+<tr class="even">
+<td>Um capítulo inteiro</td>
+<td><code>"I"</code></td>
+<td>Doenças do aparelho circulatório, de I00 a I99.</td>
+</tr>
+<tr class="odd">
+<td>Uma categoria de três caracteres</td>
+<td><code>"J18"</code></td>
+<td>J18 e seus detalhamentos (J18.0, J18.9…).</td>
+</tr>
+<tr class="even">
+<td>Formatos misturados</td>
+<td><code>c("J09-J18", "I21")</code></td>
+<td>Faixa e código avulso, juntos.</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>icd_codes</code> <strong>ou</strong> <code>disease_group</code> (um grupo predefinido, como <code>dengue</code>), nunca os dois. O parâmetro <code>match_type</code> controla como a comparação é feita; o padrão <code>starts_with</code> é o que faz <code>"J18"</code> incluir <code>J18.9</code>.</p>
+<p><strong>Mapas interativos.</strong> Quando uma função de mapa é executada com <code>interactive = TRUE</code>, o resultado é um mapa com zoom e informações ao clicar. O mapa-base vem do <strong>OpenFreeMap</strong> e <strong>exige conexão com a internet</strong>; sem ela, os polígonos aparecem, mas o fundo não. O seletor no canto superior direito do mapa alterna entre cinco estilos: <em>Positron</em> (padrão, claro e discreto), <em>Liberty</em>, <em>Bright</em>, <em>Dark</em> e <em>Fiord</em>.</p>
+</section>
 <section id="preservar-e-compartilhar-uma-análise" class="level2">
 <h2 class="anchored" data-anchor-id="preservar-e-compartilhar-uma-análise">Preservar e compartilhar uma análise</h2>
 <p>Ao terminar, use os comandos disponíveis na interface:</p>
@@ -566,7 +620,7 @@ Como ler as tabelas
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Salvar projeto</strong></td>
+<td><strong>Arquivo → Salvar projeto</strong></td>
 <td>Nós, ordem e parâmetros do Pipeline em <code>.climasus.json</code>.</td>
 <td>Compartilhe junto a fonte dos dados, período, filtros e versão do Studio.</td>
 </tr>

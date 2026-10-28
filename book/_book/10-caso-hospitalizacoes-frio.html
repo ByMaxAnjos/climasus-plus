@@ -305,12 +305,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#série-e-cobertura" id="toc-série-e-cobertura" class="nav-link" data-scroll-target="#série-e-cobertura">Série e cobertura</a></li>
   <li><a href="#ondas-de-frio-detectadas" id="toc-ondas-de-frio-detectadas" class="nav-link" data-scroll-target="#ondas-de-frio-detectadas">Ondas de frio detectadas</a></li>
-  <li><a href="#série-temporal-interrompida" id="toc-série-temporal-interrompida" class="nav-link" data-scroll-target="#série-temporal-interrompida">Série temporal interrompida</a></li>
+  <li><a href="#série-temporal-interrompida-o-que-o-snapshot-mostrou" id="toc-série-temporal-interrompida-o-que-o-snapshot-mostrou" class="nav-link" data-scroll-target="#série-temporal-interrompida-o-que-o-snapshot-mostrou">Série temporal interrompida: o que o snapshot mostrou</a></li>
+  <li><a href="#replicação-com-dlnm-a-resposta-principal" id="toc-replicação-com-dlnm-a-resposta-principal" class="nav-link" data-scroll-target="#replicação-com-dlnm-a-resposta-principal">Replicação com DLNM: a resposta principal</a></li>
   </ul></li>
   <li><a href="#interpretando-o-resultado" id="toc-interpretando-o-resultado" class="nav-link" data-scroll-target="#interpretando-o-resultado">Interpretando o resultado</a></li>
   <li><a href="#numeros-ec04" id="toc-numeros-ec04" class="nav-link" data-scroll-target="#numeros-ec04">O que os números mostram</a></li>
-  <li><a href="#reproduzir" id="toc-reproduzir" class="nav-link" data-scroll-target="#reproduzir">Reproduzir</a></li>
   <li><a href="#o-que-isso-significa-para-ação" id="toc-o-que-isso-significa-para-ação" class="nav-link" data-scroll-target="#o-que-isso-significa-para-ação">O que isso significa para ação</a></li>
+  <li><a href="#reproduzir" id="toc-reproduzir" class="nav-link" data-scroll-target="#reproduzir">Reproduzir</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/book/10-caso-hospitalizacoes-frio.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -338,11 +339,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>No recorte de calor e frio do Capítulo 0, apresentamos brevemente o outro lado do espectro de temperatura: assim como o calor extremo, o frio extremo também tem efeito sobre a saúde respiratória, com relevância maior para regiões de clima mais frio ou de altitude — e, na Amazônia, para as incursões de ar polar conhecidas como friagem. Este capítulo acompanha esse recorte em uma sequência completa, e é o único dos quatro estudos de caso que usa um desenho quase-experimental (Capítulo 6) em vez do núcleo temporal DLNM. Público principal: acadêmico e gestor técnico responsável por planos de contingência para frio extremo.</p>
+<p>No recorte de calor e frio do Capítulo 0, apresentamos brevemente o outro lado do espectro de temperatura: assim como o calor extremo, o frio extremo também tem efeito sobre a saúde respiratória, com relevância maior para regiões de clima mais frio ou de altitude — e, na Amazônia, para as incursões de ar polar conhecidas como friagem. Este capítulo acompanha esse recorte em uma sequência completa, e é o único dos quatro estudos de caso que começa por um desenho quase-experimental (Capítulo 6); a replicação mostra por que o ITS, sozinho, não responde à pergunta e completa o caso com um DLNM. Público principal: acadêmico e gestor técnico responsável por planos de contingência para frio extremo.</p>
 <section id="o-pipeline-completo-etapa-por-etapa" class="level2">
 <h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
 <p>Recorte: internações respiratórias (SIH, CID-10 <code>J09</code>-<code>J18</code>, pneumonias e influenza) em <strong>Porto Alegre (RS)</strong>, 2010-2019, contra ondas de frio detectadas para a região Sul a partir da temperatura das estações INMET. O Modelo de catálogo <code>ec-04-hospitalizacoes-frio</code> traz este Pipeline pronto para carregar no Centro de Pipelines. A série analisada é de <strong>um único município</strong>; a detecção de ondas de frio é feita para o Sul e serve como contexto climático.</p>
-<p><a href="images/arco-ec04.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec04.svg" class="img-fluid" alt="Arco do caso ec-04 em quatro etapas — preparação no SIH-RD para J09-J18 em Porto Alegre, integração com ondas de frio, modelo de série interrompida e ação em leitos e alertas. À direita, a ficha do estudo; abaixo, a série observada e a tendência contrafactual, com a mudança de nível após o evento de frio."></a></p>
+<p><a href="images/arco-ec04.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec04.svg" class="img-fluid" alt="Arco do caso ec-04 em quatro etapas — preparação no SIH-RD para J09-J18 em Porto Alegre, integração com ondas de frio, modelo de série interrompida e ação em leitos e alertas. À direita, a ficha do estudo; abaixo, o esquema do ITS com série observada e contrafactual; a replicação mostra que a mudança de nível não é robusta."></a></p>
 <p><strong>Preparação</strong></p>
 <ol type="1">
 <li><strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>) — importa internações do sistema <code>SIH-RD</code>, região Sul, anos de 2010 a 2019, todos os meses (<code>month = 1:12</code>), porque a detecção de onda de frio por percentil precisa da distribuição do ano inteiro.</li>
@@ -380,7 +381,10 @@ ITS para um evento, não para todas as ondas de frio
 </section>
 <section id="dados-usados" class="level2">
 <h2 class="anchored" data-anchor-id="dados-usados">Dados usados</h2>
-<p><strong>Fonte:</strong> SIH-RD (DATASUS), internações por J09–J18 (pneumonias e influenza) em Porto Alegre (RS), 2010–2019, todos os meses. <strong>Recorte:</strong> série diária de um único município; a detecção de ondas de frio usa as estações INMET do Sul (método WHO, percentil 10, baseline 2010–2015). <strong>N:</strong> 3.810 dias (2009-07-17 a 2019-12-21); <strong>38.349 internações</strong>; média de 10,07 por dia; máximo de 34; sem dias ausentes. <strong>Evento:</strong> estação A801 (Porto Alegre), <strong>2011-07-03 a 2011-07-09</strong>, 7 dias; temperatura média 2,94 °C; distância da estação ao município 5,5 km. <strong>Snapshot:</strong> <code>data/ec04/analytic.parquet</code> (MD5 <code>cee0f28d72809b5365961b13c5e7ff91</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec04/codebook.csv</code>.</p>
+<p><strong>Fonte:</strong> SIH-RD (DATASUS), internações por J09–J18 (pneumonias e influenza) em Porto Alegre (RS), 2010–2019, todos os meses. <strong>Recorte:</strong> série diária de um único município; a detecção de ondas de frio usa as estações INMET do Sul (método WHO, percentil 10, baseline 2010–2015).</p>
+<p><strong>O que o snapshot fez:</strong> usou 3.810 dias (2009-07-17 a 2019-12-21), <strong>38.349 internações</strong>, e um ITS com tendência linear global, dois harmônicos, sem dia da semana e incluindo o ano parcial de 2009. O evento escolhido foi <strong>2011-07-03 a 2011-07-09</strong> (estação A801, 7 dias, temperatura média 2,94 °C).</p>
+<p><strong>O que a replicação fez:</strong> restringiu a 2010–2019 (3.639 dias; <strong>37.969 internações</strong>), incluiu dia da semana e quatro harmônicos, e comparou três especificações: ITS com janela total, ITS com janela local de ±365 dias e <strong>DLNM de temperatura contínua</strong> (0–21 dias, dia da semana, feriados, 7 df/ano, referência no MMT).</p>
+<p><strong>Snapshot:</strong> <code>data/ec04/analytic.parquet</code> (MD5 <code>cee0f28d72809b5365961b13c5e7ff91</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec04/codebook.csv</code>.</p>
 </section>
 <section id="resultados" class="level2">
 <h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
@@ -396,7 +400,7 @@ Figura&nbsp;17.1: Série diária de internações respiratórias em Porto Alegre
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> o eixo x é o dia; o eixo y é o número de internações. A série tem sazonalidade e um pico inicial em 2009–2010; o modelo ITS precisa separar tendência e sazonalidade antes de atribuir uma mudança ao evento.</p>
+<p><strong>Como ler:</strong> o eixo x é o dia; o eixo y é o número de internações. A série tem sazonalidade e um pico inicial em 2009–2010; o modelo precisa separar tendência e sazonalidade antes de atribuir uma mudança ao evento. O ano de 2009 é parcial e distorce a tendência global — por isso a replicação começa em 2010.</p>
 </section>
 <section id="ondas-de-frio-detectadas" class="level3">
 <h3 class="anchored" data-anchor-id="ondas-de-frio-detectadas">Ondas de frio detectadas</h3>
@@ -410,90 +414,179 @@ Figura&nbsp;17.2: Dias de onda de frio por ano na estação A801 (Porto Alegre).
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> as barras são os dias classificados como onda de frio (WHO, percentil 10, baseline 2010–2015) na estação de Porto Alegre. A detecção é descritiva; o ITS abaixo usa uma data de evento, não o indicador binário de onda.</p>
+<p><strong>Como ler:</strong> as barras são os dias classificados como onda de frio (WHO, percentil 10, baseline 2010–2015) na estação de Porto Alegre. A detecção é descritiva; o ITS usa uma data de evento, não o indicador binário de onda.</p>
 </section>
-<section id="série-temporal-interrompida" class="level3">
-<h3 class="anchored" data-anchor-id="série-temporal-interrompida">Série temporal interrompida</h3>
+<section id="série-temporal-interrompida-o-que-o-snapshot-mostrou" class="level3">
+<h3 class="anchored" data-anchor-id="série-temporal-interrompida-o-que-o-snapshot-mostrou">Série temporal interrompida: o que o snapshot mostrou</h3>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Medida</th>
-<th style="text-align: right;">Valor</th>
+<th style="text-align: right;">Snapshot</th>
+<th style="text-align: right;">Replicação (2010–2019, DOW + 4 harmônicos)</th>
+<th style="text-align: right;">Replicação (janela ±365 d)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Mudança imediata de nível (RR)</td>
-<td style="text-align: right;">0,62 (IC95% 0,58–0,66)</td>
+<td style="text-align: right;"><strong>0,62 (0,58–0,66)</strong></td>
+<td style="text-align: right;"><strong>0,87 (0,82–0,92)</strong></td>
+<td style="text-align: right;"><strong>1,01 (0,83–1,24)</strong></td>
 </tr>
 <tr class="even">
 <td>Mudança de tendência (razão anual)</td>
-<td style="text-align: right;">0,54 (IC95% —; p &lt; 0,001)</td>
+<td style="text-align: right;">0,54 (p &lt; 0,001)</td>
+<td style="text-align: right;">1,04</td>
+<td style="text-align: right;">1,07</td>
 </tr>
 <tr class="odd">
 <td>Data da interrupção</td>
+<td style="text-align: right;">2011-07-03</td>
+<td style="text-align: right;">2011-07-03</td>
 <td style="text-align: right;">2011-07-03</td>
 </tr>
 <tr class="even">
 <td>Dias no modelo</td>
 <td style="text-align: right;">3.810</td>
+<td style="text-align: right;">3.639</td>
+<td style="text-align: right;">731</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Como ler — com muita cautela:</strong> no modelo, o evento é seguido de uma <strong>queda</strong> de internações (RR 0,62), não de um aumento. Isso é contraintuitivo para frio e não deve ser lido como “frio protege”. O ITS controla tendência e harmônicos, mas <strong>não controla temperatura contínua, poluição, influenza/RSV, mudanças de codificação ou cobertura</strong>. Uma queda pode refletir sazonalidade, tendência, mudança de registro ou um evento que não funcionou como choque isolado.</p>
+<p><strong>Como ler — o ponto central do capítulo:</strong> o ITS do snapshot estima uma <strong>queda de 38%</strong> nas internações (RR 0,62), contraintuitiva para frio. Quando se corrigem a tendência, o dia da semana e o ano parcial, a queda encolhe para 13% (RR 0,87); quando se olha apenas a janela local de ±365 dias, o efeito <strong>desaparece</strong> (RR 1,01; IC 0,83–1,24). A série bruta mostra internações <strong>mais altas</strong> nas semanas seguintes ao evento (médias semanais de 14,4 → 18,3 → 17,6), não uma queda. O “efeito” de 0,62 é a distância entre a tendência global e o nível pós-evento, não um efeito do frio.</p>
 <div id="fig-ec04-its" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec04-its-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec04/its_contrafactual.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;17.3: Série observada e contrafactual em janela de ±180 dias ao redor do evento."><img src="images/results/ec04/its_contrafactual.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec04/its_contrafactual.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;17.3: Série observada e contrafactual do snapshot em janela de ±180 dias ao redor do evento."><img src="images/results/ec04/its_contrafactual.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec04-its-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;17.3: Série observada e contrafactual em janela de ±180 dias ao redor do evento.
+Figura&nbsp;17.3: Série observada e contrafactual do snapshot em janela de ±180 dias ao redor do evento.
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> a linha cinza é a série observada; a tracejada é o contrafactual (tendência e sazonalidade pré-evento projetadas); a faixa é a incerteza; a linha vertical é o evento. A janela é de ±180 dias. A projeção de longo prazo (9 anos) <strong>não é mostrada</strong> porque a extrapolação linear explode e não é crível. Mesmo nesta janela, o contrafactual é uma projeção, não uma prova do que teria acontecido.</p>
+<p><strong>Como ler:</strong> a linha cinza é a série observada; a tracejada é o contrafactual do snapshot; a linha vertical é o evento. A janela é de ±180 dias. A projeção de longo prazo (9 anos) <strong>não é mostrada</strong> porque a extrapolação linear explode e não é crível. A figura é do snapshot; a tabela acima mostra que a janela local não sustenta a mudança de nível.</p>
+</section>
+<section id="replicação-com-dlnm-a-resposta-principal" class="level3">
+<h3 class="anchored" data-anchor-id="replicação-com-dlnm-a-resposta-principal">Replicação com DLNM: a resposta principal</h3>
+<p>Como o ITS depende de uma data e de uma tendência global, a pergunta “o frio aumenta internações?” foi reestimada com <strong>DLNM de temperatura contínua</strong> na mesma cidade:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Medida</th>
+<th style="text-align: right;">Replicação (DLNM, cidade)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Série</td>
+<td style="text-align: right;">3.639 dias, 37.969 internações</td>
+</tr>
+<tr class="even">
+<td>MMT</td>
+<td style="text-align: right;"><strong>22,7 °C (p68)</strong></td>
+</tr>
+<tr class="odd">
+<td>RR no p01 (frio) vs MMT</td>
+<td style="text-align: right;"><strong>1,52 (1,24–1,87)</strong></td>
+</tr>
+<tr class="even">
+<td>RR no p05 (frio) vs MMT</td>
+<td style="text-align: right;"><strong>1,43 (1,23–1,67)</strong></td>
+</tr>
+<tr class="odd">
+<td>RR no p99 (calor) vs MMT</td>
+<td style="text-align: right;">1,42 (1,16–1,74)</td>
+</tr>
+<tr class="even">
+<td>AF total</td>
+<td style="text-align: right;"><strong>12,7% (7,3–16,9)</strong></td>
+</tr>
+<tr class="odd">
+<td>AF frio / calor</td>
+<td style="text-align: right;">10,5% / 2,2%</td>
+</tr>
+<tr class="even">
+<td>Dispersão</td>
+<td style="text-align: right;">1,17</td>
+</tr>
+<tr class="odd">
+<td>Autocorrelação residual</td>
+<td style="text-align: right;">p = 0,72</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Como ler:</strong> o DLNM recupera o sinal esperado — frio aumenta internações respiratórias — com RR 1,52 no p01 e AF de 12,7%, dominada pelo frio (10,5%). O calor extremo também aparece (RR 1,42 no p99), o que é plausível em Porto Alegre: tanto a friagem quanto as ondas de calor do verão sobrecarregam o sistema respiratório. A magnitude é maior que a literatura nacional (RR 1,07; IC 1,01–1,14, para todas as causas respiratórias), o que é compatível com o recorte mais estreito (J09–J18), a cidade do Sul e o desenho de série única.</p>
+<p><strong>Comparação com a literatura.</strong> O estudo nacional de frio e internações cardiorrespiratórias (Environ Res, 2023) estimou RR 1,07 (1,01–1,14) para respiratório e 1,17 (1,07–1,27) para cardiovascular; em Campo Grande, o frio foi associado a RR 1,48 (1,23–1,79) em idosos. A direção é consistente; a magnitude da réplica fica entre esses valores.</p>
 </section>
 </section>
 <section id="interpretando-o-resultado" class="level2">
 <h2 class="anchored" data-anchor-id="interpretando-o-resultado">Interpretando o resultado</h2>
-<p>Este é o único dos quatro estudos de caso que não usa <strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>). A escolha de <strong>Avaliar impacto com série interrompida</strong> (<code>sus_mod_its</code>) — em vez do núcleo temporal completo — segue o critério apresentado no Capítulo 6: perguntas sobre <strong>um evento específico</strong> (aqui, “o que muda nas internações de Porto Alegre quando ocorre um evento de frio delimitado?”) tendem a ser respondidas por um desenho quase-experimental, sem exigir o ajuste mais pesado de um Modelo DLNM completo. O Resultado de <strong>Avaliar impacto com série interrompida</strong> (<code>sus_mod_its</code>) estima se houve mudança de nível (alta ou queda nas internações no início do evento) e/ou de tendência (uma inclinação diferente enquanto o evento persiste).</p>
-<p>Há uma diferença importante em relação ao Capítulo 9: calor extremo usou DLNM porque o interesse era a curva completa de exposição-resposta ao longo de toda a série; aqui, o interesse é mais pontual (o efeito de períodos específicos de onda de frio), o que favorece o ITS. Nada impede repetir este mesmo recorte com <strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>) se o objetivo for uma curva de exposição-resposta completa para temperaturas baixas — os dois desenhos respondem perguntas diferentes, não são mutuamente exclusivos.</p>
-<p>Não há limiar universal de onda de frio: o percentil 10 é relativo à distribuição local e precisa ser informado junto com o período de referência. Este template usa uma referência fixa de 2010–2015; são cinco anos, uma base curta que deve ser declarada como limitação.</p>
+<p>Há duas perguntas diferentes neste capítulo, e elas não devem ser confundidas:</p>
+<ol type="1">
+<li><strong>“O que mudou depois deste evento específico?”</strong> — o ITS responde, mas de forma frágil: 0,62 no snapshot, 0,87 com tendência/DOW corrigidos e 1,01 na janela local. A sensibilidade mostra que o número não é robusto a decisões de especificação.</li>
+<li><strong>“O frio aumenta internações?”</strong> — o DLNM responde com uma curva completa: RR 1,52 no p01 e AF de 12,7%, com frio dominante. Esta é a resposta que sustenta uma leitura epidemiológica.</li>
+</ol>
+<p>O ITS não é inútil: ele é útil para avaliar <strong>intervenções</strong> ou eventos bem delimitados, com tendência bem especificada e janela pré-definida. O erro do snapshot foi tratar uma data de frio como se fosse uma intervenção única, com uma tendência global de nove anos e sem dia da semana. A leitura correta do ITS é <strong>um exercício de sensibilidade</strong>, não a manchete do caso.</p>
+<p>Limitações: o DLNM não ajusta poluição, influenza/RSV, mudanças de codificação ou cobertura do SIH; usa uma única estação (A801); e é ecológico. A AF é populacional, não individual. A magnitude maior que a literatura nacional pode refletir o recorte J09–J18 e a maior intensidade do frio no Sul, mas também especificação e poder.</p>
 </section>
 <section id="numeros-ec04" class="level2">
 <h2 class="anchored" data-anchor-id="numeros-ec04">O que os números mostram</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Pergunta</th>
-<th>Resposta neste snapshot</th>
+<th>Snapshot (ITS)</th>
+<th>Replicação (DLNM)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>O evento mudou o nível das internações?</td>
-<td>Sim, para baixo: RR 0,62 (IC95% 0,58–0,66).</td>
+<td>Sim, para baixo: RR 0,62</td>
+<td>Não de forma robusta: 0,87 (total) e 1,01 (±365 d)</td>
 </tr>
 <tr class="even">
-<td>O evento mudou a tendência?</td>
-<td>Sim, para baixo: razão anual 0,54 (p &lt; 0,001).</td>
+<td>O frio aumenta internações?</td>
+<td>Não estimado</td>
+<td><strong>Sim: RR p01 1,52 (1,24–1,87)</strong></td>
 </tr>
 <tr class="odd">
-<td>Qual evento foi usado?</td>
-<td>A801 (Porto Alegre), 2011-07-03 a 2011-07-09, 7 dias.</td>
+<td>Qual é a carga do frio?</td>
+<td>Não estimada</td>
+<td><strong>AF 10,5% (frio); 12,7% total</strong></td>
 </tr>
 <tr class="even">
+<td>O resultado vale para todas as ondas?</td>
+<td>Não</td>
+<td>Não; é uma curva média, não um evento</td>
+</tr>
+<tr class="odd">
 <td>O contrafactual é crível no longo prazo?</td>
-<td>Não; a projeção de 9 anos explode. Mostramos apenas ±180 dias.</td>
+<td>Não; a projeção de 9 anos explode</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
-<p><strong>O que não podemos concluir:</strong> que o frio proteja; que o evento tenha causado a queda; que o resultado valha para todas as ondas de frio. O ITS controla tendência e sazonalidade, mas não temperatura contínua, poluição, influenza/RSV, codificação ou cobertura. A queda pode ser sazonalidade, tendência, mudança de registro ou um evento que não funcionou como choque isolado.</p>
-<p><strong>Antes de concluir:</strong> teste um DLNM com temperatura contínua, um indicador de onda de frio, outra data de evento e covariáveis (poluição, influenza); verifique a codificação do SIH e a cobertura ao longo do período.</p>
+<p><strong>O que não podemos concluir:</strong> que o frio proteja; que o evento de 2011 tenha causado a queda de 0,62; que o RR 1,52 valha para cada onda de frio ou cada pessoa. O ITS controla tendência e sazonalidade, mas não temperatura contínua, poluição, influenza/RSV, codificação ou cobertura. A queda do snapshot pode ser tendência, sazonalidade, mudança de registro ou um evento que não funcionou como choque isolado.</p>
+<p><strong>Antes de concluir:</strong> teste outra data de evento, um indicador de onda de frio, covariáveis (poluição, influenza/RSV) e verifique a codificação/cobertura do SIH. A janela local deve ser pré-especificada, não escolhida depois de ver o resultado.</p>
+</section>
+<section id="o-que-isso-significa-para-ação" class="level2">
+<h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
+<p>A resposta principal é que <strong>o frio aumenta internações respiratórias</strong> em Porto Alegre (RR 1,52; AF 10,5%), e que o ITS de 0,62 <strong>não</strong> deve ser usado para dimensionar um plano de contingência nem para afirmar que o frio protege. A ação responsável é usar o DLNM para a curva de risco, reservar o ITS para avaliar intervenções específicas e checar codificação/cobertura do SIH.</p>
+<p>Na Amazônia, o mesmo desenho pode apoiar planos para a friagem, com atenção a populações ribeirinhas e a moradias sem isolamento térmico — mas somente depois de um resultado consistente e com a exposição adequada (temperatura mínima, duração do frio e umidade).</p>
+<p>Com este capítulo, os quatro estudos de caso do guia — respiratório, dengue, calor e frio — retomam os recortes de fumaça, chuva e calor/frio apresentados no Capítulo 0. O recorte de seca e isolamento, também apresentado lá, não tem estudo de caso próprio; a mesma sequência de Preparação, Integração e Modelagem se aplica, com desfechos de água, alimentos, malária e continuidade do cuidado. Para levar qualquer um deles além do Studio — relatório técnico ou nova execução — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando fontes, parâmetros e limitações.</p>
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
@@ -501,14 +594,12 @@ Figura&nbsp;17.3: Série observada e contrafactual em janela de ±180 dias ao re
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para reaproveitar o parquet e refazer o ITS no evento A801:</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04b-ec04-its.R</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># para gerar a janela de ±180 dias:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04c-ec04-window-plot.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04c-ec04-window-plot.R</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># replicação cidade-específica (Porto Alegre, A801, ITS + DLNM):</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/00-build-city-climate.R</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> book/scripts/90-replicacao/prep_city_series.py</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/01-fit-replicacao.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>O script grava a tabela analítica em <code>data/ec04/analytic.parquet</code>, as tabelas em <code>tables/results/ec04/</code>, as figuras em <code>images/results/ec04/</code> e os metadados em <code>results/ec04.json</code>. O snapshot usado neste capítulo foi gerado em 26/10/2026.</p>
-</section>
-<section id="o-que-isso-significa-para-ação" class="level2">
-<h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
-<p>Este resultado <strong>não mostra aumento</strong> de internações durante o evento; ele mostra uma queda (RR 0,62). Portanto, não use este número para dimensionar um plano de contingência de frio nem para afirmar que o frio protege. A ação responsável é revisar o desenho: DLNM com temperatura contínua, indicador de onda de frio, outra data de evento, covariáveis (poluição, influenza/RSV) e checagem de codificação/cobertura do SIH.</p>
-<p>Na Amazônia, o mesmo desenho pode apoiar planos para a friagem, com atenção a populações ribeirinhas e a moradias sem isolamento térmico — mas somente depois de um resultado consistente.</p>
-<p>Com este capítulo, os quatro estudos de caso do guia — respiratório, dengue, calor e frio — retomam os recortes de fumaça, chuva e calor/frio apresentados no Capítulo 0. O recorte de seca e isolamento, também apresentado lá, não tem estudo de caso próprio; a mesma sequência de Preparação, Integração e Modelagem se aplica, com desfechos de água, alimentos, malária e continuidade do cuidado. Para levar qualquer um deles além do Studio — relatório técnico ou nova execução — use <strong>Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando fontes, parâmetros e limitações.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -522,11 +613,13 @@ Verifique se ficou
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>1. Por que este Pipeline usa Avaliar impacto com série interrompida (<code>sus_mod_its</code>) em vez de Modelar risco com DLNM (<code>sus_mod_dlnm</code>), diferente dos Capítulos 7 a 9?</strong></p>
-<p>Porque a pergunta de interesse aqui é mais pontual — o efeito de <strong>um evento de frio delimitado</strong> sobre o nível/tendência das internações — um desenho quase-experimental como o ITS responde bem a esse tipo de pergunta sem exigir o ajuste completo de uma curva de exposição-resposta como o DLNM.</p>
+<p>Porque a pergunta do template é mais pontual — o efeito de <strong>um evento de frio delimitado</strong> sobre o nível/tendência das internações. O ITS é o desenho indicado para essa pergunta, mas a replicação mostra que ele é frágil: o resultado muda de 0,62 para 0,87 com tendência/DOW corrigidos e para 1,01 na janela local. Sem tendência bem especificada e janela pré-definida, o ITS não sustenta a leitura.</p>
 <p><strong>2. Detectar ondas de frio (<code>sus_climate_compute_coldwaves</code>) usa percentil 10 como limiar, o espelho do percentil 90 usado para calor no Capítulo 9. O que esse limiar representa?</strong></p>
 <p>Um limiar baseado na distribuição histórica local de temperatura (os 10% dos dias mais frios, ou os 10% dos dias mais quentes) — não um valor absoluto fixo — o que permite que a mesma metodologia se adapte a climas regionais diferentes. Registre a classificação e o período de referência usados.</p>
 <p><strong>3. O texto diz que nada impede repetir este recorte com Modelar risco com DLNM (<code>sus_mod_dlnm</code>). O que se ganharia com isso, que o ITS não oferece?</strong></p>
-<p>Uma curva de exposição-resposta completa relacionando qualquer nível de temperatura (não só os períodos classificados como onda de frio) ao risco de internação, incluindo a estrutura de defasagem ao longo dos dias — informação mais detalhada do que a mudança de nível/tendência que o ITS reporta.</p>
+<p>Uma curva de exposição-resposta completa relacionando qualquer nível de temperatura (não só os períodos classificados como onda de frio) ao risco de internação, incluindo a estrutura de defasagem ao longo dos dias. A replicação fez exatamente isso e encontrou RR 1,52 (1,24–1,87) no p01, com AF de 12,7% — a resposta epidemiológica que o ITS não entrega.</p>
+<p><strong>4. Por que o ITS do snapshot dá 0,62 e o DLNM dá 1,52 no p01?</strong></p>
+<p>Porque respondem perguntas diferentes. O ITS compara o nível pós-evento com uma tendência global de nove anos; com o ano parcial de 2009, sem dia da semana e com dois harmônicos, a tendência absorve a sazonalidade e produz uma “queda” que não aparece na janela local (1,01). O DLNM estima a curva de temperatura contínua ao longo de toda a série, com defasagem e controle sazonal, e recupera o efeito de frio (RR 1,52). O ITS é um exercício de especificação; o DLNM é a resposta epidemiológica.</p>
 </div>
 </div>
 </div>

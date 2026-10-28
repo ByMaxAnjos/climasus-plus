@@ -291,7 +291,7 @@ que outros fatores não foram medidos) e continua sujeita à mesma cautela de se
 associação, mesmo bem modelada estatisticamente, não é prova de causa isolada; é a
 melhor explicação que os dados e o Modelo sustentam até que surja evidência que a
 contradiga. O Resultado permanece no Pipeline do Studio. Para preservar o trabalho, use
-**Salvar projeto**, que registra nós e parâmetros, e **Exportar `.R`**, que gera o código
+**Arquivo → Salvar projeto**, que registra nós e parâmetros, e **Exportar `.R`**, que gera o código
 equivalente para revisão ou execução em outro ambiente. Esses arquivos não substituem a
 avaliação metodológica nem garantem que fontes externas, versões de dados e dependências
 permaneçam iguais.

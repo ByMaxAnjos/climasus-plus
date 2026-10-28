@@ -303,9 +303,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#dados-usados" id="toc-dados-usados" class="nav-link" data-scroll-target="#dados-usados">Dados usados</a></li>
   <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">Resultados</a>
   <ul class="collapse">
-  <li><a href="#série-e-cobertura" id="toc-série-e-cobertura" class="nav-link" data-scroll-target="#série-e-cobertura">Série e cobertura</a></li>
-  <li><a href="#modelo-dlnm" id="toc-modelo-dlnm" class="nav-link" data-scroll-target="#modelo-dlnm">Modelo DLNM</a></li>
-  <li><a href="#fração-atribuível" id="toc-fração-atribuível" class="nav-link" data-scroll-target="#fração-atribuível">Fração atribuível</a></li>
+  <li><a href="#série-e-cobertura-snapshot" id="toc-série-e-cobertura-snapshot" class="nav-link" data-scroll-target="#série-e-cobertura-snapshot">Série e cobertura (snapshot)</a></li>
+  <li><a href="#modelo-dlnm-snapshot-e-replicação" id="toc-modelo-dlnm-snapshot-e-replicação" class="nav-link" data-scroll-target="#modelo-dlnm-snapshot-e-replicação">Modelo DLNM: snapshot e replicação</a></li>
+  <li><a href="#fração-atribuível-por-que-não-reportar" id="toc-fração-atribuível-por-que-não-reportar" class="nav-link" data-scroll-target="#fração-atribuível-por-que-não-reportar">Fração atribuível: por que não reportar</a></li>
   </ul></li>
   <li><a href="#interpretando-o-resultado" id="toc-interpretando-o-resultado" class="nav-link" data-scroll-target="#interpretando-o-resultado">Interpretando o resultado</a></li>
   <li><a href="#numeros-ec01" id="toc-numeros-ec01" class="nav-link" data-scroll-target="#numeros-ec01">O que os números mostram</a></li>
@@ -338,12 +338,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>No recorte de fumaça e qualidade do ar do Capítulo 0, apresentamos a ideia de que fumaça de queimada e má qualidade do ar podem se transformar em crise respiratória — com crianças pequenas entre os grupos mais vulneráveis. Este capítulo retoma o desfecho respiratório pediátrico em uma sequência completa, usando a temperatura como exposição principal e a umidade como covariável; fumaça e poluição entram como extensão do Pipeline. Vai do dado bruto do SIM-DO à fração atribuível, pelas três Etapas percorridas nos capítulos anteriores. Público principal: acadêmico e gestor técnico que já percorreram o piloto e querem ver um Pipeline inteiro montado, sem interrupção entre Etapas.</p>
+<p>No recorte de fumaça e qualidade do ar do Capítulo 0, apresentamos a ideia de que fumaça de queimada e má qualidade do ar podem se transformar em crise respiratória — com crianças pequenas entre os grupos mais vulneráveis. Este capítulo retoma o desfecho respiratório pediátrico em uma sequência completa, usando a temperatura como exposição principal e a umidade como covariável; fumaça e poluição entram como extensão do Pipeline. Vai do dado bruto do SIM-DO à fração atribuível, pelas três Etapas percorridas nos capítulos anteriores. Público principal: acadêmico e gestor técnico que já percorreram o piloto e querem ver um Pipeline inteiro montado, sem interrupção entre Etapas. O capítulo também é uma lição de <strong>poder e unidade de análise</strong>: o resultado correto deste recorte é “não estimável”, e a replicação mostra por quê.</p>
 <section id="o-pipeline-completo-etapa-por-etapa" class="level2">
 <h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
 <p>Recorte: óbitos por causas respiratórias (CID-10, capítulo J) em crianças menores de 5 anos, no Sudeste (SP, RJ, MG, ES), 2015-2019, contra a temperatura do ar registrada pelas estações do INMET. O Modelo de catálogo <code>ec-01-respiratorio-pediatrico</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
-<p>O exemplo usa o Sudeste para manter continuidade com o caso ec-01. O mesmo Pipeline se aplica à Amazônia, onde a exposição principal pode ser MP2,5 ou fumaça e a série climática deve vir de grade; a lógica de Preparação, Integração e Modelagem é a mesma.</p>
-<p><a href="images/arco-ec01.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec01.svg" class="img-fluid" alt="Arco do caso ec-01 em quatro etapas — preparação no SIM-DO, integração com temperatura e umidade, modelagem DLNM e impacto com fração atribuível. À direita, a ficha do estudo com fonte, CID, população, território e período; abaixo, a curva em U do risco relativo por temperatura com o mínimo de mortalidade."></a></p>
+<p>O snapshot usa o Sudeste para manter continuidade com o caso ec-01; a replicação cidade-específica usa a capital paulista, porque a agregação regional não corresponde a nenhuma exposição real. O mesmo Pipeline se aplica à Amazônia, onde a exposição principal pode ser MP2,5 ou fumaça e a série climática deve vir de grade; a lógica de Preparação, Integração e Modelagem é a mesma.</p>
+<p><a href="images/arco-ec01.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec01.svg" class="img-fluid" alt="Arco do caso ec-01 em quatro etapas — preparação no SIM-DO, integração com temperatura e umidade, modelagem DLNM e impacto com fração atribuível. À direita, a ficha do estudo com fonte, CID, população, território e período; abaixo, a curva esquemática em U do risco relativo; a replicação cidade-específica não estabiliza essa curva."></a></p>
 <p><strong>Preparação</strong></p>
 <ol type="1">
 <li><strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>) — importa óbitos do sistema <code>SIM-DO</code>, UFs <code>SP</code>, <code>RJ</code>, <code>MG</code>, <code>ES</code>, anos de 2015 a 2019.</li>
@@ -352,13 +352,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Filtrar por CID-10 ou grupo de doença</strong> (<code>sus_data_filter_cid</code>) — filtra pelo grupo de doença respiratório.</li>
 <li><strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) — cria faixas etárias (<code>c(0, 5, 15, 60, Inf)</code>) e variáveis de calendário.</li>
 <li><strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) — recorta para a faixa etária <code>c(0, 5)</code>, isolando a população pediátrica.</li>
-<li><strong>Agregar dados em série temporal</strong> (<code>sus_data_aggregate</code>) — agrega a série por <strong>semana</strong>, com <code>complete_dates = TRUE</code>. A resolução semanal é compatível com as defasagens em dias usadas no DLNM e evita a sobreposição quase total das janelas mensais.</li>
+<li><strong>Agregar dados em série temporal</strong> (<code>sus_data_aggregate</code>) — agrega a série por <strong>semana</strong>, com <code>complete_dates = TRUE</code>. Um desfecho semanal exige defasagens em <strong>semanas</strong>; o snapshot manteve 21 lags diários, o que a replicação corrige para 0–3 semanas.</li>
 </ol>
 <p><strong>Integração</strong></p>
 <ol start="8" type="1">
 <li><strong>Juntar dados a limites geográficos</strong> (<code>sus_spatial_join</code>) — liga a série de saúde aos municípios, pré-requisito para o cruzamento com clima.</li>
 <li><strong>Importar dados das estações do INMET</strong> (<code>sus_climate_inmet</code>) — traz temperatura e umidade das estações INMET das mesmas UFs e anos.</li>
-<li><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>) — cria as colunas de defasagem de <strong>0 a 21 dias</strong> para as variáveis climáticas disponíveis, com <code>temporal_strategy = "distributed_lag"</code>. A umidade entra como covariável no modelo.</li>
+<li><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>) — cria as colunas de defasagem para as variáveis climáticas disponíveis, com <code>temporal_strategy = "distributed_lag"</code>. No snapshot foram 0–21 <strong>dias</strong>; na replicação semanal, 0–3 <strong>semanas</strong>. A umidade entra como covariável no modelo.</li>
 </ol>
 <p><strong>Análise &amp; Modelagem</strong></p>
 <ol start="11" type="1">
@@ -369,174 +369,220 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="dados-usados" class="level2">
 <h2 class="anchored" data-anchor-id="dados-usados">Dados usados</h2>
-<p><strong>Fonte:</strong> SIM-DO (DATASUS), óbitos por causas respiratórias (CID-10 capítulo J) em menores de 5 anos, em SP, RJ, MG e ES, 2015–2019. <strong>Recorte:</strong> série semanal por município; a exposição é a temperatura do ar na estação INMET mais próxima, com a umidade relativa como covariável. <strong>N:</strong> 187.330 linhas município-semana; 715 municípios; 262 semanas (2014-12-28 a 2019-12-29). O modelo agrega os municípios por semana: <strong>258 semanas</strong> e <strong>4.765 óbitos</strong> no período; após as defasagens, a AF usa <strong>4.715</strong> óbitos. <strong>Snapshot:</strong> <code>data/ec01/analytic.parquet</code> (MD5 <code>ebeb29b507eaff67a7cd051ccf7337a1</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec01/codebook.csv</code>. <strong>Avisos do Motor:</strong> dispersão moderada (1,68) e autocorrelação residual (Ljung-Box p &lt; 0,001).</p>
+<p><strong>Fonte:</strong> SIM-DO (DATASUS), óbitos por causas respiratórias (CID-10 capítulo J) em menores de 5 anos, em SP, RJ, MG e ES, 2015–2019. <strong>Recorte do snapshot:</strong> série semanal por município; a exposição é a temperatura do ar na estação INMET mais próxima, com a umidade relativa como covariável.</p>
+<p><strong>O que o snapshot fez:</strong> manteve 715 municípios e deixou <code>sus_mod_dlnm()</code> agregar tudo por semana. O modelo resultante tem <strong>258 semanas e 4.765 óbitos</strong> — uma série regional, não uma cidade. A exposição é a média das exposições municipais, e as 21 colunas de lag são <strong>dias</strong> aplicados a um desfecho <strong>semanal</strong>.</p>
+<p><strong>O que a replicação fez:</strong> filtrou o município de São Paulo (código 355030), usou a estação A701 (Mirante), reconstruiu a temperatura semanal a partir da série diária e criou defasagens em <strong>semanas</strong> (0–3). Série de 259 semanas e <strong>757 óbitos</strong>; modelo semanal com temperatura (ns, 3 df), umidade da semana e 10 df de tendência. O filtro municipal é feito no script de replicação, antes do modelo; o template do catálogo importa as UFs inteiras.</p>
+<p><strong>Snapshot:</strong> <code>data/ec01/analytic.parquet</code> (MD5 <code>ebeb29b507eaff67a7cd051ccf7337a1</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec01/codebook.csv</code>. <strong>Avisos do Motor (snapshot):</strong> dispersão 1,68 (moderada) e autocorrelação residual (Ljung-Box p &lt; 0,001). <strong>Replicação:</strong> dispersão 1,19; Ljung-Box p = 0,022.</p>
 </section>
 <section id="resultados" class="level2">
 <h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
-<section id="série-e-cobertura" class="level3">
-<h3 class="anchored" data-anchor-id="série-e-cobertura">Série e cobertura</h3>
+<section id="série-e-cobertura-snapshot" class="level3">
+<h3 class="anchored" data-anchor-id="série-e-cobertura-snapshot">Série e cobertura (snapshot)</h3>
 <div id="fig-ec01-serie" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec01-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec01/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019."><img src="images/results/ec01/serie.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec01/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019 (snapshot)."><img src="images/results/ec01/serie.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019.
+Figura&nbsp;14.1: Série semanal de óbitos respiratórios pediátricos no Sudeste, 2015–2019 (snapshot).
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> o eixo x é a semana; o eixo y é o número de óbitos notificados. A série tem sazonalidade e anos com picos diferentes; o modelo precisa separar essa sazonalidade da exposição climática. O gráfico descreve a série, não o efeito da temperatura.</p>
+<p><strong>Como ler:</strong> o eixo x é a semana; o eixo y é o número de óbitos notificados. A série tem sazonalidade e anos com picos diferentes; o modelo precisa separar essa sazonalidade da exposição climática. A figura é do snapshot regional; a réplica cidade-específica tem 757 óbitos e está na tabela adiante.</p>
 </section>
-<section id="modelo-dlnm" class="level3">
-<h3 class="anchored" data-anchor-id="modelo-dlnm">Modelo DLNM</h3>
+<section id="modelo-dlnm-snapshot-e-replicação" class="level3">
+<h3 class="anchored" data-anchor-id="modelo-dlnm-snapshot-e-replicação">Modelo DLNM: snapshot e replicação</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 42%">
-<col style="width: 57%">
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Medida</th>
-<th style="text-align: right;">Valor</th>
+<th style="text-align: right;">Snapshot (Sudeste, 715 municípios)</th>
+<th style="text-align: right;">Replicação (cidade de SP)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>RR no p75 de temperatura (24,1 °C) vs referência (22,6 °C)</td>
-<td style="text-align: right;">0,97 (IC95% 0,78–1,21)</td>
+<td>Unidade de análise</td>
+<td style="text-align: right;">715 municípios agregados</td>
+<td style="text-align: right;">1 município (355030)</td>
 </tr>
 <tr class="even">
-<td>Defasagem de pico</td>
-<td style="text-align: right;">0 dias</td>
+<td>Óbitos no modelo</td>
+<td style="text-align: right;">4.765</td>
+<td style="text-align: right;">757</td>
 </tr>
 <tr class="odd">
-<td>Semanas no modelo</td>
+<td>Semanas</td>
 <td style="text-align: right;">258</td>
+<td style="text-align: right;">259</td>
 </tr>
 <tr class="even">
-<td>Dispersão</td>
-<td style="text-align: right;">1,68 (moderada)</td>
+<td>Defasagem</td>
+<td style="text-align: right;">0–21 <strong>dias</strong> (sobre desfecho semanal)</td>
+<td style="text-align: right;">0–3 <strong>semanas</strong></td>
 </tr>
 <tr class="odd">
+<td>Referência</td>
+<td style="text-align: right;">mediana (22,6 °C)</td>
+<td style="text-align: right;">MMT 16,6 °C (p10)</td>
+</tr>
+<tr class="even">
+<td>RR no p75 vs referência</td>
+<td style="text-align: right;">0,97 (0,78–1,21)</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr class="odd">
+<td>RR no p90 vs MMT</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2,43 (1,48–4,01)</td>
+</tr>
+<tr class="even">
+<td>RR no p01 vs MMT</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0,66 (0,43–1,01)</td>
+</tr>
+<tr class="odd">
+<td>Dispersão</td>
+<td style="text-align: right;">1,68</td>
+<td style="text-align: right;">1,19</td>
+</tr>
+<tr class="even">
 <td>Autocorrelação residual</td>
 <td style="text-align: right;">p &lt; 0,001</td>
+<td style="text-align: right;">p = 0,022</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Como ler:</strong> o intervalo de 0,78 a 1,21 inclui 1; não há evidência de associação no p75 versus a referência. O pico em lag 0 não significa efeito imediato: a curva é larga e o modelo tem autocorrelação residual, o que estreita artificialmente a incerteza. O resultado é compatível com ausência de efeito ou com um efeito pequeno que este recorte não consegue separar.</p>
+<p><strong>Como ler — e por que este caso é diferente dos outros:</strong> a replicação cidade-específica <strong>não produz uma curva estável</strong>. O MMT cai no p10 (16,6 °C), o RR sobe a 2,43 no p90 e cai a 0,66 no p01 — uma forma invertida, sem sentido biológico para mortalidade respiratória pediátrica. Com 757 óbitos em 259 semanas (média de 2,9 por semana), o modelo não tem poder para estimar uma curva em U com três defasagens e 10 df de tendência.</p>
+<p><strong>O que isso significa:</strong> o resultado correto deste recorte não é “não há efeito” nem “a temperatura protege”. É <strong>não estimável com o desenho atual</strong>. O snapshot regional parecia ter poder (4.765 óbitos), mas o poder vinha de somar populações com exposições diferentes — uma média que não corresponde a nenhum território real. A réplica mostra que, ao corrigir a unidade, o problema de poder aparece.</p>
 <div id="fig-ec01-dlnm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec01-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec01/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;14.2: Curva exposição-resposta cumulativa para temperatura e óbitos respiratórios pediátricos."><img src="images/results/ec01/dlnm_overall.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec01/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;14.2: Curva exposição-resposta cumulativa do snapshot (Sudeste, referência mediana)."><img src="images/results/ec01/dlnm_overall.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.2: Curva exposição-resposta cumulativa para temperatura e óbitos respiratórios pediátricos.
+Figura&nbsp;14.2: Curva exposição-resposta cumulativa do snapshot (Sudeste, referência mediana).
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> o eixo x é a temperatura; o eixo y é o RR cumulativo. A curva é baixa nos extremos e máxima perto da referência, mas a faixa de confiança é ampla. Não leia o ponto de mínimo como “temperatura segura” individual.</p>
+<p><strong>Como ler:</strong> o eixo x é a temperatura; o eixo y é o RR cumulativo. A curva é baixa nos extremos e máxima perto da referência, mas a faixa de confiança é ampla. A figura é do snapshot regional; a réplica cidade-específica não estabiliza a curva. Não leia o ponto de mínimo como “temperatura segura” individual.</p>
 </section>
-<section id="fração-atribuível" class="level3">
-<h3 class="anchored" data-anchor-id="fração-atribuível">Fração atribuível</h3>
+<section id="fração-atribuível-por-que-não-reportar" class="level3">
+<h3 class="anchored" data-anchor-id="fração-atribuível-por-que-não-reportar">Fração atribuível: por que não reportar</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Componente</th>
-<th style="text-align: right;">AF (%)</th>
-<th style="text-align: right;">IC95%</th>
-<th style="text-align: right;">Número atribuível</th>
+<th style="text-align: right;">Snapshot (Sudeste)</th>
+<th style="text-align: right;">Replicação (cidade)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Total</td>
-<td style="text-align: right;">-29,1</td>
-<td style="text-align: right;">-50,7 a -12,3</td>
-<td style="text-align: right;">-1.370</td>
+<td style="text-align: right;">-29,1% (-50,7 a -12,3)</td>
+<td style="text-align: right;">41,6% (28,7–50,4)*</td>
 </tr>
 <tr class="even">
 <td>Calor</td>
-<td style="text-align: right;">-12,2</td>
-<td style="text-align: right;">-20,7 a -5,7</td>
-<td style="text-align: right;">-576</td>
+<td style="text-align: right;">-12,2% (-20,7 a -5,7)</td>
+<td style="text-align: right;">44,2%*</td>
 </tr>
 <tr class="odd">
 <td>Frio</td>
-<td style="text-align: right;">-16,8</td>
-<td style="text-align: right;">-29,8 a -6,2</td>
-<td style="text-align: right;">-794</td>
+<td style="text-align: right;">-16,8% (-29,8 a -6,2)</td>
+<td style="text-align: right;">-2,5%*</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Como ler — e por que este resultado não vira manchete:</strong> a AF saiu <strong>negativa</strong>. Isso não significa que a temperatura “protege”; significa que a referência (mediana), a forma da curva e a instabilidade do modelo produzem uma conta que não é interpretável como carga atribuível. Quando a AF é negativa, o correto é <strong>não reportar</strong> “29% dos óbitos evitados pelo clima” e voltar ao modelo: revisar referência (MMT), especificação, dispersão e autocorrelação. Este é um exemplo real de por que a fração atribuível não deve ser lida isolada da curva e dos diagnósticos.</p>
+<p>* AF não interpretável: MMT na borda (p10), curva invertida e apenas 757 eventos. O número não deve ser citado como carga.</p>
+<p><strong>Como ler — e por que este resultado não vira manchete:</strong> a AF do snapshot saiu <strong>negativa</strong> (-29,1%); a da replicação saiu <strong>positiva, mas igualmente inválida</strong> (41,6%). Nos dois casos, a conta não é interpretável como carga atribuível. Quando a AF é negativa ou quando a curva não estabiliza, o correto é <strong>não reportar</strong> um percentual de óbitos atribuíveis e voltar ao desenho: unidade de análise, unidade do lag, poder, referência e especificação. Este é um exemplo real de por que a fração atribuível não deve ser lida isolada da curva e dos diagnósticos.</p>
 <div id="fig-ec01-af" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec01-af-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec01/af_bar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;14.3: Fração atribuível por componente: as barras ficam abaixo de zero."><img src="images/results/ec01/af_bar.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec01/af_bar.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;14.3: Fração atribuível do snapshot: as barras ficam abaixo de zero."><img src="images/results/ec01/af_bar.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec01-af-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;14.3: Fração atribuível por componente: as barras ficam abaixo de zero.
+Figura&nbsp;14.3: Fração atribuível do snapshot: as barras ficam abaixo de zero.
 </figcaption>
 </figure>
 </div>
-<p><strong>Como ler:</strong> as barras de AF total, calor e frio estão abaixo de zero. Isso é um sinal de diagnóstico, não de “proteção”: a referência e a curva produzem uma conta que não se sustenta como carga atribuível.</p>
+<p><strong>Como ler:</strong> as barras de AF total, calor e frio estão abaixo de zero no snapshot. Isso é um sinal de diagnóstico, não de “proteção”: a referência e a curva produzem uma conta que não se sustenta como carga atribuível.</p>
 </section>
 </section>
 <section id="interpretando-o-resultado" class="level2">
 <h2 class="anchored" data-anchor-id="interpretando-o-resultado">Interpretando o resultado</h2>
-<p>O resultado real deste snapshot é um <strong>exemplo de modelo que não sustenta uma conclusão de carga</strong>. O RR no p75 inclui 1, a AF é negativa e os diagnósticos mostram autocorrelação residual e dispersão moderada. Isso não significa que a temperatura não importa; significa que este recorte — óbitos respiratórios em menores de 5 anos, 715 municípios, cinco anos, série semanal agregada — não é suficiente para estimar a relação com estabilidade.</p>
-<p>Antes de concluir qualquer coisa, o caminho é revisar o desenho:</p>
-<ul>
-<li>trocar a referência mediana por uma <strong>temperatura de mortalidade mínima (MMT)</strong> ou um valor pré-especificado;</li>
-<li>investigar a <strong>autocorrelação</strong> (harmônicos, <code>dof_per_year</code>, modelo com erro autorregressivo);</li>
-<li>testar <strong>agregação por estado/município</strong>, em vez de somar 715 municípios em uma série;</li>
-<li>adicionar <strong>poluição do ar</strong> e outras causas respiratórias;</li>
-<li><strong>não reportar a AF negativa</strong> como carga atribuível.</li>
-</ul>
+<p>O caso ec-01 é uma lição de <strong>poder e unidade de análise</strong>, não de ausência de efeito. Três decisões explicam o snapshot:</p>
+<ol type="1">
+<li><strong>Agregação regional.</strong> Somar 715 municípios e calcular a média das exposições produz uma série que não existe em nenhum lugar; o desfecho é uma soma populacional, a exposição é uma média espacial.</li>
+<li><strong>Lag na unidade errada.</strong> As 21 colunas diárias sobre um desfecho semanal são quase duplicatas; a janela de 21 dias não corresponde a três semanas de defasagem.</li>
+<li><strong>Poder real.</strong> A cidade de São Paulo tem 757 óbitos em cinco anos. Isso é suficiente para uma série descritiva, mas não para uma curva em U com três defasagens e 10 df de tendência.</li>
+</ol>
+<p>O caminho responsável é um desenho <strong>multicidade</strong>: ajustar um DLNM por capital (ou por município grande), com lags semanais, e combinar os resultados com <strong>Combinar DLNM entre cidades</strong> (<code>sus_mod_pool</code>) — ou usar uma série mais longa e agregação mensal, com menos parâmetros. Poluição (MP2,5/fumaça), causa específica e idade também precisam entrar. Sem isso, o resultado nulo do snapshot não deve ser interpretado como “temperatura não importa”.</p>
 </section>
 <section id="numeros-ec01" class="level2">
 <h2 class="anchored" data-anchor-id="numeros-ec01">O que os números mostram</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Pergunta</th>
-<th>Resposta neste snapshot</th>
+<th>Snapshot (Sudeste)</th>
+<th>Replicação (cidade)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>A temperatura no p75 se associa a mais óbitos?</td>
-<td>Não; RR 0,97 (IC95% 0,78–1,21), intervalo inclui 1.</td>
+<td>Não; RR 0,97 (0,78–1,21)</td>
+<td>Não estimável</td>
 </tr>
 <tr class="even">
 <td>Qual é a fração atribuível?</td>
-<td>Negativa (-29,1%); não é interpretável como carga.</td>
+<td>Negativa (-29,1%)</td>
+<td>41,6%, mas inválida</td>
 </tr>
 <tr class="odd">
 <td>O modelo está bem especificado?</td>
-<td>Não; há autocorrelação residual e dispersão 1,68.</td>
+<td>Não; autocorrelação e dispersão 1,68</td>
+<td>Não; MMT na borda e curva invertida</td>
 </tr>
 <tr class="even">
-<td>O que a série mostra?</td>
-<td>Sazonalidade e picos anuais; isso não é o efeito da temperatura.</td>
+<td>Qual é a conclusão?</td>
+<td>Não usar a AF</td>
+<td><strong>Não estimável com 757 eventos</strong></td>
+</tr>
+<tr class="odd">
+<td>O que fazer?</td>
+<td>Revisar o desenho</td>
+<td>Pool multicidade + lags semanais</td>
 </tr>
 </tbody>
 </table>
-<p><strong>O que não podemos concluir:</strong> que a temperatura não tenha efeito; que a AF negativa seja “proteção”; que uma criança específica tenha sido afetada. O resultado é compatível com ausência de efeito <strong>ou</strong> com um efeito que este desenho não consegue separar.</p>
+<p><strong>O que não podemos concluir:</strong> que a temperatura não tenha efeito; que a AF negativa (ou a AF de 41,6%) seja “proteção”; que uma criança específica tenha sido afetada. O resultado é compatível com <strong>ausência de poder</strong> para separar o efeito, não com ausência de efeito.</p>
 </section>
 <section id="o-que-isso-significa-para-ação" class="level2">
 <h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
-<p>Este é um caso de <strong>resultado nulo/instável</strong>, não de sucesso. A ação responsável não é montar um alerta com a AF negativa; é revisar o desenho antes de usar o número: referência (MMT), autocorrelação, agregação por estado/município, poluição e definição de caso. Um resultado assim é útil porque mostra, com dados reais, por que a etapa de diagnóstico existe.</p>
-<p>Na Amazônia, o mesmo desenho pode ser estendido para fumaça, mas a exposição precisa ser medida por MP2,5 ou focos de calor, e o modelo precisa lidar com a sazonalidade da queima. Sem essa extensão, a temperatura sozinha não sustenta uma conclusão de carga.</p>
-<p>Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução automatizada semanal com dados atualizados — use <strong>Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando fontes, filtros, versões, referência e limitações.</p>
+<p>Este é um caso de <strong>resultado não estimável</strong>, não de sucesso nem de nulo. A ação responsável não é montar um alerta com a AF; é revisar o desenho antes de usar o número: pooling multicidade, lags em semanas, mais anos, poluição e definição de caso. Um resultado assim é útil porque mostra, com dados reais, por que a etapa de diagnóstico e a unidade de análise existem.</p>
+<p>Na Amazônia, o mesmo desenho pode ser estendido para fumaça, mas a exposição precisa ser medida por MP2,5 ou focos de calor, e o modelo precisa lidar com a sazonalidade da queima. Sem essa extensão e sem pooling, a temperatura sozinha não sustenta uma conclusão de carga.</p>
+<p>Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução automatizada semanal com dados atualizados — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando fontes, filtros, versões, referência e limitações.</p>
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/01-run-ec01.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/01-run-ec01.R</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># replicação cidade-específica (São Paulo, A701, lags semanais):</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/00-build-city-climate.R</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> book/scripts/90-replicacao/prep_city_series.py</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/01-fit-replicacao.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>O script grava a tabela analítica em <code>data/ec01/analytic.parquet</code>, as tabelas em <code>tables/results/ec01/</code>, as figuras em <code>images/results/ec01/</code> e os metadados em <code>results/ec01.json</code>. O snapshot usado neste capítulo foi gerado em 26/10/2026.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
@@ -553,9 +599,11 @@ Verifique se ficou
 <p><strong>1. Por que este Pipeline usa a função Filtrar por características demográficas (<code>sus_data_filter_demographics</code>) com <code>age_range = c(0, 5)</code> depois de já ter criado faixas etárias mais largas com Criar variáveis derivadas (<code>sus_data_create_variables</code>)?</strong></p>
 <p><strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) cria a variável de faixa etária para toda a base (adequado se o Pipeline quisesse comparar faixas depois); <strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) é o Passo que efetivamente recorta a população de interesse (menores de 5 anos) para a análise deste capítulo.</p>
 <p><strong>2. O que o Resultado de Calcular fração atribuível (<code>sus_mod_af</code>) acrescenta que a curva de Visualizar resultados do DLNM (<code>sus_mod_plot_dlnm</code>), isoladamente, não mostra?</strong></p>
-<p>A curva DLNM mostra a forma da relação exposição-resposta e da defasagem; a fração atribuível traduz essa curva em uma proporção (e um número absoluto) de casos que podem ser atribuídos à exposição — o dado que efetivamente entra num argumento de política pública. <strong>Neste snapshot, porém, a AF saiu negativa</strong>, então a resposta correta é não usá-la como carga: primeiro é preciso revisar referência, dispersão e autocorrelação.</p>
+<p>A curva DLNM mostra a forma da relação exposição-resposta e da defasagem; a fração atribuível traduz essa curva em uma proporção (e um número absoluto) de casos que podem ser atribuídos à exposição — o dado que efetivamente entra num argumento de política pública. <strong>Neste snapshot, porém, a AF saiu negativa</strong>; na replicação cidade-específica ela saiu positiva (41,6%), mas também não é interpretável, porque o MMT caiu na borda e a curva não estabilizou. A resposta correta é não usá-la como carga: primeiro é preciso revisar unidade de análise, poder, referência e especificação.</p>
 <p><strong>3. Se o gestor público quiser incluir queimadas na análise, além de temperatura, que Função do catálogo ele adicionaria ao Pipeline, e em qual Etapa?</strong></p>
 <p><strong>Importar focos de queimadas</strong> (<code>sus_grid_fires</code>), ou uma função de poluição como <strong>Importar poluição do ar de alta resolução (GHAP)</strong> (<code>sus_grid_pollution_ghap</code>) — com CAMS (<code>sus_grid_pollution_cams</code>) como checagem de sensibilidade —, na Etapa Integração. Depois, esses dados entram junto à série de saúde por <strong>Juntar dados ambientais por município</strong> (<code>sus_grid_join</code>), antes de seguir para a Etapa Análise &amp; Modelagem.</p>
+<p><strong>4. Por que o snapshot tinha 4.765 óbitos e a replicação só 757?</strong></p>
+<p>Porque o snapshot somava 715 municípios do Sudeste; a replicação usa apenas a cidade de São Paulo. O número maior não significa mais poder estatístico: a exposição do snapshot era uma média de 715 municípios, que não corresponde a nenhum território real. Ao corrigir a unidade, o poder real (757 eventos em 259 semanas) aparece — e é insuficiente para uma curva em U estável.</p>
 </div>
 </div>
 </div>

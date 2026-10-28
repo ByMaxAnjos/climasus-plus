@@ -4,6 +4,8 @@
 **Data:** 27 de outubro de 2026.
 **Base:** resultados gravados em `book/tables/results/`, dados analíticos em `book/data/`, código do `climasus4r` e literatura publicada.
 **Artefatos desta reavaliação:** `book/scripts/90-replicacao/` e `book/results/replicacao/`.
+**Status:** resultados integrados aos capítulos 7–10 em 28/10/2026 (seções de Resultados,
+Interpretação, tabelas e perguntas de revisão).
 
 ---
 
@@ -244,6 +246,9 @@ O desenho publicado que recupera o sinal (Lowe 2021) usa **PDSI/chuva**, 558 mic
 9. **Template de replicação**: um pipeline que recebe uma estimativa publicada (RR, IC, exposição, lag) e devolve a comparação com o resultado local.
 
 ## 7. Recomendações para o livro
+
+**Status:** itens 1–4 e 6 (rótulo da figura) aplicados em 28/10/2026; o item 5 (caixa de
+métodos) permanece como próximo passo editorial.
 
 1. **ec-03**: substituir o contraste p75 (0,98) pelo contraste de cauda (p99 1,21; p01 1,67) e pela AF com MMT. A narrativa “dominado pelo frio” passa a ter suporte.
 2. **ec-04**: apresentar o ITS como **exercício de especificação** (0,62 → 0,87 → 1,01), não como efeito do frio; usar o DLNM como resultado principal.

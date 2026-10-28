@@ -27,7 +27,7 @@ que momento vale sair do padrão.
 
 | Função | Parâmetros principais | O que controlam | Quando ajustar |
 |---|---|---|---|
-| **Importar dados do DATASUS** (`sus_data_import`) | `system`, `uf`, `year`, `month` | Sistema de origem, território e período dos dados de saúde. | Sempre que mudar sistema, estado, ano ou recorte temporal. |
+| **Importar dados do DATASUS** (`sus_data_import`) | `system`, `uf`, `region`, `year`, `month` | Sistema de origem, território (estados ou uma região predefinida, opcional) e período dos dados de saúde. | Sempre que mudar sistema, estado, região, ano ou recorte temporal. |
 | **Ler dados exportados** (`sus_data_read`) | `path` | Arquivo ou pasta com dados já processados. | Quando a análise começa de uma base salva, não de nova importação. |
 | **Filtrar por CID-10 ou grupo de doença** (`sus_data_filter_cid`) | `disease_group`, `icd_codes`, `icd_column`, `match_type` | Qual desfecho de saúde entra na análise. | Sempre que a pergunta envolver outro grupo de doença, capítulo ou conjunto de códigos CID. |
 | **Filtrar por características demográficas** (`sus_data_filter_demographics`) | `age_range`, `sex`, `race`, `region`, `municipality_code` | Quem entra no recorte populacional. | Quando a análise for por idade, sexo, raça/cor, região ou município. |
@@ -65,6 +65,25 @@ que momento vale sair do padrão.
 | **Modelar risco espacial ou espaço-temporal** | `W`/`neighbors`, `time_col`, `covariates`, `offset`, `family` | Dependência entre municípios, tempo, covariáveis e denominador. | Quando a pergunta inclui onde o risco se concentra ou como muda no espaço-tempo. Use uma linha por município e `offset` de expected counts/população. |
 | **Prever desfechos com machine learning** (`sus_mod_ml`) | `outcome_col`, `feature_cols`, `id_col`, `objective`, `nfold`, `max_depth` | Alvo, preditores, validação e complexidade do modelo. | Quando o objetivo é previsão. Use `id_col` para validação agrupada, inclua features de lag e reserve validação temporal; não interprete importância como efeito causal. |
 
+## Três parâmetros que costumam gerar dúvida
+
+**`region` (em Importar dados do DATASUS).** É opcional e começa **vazio** (`NULL`): vazio significa "use os estados informados em `uf`". Quando você escolhe uma região (por exemplo `norte`, `nordeste` ou `amazonia_legal`), ela **prevalece sobre `uf`**, e o Studio importa todos os estados do grupo. No menu do parâmetro, a primeira opção, em branco, é a escolha "sem região".
+
+**`icd_codes` (em Filtrar por CID-10 ou grupo de doença).** Aceita vários formatos, que podem ser misturados:
+
+| Formato | Exemplo | O que seleciona |
+|---|---|---|
+| Um código | `"J18.9"` | Pneumonia não especificada. |
+| Vários códigos | `c("I10", "I11.0")` | Cada código da lista. |
+| Uma faixa | `"J09-J18"` | Todos os códigos de J09 a J18. |
+| Um capítulo inteiro | `"I"` | Doenças do aparelho circulatório, de I00 a I99. |
+| Uma categoria de três caracteres | `"J18"` | J18 e seus detalhamentos (J18.0, J18.9...). |
+| Formatos misturados | `c("J09-J18", "I21")` | Faixa e código avulso, juntos. |
+
+Use `icd_codes` **ou** `disease_group` (um grupo predefinido, como `dengue`), nunca os dois. O parâmetro `match_type` controla como a comparação é feita; o padrão `starts_with` é o que faz `"J18"` incluir `J18.9`.
+
+**Mapas interativos.** Quando uma função de mapa é executada com `interactive = TRUE`, o resultado é um mapa com zoom e informações ao clicar. O mapa-base vem do **OpenFreeMap** e **exige conexão com a internet**; sem ela, os polígonos aparecem, mas o fundo não. O seletor no canto superior direito do mapa alterna entre cinco estilos: *Positron* (padrão, claro e discreto), *Liberty*, *Bright*, *Dark* e *Fiord*.
+
 ## Preservar e compartilhar uma análise
 
 Ao terminar, use os comandos disponíveis na interface:
@@ -73,7 +92,7 @@ Ao terminar, use os comandos disponíveis na interface:
 
 | Comando | O que preserva | Boa prática |
 |---|---|---|
-| **Salvar projeto** | Nós, ordem e parâmetros do Pipeline em `.climasus.json`. | Compartilhe junto a fonte dos dados, período, filtros e versão do Studio. |
+| **Arquivo → Salvar projeto** | Nós, ordem e parâmetros do Pipeline em `.climasus.json`. | Compartilhe junto a fonte dos dados, período, filtros e versão do Studio. |
 | **Exportar `.R`** | O código equivalente ao Pipeline. | Revise o código e registre as dependências antes de executar fora do Studio. |
 | **Exportar resultado** | Tabelas, gráficos, mapas ou outros artefatos. | Mantenha o arquivo original e a descrição dos critérios usados. |
 

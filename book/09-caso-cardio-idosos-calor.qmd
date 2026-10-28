@@ -80,7 +80,8 @@ chamava isso de “São Paulo”, mas o número não descreve a capital.
 **O que a replicação fez:** filtrou o município de São Paulo (código 355030) e usou a
 estação A701 (Mirante), com 99% de cobertura diária em 2010–2019. Série de 3.636 dias e
 **184.893 óbitos** cardiovasculares em 60+. Modelo diário com dia da semana, feriados,
-7 df/ano de tendência, defasagem 0–21 dias e referência no **MMT**.
+7 df/ano de tendência, defasagem 0–21 dias e referência no **MMT**. O filtro municipal é
+feito no script de replicação; o template do catálogo importa a UF inteira.
 
 **Snapshot:** `data/ec03/analytic.parquet` (MD5 `0ee2a03b96da684eeaff0a4a32442d26`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec03/codebook.csv`.
@@ -206,7 +207,7 @@ quentes; só a temperatura máxima diurna pode subestimar o risco. A mesma caute
 frio: friagem e moradias sem isolamento térmico não aparecem na temperatura média da cidade.
 
 Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
-automatizada a cada nova temporada de calor — use **Salvar projeto** e **Exportar `.R`**,
+automatizada a cada nova temporada de calor — use **Arquivo → Salvar projeto** e **Exportar `.R`**,
 sempre registrando fontes, versões e limitações.
 
 ## Reproduzir

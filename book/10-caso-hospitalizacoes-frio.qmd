@@ -22,7 +22,7 @@ partir da temperatura das estações INMET. O Modelo de catálogo
 Pipelines. A série analisada é de **um único município**; a detecção de ondas de frio é
 feita para o Sul e serve como contexto climático.
 
-![](images/arco-ec04.svg){fig-alt="Arco do caso ec-04 em quatro etapas — preparação no SIH-RD para J09-J18 em Porto Alegre, integração com ondas de frio, modelo de série interrompida e ação em leitos e alertas. À direita, a ficha do estudo; abaixo, a série observada e a tendência contrafactual, com a mudança de nível após o evento de frio."}
+![](images/arco-ec04.svg){fig-alt="Arco do caso ec-04 em quatro etapas — preparação no SIH-RD para J09-J18 em Porto Alegre, integração com ondas de frio, modelo de série interrompida e ação em leitos e alertas. À direita, a ficha do estudo; abaixo, o esquema do ITS com série observada e contrafactual; a replicação mostra que a mudança de nível não é robusta."}
 
 **Preparação**
 
@@ -226,7 +226,7 @@ retomam os recortes de fumaça, chuva e calor/frio apresentados no Capítulo 0. 
 seca e isolamento, também apresentado lá, não tem estudo de caso próprio; a mesma sequência
 de Preparação, Integração e Modelagem se aplica, com desfechos de água, alimentos, malária e
 continuidade do cuidado. Para levar qualquer um deles além do Studio — relatório técnico ou
-nova execução — use **Salvar projeto** e **Exportar `.R`**, registrando fontes, parâmetros e
+nova execução — use **Arquivo → Salvar projeto** e **Exportar `.R`**, registrando fontes, parâmetros e
 limitações.
 
 ## Reproduzir
@@ -253,10 +253,11 @@ O script grava a tabela analítica em `data/ec04/analytic.parquet`, as tabelas e
 **1. Por que este Pipeline usa Avaliar impacto com série interrompida (`sus_mod_its`) em
 vez de Modelar risco com DLNM (`sus_mod_dlnm`), diferente dos Capítulos 7 a 9?**
 
-Porque a pergunta de interesse aqui é mais pontual — o efeito de **um evento de frio
-delimitado** sobre o nível/tendência das internações — um desenho quase-experimental
-como o ITS responde bem a esse tipo de pergunta sem exigir o ajuste completo de uma
-curva de exposição-resposta como o DLNM.
+Porque a pergunta do template é mais pontual — o efeito de **um evento de frio delimitado**
+sobre o nível/tendência das internações. O ITS é o desenho indicado para essa pergunta, mas
+a replicação mostra que ele é frágil: o resultado muda de 0,62 para 0,87 com tendência/DOW
+corrigidos e para 1,01 na janela local. Sem tendência bem especificada e janela
+pré-definida, o ITS não sustenta a leitura.
 
 **2. Detectar ondas de frio (`sus_climate_compute_coldwaves`) usa percentil 10 como
 limiar, o espelho do percentil 90 usado para calor no Capítulo 9. O que esse limiar
@@ -272,8 +273,9 @@ período de referência usados.
 
 Uma curva de exposição-resposta completa relacionando qualquer nível de temperatura
 (não só os períodos classificados como onda de frio) ao risco de internação, incluindo a
-estrutura de defasagem ao longo dos dias — informação mais detalhada do que a mudança de
-nível/tendência que o ITS reporta.
+estrutura de defasagem ao longo dos dias. A replicação fez exatamente isso e encontrou
+RR 1,52 (1,24–1,87) no p01, com AF de 12,7% — a resposta epidemiológica que o ITS não
+entrega.
 
 **4. Por que o ITS do snapshot dá 0,62 e o DLNM dá 1,52 no p01?**
 
