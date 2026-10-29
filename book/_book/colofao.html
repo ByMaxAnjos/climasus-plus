@@ -344,7 +344,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="o-que-mudou-nesta-edição">O que mudou nesta edição</h2>
 <p>Esta edição foi conferida contra o catálogo e o código do Studio em <strong>22 de outubro de 2026</strong>. As mudanças editoriais e de conteúdo em relação à versão anterior são:</p>
 <ul>
-<li>Catálogo confirmado em <strong>79 funções</strong>: 15 na Preparação, 32 na Integração e 32 na Análise &amp; Modelagem.</li>
+<li>Catálogo confirmado em <strong>80 funções</strong>: 15 na Preparação, 33 na Integração e 32 na Análise &amp; Modelagem.</li>
 <li>A Etapa Integração passa a documentar as funções de censo e vínculo espacial <strong><code>sus_census_join</code></strong>, <strong><code>sus_census_select</code></strong> e <strong><code>sus_spatial_join</code></strong>, além de <strong><code>sus_grid_plot</code></strong>.</li>
 <li><strong><code>sus_data_import</code></strong>: o parâmetro <code>month</code> é obrigatório para sistemas mensais (SIH, CNES e SIA) e aceita <code>1</code>, <code>1:12</code> ou combinações como <code>c(1, 4, 6)</code>.</li>
 <li><strong><code>sus_climate_inmet</code></strong>: o padrão de <code>parallel</code> passou a ser <code>FALSE</code>; <code>TRUE</code> explícito continua permitido.</li>
@@ -356,6 +356,7 @@ ul.task-list li input[type="checkbox"] {
 <li>Nova barra superior: o menu <strong>Arquivo</strong> reúne Salvar projeto, Abrir projeto e Importar dados; <strong>Limpar</strong> fica ao lado de Pipelines; logotipos das instituições no canto direito.</li>
 <li>O botão <strong>Executar até aqui</strong> de cada Nó roda só aquele Passo e os anteriores sem Resultado; <strong>Executar</strong> continua rodando tudo.</li>
 <li>O Tutorial <strong>Mortalidade Respiratória — SP 2014-2019</strong> passou a ter o selo <strong>Guiado</strong> no menu Modelos.</li>
+<li>Nova função <strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>), na Integração: completa valores ausentes das estações com XGBoost, antes de cruzar o clima com a saúde.</li>
 <li><strong><code>sus_data_import</code></strong>: <code>region</code> começa vazio (<code>NULL</code>) e é opcional.</li>
 <li><strong><code>sus_data_filter_cid</code></strong>: a ajuda de <code>icd_codes</code> lista os formatos aceitos (código, lista, faixa, capítulo e categoria).</li>
 <li>Mapas interativos passaram a usar o mapa-base <strong>OpenFreeMap</strong>, com seletor de cinco estilos.</li>

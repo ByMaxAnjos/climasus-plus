@@ -313,6 +313,7 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>(a) Clima por estação</strong> — dados observados em estações meteorológicas do INMET.</p>
 <ul>
 <li><strong>Importar dados das estações do INMET</strong> (<code>sus_climate_inmet</code>) — importa e processa dados meteorológicos do INMET.</li>
+<li><strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>) — completa os valores ausentes das séries das estações (temperatura, umidade, chuva, vento…), estimando cada lacuna com um modelo de aprendizado de máquina treinado por estação. Rode depois de importar o INMET e antes de cruzar o clima com a saúde. Use <code>run_evaluation = TRUE</code> para testar a qualidade do preenchimento antes de confiar nele; o gráfico de conferência é <strong>Visualizar preenchimento de falhas climáticas</strong> (<code>sus_climate_plot_fill</code>).</li>
 <li><strong>Baixar normais climatológicas do INMET</strong> (<code>sus_climate_normals</code>) — baixa normais climatológicas de 30 anos do INMET (três períodos de referência disponíveis; o mais recente é 1991–2020), usadas como linha de base histórica.</li>
 <li><strong>Consultar variáveis das normais climáticas</strong> (<code>sus_climate_normals_meta</code>) — permite explorar o catálogo de variáveis das normais antes de baixá-las.</li>
 <li><strong>Calcular anomalias climáticas</strong> (<code>sus_climate_anomaly</code>) — calcula anomalias climáticas por comparação entre dados observados do INMET contra as normais de 30 anos.</li>

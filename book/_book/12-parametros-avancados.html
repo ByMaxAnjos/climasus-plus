@@ -406,42 +406,48 @@ Como ler as tabelas
 <td>Quando houver estação conhecida ou necessidade de restringir a área de estudo. <code>parallel</code> é desempenho: o padrão é <code>FALSE</code>; use <code>TRUE</code> explícito só se o ambiente suportar.</td>
 </tr>
 <tr class="even">
+<td><strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>)</td>
+<td><code>target_var</code>, <code>quality_threshold</code>, <code>run_evaluation</code>, <code>gap_percentage</code>, <code>keep_features</code></td>
+<td>Qual variável preencher, o limite de falhas por estação (padrão 40%) e se o método é só testado em vez de aplicado.</td>
+<td>Sempre que a série tiver lacunas. Use <code>run_evaluation = TRUE</code> primeiro; com <code>keep_features = FALSE</code> a coluna <code>is_imputed</code> marca o que foi estimado.</td>
+</tr>
+<tr class="odd">
 <td><strong>Calcular índices de conforto térmico</strong> (<code>sus_climate_compute_indicators</code>)</td>
 <td><code>indicators</code>, <code>region</code>, <code>custom_thresholds</code>, <code>apply_validity_mask</code></td>
 <td>Indicadores bioclimáticos e, para dengue, GDD (<code>gdd_c</code>) com base/teto configuráveis.</td>
 <td>Quando a exposição precisa ser GDD (Aedes: <code>gdd_base = 11</code>, <code>gdd_upper = 35</code>), UTCI, WBGT ou outro índice.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Importar chuva por satélite (CHIRPS)</strong> (<code>sus_grid_chirps</code>)</td>
 <td><code>resolution</code>, <code>years</code>, <code>months</code>, <code>municipalities</code>, <code>agg_fun</code>, <code>use_cache</code></td>
 <td>Chuva em grade por período, resolução, território e forma de agregação.</td>
 <td>Quando a área tem baixa cobertura de estações ou muitos municípios. Para dengue, use <code>resolution = "daily"</code>.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Importar focos de queimadas</strong> (<code>sus_grid_fires</code>)</td>
 <td><code>years</code>, <code>months</code>, <code>uf</code>, <code>bbox</code>, <code>source</code>, <code>municipalities</code>, <code>biome</code></td>
 <td>Período, território, fonte e recorte ambiental dos focos de calor.</td>
 <td>Em estudos de fumaça, queimadas ou exposição ambiental aguda.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Importar poluição do ar</strong> (<code>sus_grid_pollution_cams</code>, <code>sus_grid_pollution_ghap</code>, <code>sus_grid_pollution_merra2</code>)</td>
 <td><code>pollutants</code>, <code>years</code>, <code>municipalities</code>, <code>resolution</code>, <code>metric</code>, <code>use_cache</code></td>
 <td>Poluente, período, território e resolução. GHAP tem <code>municipalities</code> e ~1 km; CAMS é mais grosseira e não tem agregação municipal.</td>
 <td>Quando o desfecho pode responder à qualidade do ar, não só ao clima. Para PM2.5 municipal, prefira GHAP.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Juntar dados ambientais por município</strong> (<code>sus_grid_join</code>)</td>
 <td><code>by</code>, <code>type_out</code></td>
 <td>Chaves usadas para unir ambiente e saúde.</td>
 <td>Quando os dados ambientais têm escala anual, mensal ou diária diferente da saúde.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Calcular indicadores socioeconômicos e de saúde</strong> (<code>sus_socio_compute_indicators</code>)</td>
 <td><code>indicators</code>, <code>col_mapping</code>, <code>confidence_level</code>, <code>add_ci</code></td>
 <td>Quais indicadores de território entram na análise e se terão intervalos de incerteza.</td>
 <td>Quando vulnerabilidade, saneamento, renda ou estrutura demográfica podem confundir o efeito climático.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>)</td>
 <td><code>climate_var</code>, <code>time_unit</code>, <code>temporal_strategy</code>, <code>lag_days</code>, <code>window_days</code>, <code>offset_days</code>, <code>temp_base</code></td>
 <td>Exposição climática, escala temporal e defasagem.</td>
