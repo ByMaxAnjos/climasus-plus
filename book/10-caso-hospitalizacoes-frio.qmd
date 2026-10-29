@@ -43,20 +43,21 @@ feita para o Sul e serve como contexto climático.
 7. **Juntar dados a limites geográficos** (`sus_spatial_join`) — liga a série de saúde aos
    municípios.
 8. **Importar dados das estações do INMET** (`sus_climate_inmet`) — traz temperatura das estações INMET da região Sul, mesmos anos.
-9. **Detectar ondas de frio** (`sus_climate_compute_coldwaves`) — detecta ondas de frio com o método WHO do catálogo
-   (`method = "WHO"`), usando percentil 10 (o espelho do percentil 90 usado para calor no
-   Capítulo 9) e um período de referência fixo (2010–2015). Há sete metodologias
-   disponíveis, e a escolha deve ser declarada e testada.
-10. **Visualizar ondas de frio** (`sus_climate_plot_coldwaves`) — mostra os dias
+9. **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) — completa as falhas das séries de temperatura média, máxima e mínima com um modelo de aprendizado de máquina treinado por estação (XGBoost), antes de detectar ondas de frio. Pode levar vários minutos.
+10. **Detectar ondas de frio** (`sus_climate_compute_coldwaves`) — detecta ondas de frio com o método WHO do catálogo
+    (`method = "WHO"`), usando percentil 10 (o espelho do percentil 90 usado para calor no
+    Capítulo 9) e um período de referência fixo (2010–2015). Há sete metodologias
+    disponíveis, e a escolha deve ser declarada e testada.
+11. **Visualizar ondas de frio** (`sus_climate_plot_coldwaves`) — mostra os dias
     classificados como onda de frio. É um ramo descritivo, não um regressor do modelo.
-11. **Filtrar por características demográficas** (`sus_data_filter_demographics`) — restringe
+12. **Filtrar por características demográficas** (`sus_data_filter_demographics`) — restringe
     a série de saúde a **Porto Alegre**, porque a ITS é um desenho de série única. Na
     execução real deste guia, o filtro foi aplicado **antes da agregação**, para evitar
     cerca de 4,5 milhões de linhas; o resultado para um município é equivalente.
 
 **Análise & Modelagem**
 
-12. **Avaliar impacto com série interrompida** (`sus_mod_its`) — ajusta uma série temporal
+13. **Avaliar impacto com série interrompida** (`sus_mod_its`) — ajusta uma série temporal
     interrompida sobre a série diária de internações de Porto Alegre, avaliando se um
     evento de frio específico muda o nível ou a tendência das internações
     (`outcome_col = "n_internacoes"`). A execução real usa **2011-07-03**, o evento mais
@@ -172,11 +173,11 @@ valores.
 Há duas perguntas diferentes neste capítulo, e elas não devem ser confundidas:
 
 1. **“O que mudou depois deste evento específico?”** — o ITS responde, mas de forma frágil:
-   0,62 no snapshot, 0,87 com tendência/DOW corrigidos e 1,01 na janela local. A
-   sensibilidade mostra que o número não é robusto a decisões de especificação.
+    0,62 no snapshot, 0,87 com tendência/DOW corrigidos e 1,01 na janela local. A
+    sensibilidade mostra que o número não é robusto a decisões de especificação.
 2. **“O frio aumenta internações?”** — o DLNM responde com uma curva completa: RR 1,52 no
-   p01 e AF de 12,7%, com frio dominante. Esta é a resposta que sustenta uma leitura
-   epidemiológica.
+    p01 e AF de 12,7%, com frio dominante. Esta é a resposta que sustenta uma leitura
+    epidemiológica.
 
 O ITS não é inútil: ele é útil para avaliar **intervenções** ou eventos bem delimitados,
 com tendência bem especificada e janela pré-definida. O erro do snapshot foi tratar uma

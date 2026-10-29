@@ -71,6 +71,16 @@ export const HOSPITALIZACAO_FRIO: TutorialDef = {
       },
     },
     {
+      id: 'frio-fill',
+      fn: 'sus_climate_fill_inmet',
+      values: { target_var: 'c("tair_dry_bulb_c", "tair_max_c", "tair_min_c")' },
+      explain: {
+        pt: 'Completamos as falhas das séries das estações (temperatura média, máxima e mínima) com um modelo de aprendizado de máquina treinado por estação (XGBoost), para que defasagens e indicadores não tenham buracos. Estações com mais de 40% de falhas são excluídas. Pode levar vários minutos; para testar a qualidade do preenchimento antes, use `run_evaluation = TRUE`.',
+        en: 'We fill the gaps in the station series (mean, maximum and minimum temperature) with a machine-learning model trained per station (XGBoost), so lags and indicators have no holes. Stations with more than 40% gaps are excluded. It can take several minutes; to test the quality of the filling first, use `run_evaluation = TRUE`.',
+        es: 'Rellenamos los vacíos de las series de las estaciones (temperatura media, máxima y mínima) con un modelo de aprendizaje automático entrenado por estación (XGBoost), para que rezagos e indicadores no tengan huecos. Se excluyen las estaciones con más de 40% de vacíos. Puede tardar varios minutos; para probar la calidad del relleno antes, use `run_evaluation = TRUE`.',
+      },
+    },
+    {
       // cold-wave detection is a TERMINAL side-branch: it must read the raw INMET climate frame
       // (sus_climate_compute_coldwaves aborts unless sus_meta(df,"type") is climate/inmet/filled/
       // indicators — coldwaves.R:306-309) and it returns a climasus_cw list, not a climasus_df,

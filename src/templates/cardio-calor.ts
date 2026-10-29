@@ -71,6 +71,16 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       },
     },
     {
+      id: 'cardio-fill',
+      fn: 'sus_climate_fill_inmet',
+      values: { target_var: 'c("tair_dry_bulb_c", "tair_max_c", "tair_min_c")' },
+      explain: {
+        pt: 'Completamos as falhas das séries das estações (temperatura média, máxima e mínima) com um modelo de aprendizado de máquina treinado por estação (XGBoost), para que defasagens e indicadores não tenham buracos. Estações com mais de 40% de falhas são excluídas. Pode levar vários minutos; para testar a qualidade do preenchimento antes, use `run_evaluation = TRUE`.',
+        en: 'We fill the gaps in the station series (mean, maximum and minimum temperature) with a machine-learning model trained per station (XGBoost), so lags and indicators have no holes. Stations with more than 40% gaps are excluded. It can take several minutes; to test the quality of the filling first, use `run_evaluation = TRUE`.',
+        es: 'Rellenamos los vacíos de las series de las estaciones (temperatura media, máxima y mínima) con un modelo de aprendizaje automático entrenado por estación (XGBoost), para que rezagos e indicadores no tengan huecos. Se excluyen las estaciones con más de 40% de vacíos. Puede tardar varios minutos; para probar la calidad del relleno antes, use `run_evaluation = TRUE`.',
+      },
+    },
+    {
       // heatwave detection is a TERMINAL side-branch: it must read the raw INMET climate frame
       // (sus_climate_compute_heatwaves aborts unless sus_meta(df,"type") is climate/inmet/filled/
       // indicators — heatwaves.R:302-310) and it returns a climasus_hw list, not a climasus_df
@@ -80,7 +90,7 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       // cardio-merged's `climate_data` reference reads.
       id: 'cardio-heatwave',
       fn: 'sus_climate_compute_heatwaves',
-      values: { df: stepRef('cardio-inmet'), method: 'WHO', percentile: '90', baseline_start: '"2010-01-01"', baseline_end: '"2015-12-31"' },
+      values: { df: stepRef('cardio-fill'), method: 'WHO', percentile: '90', baseline_start: '"2010-01-01"', baseline_end: '"2015-12-31"' },
       explain: {
         pt: 'Detectamos ondas de calor com a metodologia da OMS, percentil 90 como limiar. O limiar usa um período de referência fixo (2010–2015), não a série inteira; são cinco anos, uma base curta que deve ser declarada como limitação.',
         en: 'We detect heatwaves using the WHO methodology, 90th percentile as the threshold. The threshold uses a fixed reference period (2010–2015), not the full series; five years is a short baseline and should be declared as a limitation.',
@@ -105,7 +115,7 @@ export const CARDIO_IDOSOS_CALOR: TutorialDef = {
       // is the usual window in heat-mortality DLNM work, but treat it as an illustrative default.
       values: {
         health_data: stepRef('cardio-spatial'),
-        climate_data: stepRef('cardio-inmet'),
+        climate_data: stepRef('cardio-fill'),
         time_unit: 'day',
         climate_var: 'tair_dry_bulb_c',
         temporal_strategy: 'distributed_lag',

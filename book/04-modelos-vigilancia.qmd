@@ -16,10 +16,10 @@ primeiro Resultado sem escrever uma única linha de código.
 
 | Modelo | Pergunta de vigilância | Território e período | Passos |
 |---|---|---|---|
-| Mortalidade respiratória pediátrica e temperatura | Crianças menores de 5 anos têm mais óbitos respiratórios em dias de temperatura extrema? | Sudeste (SP, RJ, MG, ES), 2015-2019 | 13 |
-| Dengue e graus-dia | O acúmulo de calor favorável ao vetor antecipa alta de casos de dengue? | CE, PE, BA e MA, 2015-2019 | 11 |
-| Mortalidade cardiovascular em idosos e ondas de calor | Ondas de calor aumentam óbitos cardiovasculares em idosos? | São Paulo, 2010-2019 | 15 |
-| Hospitalizações respiratórias e frio | Um evento de frio muda o nível de internações respiratórias? | Porto Alegre (RS), 2010-2019 | 12 |
+| Mortalidade respiratória pediátrica e temperatura | Crianças menores de 5 anos têm mais óbitos respiratórios em dias de temperatura extrema? | Sudeste (SP, RJ, MG, ES), 2015-2019 | 14 |
+| Dengue e graus-dia | O acúmulo de calor favorável ao vetor antecipa alta de casos de dengue? | CE, PE, BA e MA, 2015-2019 | 12 |
+| Mortalidade cardiovascular em idosos e ondas de calor | Ondas de calor aumentam óbitos cardiovasculares em idosos? | São Paulo, 2010-2019 | 16 |
+| Hospitalizações respiratórias e frio | Um evento de frio muda o nível de internações respiratórias? | Porto Alegre (RS), 2010-2019 | 13 |
 
 Os territórios da tabela são exemplos nacionais, não um limite do método. Para aplicar à
 Amazônia, ajuste UF ou região, período e fonte climática; em municípios com pouca cobertura
@@ -57,12 +57,13 @@ correta — você não precisa montar nó por nó.
 7. **Somar os casos ao longo do tempo** — agregado por **semana** e por município, com semanas completas.
 8. **Juntar dados a limites geográficos** — liga a série aos municípios.
 9. **Trazer dados de temperatura e umidade das estações** — INMET, mesmos estados e anos.
-10. **Juntar saúde e clima na mesma tabela** — cria defasagens de 0–21 dias para temperatura e umidade.
-11. **Estimar o risco ligado ao clima** — DLNM com ajuste para umidade (`rh_mean_porc_lag0`) e tendência de 2 graus de liberdade por ano.
-12. **Ver a curva de risco** — gráfico exposição-defasagem-risco.
-13. **Calcular quantos casos são por causa do clima** — fração e número atribuível.
+10. **Completar os buracos nos dados das estações** — estima as falhas de temperatura e umidade, uma estação por vez.
+11. **Juntar saúde e clima na mesma tabela** — cria defasagens de 0–21 dias para temperatura e umidade.
+12. **Estimar o risco ligado ao clima** — DLNM com ajuste para umidade (`rh_mean_porc_lag0`) e tendência de 2 graus de liberdade por ano.
+13. **Ver a curva de risco** — gráfico exposição-defasagem-risco.
+14. **Calcular quantos casos são por causa do clima** — fração e número atribuível.
 
-![Modelo "Mortalidade respiratória pediátrica e temperatura" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-respiratorio.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 13 passos do modelo de mortalidade respiratória pediátrica, em linguagem simples."}
+![Modelo "Mortalidade respiratória pediátrica e temperatura" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-respiratorio.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 14 passos do modelo de mortalidade respiratória pediátrica, em linguagem simples."}
 
 Para gestão, o Resultado que mais importa é o último: que fração dos óbitos respiratórios
 em crianças pequenas está associada a dias fora da faixa segura de temperatura. O
@@ -77,12 +78,13 @@ Capítulo 7 retoma este mesmo arco com a leitura estatística completa.
 5. **Somar os casos ao longo do tempo** — agregado por **semana epidemiológica**, usando a data de primeiros sintomas e semanas completas.
 6. **Juntar dados a limites geográficos** — liga a série aos municípios.
 7. **Trazer dados de temperatura das estações** — INMET, mesmos estados e anos.
-8. **Calcular índices de conforto térmico** — calcula GDD com base 11 °C e teto 35 °C.
-9. **Juntar saúde e clima** — cria defasagens de 0–84 dias (12 semanas) do GDD.
-10. **Estimar o risco ligado ao clima** — DLNM sobre a contagem semanal de casos, com tendência de 2 graus de liberdade por ano.
-11. **Ver a curva de risco**
+8. **Completar os buracos nos dados das estações** — estima as falhas de temperatura.
+9. **Calcular índices de conforto térmico** — calcula GDD com base 11 °C e teto 35 °C.
+10. **Juntar saúde e clima** — cria defasagens de 0–84 dias (12 semanas) do GDD.
+11. **Estimar o risco ligado ao clima** — DLNM sobre a contagem semanal de casos, com tendência de 2 graus de liberdade por ano.
+12. **Ver a curva de risco**
 
-![Modelo "Dengue e graus-dia" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-dengue.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 11 passos do modelo de dengue e graus-dia, em linguagem simples."}
+![Modelo "Dengue e graus-dia" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-dengue.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 12 passos do modelo de dengue e graus-dia, em linguagem simples."}
 
 Para vigilância de arboviroses, o sinal prático é a curva de defasagem: em que janela de
 semanas o acúmulo de GDD antecipa o aumento de casos. O Modelo usa 0–84 dias como ponto de
@@ -102,14 +104,15 @@ interpretação e a gestão de vetores.
 7. **Somar os casos ao longo do tempo** — agregado por dia, com dias completos.
 8. **Juntar dados a limites geográficos**
 9. **Trazer dados de temperatura das estações** — INMET, SP.
-10. **Detectar dias de onda de calor** — método WHO, percentil 90, com referência fixa 2010–2015; há sete metodologias disponíveis, e a escolha deve ser declarada e testada.
-11. **Visualizar ondas de calor** — ramo descritivo, não um regressor do modelo.
-12. **Juntar saúde e clima** — defasagens de 0–21 dias da temperatura.
-13. **Estimar o risco ligado ao clima** — DLNM sobre a série diária; a referência padrão é a mediana e deve ser substituída por MMT para carga atribuível.
-14. **Calcular quantos casos são por causa do clima**
-15. **Ver o gráfico de casos atribuíveis** — pronto para apresentar.
+10. **Completar os buracos nos dados das estações** — estima as falhas de temperatura média, máxima e mínima.
+11. **Detectar dias de onda de calor** — método WHO, percentil 90, com referência fixa 2010–2015; há sete metodologias disponíveis, e a escolha deve ser declarada e testada.
+12. **Visualizar ondas de calor** — ramo descritivo, não um regressor do modelo.
+13. **Juntar saúde e clima** — defasagens de 0–21 dias da temperatura.
+14. **Estimar o risco ligado ao clima** — DLNM sobre a série diária; a referência padrão é a mediana e deve ser substituída por MMT para carga atribuível.
+15. **Calcular quantos casos são por causa do clima**
+16. **Ver o gráfico de casos atribuíveis** — pronto para apresentar.
 
-![Modelo "Mortalidade cardiovascular em idosos e ondas de calor" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-cardio-calor.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 15 passos do modelo de mortalidade cardiovascular e ondas de calor, em linguagem simples."}
+![Modelo "Mortalidade cardiovascular em idosos e ondas de calor" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-cardio-calor.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 16 passos do modelo de mortalidade cardiovascular e ondas de calor, em linguagem simples."}
 
 Este é o Modelo mais direto para justificar um **alerta de calor**: a detecção de onda de
 calor já entra como Passo próprio, antes mesmo do modelo estatístico. O Capítulo 9 detalha a
@@ -125,12 +128,13 @@ metodologia escolhida e recomenda testar mais de uma definição.
 6. **Somar os casos ao longo do tempo** — agregado por dia e por município, com dias completos.
 7. **Juntar dados a limites geográficos**
 8. **Trazer dados de temperatura das estações** — INMET, região Sul.
-9. **Detectar dias de onda de frio** — método WHO, percentil 10, com referência fixa 2010–2015; há sete metodologias disponíveis.
-10. **Visualizar ondas de frio** — ramo descritivo.
-11. **Filtrar um município** — restringe a série a Porto Alegre, porque a ITS é um desenho de série única.
-12. **Avaliar o efeito de um evento específico** — série temporal interrompida: internações mudaram de nível depois do evento de frio? A data é um exemplo e deve ser substituída por um evento real.
+9. **Completar os buracos nos dados das estações** — estima as falhas de temperatura média, máxima e mínima.
+10. **Detectar dias de onda de frio** — método WHO, percentil 10, com referência fixa 2010–2015; há sete metodologias disponíveis.
+11. **Visualizar ondas de frio** — ramo descritivo.
+12. **Filtrar um município** — restringe a série a Porto Alegre, porque a ITS é um desenho de série única.
+13. **Avaliar o efeito de um evento específico** — série temporal interrompida: internações mudaram de nível depois do evento de frio? A data é um exemplo e deve ser substituída por um evento real.
 
-![Modelo "Hospitalizações respiratórias e ondas de frio" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-hospitalizacao-frio.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 12 passos do modelo de hospitalizações respiratórias e frio, em linguagem simples."}
+![Modelo "Hospitalizações respiratórias e ondas de frio" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-hospitalizacao-frio.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 13 passos do modelo de hospitalizações respiratórias e frio, em linguagem simples."}
 
 Este é o único dos quatro Modelos que não usa DLNM: a pergunta é sobre um **evento de
 frio delimitado**, não sobre uma curva de exposição-resposta contínua — por isso o Passo

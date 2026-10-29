@@ -48,24 +48,25 @@ ar isolada pode subestimar o risco.
 8. **Juntar dados a limites geográficos** (`sus_spatial_join`) — liga a série de saúde aos
    municípios.
 9. **Importar dados das estações do INMET** (`sus_climate_inmet`) — traz temperatura das estações INMET de SP, mesmos anos.
-10. **Detectar ondas de calor** (`sus_climate_compute_heatwaves`) — detecta ondas de calor com o método WHO do catálogo
+10. **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) — completa as falhas das séries de temperatura média, máxima e mínima com um modelo de aprendizado de máquina treinado por estação (XGBoost), para que a detecção de ondas de calor e as defasagens não tenham buracos. Pode levar vários minutos.
+11. **Detectar ondas de calor** (`sus_climate_compute_heatwaves`) — detecta ondas de calor com o método WHO do catálogo
     (`method = "WHO"`), usando percentil 90 e um período de referência fixo (2010–2015);
     há sete metodologias disponíveis, e a escolha deve ser declarada e testada.
-11. **Visualizar ondas de calor** (`sus_climate_plot_heatwaves`) — mostra os dias
+12. **Visualizar ondas de calor** (`sus_climate_plot_heatwaves`) — mostra os dias
     classificados como onda de calor. É um ramo descritivo, não um regressor do modelo.
-12. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
+13. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
     defasagem de **0 a 21 dias** da temperatura, com
     `temporal_strategy = "distributed_lag"`.
 
 **Análise & Modelagem**
 
-13. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série diária,
+14. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série diária,
     com `outcome_col` apontando para a contagem de óbitos. O template usa a mediana da
     temperatura como referência; a replicação usa o **MMT estimado** (23,1 °C) e reporta as
     caudas p99 (calor) e p01 (frio).
-14. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número atribuível
+15. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número atribuível
     ao calor extremo, usando o limiar de referência definido no modelo.
-15. **Visualizar fração atribuível** (`sus_mod_plot_af`) — Resultado gráfico/tabela pronto para comunicação.
+16. **Visualizar fração atribuível** (`sus_mod_plot_af`) — Resultado gráfico/tabela pronto para comunicação.
 
 ## Dados usados
 
@@ -162,10 +163,10 @@ O resultado corrigido sustenta três afirmações e desfaz uma leitura errada:
 1. **Há efeito de calor**, mas ele é modesto no contraste de cauda: RR 1,21 no p99.
 2. **O frio pesa mais** neste recorte: RR 1,67 no p01 e AF de 6,8% contra 1,1% do calor.
 3. **O p75 não serve para decidir**: 24,3 °C está perto do MMT; um RR de 0,98 nesse ponto
-   não significa que o calor protege.
+    não significa que o calor protege.
 4. **O snapshot estadual não é a cidade**: a agregação de 645 municípios, a ausência de dia
-   da semana e a referência na mediana produziam uma AF de calor de 2,12% que não se
-   reproduz na capital.
+    da semana e a referência na mediana produziam uma AF de calor de 2,12% que não se
+    reproduz na capital.
 
 O que ainda limita a conclusão: o modelo não ajusta poluição do ar (PM2,5/O3), não
 estratifica por sexo ou causa específica, usa uma única estação para representar a cidade e

@@ -78,12 +78,22 @@ export const RESPIRATORIO_PEDIATRICO: TutorialDef = {
       },
     },
     {
+      id: 'resp-fill',
+      fn: 'sus_climate_fill_inmet',
+      values: { target_var: 'c("tair_dry_bulb_c", "rh_mean_porc")' },
+      explain: {
+        pt: 'Completamos as falhas das séries das estações (temperatura e umidade) com um modelo de aprendizado de máquina treinado por estação (XGBoost), para que defasagens e indicadores não tenham buracos. Estações com mais de 40% de falhas são excluídas. Pode levar vários minutos; para testar a qualidade do preenchimento antes, use `run_evaluation = TRUE`.',
+        en: 'We fill the gaps in the station series (temperature and humidity) with a machine-learning model trained per station (XGBoost), so lags and indicators have no holes. Stations with more than 40% gaps are excluded. It can take several minutes; to test the quality of the filling first, use `run_evaluation = TRUE`.',
+        es: 'Rellenamos los vacíos de las series de las estaciones (temperatura y humedad) con un modelo de aprendizaje automático entrenado por estación (XGBoost), para que rezagos e indicadores no tengan huecos. Se excluyen las estaciones con más de 40% de vacíos. Puede tardar varios minutos; para probar la calidad del relleno antes, use `run_evaluation = TRUE`.',
+      },
+    },
+    {
       fn: 'sus_climate_aggregate',
       // The outcome is now weekly, so a 0–21 day lag is a genuine three-week
       // exposure window instead of a 0–30 day lag on monthly data.
       values: {
         health_data: stepRef('resp-spatial'),
-        climate_data: stepRef('resp-inmet'),
+        climate_data: stepRef('resp-fill'),
         climate_var: 'all',
         temporal_strategy: 'distributed_lag',
         lag_days: '21',

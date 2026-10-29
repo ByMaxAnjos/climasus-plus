@@ -42,18 +42,19 @@ carregar no Centro de Pipelines.
    municípios, pré-requisito para o cruzamento com clima.
 7. **Importar dados das estações do INMET** (`sus_climate_inmet`) — traz temperatura das
    estações dos mesmos quatro estados e anos.
-8. **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) — calcula
+8. **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) — completa as falhas da série de temperatura das estações com um modelo de aprendizado de máquina treinado por estação (XGBoost). Pode levar vários minutos.
+9. **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) — calcula
    **GDD com base 11 °C e teto 35 °C**, a faixa biológica do *Aedes aegypti*. O Parâmetro
    `custom_thresholds` fixa esses valores; sem ele, a função usaria a base regional.
-9. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
-   defasagem do GDD, com `temporal_strategy = "distributed_lag"`. O snapshot usou 0–84
-   **dias**; como o desfecho é semanal, a replicação usa 0–12 **semanas**.
+10. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
+    defasagem do GDD, com `temporal_strategy = "distributed_lag"`. O snapshot usou 0–84
+    **dias**; como o desfecho é semanal, a replicação usa 0–12 **semanas**.
 
 **Análise & Modelagem**
 
-10. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a contagem
+11. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a contagem
     semanal de casos (`n_casos`) e o GDD (`gdd_c`), com `dof_per_year = 2`.
-11. **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) — Resultado gráfico da curva
+12. **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) — Resultado gráfico da curva
     exposição–defasagem–risco.
 
 ::: {.callout-warning title="Por que GDD, e não temperatura do dia?"}
@@ -166,11 +167,11 @@ O resultado do snapshot **não é um caso de GDD que “não funciona” por aca
 exposição mal-especificada e de escala errada. Três fatos se somam:
 
 1. **GDD acumulado é altamente colinear** entre dias consecutivos; usar 84 lags diários
-   sobre uma série semanal cria dezenas de variáveis quase duplicadas.
+    sobre uma série semanal cria dezenas de variáveis quase duplicadas.
 2. **Quatro estados agregados** misturam imunidade, sorotipo, transmissão e clima; a
-   exposição média não representa nenhum território.
+    exposição média não representa nenhum território.
 3. **Em cidades tropicais, a temperatura é alta o ano todo.** O GDD pode não ser o fator
-   limitante: chuva, umidade, criadouros, imunidade e sorotipo dominam a sazonalidade.
+    limitante: chuva, umidade, criadouros, imunidade e sorotipo dominam a sazonalidade.
 
 A replicação em Recife e Fortaleza mostra que o problema não é específico de uma cidade.
 O desenho publicado que recupera o sinal (Lowe et al., 2021) usa **PDSI/chuva**, 558

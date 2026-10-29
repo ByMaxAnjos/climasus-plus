@@ -16,6 +16,14 @@ export const PLAIN_LANGUAGE: Record<string, PlainEntry> = {
       es: 'Descarga los registros oficiales (muertes, internaciones, casos notificados) directo de DATASUS para el período y el lugar elegidos.',
     },
   },
+  sus_climate_fill_inmet: {
+    title: { pt: 'Completar os buracos nos dados das estações', en: 'Fill the holes in the station data', es: 'Rellenar los huecos en los datos de las estaciones' },
+    description: {
+      pt: 'Estima os valores que faltam nas séries das estações meteorológicas (temperatura, umidade...), para que a análise não tenha buracos. Pode levar alguns minutos.',
+      en: 'Estimates the values missing from the weather-station series (temperature, humidity...), so the analysis has no holes. It can take a few minutes.',
+      es: 'Estima los valores que faltan en las series de las estaciones meteorológicas (temperatura, humedad...), para que el análisis no tenga huecos. Puede tardar unos minutos.',
+    },
+  },
   sus_data_clean_encoding: {
     title: { pt: 'Corrigir letras erradas nos textos', en: 'Fix garbled text', es: 'Corregir letras erróneas en los textos' },
     description: {

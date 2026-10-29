@@ -52,20 +52,21 @@ Integração e Modelagem é a mesma.
    municípios, pré-requisito para o cruzamento com clima.
 9. **Importar dados das estações do INMET** (`sus_climate_inmet`) — traz temperatura e
    umidade das estações INMET das mesmas UFs e anos.
-10. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
+10. **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) — completa as falhas das séries das estações (temperatura e umidade) com um modelo de aprendizado de máquina treinado por estação (XGBoost); estações com mais de 40% de falhas são excluídas. Pode levar vários minutos.
+11. **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — cria as colunas de
     defasagem para as variáveis climáticas disponíveis, com
     `temporal_strategy = "distributed_lag"`. No snapshot foram 0–21 **dias**; na replicação
     semanal, 0–3 **semanas**. A umidade entra como covariável no modelo.
 
 **Análise & Modelagem**
 
-11. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série
+12. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série
     semanal, com `outcome_col` apontando para a contagem de óbitos, `climate_col` para a
     temperatura e `covariates = "rh_mean_porc_lag0"` para ajustar pela umidade da semana.
     `dof_per_year = 2` reduz a flexibilidade da tendência em cinco anos de dados.
-12. **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) — Resultado gráfico da curva
+13. **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) — Resultado gráfico da curva
     exposição–defasagem–risco.
-13. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número
+14. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número
     atribuível.
 
 ## Dados usados
@@ -168,13 +169,13 @@ O caso ec-01 é uma lição de **poder e unidade de análise**, não de ausênci
 decisões explicam o snapshot:
 
 1. **Agregação regional.** Somar 715 municípios e calcular a média das exposições produz uma
-   série que não existe em nenhum lugar; o desfecho é uma soma populacional, a exposição é
-   uma média espacial.
+    série que não existe em nenhum lugar; o desfecho é uma soma populacional, a exposição é
+    uma média espacial.
 2. **Lag na unidade errada.** As 21 colunas diárias sobre um desfecho semanal são quase
-   duplicatas; a janela de 21 dias não corresponde a três semanas de defasagem.
+    duplicatas; a janela de 21 dias não corresponde a três semanas de defasagem.
 3. **Poder real.** A cidade de São Paulo tem 757 óbitos em cinco anos. Isso é suficiente
-   para uma série descritiva, mas não para uma curva em U com três defasagens e 10 df de
-   tendência.
+    para uma série descritiva, mas não para uma curva em U com três defasagens e 10 df de
+    tendência.
 
 O caminho responsável é um desenho **multicidade**: ajustar um DLNM por capital (ou por
 município grande), com lags semanais, e combinar os resultados com
