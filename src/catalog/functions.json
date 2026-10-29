@@ -1035,6 +1035,95 @@
   ]
  },
  {
+  "name": "sus_climate_inmet",
+  "stage": "integracao",
+  "family": "climate",
+  "title": "Import and Process INMET Meteorological Data",
+  "description": "`sus_climate_inmet()` downloads, imports, standardizes, and quality-controls\nBrazilian meteorological data from the National Institute of Meteorology (INMET).\n\nThe function implements a **comprehensive processing pipeline**:\n\\enumerate{\n  \\item **Download**: Multi-year data with automatic retry and backoff\n  \\item **Parsing**: Handles INMET's CSV format with metadata extraction\n  \\item **Standardization**: Renames columns to canonical names (see **Variables**)\n  \\item **Quality Control**: Physical consistency checks (see **QC Details**)\n  \\item **Caching**: Two-level (memory + disk) with Parquet format\n  \\item **Parallel Processing**: Both between and within years\n}",
+  "args": [
+   {
+    "name": "years",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Numeric vector of year(s) to import.\n  Examples: `2020`, `2020:2024`, `c(2019, 2021, 2023)`.\n  Must be between 2000 and current year. If `NULL`, imports last 2 years."
+   },
+   {
+    "name": "uf",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [
+     "AM"
+    ],
+    "doc": "Character vector of Brazilian state codes (e.g., `\"AM\"`,\n  `c(\"RJ\", \"MG\")`). Case insensitive. If `NULL` (default), imports\n  **all 27 states** (may be slow - see **Performance**)."
+   },
+   {
+    "name": "station_code",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character vector of INMET station codes to filter\n  (e.g., `c(\"A101\", \"A122\")`). Optional. If provided, the function downloads\n  data for the requested `years`/`uf` and then filters to include only the\n  specified stations. If `NULL` (default), all stations in the selected\n  states are returned. Station codes are matched case-insensitively."
+   },
+   {
+    "name": "use_cache",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), implements two-level caching:\n  \\itemize{\n    \\item **Session cache**: In-memory cache (MD5 hash of parameters)\n    \\item **Disk cache**: Parquet files with Zstandard compression\n  }\n  Use `unlink(cache_dir, recursive = TRUE)` to clear all caches."
+   },
+   {
+    "name": "cache_dir",
+    "default": "\"~/.climasus4r_cache/climate\"",
+    "required": false,
+    "type": "text",
+    "options": [
+     "~/.climasus4r_cache/climate"
+    ],
+    "doc": "Character. Directory path for disk cache.\n  Default: `\"~/.climasus4r_cache/climate\"`. Created automatically."
+   },
+   {
+    "name": "parallel",
+    "default": "FALSE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), enables **two levels** of parallelism:\n  \\itemize{\n    \\item **Between years**: Multiple years downloaded simultaneously\n    \\item **Within year**: CSV files for each year parsed in parallel\n  }\n  For single-year imports, only within-year parallelization applies."
+   },
+   {
+    "name": "workers",
+    "default": "2",
+    "required": false,
+    "type": "number",
+    "options": [],
+    "doc": "Integer. Number of parallel workers. Default: `4`.\n  Ignored if `parallel = FALSE`. Uses `future::multisession` backend.\n  Automatically capped at `availableCores() - 1`."
+   },
+   {
+    "name": "lang",
+    "default": "\"pt\"",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "pt",
+     "en",
+     "es"
+    ],
+    "doc": "Character. Message language. One of:\n  \\itemize{\n    \\item `\"pt\"`: Portuguese (default)\n    \\item `\"en\"`: English\n    \\item `\"es\"`: Spanish\n  }"
+   },
+   {
+    "name": "verbose",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. If `TRUE` (default), prints detailed progress including:\n  \\itemize{\n    \\item Cache hits/misses\n    \\item Download progress with retry attempts\n    \\item QC modifications (rows corrected/removed)\n    \\item Final statistics\n  }"
+   }
+  ]
+ },
+ {
   "name": "sus_climate_fill_inmet",
   "stage": "integracao",
   "family": "climate",
@@ -1144,95 +1233,6 @@
      "es"
     ],
     "doc": "Character. Message language: `\"pt\"` (Portuguese), `\"en\"` (English), or `\"es\"` (Spanish).\n  Default: `\"pt\"`."
-   }
-  ]
- },
- {
-  "name": "sus_climate_inmet",
-  "stage": "integracao",
-  "family": "climate",
-  "title": "Import and Process INMET Meteorological Data",
-  "description": "`sus_climate_inmet()` downloads, imports, standardizes, and quality-controls\nBrazilian meteorological data from the National Institute of Meteorology (INMET).\n\nThe function implements a **comprehensive processing pipeline**:\n\\enumerate{\n  \\item **Download**: Multi-year data with automatic retry and backoff\n  \\item **Parsing**: Handles INMET's CSV format with metadata extraction\n  \\item **Standardization**: Renames columns to canonical names (see **Variables**)\n  \\item **Quality Control**: Physical consistency checks (see **QC Details**)\n  \\item **Caching**: Two-level (memory + disk) with Parquet format\n  \\item **Parallel Processing**: Both between and within years\n}",
-  "args": [
-   {
-    "name": "years",
-    "default": "NULL",
-    "required": false,
-    "type": "text",
-    "options": [],
-    "doc": "Numeric vector of year(s) to import.\n  Examples: `2020`, `2020:2024`, `c(2019, 2021, 2023)`.\n  Must be between 2000 and current year. If `NULL`, imports last 2 years."
-   },
-   {
-    "name": "uf",
-    "default": "NULL",
-    "required": false,
-    "type": "text",
-    "options": [
-     "AM"
-    ],
-    "doc": "Character vector of Brazilian state codes (e.g., `\"AM\"`,\n  `c(\"RJ\", \"MG\")`). Case insensitive. If `NULL` (default), imports\n  **all 27 states** (may be slow - see **Performance**)."
-   },
-   {
-    "name": "station_code",
-    "default": "NULL",
-    "required": false,
-    "type": "text",
-    "options": [],
-    "doc": "Character vector of INMET station codes to filter\n  (e.g., `c(\"A101\", \"A122\")`). Optional. If provided, the function downloads\n  data for the requested `years`/`uf` and then filters to include only the\n  specified stations. If `NULL` (default), all stations in the selected\n  states are returned. Station codes are matched case-insensitively."
-   },
-   {
-    "name": "use_cache",
-    "default": "TRUE",
-    "required": false,
-    "type": "boolean",
-    "options": [],
-    "doc": "Logical. If `TRUE` (default), implements two-level caching:\n  \\itemize{\n    \\item **Session cache**: In-memory cache (MD5 hash of parameters)\n    \\item **Disk cache**: Parquet files with Zstandard compression\n  }\n  Use `unlink(cache_dir, recursive = TRUE)` to clear all caches."
-   },
-   {
-    "name": "cache_dir",
-    "default": "\"~/.climasus4r_cache/climate\"",
-    "required": false,
-    "type": "text",
-    "options": [
-     "~/.climasus4r_cache/climate"
-    ],
-    "doc": "Character. Directory path for disk cache.\n  Default: `\"~/.climasus4r_cache/climate\"`. Created automatically."
-   },
-   {
-    "name": "parallel",
-    "default": "FALSE",
-    "required": false,
-    "type": "boolean",
-    "options": [],
-    "doc": "Logical. If `TRUE` (default), enables **two levels** of parallelism:\n  \\itemize{\n    \\item **Between years**: Multiple years downloaded simultaneously\n    \\item **Within year**: CSV files for each year parsed in parallel\n  }\n  For single-year imports, only within-year parallelization applies."
-   },
-   {
-    "name": "workers",
-    "default": "2",
-    "required": false,
-    "type": "number",
-    "options": [],
-    "doc": "Integer. Number of parallel workers. Default: `4`.\n  Ignored if `parallel = FALSE`. Uses `future::multisession` backend.\n  Automatically capped at `availableCores() - 1`."
-   },
-   {
-    "name": "lang",
-    "default": "\"pt\"",
-    "required": false,
-    "type": "enum",
-    "options": [
-     "pt",
-     "en",
-     "es"
-    ],
-    "doc": "Character. Message language. One of:\n  \\itemize{\n    \\item `\"pt\"`: Portuguese (default)\n    \\item `\"en\"`: English\n    \\item `\"es\"`: Spanish\n  }"
-   },
-   {
-    "name": "verbose",
-    "default": "TRUE",
-    "required": false,
-    "type": "boolean",
-    "options": [],
-    "doc": "Logical. If `TRUE` (default), prints detailed progress including:\n  \\itemize{\n    \\item Cache hits/misses\n    \\item Download progress with retry attempts\n    \\item QC modifications (rows corrected/removed)\n    \\item Final statistics\n  }"
    }
   ]
  },

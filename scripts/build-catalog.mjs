@@ -222,6 +222,14 @@ for (const f of readdirSync(RDIR).filter((f) => f.endsWith('.R'))) {
 }
 
 catalog.sort((a, b) => a.name.localeCompare(b.name))
+// the Library lists in catalog order: keep the gap-filler right AFTER the import it follows
+{
+  const fi = catalog.findIndex((f) => f.name === 'sus_climate_fill_inmet')
+  if (fi >= 0) {
+    const [fill] = catalog.splice(fi, 1)
+    catalog.splice(catalog.findIndex((f) => f.name === 'sus_climate_inmet') + 1, 0, fill)
+  }
+}
 mkdirSync(dirname(OUT), { recursive: true })
 writeFileSync(OUT, JSON.stringify(catalog, null, 1))
 console.log(`${catalog.length} functions → ${OUT}`)

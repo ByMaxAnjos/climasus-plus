@@ -120,13 +120,15 @@ export const TEMPLATES: PipelineTemplate[] = [
       es: 'Clima de estaciones (INMET)',
     },
     description: {
-      pt: 'Baixa séries diárias das estações automáticas do INMET (temperatura, umidade, precipitação) para os anos e UFs escolhidos. Confira a distância estação–município e as falhas antes de usar: o Studio não tem, hoje, um nó de preenchimento de falhas.',
-      en: 'Downloads daily series from INMET automatic stations (temperature, humidity, precipitation) for the chosen years and states. Check station–municipality distance and gaps before use: the Studio currently has no gap-filling node.',
-      es: 'Descarga series diarias de las estaciones automáticas del INMET (temperatura, humedad, precipitación) para los años y estados elegidos. Verifique la distancia estación–municipio y los vacíos.',
+      pt: 'Baixa séries diárias das estações automáticas do INMET (temperatura, umidade, precipitação) para os anos e UFs escolhidos. Em seguida, preenche as falhas das séries com um modelo por estação (XGBoost); confira a distância estação–município antes de usar e rode com `run_evaluation = TRUE` para testar a qualidade do preenchimento.',
+      en: 'Downloads daily series from INMET automatic stations (temperature, humidity, precipitation) for the chosen years and states. It then fills the series gaps with a per-station model (XGBoost); check the station–municipality distance before use and run with `run_evaluation = TRUE` to test the quality of the filling.',
+      es: 'Descarga series diarias de las estaciones automáticas del INMET (temperatura, humedad, precipitación) para los años y estados elegidos. Luego rellena los vacíos de las series con un modelo por estación (XGBoost); verifique la distancia estación–municipio antes de usar.',
     },
     vignetteUrl: `${PKGDOWN}/07-clima-estacoes.html`,
     steps: [
       { fn: 'sus_climate_inmet', values: { years: '2018:2022', uf: '"SP"' } },
+      // fill always sits right after the import: downstream steps read the completed series
+      { fn: 'sus_climate_fill_inmet', values: { target_var: '"tair_dry_bulb_c"' } },
     ],
   },
   {
@@ -238,7 +240,8 @@ export const TEMPLATES: PipelineTemplate[] = [
       // sus_climate_aggregate only accepts health data at stage "spatial"
       { id: 'exp-spatial', fn: 'sus_spatial_join', values: {} },
       { id: 'exp-inmet', fn: 'sus_climate_inmet', values: { years: '2015:2019', uf: '"SP"' } },
-      { fn: 'sus_climate_aggregate', values: { health_data: stepRef('exp-spatial'), climate_data: stepRef('exp-inmet'), climate_var: 'tair_dry_bulb_c', temporal_strategy: 'distributed_lag', lag_days: '21' } },
+      { id: 'exp-fill', fn: 'sus_climate_fill_inmet', values: { target_var: '"tair_dry_bulb_c"' } },
+      { fn: 'sus_climate_aggregate', values: { health_data: stepRef('exp-spatial'), climate_data: stepRef('exp-fill'), climate_var: 'tair_dry_bulb_c', temporal_strategy: 'distributed_lag', lag_days: '21' } },
       { fn: 'sus_climate_plot_aggregate', values: { plot_type: 'timeseries' } },
     ],
   },
@@ -259,6 +262,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     vignetteUrl: `${PKGDOWN}/climate_indicators.html`,
     steps: [
       { fn: 'sus_climate_inmet', values: { years: '2018:2022', uf: '"RS"' } },
+      { fn: 'sus_climate_fill_inmet', values: { target_var: 'c("tair_dry_bulb_c", "rh_mean_porc", "ws_2_m_s", "sr_kj_m2")' } },
       { fn: 'sus_climate_compute_indicators', values: { region: 'south' } },
     ],
   },
@@ -278,6 +282,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     vignetteUrl: `${PKGDOWN}/ondas_de_calor.html`,
     steps: [
       { fn: 'sus_climate_inmet', values: { years: '2010:2023', uf: '"RS"' } },
+      { fn: 'sus_climate_fill_inmet', values: { target_var: 'c("tair_dry_bulb_c", "tair_max_c", "tair_min_c", "rh_mean_porc", "ws_2_m_s", "sr_kj_m2")' } },
       { fn: 'sus_climate_compute_indicators', values: {} },
       { fn: 'sus_climate_compute_heatwaves', values: { method: 'WHO', percentile: '90', baseline_start: '"2010-01-01"', baseline_end: '"2016-12-31"' } },
       { fn: 'sus_climate_plot_heatwaves', values: {} },
@@ -299,6 +304,7 @@ export const TEMPLATES: PipelineTemplate[] = [
     vignetteUrl: `${PKGDOWN}/ondas_de_frio.html`,
     steps: [
       { fn: 'sus_climate_inmet', values: { years: '2010:2023', uf: '"RS"' } },
+      { fn: 'sus_climate_fill_inmet', values: { target_var: 'c("tair_dry_bulb_c", "tair_max_c", "tair_min_c", "rh_mean_porc", "ws_2_m_s", "sr_kj_m2")' } },
       { fn: 'sus_climate_compute_indicators', values: {} },
       { fn: 'sus_climate_compute_coldwaves', values: { method: 'WHO', percentile: '10', baseline_start: '"2010-01-01"', baseline_end: '"2016-12-31"' } },
       { fn: 'sus_climate_plot_coldwaves', values: {} },
