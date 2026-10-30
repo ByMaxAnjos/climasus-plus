@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_read",
+      "values": {
+        "path": ""
+      },
+      "id": "step-01"
+    },
+    {
+      "id": "exp-spatial",
+      "fn": "sus_spatial_join",
+      "values": {}
+    },
+    {
+      "id": "exp-inmet",
+      "fn": "sus_climate_inmet",
+      "values": {
+        "years": "2015:2019",
+        "uf": "\"SP\""
+      }
+    },
+    {
+      "id": "exp-fill",
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "\"tair_dry_bulb_c\""
+      }
+    },
+    {
+      "fn": "sus_climate_aggregate",
+      "values": {
+        "health_data": "@step:exp-spatial",
+        "climate_data": "@step:exp-fill",
+        "climate_var": "tair_dry_bulb_c",
+        "temporal_strategy": "distributed_lag",
+        "lag_days": "21"
+      },
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_climate_plot_aggregate",
+      "values": {
+        "plot_type": "timeseries"
+      },
+      "id": "step-03"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

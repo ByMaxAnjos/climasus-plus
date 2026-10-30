@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_import",
+      "values": {
+        "uf": "c(\"CE\", \"PE\", \"BA\", \"MA\")",
+        "system": "SINAN-DENGUE",
+        "year": "2015:2019"
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_data_clean_encoding",
+      "values": {},
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_data_standardize",
+      "values": {},
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_data_create_variables",
+      "values": {
+        "create_calendar_vars": "TRUE"
+      },
+      "id": "step-04"
+    },
+    {
+      "id": "dengue-health-agg",
+      "fn": "sus_data_aggregate",
+      "values": {
+        "time_unit": "week",
+        "group_by": "codigo_municipio_residencia",
+        "complete_dates": "TRUE",
+        "date_col": "data_primeiros_sintomas"
+      }
+    },
+    {
+      "id": "dengue-spatial",
+      "fn": "sus_spatial_join",
+      "values": {}
+    },
+    {
+      "id": "dengue-inmet",
+      "fn": "sus_climate_inmet",
+      "values": {
+        "uf": "c(\"CE\", \"PE\", \"BA\", \"MA\")",
+        "years": "2015:2019"
+      }
+    },
+    {
+      "id": "dengue-gdd",
+      "fn": "sus_climate_compute_indicators",
+      "values": {
+        "df": "@step:dengue-inmet",
+        "indicators": "gdd",
+        "custom_thresholds": "list(gdd_base = 11, gdd_upper = 35)"
+      }
+    },
+    {
+      "fn": "sus_climate_aggregate",
+      "values": {
+        "health_data": "@step:dengue-spatial",
+        "climate_data": "@step:dengue-gdd",
+        "climate_var": "gdd_c",
+        "temporal_strategy": "distributed_lag",
+        "lag_days": "84"
+      },
+      "id": "step-05"
+    },
+    {
+      "id": "dengue-fit",
+      "fn": "sus_mod_dlnm",
+      "values": {
+        "outcome_col": "n_casos",
+        "climate_col": "gdd_c",
+        "dof_per_year": "2"
+      }
+    },
+    {
+      "fn": "sus_mod_plot_dlnm",
+      "values": {
+        "fit": "@step:dengue-fit"
+      },
+      "id": "step-06"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

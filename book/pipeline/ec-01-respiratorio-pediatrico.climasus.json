@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_import",
+      "values": {
+        "uf": "c(\"SP\", \"RJ\", \"MG\", \"ES\")",
+        "system": "SIM-DO",
+        "year": "2015:2019"
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_data_clean_encoding",
+      "values": {},
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_data_standardize",
+      "values": {},
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_data_filter_cid",
+      "values": {
+        "disease_group": "respiratory"
+      },
+      "id": "step-04"
+    },
+    {
+      "fn": "sus_data_create_variables",
+      "values": {
+        "age_breaks": "c(0, 5, 15, 60, Inf)",
+        "create_calendar_vars": "TRUE"
+      },
+      "id": "step-05"
+    },
+    {
+      "fn": "sus_data_filter_demographics",
+      "values": {
+        "age_range": "c(0, 5)"
+      },
+      "id": "step-06"
+    },
+    {
+      "id": "resp-health-agg",
+      "fn": "sus_data_aggregate",
+      "values": {
+        "time_unit": "week",
+        "group_by": "codigo_municipio_residencia",
+        "complete_dates": "TRUE"
+      }
+    },
+    {
+      "id": "resp-spatial",
+      "fn": "sus_spatial_join",
+      "values": {}
+    },
+    {
+      "id": "resp-inmet",
+      "fn": "sus_climate_inmet",
+      "values": {
+        "uf": "c(\"SP\", \"RJ\", \"MG\", \"ES\")",
+        "years": "2015:2019"
+      }
+    },
+    {
+      "fn": "sus_climate_aggregate",
+      "values": {
+        "health_data": "@step:resp-spatial",
+        "climate_data": "@step:resp-inmet",
+        "climate_var": "all",
+        "temporal_strategy": "distributed_lag",
+        "lag_days": "21"
+      },
+      "id": "step-07"
+    },
+    {
+      "id": "resp-dlnm",
+      "fn": "sus_mod_dlnm",
+      "values": {
+        "climate_col": "tair_dry_bulb_c",
+        "covariates": "rh_mean_porc_lag0",
+        "dof_per_year": "2"
+      }
+    },
+    {
+      "fn": "sus_mod_plot_dlnm",
+      "values": {
+        "fit": "@step:resp-dlnm"
+      },
+      "id": "step-08"
+    },
+    {
+      "fn": "sus_mod_af",
+      "values": {
+        "fit": "@step:resp-dlnm"
+      },
+      "id": "step-09"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

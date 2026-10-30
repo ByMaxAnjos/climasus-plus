@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_import",
+      "values": {
+        "uf": "SP",
+        "system": "SIM-DO",
+        "year": "2010:2019"
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_data_clean_encoding",
+      "values": {},
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_data_standardize",
+      "values": {},
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_data_filter_cid",
+      "values": {
+        "icd_codes": "I",
+        "match_type": "chapter"
+      },
+      "id": "step-04"
+    },
+    {
+      "fn": "sus_data_create_variables",
+      "values": {
+        "age_breaks": "c(0, 60, Inf)"
+      },
+      "id": "step-05"
+    },
+    {
+      "fn": "sus_data_filter_demographics",
+      "values": {
+        "age_range": "c(60, Inf)"
+      },
+      "id": "step-06"
+    },
+    {
+      "id": "cardio-health-agg",
+      "fn": "sus_data_aggregate",
+      "values": {
+        "time_unit": "day",
+        "group_by": "codigo_municipio_residencia",
+        "complete_dates": "TRUE"
+      }
+    },
+    {
+      "id": "cardio-spatial",
+      "fn": "sus_spatial_join",
+      "values": {}
+    },
+    {
+      "id": "cardio-inmet",
+      "fn": "sus_climate_inmet",
+      "values": {
+        "uf": "SP",
+        "years": "2010:2019"
+      }
+    },
+    {
+      "id": "cardio-heatwave",
+      "fn": "sus_climate_compute_heatwaves",
+      "values": {
+        "df": "@step:cardio-inmet",
+        "method": "WHO",
+        "percentile": "90",
+        "baseline_start": "\"2010-01-01\"",
+        "baseline_end": "\"2015-12-31\""
+      }
+    },
+    {
+      "fn": "sus_climate_plot_heatwaves",
+      "values": {},
+      "id": "step-07"
+    },
+    {
+      "id": "cardio-merged",
+      "fn": "sus_climate_aggregate",
+      "values": {
+        "health_data": "@step:cardio-spatial",
+        "climate_data": "@step:cardio-inmet",
+        "time_unit": "day",
+        "climate_var": "tair_dry_bulb_c",
+        "temporal_strategy": "distributed_lag",
+        "lag_days": "21"
+      }
+    },
+    {
+      "fn": "sus_mod_dlnm",
+      "values": {
+        "outcome_col": "n_obitos",
+        "climate_col": "tair_dry_bulb_c",
+        "dof_per_year": "4"
+      },
+      "id": "step-08"
+    },
+    {
+      "fn": "sus_mod_af",
+      "values": {},
+      "id": "step-09"
+    },
+    {
+      "fn": "sus_mod_plot_af",
+      "values": {},
+      "id": "step-10"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

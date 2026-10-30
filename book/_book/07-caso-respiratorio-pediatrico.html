@@ -358,10 +358,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="8" type="1">
 <li><strong>Juntar dados a limites geográficos</strong> (<code>sus_spatial_join</code>) — liga a série de saúde aos municípios, pré-requisito para o cruzamento com clima.</li>
 <li><strong>Importar dados das estações do INMET</strong> (<code>sus_climate_inmet</code>) — traz temperatura e umidade das estações INMET das mesmas UFs e anos.</li>
+<li><strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>) — completa as falhas das séries das estações (temperatura e umidade) com um modelo de aprendizado de máquina treinado por estação (XGBoost); estações com mais de 40% de falhas são excluídas. Pode levar vários minutos.</li>
 <li><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>) — cria as colunas de defasagem para as variáveis climáticas disponíveis, com <code>temporal_strategy = "distributed_lag"</code>. No snapshot foram 0–21 <strong>dias</strong>; na replicação semanal, 0–3 <strong>semanas</strong>. A umidade entra como covariável no modelo.</li>
 </ol>
 <p><strong>Análise &amp; Modelagem</strong></p>
-<ol start="11" type="1">
+<ol start="12" type="1">
 <li><strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>) — ajusta o Modelo DLNM sobre a série semanal, com <code>outcome_col</code> apontando para a contagem de óbitos, <code>climate_col</code> para a temperatura e <code>covariates = "rh_mean_porc_lag0"</code> para ajustar pela umidade da semana. <code>dof_per_year = 2</code> reduz a flexibilidade da tendência em cinco anos de dados.</li>
 <li><strong>Visualizar resultados do DLNM</strong> (<code>sus_mod_plot_dlnm</code>) — Resultado gráfico da curva exposição–defasagem–risco.</li>
 <li><strong>Calcular fração atribuível</strong> (<code>sus_mod_af</code>) — calcula a fração e o número atribuível.</li>
@@ -578,14 +579,66 @@ Figura&nbsp;14.3: Fração atribuível do snapshot: as barras ficam abaixo de ze
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/01-run-ec01.R</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># replicação cidade-específica (São Paulo, A701, lags semanais):</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/00-build-city-climate.R</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> book/scripts/90-replicacao/prep_city_series.py</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/01-fit-replicacao.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>O script grava a tabela analítica em <code>data/ec01/analytic.parquet</code>, as tabelas em <code>tables/results/ec01/</code>, as figuras em <code>images/results/ec01/</code> e os metadados em <code>results/ec01.json</code>. O snapshot usado neste capítulo foi gerado em 26/10/2026.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reprodutibilidade">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reprodutibilidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-01-respiratorio-pediatrico.climasus.json"><code>ec-01-respiratorio-pediatrico.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 13 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
+<p><strong>Copiar em R.</strong> O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em <a href="pipeline/R/ec-01-respiratorio-pediatrico.R"><code>pipeline/R/ec-01-respiratorio-pediatrico.R</code></a>. A replicação cidade-específica que mostra por que este recorte não é estimável está em <code>book/scripts/90-replicacao/01-fit-replicacao.R</code>.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Caso ec-01 — espelho R de ec-01-respiratorio-pediatrico.climasus.json</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(climasus4r)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">sus_data_import</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">system =</span> <span class="st">"SIM-DO"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">uf =</span> <span class="fu">c</span>(<span class="st">"SP"</span>, <span class="st">"RJ"</span>, <span class="st">"MG"</span>, <span class="st">"ES"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2019</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_clean_encoding</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_standardize</span>(<span class="at">lang =</span> <span class="st">"pt"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_filter_cid</span>(<span class="at">disease_group =</span> <span class="st">"respiratory"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_create_variables</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">age_breaks =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">60</span>, <span class="cn">Inf</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">create_calendar_vars =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_filter_demographics</span>(<span class="at">age_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">5</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_aggregate</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_unit =</span> <span class="st">"week"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_by =</span> <span class="st">"codigo_municipio_residencia"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">complete_dates =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>saude <span class="ot">&lt;-</span> <span class="fu">sus_spatial_join</span>(dados)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_inmet</span>(<span class="at">years =</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2019</span>, <span class="at">uf =</span> <span class="fu">c</span>(<span class="st">"SP"</span>, <span class="st">"RJ"</span>, <span class="st">"MG"</span>, <span class="st">"ES"</span>))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>integrado <span class="ot">&lt;-</span> <span class="fu">sus_climate_aggregate</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">health_data =</span> saude,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_data =</span> clima,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_var =</span> <span class="fu">c</span>(<span class="st">"tair_dry_bulb_c"</span>, <span class="st">"rh_mean_porc"</span>),</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporal_strategy =</span> <span class="st">"distributed_lag"</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">lag_days =</span> <span class="dv">21</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">sus_mod_dlnm</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  integrado,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_obitos"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_col =</span> <span class="st">"tair_dry_bulb_c"</span>,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariates =</span> <span class="st">"rh_mean_porc_lag0"</span>,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">dof_per_year =</span> <span class="dv">2</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_dlnm</span>(ajuste)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_af</span>(ajuste)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -594,7 +647,7 @@ Verifique se ficou
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>1. Por que este Pipeline usa a função Filtrar por características demográficas (<code>sus_data_filter_demographics</code>) com <code>age_range = c(0, 5)</code> depois de já ter criado faixas etárias mais largas com Criar variáveis derivadas (<code>sus_data_create_variables</code>)?</strong></p>
 <p><strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) cria a variável de faixa etária para toda a base (adequado se o Pipeline quisesse comparar faixas depois); <strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) é o Passo que efetivamente recorta a população de interesse (menores de 5 anos) para a análise deste capítulo.</p>

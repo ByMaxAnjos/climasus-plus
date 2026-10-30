@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_import",
+      "values": {
+        "region": "sul",
+        "system": "SIH-RD",
+        "year": "2010:2019",
+        "month": "1:12"
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_data_clean_encoding",
+      "values": {},
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_data_standardize",
+      "values": {},
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_data_filter_cid",
+      "values": {
+        "icd_codes": "c(\"J09\", \"J18\")",
+        "match_type": "range"
+      },
+      "id": "step-04"
+    },
+    {
+      "fn": "sus_data_create_variables",
+      "values": {},
+      "id": "step-05"
+    },
+    {
+      "id": "frio-health-agg",
+      "fn": "sus_data_aggregate",
+      "values": {
+        "time_unit": "day",
+        "group_by": "codigo_municipio_residencia",
+        "complete_dates": "TRUE"
+      }
+    },
+    {
+      "id": "frio-spatial",
+      "fn": "sus_spatial_join",
+      "values": {}
+    },
+    {
+      "id": "frio-inmet",
+      "fn": "sus_climate_inmet",
+      "values": {
+        "uf": "c(\"PR\", \"SC\", \"RS\")",
+        "years": "2010:2019"
+      }
+    },
+    {
+      "fn": "sus_climate_compute_coldwaves",
+      "values": {
+        "method": "WHO",
+        "percentile": "10",
+        "baseline_start": "\"2010-01-01\"",
+        "baseline_end": "\"2015-12-31\""
+      },
+      "id": "step-06"
+    },
+    {
+      "fn": "sus_climate_plot_coldwaves",
+      "values": {},
+      "id": "step-07"
+    },
+    {
+      "id": "frio-city",
+      "fn": "sus_data_filter_demographics",
+      "values": {
+        "df": "@step:frio-spatial",
+        "city": "\"Porto Alegre\""
+      }
+    },
+    {
+      "fn": "sus_mod_its",
+      "values": {
+        "data": "@step:frio-city",
+        "outcome_col": "n_internacoes",
+        "interruption_dates": "2011-07-03"
+      },
+      "id": "step-08"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

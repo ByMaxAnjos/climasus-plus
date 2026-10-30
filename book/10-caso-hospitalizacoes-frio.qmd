@@ -232,21 +232,61 @@ limitações.
 
 ## Reproduzir
 
-```bash
-Rscript book/scripts/04-run-ec04.R
-# para reaproveitar o parquet e refazer o ITS no evento A801:
-Rscript book/scripts/04b-ec04-its.R
-# para gerar a janela de ±180 dias:
-Rscript book/scripts/04c-ec04-window-plot.R
-# replicação cidade-específica (Porto Alegre, A801, ITS + DLNM):
-Rscript book/scripts/90-replicacao/00-build-city-climate.R
-python3 book/scripts/90-replicacao/prep_city_series.py
-Rscript book/scripts/90-replicacao/01-fit-replicacao.R
+::: {.callout-note title="Reprodutibilidade"}
+**Abrir no Studio.** Baixe [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 12 Passos, a ordem e os Parâmetros descritos neste capítulo.
+
+**Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-04-hospitalizacoes-frio.R`](pipeline/R/ec-04-hospitalizacoes-frio.R). O DLNM e a sensibilidade de janela que sustentam a leitura corrigida estão em `book/scripts/90-replicacao/01-fit-replicacao.R`.
+:::
+
+```r
+# Caso ec-04 — espelho R de ec-04-hospitalizacoes-frio.climasus.json
+library(climasus4r)
+
+dados <- sus_data_import(
+  system = "SIH-RD",
+  region = "sul",
+  year = 2010:2019,
+  month = 1:12
+) |>
+  sus_data_clean_encoding() |>
+  sus_data_standardize(lang = "pt") |>
+  sus_data_filter_cid(icd_codes = c("J09", "J18"), match_type = "range") |>
+  sus_data_create_variables() |>
+  sus_data_aggregate(
+    time_unit = "day",
+    group_by = "codigo_municipio_residencia",
+    complete_dates = TRUE
+  )
+
+saude <- sus_spatial_join(dados)
+clima <- sus_climate_inmet(years = 2010:2019, uf = c("PR", "SC", "RS"))
+
+frio <- sus_climate_compute_coldwaves(
+  clima,
+  method = "WHO",
+  percentile = 10,
+  baseline_start = "2010-01-01",
+  baseline_end = "2015-12-31"
+)
+sus_climate_plot_coldwaves(frio, interactive = FALSE)
+
+poa <- sus_data_filter_demographics(saude, city = "Porto Alegre")
+
+its <- sus_mod_its(
+  poa,
+  outcome_col = "n_internacoes",
+  interruption_dates = "2011-07-03"
+)
+
+its$effects
 ```
 
-O script grava a tabela analítica em `data/ec04/analytic.parquet`, as tabelas em
-`tables/results/ec04/`, as figuras em `images/results/ec04/` e os metadados em
-`results/ec04.json`. O snapshot usado neste capítulo foi gerado em 26/10/2026.
+**O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
+Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os
+Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a
+fonte e o período dos dados, a versão do Studio/`climasus4r` e, se possível, o checksum do
+arquivo analítico. A biblioteca completa está no
+[Capítulo 12](12-parametros-avancados.qmd#biblioteca-de-pipelines).
 
 ::: {.callout-note collapse="true"}
 ## Verifique se ficou

@@ -319,25 +319,25 @@ ul.task-list li input[type="checkbox"] {
 <td>Mortalidade respiratória pediátrica e temperatura</td>
 <td>Crianças menores de 5 anos têm mais óbitos respiratórios em dias de temperatura extrema?</td>
 <td>Sudeste (SP, RJ, MG, ES), 2015-2019</td>
-<td>13</td>
+<td>14</td>
 </tr>
 <tr class="even">
 <td>Dengue e graus-dia</td>
 <td>O acúmulo de calor favorável ao vetor antecipa alta de casos de dengue?</td>
 <td>CE, PE, BA e MA, 2015-2019</td>
-<td>11</td>
+<td>12</td>
 </tr>
 <tr class="odd">
 <td>Mortalidade cardiovascular em idosos e ondas de calor</td>
 <td>Ondas de calor aumentam óbitos cardiovasculares em idosos?</td>
 <td>São Paulo, 2010-2019</td>
-<td>15</td>
+<td>16</td>
 </tr>
 <tr class="even">
 <td>Hospitalizações respiratórias e frio</td>
 <td>Um evento de frio muda o nível de internações respiratórias?</td>
 <td>Porto Alegre (RS), 2010-2019</td>
-<td>12</td>
+<td>13</td>
 </tr>
 </tbody>
 </table>
@@ -405,6 +405,7 @@ Como carregar um Modelo
 <li><strong>Somar os casos ao longo do tempo</strong> — agregado por <strong>semana</strong> e por município, com semanas completas.</li>
 <li><strong>Juntar dados a limites geográficos</strong> — liga a série aos municípios.</li>
 <li><strong>Trazer dados de temperatura e umidade das estações</strong> — INMET, mesmos estados e anos.</li>
+<li><strong>Completar os buracos nos dados das estações</strong> — estima as falhas de temperatura e umidade, uma estação por vez.</li>
 <li><strong>Juntar saúde e clima na mesma tabela</strong> — cria defasagens de 0–21 dias para temperatura e umidade.</li>
 <li><strong>Estimar o risco ligado ao clima</strong> — DLNM com ajuste para umidade (<code>rh_mean_porc_lag0</code>) e tendência de 2 graus de liberdade por ano.</li>
 <li><strong>Ver a curva de risco</strong> — gráfico exposição-defasagem-risco.</li>
@@ -412,7 +413,7 @@ Como carregar um Modelo
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/screenshots/studio-modelo-respiratorio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Modelo “Mortalidade respiratória pediátrica e temperatura” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-respiratorio.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 13 passos do modelo de mortalidade respiratória pediátrica, em linguagem simples."></a></p>
+<p><a href="images/screenshots/studio-modelo-respiratorio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Modelo “Mortalidade respiratória pediátrica e temperatura” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-respiratorio.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 14 passos do modelo de mortalidade respiratória pediátrica, em linguagem simples."></a></p>
 <figcaption>Modelo “Mortalidade respiratória pediátrica e temperatura” carregado no Pipeline, em Modo Vigilância e gestão.</figcaption>
 </figure>
 </div>
@@ -428,6 +429,7 @@ Como carregar um Modelo
 <li><strong>Somar os casos ao longo do tempo</strong> — agregado por <strong>semana epidemiológica</strong>, usando a data de primeiros sintomas e semanas completas.</li>
 <li><strong>Juntar dados a limites geográficos</strong> — liga a série aos municípios.</li>
 <li><strong>Trazer dados de temperatura das estações</strong> — INMET, mesmos estados e anos.</li>
+<li><strong>Completar os buracos nos dados das estações</strong> — estima as falhas de temperatura.</li>
 <li><strong>Calcular índices de conforto térmico</strong> — calcula GDD com base 11 °C e teto 35 °C.</li>
 <li><strong>Juntar saúde e clima</strong> — cria defasagens de 0–84 dias (12 semanas) do GDD.</li>
 <li><strong>Estimar o risco ligado ao clima</strong> — DLNM sobre a contagem semanal de casos, com tendência de 2 graus de liberdade por ano.</li>
@@ -435,7 +437,7 @@ Como carregar um Modelo
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/screenshots/studio-modelo-dengue.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Modelo “Dengue e graus-dia” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-dengue.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 11 passos do modelo de dengue e graus-dia, em linguagem simples."></a></p>
+<p><a href="images/screenshots/studio-modelo-dengue.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Modelo “Dengue e graus-dia” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-dengue.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 12 passos do modelo de dengue e graus-dia, em linguagem simples."></a></p>
 <figcaption>Modelo “Dengue e graus-dia” carregado no Pipeline, em Modo Vigilância e gestão.</figcaption>
 </figure>
 </div>
@@ -453,6 +455,7 @@ Como carregar um Modelo
 <li><strong>Somar os casos ao longo do tempo</strong> — agregado por dia, com dias completos.</li>
 <li><strong>Juntar dados a limites geográficos</strong></li>
 <li><strong>Trazer dados de temperatura das estações</strong> — INMET, SP.</li>
+<li><strong>Completar os buracos nos dados das estações</strong> — estima as falhas de temperatura média, máxima e mínima.</li>
 <li><strong>Detectar dias de onda de calor</strong> — método WHO, percentil 90, com referência fixa 2010–2015; há sete metodologias disponíveis, e a escolha deve ser declarada e testada.</li>
 <li><strong>Visualizar ondas de calor</strong> — ramo descritivo, não um regressor do modelo.</li>
 <li><strong>Juntar saúde e clima</strong> — defasagens de 0–21 dias da temperatura.</li>
@@ -462,7 +465,7 @@ Como carregar um Modelo
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/screenshots/studio-modelo-cardio-calor.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Modelo “Mortalidade cardiovascular em idosos e ondas de calor” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-cardio-calor.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 15 passos do modelo de mortalidade cardiovascular e ondas de calor, em linguagem simples."></a></p>
+<p><a href="images/screenshots/studio-modelo-cardio-calor.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Modelo “Mortalidade cardiovascular em idosos e ondas de calor” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-cardio-calor.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 16 passos do modelo de mortalidade cardiovascular e ondas de calor, em linguagem simples."></a></p>
 <figcaption>Modelo “Mortalidade cardiovascular em idosos e ondas de calor” carregado no Pipeline, em Modo Vigilância e gestão.</figcaption>
 </figure>
 </div>
@@ -479,6 +482,7 @@ Como carregar um Modelo
 <li><strong>Somar os casos ao longo do tempo</strong> — agregado por dia e por município, com dias completos.</li>
 <li><strong>Juntar dados a limites geográficos</strong></li>
 <li><strong>Trazer dados de temperatura das estações</strong> — INMET, região Sul.</li>
+<li><strong>Completar os buracos nos dados das estações</strong> — estima as falhas de temperatura média, máxima e mínima.</li>
 <li><strong>Detectar dias de onda de frio</strong> — método WHO, percentil 10, com referência fixa 2010–2015; há sete metodologias disponíveis.</li>
 <li><strong>Visualizar ondas de frio</strong> — ramo descritivo.</li>
 <li><strong>Filtrar um município</strong> — restringe a série a Porto Alegre, porque a ITS é um desenho de série única.</li>
@@ -486,7 +490,7 @@ Como carregar um Modelo
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/screenshots/studio-modelo-hospitalizacao-frio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Modelo “Hospitalizações respiratórias e ondas de frio” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-hospitalizacao-frio.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 12 passos do modelo de hospitalizações respiratórias e frio, em linguagem simples."></a></p>
+<p><a href="images/screenshots/studio-modelo-hospitalizacao-frio.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Modelo “Hospitalizações respiratórias e ondas de frio” carregado no Pipeline, em Modo Vigilância e gestão."><img src="images/screenshots/studio-modelo-hospitalizacao-frio.png" class="img-fluid figure-img" alt="Captura do Pipeline do climasus+ Studio com os 13 passos do modelo de hospitalizações respiratórias e frio, em linguagem simples."></a></p>
 <figcaption>Modelo “Hospitalizações respiratórias e ondas de frio” carregado no Pipeline, em Modo Vigilância e gestão.</figcaption>
 </figure>
 </div>

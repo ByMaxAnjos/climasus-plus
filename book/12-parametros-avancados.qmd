@@ -101,6 +101,56 @@ Salvar um arquivo não torna o resultado automaticamente reproduzível: dados ex
 podem mudar, caminhos locais podem deixar de existir e métodos estatísticos exigem
 revisão. Para uma decisão pública, anexe a ficha metodológica e as limitações.
 
+### Biblioteca de pipelines do guia {#biblioteca-de-pipelines}
+
+Todos os pipelines descritos neste guia estão em [`pipeline/`](pipeline/README.md) como projetos
+`.climasus.json`, com um espelho em R em `pipeline/R/`. O projeto é o grafo
+exato — Passos, ordem e Parâmetros —; o `.R` é a mesma cadeia em código.
+
+| Projeto | Capítulo | Passos | Código R |
+|---|---|---|---|
+| [`pipeline-importacao-saude.climasus.json`](pipeline/pipeline-importacao-saude.climasus.json) | Cap. 2 | 2 | [`R`](pipeline/R/pipeline-importacao-saude.R) |
+| [`pipeline-preparacao-basica.climasus.json`](pipeline/pipeline-preparacao-basica.climasus.json) | Cap. 2 | 7 | [`R`](pipeline/R/00-preparacao.R) |
+| [`clima-aggregate-exposicao.climasus.json`](pipeline/clima-aggregate-exposicao.climasus.json) | Cap. 3 | 6 | [`R`](pipeline/R/01-integracao.R) |
+| [`mod-dlnm.climasus.json`](pipeline/mod-dlnm.climasus.json) | Cap. 6 | 5 | [`R`](pipeline/R/02-modelagem.R) |
+| [`ec-01-respiratorio-pediatrico.climasus.json`](pipeline/ec-01-respiratorio-pediatrico.climasus.json) | Cap. 7 | 13 | [`R`](pipeline/R/ec-01-respiratorio-pediatrico.R) |
+| [`ec-02-dengue-clima.climasus.json`](pipeline/ec-02-dengue-clima.climasus.json) | Cap. 8 | 11 | [`R`](pipeline/R/ec-02-dengue-clima.R) |
+| [`ec-03-cardio-idosos-calor.climasus.json`](pipeline/ec-03-cardio-idosos-calor.climasus.json) | Cap. 9 | 15 | [`R`](pipeline/R/ec-03-cardio-idosos-calor.R) |
+| [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) | Cap. 10 | 12 | [`R`](pipeline/R/ec-04-hospitalizacoes-frio.R) |
+| [`tematico-ondas-calor.climasus.json`](pipeline/tematico-ondas-calor.climasus.json) | Cap. 9 | 5 | [`R`](pipeline/R/tematico-ondas-calor.R) |
+| [`tematico-ondas-frio.climasus.json`](pipeline/tematico-ondas-frio.climasus.json) | Cap. 10 | 5 | [`R`](pipeline/R/tematico-ondas-frio.R) |
+| [`pipeline-qualidade-visualizacao.climasus.json`](pipeline/pipeline-qualidade-visualizacao.climasus.json) | Cap. 2 | 5 | [`R`](pipeline/R/qualidade-visualizacao.R) |
+
+**Abrir um projeto.** Baixe o `.climasus.json` e use **Arquivo → Abrir projeto**. O Studio
+restaura o grafo; confira UF, período, CID e exposição antes de executar. Para salvar o seu,
+use **Arquivo → Salvar projeto**: o arquivo guarda Passos, ordem, Parâmetros, notas, idioma,
+tema e modo de uso.
+
+**O que o `.json` não guarda.** Dados, cache, Resultados, Artefatos, caminhos absolutos e a
+versão do Studio. Um projeto que abre não é, por si só, uma análise reproduzível: ele é o
+**mapa do caminho**. A proveniência dos dados e a versão do ambiente precisam acompanhar o
+arquivo.
+
+**Ficha de proveniência.** Ao compartilhar um projeto, anexe:
+
+| Campo | O que registrar |
+|---|---|
+| Projeto | nome do `.climasus.json` e `schemaVersion` |
+| Versão | Studio e `climasus4r` |
+| Dados | fonte, UF/município, período, filtros e checksum |
+| Método | referência (MMT ou mediana), defasagem, covariáveis |
+| Limitações | o que o desenho não cobre |
+
+**Código R.** O comando **Exportar `.R`** gera o equivalente ao Pipeline; os arquivos em
+`pipeline/R/` são o mesmo espelho, prontos para copiar. Use-os quando a
+análise precisa ser versionada em Git, revisada por outra pessoa ou executada fora da
+interface.
+
+::: {.callout-tip title="Regra de ouro"}
+Compartilhe o `.json` **e** a ficha de proveniência. Um sem o outro não é reprodutível.
+:::
+
+
 ## Regra prática
 
 Se um Parâmetro muda **quem** entra na análise, **onde**, **quando**, **qual exposição**,

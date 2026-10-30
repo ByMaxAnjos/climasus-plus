@@ -357,12 +357,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol start="7" type="1">
 <li><strong>Juntar dados a limites geográficos</strong> (<code>sus_spatial_join</code>) — liga a série de saúde aos municípios.</li>
 <li><strong>Importar dados das estações do INMET</strong> (<code>sus_climate_inmet</code>) — traz temperatura das estações INMET da região Sul, mesmos anos.</li>
+<li><strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>) — completa as falhas das séries de temperatura média, máxima e mínima com um modelo de aprendizado de máquina treinado por estação (XGBoost), antes de detectar ondas de frio. Pode levar vários minutos.</li>
 <li><strong>Detectar ondas de frio</strong> (<code>sus_climate_compute_coldwaves</code>) — detecta ondas de frio com o método WHO do catálogo (<code>method = "WHO"</code>), usando percentil 10 (o espelho do percentil 90 usado para calor no Capítulo 9) e um período de referência fixo (2010–2015). Há sete metodologias disponíveis, e a escolha deve ser declarada e testada.</li>
 <li><strong>Visualizar ondas de frio</strong> (<code>sus_climate_plot_coldwaves</code>) — mostra os dias classificados como onda de frio. É um ramo descritivo, não um regressor do modelo.</li>
 <li><strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>) — restringe a série de saúde a <strong>Porto Alegre</strong>, porque a ITS é um desenho de série única. Na execução real deste guia, o filtro foi aplicado <strong>antes da agregação</strong>, para evitar cerca de 4,5 milhões de linhas; o resultado para um município é equivalente.</li>
 </ol>
 <p><strong>Análise &amp; Modelagem</strong></p>
-<ol start="12" type="1">
+<ol start="13" type="1">
 <li><strong>Avaliar impacto com série interrompida</strong> (<code>sus_mod_its</code>) — ajusta uma série temporal interrompida sobre a série diária de internações de Porto Alegre, avaliando se um evento de frio específico muda o nível ou a tendência das internações (<code>outcome_col = "n_internacoes"</code>). A execução real usa <strong>2011-07-03</strong>, o evento mais longo da estação A801 (Porto Alegre); a data foi escolhida a partir dos eventos detectados, não de um valor fixo.</li>
 </ol>
 <div class="callout callout-style-default callout-warning callout-titled" title="ITS para um evento, não para todas as ondas de frio">
@@ -590,18 +591,63 @@ Figura&nbsp;17.3: Série observada e contrafactual do snapshot em janela de ±18
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04-run-ec04.R</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># para reaproveitar o parquet e refazer o ITS no evento A801:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04b-ec04-its.R</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># para gerar a janela de ±180 dias:</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/04c-ec04-window-plot.R</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># replicação cidade-específica (Porto Alegre, A801, ITS + DLNM):</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/00-build-city-climate.R</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> book/scripts/90-replicacao/prep_city_series.py</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> book/scripts/90-replicacao/01-fit-replicacao.R</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>O script grava a tabela analítica em <code>data/ec04/analytic.parquet</code>, as tabelas em <code>tables/results/ec04/</code>, as figuras em <code>images/results/ec04/</code> e os metadados em <code>results/ec04.json</code>. O snapshot usado neste capítulo foi gerado em 26/10/2026.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Reprodutibilidade">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reprodutibilidade
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-04-hospitalizacoes-frio.climasus.json"><code>ec-04-hospitalizacoes-frio.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 12 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
+<p><strong>Copiar em R.</strong> O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em <a href="pipeline/R/ec-04-hospitalizacoes-frio.R"><code>pipeline/R/ec-04-hospitalizacoes-frio.R</code></a>. O DLNM e a sensibilidade de janela que sustentam a leitura corrigida estão em <code>book/scripts/90-replicacao/01-fit-replicacao.R</code>.</p>
+</div>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Caso ec-04 — espelho R de ec-04-hospitalizacoes-frio.climasus.json</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(climasus4r)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">sus_data_import</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">system =</span> <span class="st">"SIH-RD"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">region =</span> <span class="st">"sul"</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2019</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">month =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_clean_encoding</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_standardize</span>(<span class="at">lang =</span> <span class="st">"pt"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_filter_cid</span>(<span class="at">icd_codes =</span> <span class="fu">c</span>(<span class="st">"J09"</span>, <span class="st">"J18"</span>), <span class="at">match_type =</span> <span class="st">"range"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_create_variables</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sus_data_aggregate</span>(</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">time_unit =</span> <span class="st">"day"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">group_by =</span> <span class="st">"codigo_municipio_residencia"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">complete_dates =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>saude <span class="ot">&lt;-</span> <span class="fu">sus_spatial_join</span>(dados)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_inmet</span>(<span class="at">years =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2019</span>, <span class="at">uf =</span> <span class="fu">c</span>(<span class="st">"PR"</span>, <span class="st">"SC"</span>, <span class="st">"RS"</span>))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>frio <span class="ot">&lt;-</span> <span class="fu">sus_climate_compute_coldwaves</span>(</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  clima,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"WHO"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">percentile =</span> <span class="dv">10</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_start =</span> <span class="st">"2010-01-01"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_end =</span> <span class="st">"2015-12-31"</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_climate_plot_coldwaves</span>(frio, <span class="at">interactive =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>poa <span class="ot">&lt;-</span> <span class="fu">sus_data_filter_demographics</span>(saude, <span class="at">city =</span> <span class="st">"Porto Alegre"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>its <span class="ot">&lt;-</span> <span class="fu">sus_mod_its</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  poa,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_internacoes"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">interruption_dates =</span> <span class="st">"2011-07-03"</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>its<span class="sc">$</span>effects</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -610,7 +656,7 @@ Verifique se ficou
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><strong>1. Por que este Pipeline usa Avaliar impacto com série interrompida (<code>sus_mod_its</code>) em vez de Modelar risco com DLNM (<code>sus_mod_dlnm</code>), diferente dos Capítulos 7 a 9?</strong></p>
 <p>Porque a pergunta do template é mais pontual — o efeito de <strong>um evento de frio delimitado</strong> sobre o nível/tendência das internações. O ITS é o desenho indicado para essa pergunta, mas a replicação mostra que ele é frágil: o resultado muda de 0,62 para 0,87 com tendência/DOW corrigidos e para 1,01 na janela local. Sem tendência bem especificada e janela pré-definida, o ITS não sustenta a leitura.</p>

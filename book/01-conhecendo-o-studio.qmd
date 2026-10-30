@@ -53,6 +53,14 @@ Em resumo: você escolhe uma **Função** na Biblioteca, preenche seus Parâmetr
 Função e Passo não são a mesma coisa. Função é a definição disponível na Biblioteca. Passo é o uso dessa Função dentro de um Pipeline, com Parâmetros preenchidos. A mesma Função pode gerar vários Passos diferentes.
 :::
 
+::: {.callout-tip title="Reprodutibilidade desde o primeiro Passo"}
+Todo Pipeline pode ser salvo como um projeto `.climasus.json` (**Arquivo → Salvar projeto**)
+e reaberto por outra pessoa (**Arquivo → Abrir projeto**). O arquivo guarda Passos, ordem e
+Parâmetros — não os dados nem os Resultados. A biblioteca de pipelines deste guia está em
+[`pipeline/`](pipeline/README.md) e é apresentada no
+[Capítulo 12](12-parametros-avancados.qmd#biblioteca-de-pipelines).
+:::
+
 ## A Biblioteca e as Etapas
 
 O catálogo do Studio tem **80 ações**. Para facilitar a escolha, elas são agrupadas em três **Etapas**, que correspondem às fases do trabalho analítico:

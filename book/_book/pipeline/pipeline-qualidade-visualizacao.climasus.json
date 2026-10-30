@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "id": "q-read",
+      "fn": "sus_data_read",
+      "values": {
+        "path": ""
+      }
+    },
+    {
+      "fn": "sus_data_quality_report",
+      "values": {
+        "df": "@step:q-read"
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_data_ts_quality",
+      "values": {
+        "data": "@step:q-read"
+      },
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_data_plot_aggregate_ts",
+      "values": {
+        "df": "@step:q-read"
+      },
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_data_plot_aggregate_map",
+      "values": {
+        "df": "@step:q-read"
+      },
+      "id": "step-04"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "vigilancia"
+}

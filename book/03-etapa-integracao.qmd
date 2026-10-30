@@ -174,6 +174,8 @@ território.
 
 ![](images/integracao-flow.svg){fig-alt="Três entradas — saúde, clima e território — convergem em um alinhamento temporal e espacial: uma linha do tempo com janela de defasagem e um mapa municipal com estações próximas. O resultado é uma tabela integrada com colunas de defasagem e indicador de vulnerabilidade."}
 
+O projeto deste Pipeline está em [`pipeline/clima-aggregate-exposicao.climasus.json`](pipeline/clima-aggregate-exposicao.climasus.json), com o código em [`pipeline/R/01-integracao.R`](pipeline/R/01-integracao.R).
+
 ![Pipeline de Integração no Studio: a série de saúde preparada é combinada com o clima das estações e transformada em colunas de defasagem para a modelagem.](images/screenshots/studio-integracao-pipeline.png){fig-alt="Captura do canvas do climasus+ Studio mostrando um Pipeline de Integração com série de saúde, vínculo municipal, estações INMET, cruzamento saúde-clima com defasagem distribuída e visualização."}
 
 ::: {.callout-tip}

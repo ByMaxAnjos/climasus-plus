@@ -6,6 +6,7 @@ project:
     - theme/guide.css
     - theme/guide.js
     - images
+    - pipeline
 
 book:
   title: "climasus+ Studio"

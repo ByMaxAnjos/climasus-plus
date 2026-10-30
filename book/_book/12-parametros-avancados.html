@@ -269,7 +269,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#integração" id="toc-integração" class="nav-link" data-scroll-target="#integração">Integração</a></li>
   <li><a href="#análise-modelagem" id="toc-análise-modelagem" class="nav-link" data-scroll-target="#análise-modelagem">Análise &amp; Modelagem</a></li>
   <li><a href="#três-parâmetros-que-costumam-gerar-dúvida" id="toc-três-parâmetros-que-costumam-gerar-dúvida" class="nav-link" data-scroll-target="#três-parâmetros-que-costumam-gerar-dúvida">Três parâmetros que costumam gerar dúvida</a></li>
-  <li><a href="#preservar-e-compartilhar-uma-análise" id="toc-preservar-e-compartilhar-uma-análise" class="nav-link" data-scroll-target="#preservar-e-compartilhar-uma-análise">Preservar e compartilhar uma análise</a></li>
+  <li><a href="#preservar-e-compartilhar-uma-análise" id="toc-preservar-e-compartilhar-uma-análise" class="nav-link" data-scroll-target="#preservar-e-compartilhar-uma-análise">Preservar e compartilhar uma análise</a>
+  <ul class="collapse">
+  <li><a href="#biblioteca-de-pipelines" id="toc-biblioteca-de-pipelines" class="nav-link" data-scroll-target="#biblioteca-de-pipelines">Biblioteca de pipelines do guia</a></li>
+  </ul></li>
   <li><a href="#regra-prática" id="toc-regra-prática" class="nav-link" data-scroll-target="#regra-prática">Regra prática</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/ByMaxAnjos/climasus-plus/edit/main/book/12-parametros-avancados.qmd" class="toc-action"><i class="bi bi-github"></i>Editar essa página</a></li><li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues/new" class="toc-action"><i class="bi empty"></i>Criar uma issue</a></li></ul></div></nav>
@@ -643,6 +646,135 @@ Como ler as tabelas
 </tbody>
 </table>
 <p>Salvar um arquivo não torna o resultado automaticamente reproduzível: dados externos podem mudar, caminhos locais podem deixar de existir e métodos estatísticos exigem revisão. Para uma decisão pública, anexe a ficha metodológica e as limitações.</p>
+<section id="biblioteca-de-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="biblioteca-de-pipelines">Biblioteca de pipelines do guia</h3>
+<p>Todos os pipelines descritos neste guia estão em <a href="pipeline/README.md"><code>pipeline/</code></a> como projetos <code>.climasus.json</code>, com um espelho em R em <code>pipeline/R/</code>. O projeto é o grafo exato — Passos, ordem e Parâmetros —; o <code>.R</code> é a mesma cadeia em código.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Projeto</th>
+<th>Capítulo</th>
+<th>Passos</th>
+<th>Código R</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="pipeline/pipeline-importacao-saude.climasus.json"><code>pipeline-importacao-saude.climasus.json</code></a></td>
+<td>Cap. 2</td>
+<td>2</td>
+<td><a href="pipeline/R/pipeline-importacao-saude.R"><code>R</code></a></td>
+</tr>
+<tr class="even">
+<td><a href="pipeline/pipeline-preparacao-basica.climasus.json"><code>pipeline-preparacao-basica.climasus.json</code></a></td>
+<td>Cap. 2</td>
+<td>7</td>
+<td><a href="pipeline/R/00-preparacao.R"><code>R</code></a></td>
+</tr>
+<tr class="odd">
+<td><a href="pipeline/clima-aggregate-exposicao.climasus.json"><code>clima-aggregate-exposicao.climasus.json</code></a></td>
+<td>Cap. 3</td>
+<td>6</td>
+<td><a href="pipeline/R/01-integracao.R"><code>R</code></a></td>
+</tr>
+<tr class="even">
+<td><a href="pipeline/mod-dlnm.climasus.json"><code>mod-dlnm.climasus.json</code></a></td>
+<td>Cap. 6</td>
+<td>5</td>
+<td><a href="pipeline/R/02-modelagem.R"><code>R</code></a></td>
+</tr>
+<tr class="odd">
+<td><a href="pipeline/ec-01-respiratorio-pediatrico.climasus.json"><code>ec-01-respiratorio-pediatrico.climasus.json</code></a></td>
+<td>Cap. 7</td>
+<td>13</td>
+<td><a href="pipeline/R/ec-01-respiratorio-pediatrico.R"><code>R</code></a></td>
+</tr>
+<tr class="even">
+<td><a href="pipeline/ec-02-dengue-clima.climasus.json"><code>ec-02-dengue-clima.climasus.json</code></a></td>
+<td>Cap. 8</td>
+<td>11</td>
+<td><a href="pipeline/R/ec-02-dengue-clima.R"><code>R</code></a></td>
+</tr>
+<tr class="odd">
+<td><a href="pipeline/ec-03-cardio-idosos-calor.climasus.json"><code>ec-03-cardio-idosos-calor.climasus.json</code></a></td>
+<td>Cap. 9</td>
+<td>15</td>
+<td><a href="pipeline/R/ec-03-cardio-idosos-calor.R"><code>R</code></a></td>
+</tr>
+<tr class="even">
+<td><a href="pipeline/ec-04-hospitalizacoes-frio.climasus.json"><code>ec-04-hospitalizacoes-frio.climasus.json</code></a></td>
+<td>Cap. 10</td>
+<td>12</td>
+<td><a href="pipeline/R/ec-04-hospitalizacoes-frio.R"><code>R</code></a></td>
+</tr>
+<tr class="odd">
+<td><a href="pipeline/tematico-ondas-calor.climasus.json"><code>tematico-ondas-calor.climasus.json</code></a></td>
+<td>Cap. 9</td>
+<td>5</td>
+<td><a href="pipeline/R/tematico-ondas-calor.R"><code>R</code></a></td>
+</tr>
+<tr class="even">
+<td><a href="pipeline/tematico-ondas-frio.climasus.json"><code>tematico-ondas-frio.climasus.json</code></a></td>
+<td>Cap. 10</td>
+<td>5</td>
+<td><a href="pipeline/R/tematico-ondas-frio.R"><code>R</code></a></td>
+</tr>
+<tr class="odd">
+<td><a href="pipeline/pipeline-qualidade-visualizacao.climasus.json"><code>pipeline-qualidade-visualizacao.climasus.json</code></a></td>
+<td>Cap. 2</td>
+<td>5</td>
+<td><a href="pipeline/R/qualidade-visualizacao.R"><code>R</code></a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Abrir um projeto.</strong> Baixe o <code>.climasus.json</code> e use <strong>Arquivo → Abrir projeto</strong>. O Studio restaura o grafo; confira UF, período, CID e exposição antes de executar. Para salvar o seu, use <strong>Arquivo → Salvar projeto</strong>: o arquivo guarda Passos, ordem, Parâmetros, notas, idioma, tema e modo de uso.</p>
+<p><strong>O que o <code>.json</code> não guarda.</strong> Dados, cache, Resultados, Artefatos, caminhos absolutos e a versão do Studio. Um projeto que abre não é, por si só, uma análise reproduzível: ele é o <strong>mapa do caminho</strong>. A proveniência dos dados e a versão do ambiente precisam acompanhar o arquivo.</p>
+<p><strong>Ficha de proveniência.</strong> Ao compartilhar um projeto, anexe:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Campo</th>
+<th>O que registrar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Projeto</td>
+<td>nome do <code>.climasus.json</code> e <code>schemaVersion</code></td>
+</tr>
+<tr class="even">
+<td>Versão</td>
+<td>Studio e <code>climasus4r</code></td>
+</tr>
+<tr class="odd">
+<td>Dados</td>
+<td>fonte, UF/município, período, filtros e checksum</td>
+</tr>
+<tr class="even">
+<td>Método</td>
+<td>referência (MMT ou mediana), defasagem, covariáveis</td>
+</tr>
+<tr class="odd">
+<td>Limitações</td>
+<td>o que o desenho não cobre</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Código R.</strong> O comando <strong>Exportar <code>.R</code></strong> gera o equivalente ao Pipeline; os arquivos em <code>pipeline/R/</code> são o mesmo espelho, prontos para copiar. Use-os quando a análise precisa ser versionada em Git, revisada por outra pessoa ou executada fora da interface.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Regra de ouro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Regra de ouro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compartilhe o <code>.json</code> <strong>e</strong> a ficha de proveniência. Um sem o outro não é reprodutível.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="regra-prática" class="level2">
 <h2 class="anchored" data-anchor-id="regra-prática">Regra prática</h2>

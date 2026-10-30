@@ -1,0 +1,112 @@
+[
+  {
+    "id": "pipeline-importacao-saude",
+    "file": "pipeline-importacao-saude.climasus.json",
+    "title": "Etapa 1: importar dados de saúde",
+    "chapter": "Cap. 2",
+    "description": "Importa dados do DATASUS e gera o relatório de qualidade — o ponto de partida mínimo.",
+    "mode": "vigilancia",
+    "steps": 2,
+    "r": "pipeline/R/pipeline-importacao-saude.R"
+  },
+  {
+    "id": "pipeline-preparacao-basica",
+    "file": "pipeline-preparacao-basica.climasus.json",
+    "title": "Etapas 2-4: limpar, filtrar e agregar",
+    "chapter": "Cap. 2",
+    "description": "Encoding, padronização, filtro CID, variáveis derivadas, agregação semanal e relatório de qualidade.",
+    "mode": "vigilancia",
+    "steps": 7,
+    "r": "pipeline/R/00-preparacao.R"
+  },
+  {
+    "id": "clima-aggregate-exposicao",
+    "file": "clima-aggregate-exposicao.climasus.json",
+    "title": "Exposição aguda saúde × clima (lag distribuído)",
+    "chapter": "Cap. 3",
+    "description": "Saúde preparada + estações INMET + agregación com defasagens; opcionalmente preenche falhas.",
+    "mode": "pesquisa",
+    "steps": 6,
+    "r": "pipeline/R/01-integracao.R"
+  },
+  {
+    "id": "mod-dlnm",
+    "file": "mod-dlnm.climasus.json",
+    "title": "Modelagem DLNM a partir de dados preparados",
+    "chapter": "Cap. 6",
+    "description": "DLNM, curva exposição-resposta e fração atribuível a partir de uma tabela integrada.",
+    "mode": "pesquisa",
+    "steps": 5,
+    "r": "pipeline/R/02-modelagem.R"
+  },
+  {
+    "id": "ec-01-respiratorio-pediatrico",
+    "file": "ec-01-respiratorio-pediatrico.climasus.json",
+    "title": "Mortalidade respiratória pediátrica e temperatura (Sudeste)",
+    "chapter": "Cap. 7",
+    "description": "SIM-DO respiratório <5a no Sudeste (2015–2019), INMET, DLNM e AF.",
+    "mode": "pesquisa",
+    "steps": 13,
+    "r": "pipeline/R/ec-01-respiratorio-pediatrico.R"
+  },
+  {
+    "id": "ec-02-dengue-clima",
+    "file": "ec-02-dengue-clima.climasus.json",
+    "title": "Dengue e graus-dia (Nordeste)",
+    "chapter": "Cap. 8",
+    "description": "SINAN dengue em CE/PE/BA/MA (2015–2019), GDD base 11 °C, DLNM e curva.",
+    "mode": "pesquisa",
+    "steps": 11,
+    "r": "pipeline/R/ec-02-dengue-clima.R"
+  },
+  {
+    "id": "ec-03-cardio-idosos-calor",
+    "file": "ec-03-cardio-idosos-calor.climasus.json",
+    "title": "Mortalidade cardiovascular em idosos e ondas de calor (SP)",
+    "chapter": "Cap. 9",
+    "description": "SIM-DO cardiovascular 60+ em São Paulo (2010–2019), ondas de calor, DLNM e AF.",
+    "mode": "pesquisa",
+    "steps": 15,
+    "r": "pipeline/R/ec-03-cardio-idosos-calor.R"
+  },
+  {
+    "id": "ec-04-hospitalizacoes-frio",
+    "file": "ec-04-hospitalizacoes-frio.climasus.json",
+    "title": "Hospitalizações respiratórias e ondas de frio (Sul)",
+    "chapter": "Cap. 10",
+    "description": "SIH-RD J09–J18 em Porto Alegre (2010–2019), ondas de frio e ITS com o evento de 2011-07-03.",
+    "mode": "pesquisa",
+    "steps": 12,
+    "r": "pipeline/R/ec-04-hospitalizacoes-frio.R"
+  },
+  {
+    "id": "tematico-ondas-calor",
+    "file": "tematico-ondas-calor.climasus.json",
+    "title": "Ondas de calor: detectar e visualizar",
+    "chapter": "Cap. 9",
+    "description": "Detecção e visualização de ondas de calor (WHO p90) para São Paulo.",
+    "mode": "vigilancia",
+    "steps": 5,
+    "r": "pipeline/R/tematico-ondas-calor.R"
+  },
+  {
+    "id": "tematico-ondas-frio",
+    "file": "tematico-ondas-frio.climasus.json",
+    "title": "Ondas de frio: detectar e visualizar",
+    "chapter": "Cap. 10",
+    "description": "Detecção e visualização de ondas de frio (WHO p10) para o Sul.",
+    "mode": "vigilancia",
+    "steps": 5,
+    "r": "pipeline/R/tematico-ondas-frio.R"
+  },
+  {
+    "id": "pipeline-qualidade-visualizacao",
+    "file": "pipeline-qualidade-visualizacao.climasus.json",
+    "title": "Qualidade e visualização da série agregada",
+    "chapter": "Cap. 2",
+    "description": "Lê uma tabela, gera diagnóstico de qualidade e uma visualização rápida.",
+    "mode": "vigilancia",
+    "steps": 5,
+    "r": "pipeline/R/qualidade-visualizacao.R"
+  }
+]
