@@ -3021,3 +3021,28 @@ a.external::after {
     max-width: none;
   }
 }
+
+// ── Bloco R claro, estilo Positron (apenas em .r-positron) ─────────────────
+.r-positron {
+  margin: 1.2rem 0;
+  pre {
+    background: #ffffff !important;
+    color: #1f2328 !important;
+    border: 1px solid #d0d7de !important;
+    border-left: 4px solid #2f6feb !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 2px rgba(11, 36, 32, 0.06) !important;
+  }
+  pre code { background: transparent !important; color: inherit !important; border: none !important; padding: 0 !important; }
+  code span.co { color: #6a737d !important; font-style: italic; }
+  code span.kw { color: #0000ff !important; }
+  code span.st, code span.ss, code span.vs, code span.ch { color: #a31515 !important; }
+  code span.fu { color: #795e26 !important; }
+  code span.dv, code span.fl, code span.bn, code span.cn { color: #098658 !important; }
+  code span.op, code span.ot, code span.va { color: #1f2328 !important; }
+  code span.at, code span.dt { color: #795e26 !important; }
+  .code-copy-button { color: #57606a !important; }
+  .code-copy-button:hover { color: #1f2328 !important; }
+  pre code span[id^="cb"] { color: #1f2328 !important; }
+  pre code a { color: inherit !important; }
+}

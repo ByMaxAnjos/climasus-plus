@@ -605,6 +605,7 @@ Reprodutibilidade
 <p><strong>Copiar em R.</strong> O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em <a href="pipeline/R/ec-04-hospitalizacoes-frio.R"><code>pipeline/R/ec-04-hospitalizacoes-frio.R</code></a>. O DLNM e a sensibilidade de janela que sustentam a leitura corrigida estão em <code>book/scripts/90-replicacao/01-fit-replicacao.R</code>.</p>
 </div>
 </div>
+<div class="r-positron">
 <div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Caso ec-04 — espelho R de ec-04-hospitalizacoes-frio.climasus.json</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(climasus4r)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -645,6 +646,7 @@ Reprodutibilidade
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>its<span class="sc">$</span>effects</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">

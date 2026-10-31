@@ -222,6 +222,7 @@ registrando fontes, filtros, versões, referência e limitações.
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-01-respiratorio-pediatrico.R`](pipeline/R/ec-01-respiratorio-pediatrico.R). A replicação cidade-específica que mostra por que este recorte não é estimável está em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
 
+::: {.r-positron}
 ```r
 # Caso ec-01 — espelho R de ec-01-respiratorio-pediatrico.climasus.json
 library(climasus4r)
@@ -267,6 +268,7 @@ ajuste <- sus_mod_dlnm(
 sus_mod_plot_dlnm(ajuste)
 sus_mod_af(ajuste)
 ```
+:::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
 Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os

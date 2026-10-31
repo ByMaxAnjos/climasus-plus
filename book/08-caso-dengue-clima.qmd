@@ -228,6 +228,7 @@ distância das estações e os atrasos considerados.
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-02-dengue-clima.R`](pipeline/R/ec-02-dengue-clima.R). A replicação que mostra por que o GDD não é identificável em Recife e Fortaleza está em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
 
+::: {.r-positron}
 ```r
 # Caso ec-02 — espelho R de ec-02-dengue-clima.climasus.json
 library(climasus4r)
@@ -273,6 +274,7 @@ ajuste <- sus_mod_dlnm(
 
 sus_mod_plot_dlnm(ajuste)
 ```
+:::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
 Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os

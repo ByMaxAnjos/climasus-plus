@@ -238,6 +238,7 @@ limitações.
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-04-hospitalizacoes-frio.R`](pipeline/R/ec-04-hospitalizacoes-frio.R). O DLNM e a sensibilidade de janela que sustentam a leitura corrigida estão em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
 
+::: {.r-positron}
 ```r
 # Caso ec-04 — espelho R de ec-04-hospitalizacoes-frio.climasus.json
 library(climasus4r)
@@ -280,6 +281,7 @@ its <- sus_mod_its(
 
 its$effects
 ```
+:::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
 Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os

@@ -219,6 +219,7 @@ sempre registrando fontes, versões e limitações.
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-03-cardio-idosos-calor.R`](pipeline/R/ec-03-cardio-idosos-calor.R). Os números corrigidos deste capítulo (cidade de São Paulo, MMT, DOW/feriados) vêm da replicação em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
 
+::: {.r-positron}
 ```r
 # Caso ec-03 — espelho R de ec-03-cardio-idosos-calor.climasus.json
 library(climasus4r)
@@ -270,6 +271,7 @@ sus_mod_plot_dlnm(ajuste, type = "overall")
 af <- sus_mod_af(ajuste, nsim = 200)
 sus_mod_plot_af(af, type = "bar")
 ```
+:::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
 Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os
