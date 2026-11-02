@@ -1,79 +1,42 @@
 ---
-title: "Por que isso importa: clima, saúde e o que os dados escondem"
+title: "Clima e saúde: quando encontra e desencontra"
 subtitle: "Capítulo 00 · Fundamentos"
 ---
 
-::: {.amazonia}
-<div class="amazonia-kicker">Cena de abertura · Amazônia</div>
 
-**Setembro, fim da tarde, em uma cidade média do Amazonas.** Há três semanas não chove.
-O céu está cinza, mas não é nublado: é fumaça. Ela vem de queimadas que ardem a dezenas
-ou centenas de quilômetros dali e cobre o ar com material particulado fino — as
-partículas que entram fundo no pulmão. Na fila do pronto atendimento infantil, mães
-seguram crianças com crise de asma. No hospital regional, leitos de cardiologia são
-ocupados por idosos que chegaram com falta de ar e pressão descompensada.
-
-**Rio acima, em uma comunidade ribeirinha, o mesmo período tem outra face.** O nível do
-rio baixou, e o barco que leva vacinas, medicamentos e a equipe de saúde não conseguiu
-atracar. A água de beber ficou mais turva. A malária voltou a aparecer em famílias que
-moram perto da margem. Ninguém ali diria que está vivendo um "evento climático": estão
-vivendo uma seca, uma fumaça, um rio que não dá passagem.
-
-<cite>Cena composta a partir de situações recorrentes na Amazônia. Não descreve um
-município específico.</cite>
-:::
-
-## A ideia principal
-
-Clima e saúde, na Amazônia, não são dois assuntos vizinhos. São o mesmo problema visto de
-dois ângulos.
+## Introdução
 
 Um óbito por insuficiência cardíaca três dias depois de uma onda de calor é registrado no
 **Sistema de Informação sobre Mortalidade (SIM)** como doença cardiovascular. Uma criança
 com diarreia depois de beber água contaminada por uma enchente é atendida como **doença
 diarreica aguda**. Um caso de dengue notificado semanas depois da chuva entra no
-**Sistema de Informação de Agravos de Notificação (SINAN)** como dengue. Em nenhum
-desses registros aparece a palavra "clima". É exatamente por isso que o problema fica
-invisível onde deveria ser previsto.
+**Sistema de Informação de Agravos de Notificação (SINAN)** como dengue. O que esses casos aparenetemene isolados pode ter em comum é a exposição climática (ou condições meteorológicas) que os precedeu. Mas nenhum desses registros aparece a palavra "clima". É exatamente por isso que o problema fica invisível onde deveria ser previsto.
 
-A tese deste capítulo cabe em uma frase: **a exposição climática se transforma em agravo
-de saúde com atraso, sob outro nome e de forma desigual**. Quem organiza a resposta
-apenas pelo boletim do dia vê o problema quando ele já virou fila, leito ocupado e óbito.
+A ideia principal deste capítulo é que **a exposição climática se transforma em agravo
+de saúde com atraso, sob outro nome e de forma desigual**. Quem olha apenas o boletim do dia reage ao problema quando ele já é fila, leito ocupado e óbito, e não quando ainda era previsão de calor, chuva ou fumaça.
 
-### Um guia nacional, com a Amazônia como ponto de partida
-
-A Amazônia abre este guia porque é onde fumaça, seca, enchente e isolamento aparecem
-juntos, com frequência e intensidade que exigem resposta específica. Mas o raciocínio não é
-amazônico: é brasileiro. Este guia é nacional — foi escrito para qualquer município
-brasileiro, e a Amazônia é o ponto de partida, não o limite.
-
-No Semiárido, o perigo que organiza a agenda é a estiagem prolongada e a insegurança
-hídrica. No Sul, são as ondas de frio e as chuvas intensas. No Sudeste e no Centro-Oeste,
-são as ilhas de calor urbano — áreas da cidade que esquentam mais que o entorno — e a
-poluição do ar. No litoral, são a ressaca, a enchente e a intrusão salina, o avanço da
-água do mar sobre a água doce. O que muda é a combinação de perigo, exposição e
+A Amazônia é marcada por episódios de calor extremo, fumaça, seca e enchente com frequência e intensidade que exigem resposta específica e coordenação. No Semiárido, a ameaça climática que dita a agenda é a estiagem prolongada e a insegurança hídrica. No Sul, são as ondas de frio e as chuvas intensas seguidas de deslizamentos em área de risco. No Sudeste e no Centro-Oeste, são as ilhas de calor urbano, áreas da cidade que esquentam mais que o entorno, e a poluição do ar.  O que muda é a combinação de ameaça, exposição e
 vulnerabilidade. O que permanece é a necessidade de olhar clima, saúde e território no
 mesmo quadro.
 
 ::: {.callout-tip title="Como ler este capítulo"}
-Não é preciso decorar siglas. O capítulo responde a cinco perguntas centrais: como o
-clima vira risco; por que o efeito demora; quem adoece primeiro; como medir a exposição;
+O capítulo responde a cinco perguntas essenciais: como o
+clima contribui para o risco à saúde; por que o efeito demora; quem adoece primeiro; como medir a exposição;
 e o que a gestão pode fazer com isso. Os blocos principais terminam com a base científica
-que sustenta a afirmação — para que o leitor possa conferir, contestar e aprofundar.
+que sustenta a afirmação para que o leitor possa conferir, contestar e aprofundar.
 :::
 
 ## Como o clima se transforma em risco à saúde
 
-Antes de olhar números, responda quatro perguntas. A ordem importa, porque cada resposta
+Para entender o risco, responda quatro perguntas. A ordem importa, porque cada resposta
 muda a interpretação da seguinte.
 
-1. **Perigo:** qual processo físico pode causar dano? Onda de calor, chuva extrema,
+1. **Perigo/Ameaça:** qual processo físico pode causar dano? Onda de calor, chuva extrema,
    enchente, estiagem, incêndio florestal, fumaça, friagem. Perigo não é sinônimo de
    desastre: um perigo se torna desastre quando encontra população exposta, vulnerável e
    sem capacidade de resposta.
 2. **Exposição:** quem esteve sujeito ao perigo, onde, por quanto tempo e com que
-   intensidade? A temperatura média do município não representa o telhado de zinco de um
-   bairro periférico, nem o trabalhador que passa o dia em área aberta.
+   intensidade? A exposição é materilizada por pessoas, no território, no tempo e intensidade. 
 3. **Vulnerabilidade:** o que transforma exposição em dano? Idade, doença prévia, renda,
    moradia, saneamento, trabalho, mobilidade, racismo ambiental (a exposição desigual por
    raça e território), acesso à informação e acesso ao cuidado atuam juntos.
@@ -81,12 +44,8 @@ muda a interpretação da seguinte.
    pode ser óbito, internação, atendimento na atenção primária, notificação, sofrimento
    psíquico, interrupção de tratamento ou perda de acesso a um serviço.
 
-O risco nasce da interação entre perigo, exposição e vulnerabilidade. O desfecho e a
-resposta são o que se mede e o que se faz depois. A formulação não é uma multiplicação
-matemática; é uma forma de lembrar que nenhum dos três explica o problema sozinho. A
-mesma chuva que alaga um bairro sem drenagem pode ser apenas chuva em um bairro com
-drenagem adequada. A mesma temperatura pode ser suportável para quem tem moradia ventilada
-e insuportável para quem vive sob telhado de amianto.
+O risco surge, portanto, da interação entre perigo, exposição e vulnerabilidade. A mesma onda de calor extrema pode ser perigosa para quem trabalha ao ar livre e irrelevante para quem está em casa com ar-condicionado. A mesma chuva pode ser perigosa para quem mora em área de risco e irrelevante para quem mora em condômio fechado. O desfecho e a
+resposta são o que se mede e o que se faz depois.
 
 A resposta pública atua sobre esses elementos: reduz a exposição (abrigo, alerta,
 interrupção de atividade ao ar livre), protege grupos mais vulneráveis (busca ativa,
@@ -106,41 +65,23 @@ adotam a mesma lógica: não basta medir o perigo; é preciso medir quem está e
 quem tem condições de se proteger.
 :::
 
-## Os caminhos pelos quais o clima chega à saúde
+## Impactos do clima na saúde
 
-Agrupar os caminhos pelo mecanismo predominante ajuda a escolher o dado e o desfecho
-corretos. Os grupos não são etapas sucessivas: eles se combinam no mesmo território.
+Os mecanismos pelos quais as mudanças climáticas afetam a saúde humana são complexos e interdependentes. Em termos simples, esses impactos podem ser organizados em quatro dimensões inter-relacionadas. A primeira compreende os efeitos diretos da exposição a eventos extremos, como tempestades, inundações e ondas de calor, que podem provocar lesões, adoecimento e mortes. A segunda reúne os efeitos indiretos mediados por alterações nos ecossistemas e nas condições ambientais, capazes de modificar a distribuição de vetores e agentes patogênicos e a dinâmica de transmissão de doenças infecciosas, inclusive aquelas transmitidas por vetores, água e alimentos.
+A terceira dimensão envolve efeitos mediados por processos sociais, econômicos e psicossociais, como perda de renda, insegurança alimentar, deslocamentos populacionais, ruptura de vínculos comunitários e perda do sentimento de pertencimento ao lugar. Esses processos podem comprometer a saúde física e mental. Em contextos de vulnerabilidade, os riscos climáticos também podem agravar fatores associados a conflitos. Por fim, a dimensão sistêmica e institucional abrange danos à infraestrutura e interrupções em serviços essenciais, como energia, abastecimento de água, saneamento, transporte, comunicação e assistência à saúde, que comprometem a capacidade de prevenção e resposta e a continuidade do cuidado. Essas dimensões se sobrepõem e podem potencializar umas às outras.
 
-| Caminho | Como o clima entra | Exemplos de desfecho |
+| Impacto | Como o clima entra | Exemplos de desfecho |
 |---|---|---|
 | **Direto e físico** | Calor, frio, tempestade, inundação, deslizamento e fumaça atuam sobre o corpo | Estresse térmico, agravos cardiovasculares e respiratórios, lesões, afogamentos e óbitos |
 | **Ambiental e ecológico** | Alteração da qualidade da água e do ar, de criadouros e de habitats | Arboviroses, malária, doenças transmitidas por água e alimentos, alergias e desnutrição |
 | **Social e psicossocial** | Perda de renda, insegurança alimentar, deslocamento, ruptura de vínculos e perda do lugar | Ansiedade, depressão, estresse pós-traumático, piora do cuidado e abandono de tratamento |
 | **Sistêmico e institucional** | Danos à energia, água, transporte, comunicação e unidades de saúde | Tratamento interrompido, atraso no diagnóstico, aumento da demanda e redução da capacidade de resposta |
 
-Uma enchente pode aparecer nos quatro caminhos ao mesmo tempo: causa lesões, contamina a
-água, desloca famílias e impede o funcionamento de uma unidade de saúde. Por isso, não
-convém escolher um único "efeito principal" sem informar a população, o território, a
-janela temporal e o serviço afetado.
+## Saúde Única
 
-### Saúde Única: a floresta, o vetor e a pessoa
+A Saúde Única (em inglês, One Health) é uma abordagem integrada que reconhece a interdependência entre a saúde das pessoas, dos animais, das plantas e dos ecossistemas. Sua adoção envolve a colaboração entre diferentes setores, disciplinas e comunidades para prevenir riscos e promover a saúde de forma sustentável. Na transmissão de algumas doenças, animais silvestres, mosquitos vetores e pessoas podem integrar uma mesma cadeia de transmissão, influenciada pelas condições ambientais e sociais.
 
-**Saúde Única** (em inglês, *One Health*) é a abordagem que trata a saúde humana, a saúde
-animal e a saúde dos ecossistemas como um único problema de gestão. Não é um slogan
-ambiental: é uma forma de organizar a vigilância. Um patógeno que circula em animais
-silvestres, um mosquito que se cria em água acumulada e uma pessoa que adoece fazem parte
-do mesmo sistema ecológico.
-
-Na Amazônia, desmatamento e fogo não apenas emitem carbono. Eles alteram a borda da
-floresta, criam condições para determinados criadouros, deslocam animais e aproximam
-pessoas de vetores e patógenos. A relação não é automática nem uniforme: depende do tipo
-de uso do solo, da espécie de mosquito, da imunidade da população e das condições de
-saneamento. Mas ela é forte o suficiente para que a política de saúde precise dialogar
-com a política fundiária, ambiental e de fiscalização.
-
-Uma advertência importante: **não é a floresta que "transmite" doenças**. É a forma como
-ocupamos, desmatamos e alteramos a floresta que cria condições de transmissão. Culpar a
-floresta ou as populações que vivem nela é um erro técnico e um preconceito recorrente.
+Na Amazônia, o desmatamento e as queimadas, além de emitirem gases de efeito estufa e outras poluentes atmosféricos, transformam habitats e modificam as relações entre pessoas, animais e ambiente. Dependendo da situação, essas alterações podem favorecer determinados vetores e ampliar o contato humano com agentes infecciosos. Essa relação não é automática nem uniforme, ela varia conforme o uso do solo, o vetor e o patógeno envolvidos, ou mesmo as condições de moradia e saneamento, a mobilidade da população e o acesso à prevenção, ao diagnóstico e ao tratamento. 
 
 ::: {.fonte role="note" aria-label="Base científica"}
 A abordagem de Saúde Única é adotada pela [OMS](https://www.who.int/health-topics/one-health)
@@ -154,43 +95,32 @@ desmatamento e mudança do clima interagem e podem reduzir a resiliência da flo
 com consequências para o bem-estar humano.
 :::
 
-## Três relógios: tempo, clima e saúde
+## Tempo, clima e saúde
 
-"Tempo" e "clima" não são sinônimos, e a saúde responde a cada um em uma escala diferente.
-Confundir as escalas leva a duas decisões erradas: tratar uma mudança estrutural como
-evento passageiro ou tratar um evento passageiro como a nova normalidade.
+O tempo meteorológico e o clima não são sinônimos, e ambos afetam a saúde em diferentes escalas temporais. Confundir esses conceitos pode levar a dois erros de planejamento: tratar uma mudança de longo prazo como um evento passageiro ou interpretar um evento isolado como uma nova normalidade.
 
-| Relógio | Escala | Pergunta que responde | Resposta adequada |
+| Tipo | Escala | Pergunta que responde | Resposta adequada |
 |---|---|---|---|
 | **Tempo** | Horas a dias | O que vem nos próximos dias? | Alerta, abrigo, reforço de plantão, restrição de atividade ao ar livre |
-| **Clima** | Décadas | O padrão está mudando? | Adaptação de infraestrutura, revisão de protocolos, planejamento de rede |
+| **Clima** | Décadas (~30 anos) | O padrão está mudando? | Adaptação de infraestrutura, revisão de protocolos, planejamento de rede |
 | **Saúde** | Dias a meses (agudos); anos (crônicos) | Quando o agravo aparece? | Vigilância, busca ativa, preparação da atenção primária e da assistência |
 
-**Tempo** é o que está acontecendo agora ou nos próximos dias: uma onda de calor de cinco
-dias, uma chuva forte de uma tarde, uma frente fria que chega no fim de semana. É um
-evento com começo e fim identificáveis no calendário.
+O tempo meteorológico corresponde às condições da atmosfera em determinado lugar e momento. A previsão do tempo indica como essas condições devem evoluir nas próximas horas ou dias. Uma onda de calor de cinco dias, uma chuva intensa durante uma tarde e uma frente fria que chega no fim de semana são exemplos de eventos meteorológicos.
 
-**Clima** é o padrão de longo prazo: como temperatura, chuva e umidade se comportam em
-uma região ao longo de décadas e como esse padrão está mudando. A referência usada para
-comparar é a **normal climatológica** — no Brasil, em geral o período de 1991 a 2020. Uma
-cidade pode ter clima historicamente ameno e, ainda assim, viver uma semana de calor
-atípico: o evento pontual ocorre dentro de um pano de fundo que está mudando.
+O clima, por sua vez, corresponde aos padrões e à variabilidade das condições atmosféricas de uma região ao longo de períodos prolongados, geralmente descritos com base em séries de pelo menos 30 anos. Sua caracterização considera registros de temperatura, precipitação e umidade, entre outras variáveis. As normais climatológicas sintetizam essas condições em períodos de referência de 30 anos, como o de 1991 a 2020, e permitem comparar as condições observadas com os padrões históricos.
 
-Uma onda de calor é um evento de tempo. O aumento da frequência, da duração e da
-intensidade das ondas de calor é uma mudança de clima. As duas afirmações podem ser
-verdadeiras ao mesmo tempo — e pedem respostas diferentes.
+Uma cidade com clima historicamente ameno pode registrar uma semana de calor atípico. Esse episódio, isoladamente, não demonstra uma mudança no clima; é necessário analisar sua relação com tendências observadas ao longo do tempo.
+
+Uma onda de calor é um evento meteorológico. Já mudanças persistentes na frequência, na duração e na intensidade das ondas de calor caracterizam alterações no clima. As duas situações podem ocorrer simultaneamente e exigem respostas complementares: proteção imediata da população e adaptação de longo prazo.
 
 ### O que é "seca" na Amazônia
 
-"Seca" não é uma coisa só. A distinção importa para a saúde porque cada tipo de seca
-produz um caminho diferente de dano.
+“Seca” não é uma coisa só. Ela pode ser caracterizada de diferentes formas, conforme seus efeitos sobre as chuvas, o solo, os recursos hídricos e a sociedade. Essa distinção importa para a saúde porque ajuda a identificar diferentes mecanismos de impacto, que podem ocorrer simultaneamente.
 
-- **Seca meteorológica:** chove menos que o esperado por um período prolongado.
-- **Seca agrícola:** a umidade do solo cai e compromete a produção de alimentos.
-- **Seca hidrológica:** o nível dos rios e dos reservatórios cai. Na Amazônia, é a que
-  mais rapidamente vira problema de saúde, porque o rio é estrada, abastecimento e
-  logística de medicamentos.
-- **Seca socioeconômica:** a demanda por água supera a oferta, mesmo quando chove.
+- **Seca meteorológica:** a precipitação fica abaixo do esperado para uma região e época do ano durante um período persistente.
+- **Seca agrícola:** a água disponível no solo é insuficiente para atender às necessidades das culturas, comprometendo seu desenvolvimento e podendo reduzir a produção de alimentos.
+- **Seca hidrológica:** as vazões dos rios, os níveis de lagos e reservatórios ou as reservas de água subterrânea ficam abaixo dos padrões esperados.
+- **Seca socioeconômica:** a redução da disponibilidade de água associada à seca compromete a oferta de bens e serviços, como água para consumo, alimentos e energia, em relação à demanda da população
 
 O chamado "verão amazônico" é um nome popular para o período de menor chuva, não uma
 estação astronômica. Em boa parte da bacia, esse período vai de julho a outubro, com
@@ -213,47 +143,28 @@ solo, está sintetizada em [Marengo e colaboradores
 (2018)](https://doi.org/10.3389/feart.2018.00228).
 :::
 
-## Por que o efeito demora a aparecer
+## Por que alguns efeitos das exposições climáticas e ambientais sobre a saúde aparecem depois?
 
-Entre a exposição climática — o calor, a chuva, a fumaça, a seca — e o desfecho de saúde
-— a internação, o atendimento, o óbito — existe um intervalo. Esse intervalo se chama
-**defasagem** (em inglês, *lag*). Ignorá-lo é um dos erros mais comuns de quem olha clima
-e saúde lado a lado.
+Os efeitos do calor, da fumaça, das enchentes e da seca sobre a saúde podem aparecer imediatamente ou após algum tempo. Nas análises epidemiológicas, o intervalo entre uma exposição e o desfecho observado é chamado de **defasagem** (em inglês, lag). Considerar esse intervalo ajuda a identificar associações que poderiam passar despercebidas se fossem comparados apenas os eventos ocorridos no mesmo dia.
 
-A duração da defasagem depende do mecanismo:
+A duração da defasagem varia conforme a exposição, o mecanismo envolvido, a população e o desfecho analisado. O início dos sintomas, o atendimento, a internação e o óbito são acontecimentos distintos e podem ocorrer em momentos diferentes.
 
-| Exposição | Quando o efeito costuma aparecer | Exemplo |
+| Exposição ou situação | Padrão temporal possível | Exemplos de efeitos ou consequências |
 |---|---|---|
-| Calor extremo | Mesmo dia até cerca de uma semana | Infarto, insuficiência cardíaca, agravamento renal |
-| Fumaça de queimada | Horas a poucos dias | Crise de asma, bronquite, internação respiratória |
-| Chuva e dengue | Cerca de 2 a 8 semanas | O mosquito se desenvolve, o vírus incuba e a pessoa adoece |
-| Enchente | Dias a semanas | Leptospirose, diarreia, infecção de pele |
-| Seca prolongada | Semanas a meses | Insegurança hídrica e alimentar, malária (depende do contexto), sofrimento psíquico |
+| **Calor extremo** | No mesmo dia e nos dias seguintes | Agravamento de doenças cardiovasculares e lesão renal aguda |
+| **Fumaça de queimadas** | Durante a exposição ou nos dias seguintes, para efeitos agudos | Irritação respiratória, exacerbação da asma e aumento da procura por atendimento |
+| **Chuva e condições favoráveis à dengue** | Semanas a meses, dependendo do contexto | Mudanças na incidência de dengue |
+| **Enchentes** | Efeitos imediatos e outros que surgem nos dias ou semanas seguintes | Traumatismos e afogamentos; posteriormente, doenças associadas à exposição à água contaminada |
+| **Seca prolongada** | Efeitos que podem se desenvolver e persistir ao longo de semanas, meses ou mais | Comprometimento do abastecimento, da segurança alimentar e da saúde mental |
 
-No calor, parte do efeito aparece rápido, mas também pode haver **deslocamento de
-mortalidade** (o chamado efeito colheita): pessoas muito frágeis morrem alguns dias antes
-do que morreriam sem o evento. Isso não torna o evento menos grave; muda a forma de
-contar. Em séries curtas, o total pode parecer estável mesmo quando o risco de morrer
-naquele período aumentou.
+Esses padrões são orientativos e não representam prazos fixos nem períodos de incubação comuns a todas as doenças. Na leptospirose, por exemplo, o Ministério da Saúde informa que os sintomas podem surgir entre 1 e 30 dias após a infecção, geralmente entre 7 e 14 dias. Esse intervalo é contado a partir da exposição à bactéria, não necessariamente do início da enchente. [Ministério da Saúde — Leptospirose](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/l/leptospirose/leptospirose) 
 
-Na dengue, a defasagem tem uma explicação concreta. A água da chuva precisa acumular; a
-larva precisa se desenvolver; o mosquito adulto precisa picar uma pessoa infectada; o
-vírus precisa incubar no mosquito; e a pessoa precisa adoecer e ser atendida. Cada etapa
-consome dias. O intervalo total costuma ser de semanas, não de horas. Além da chuva, o
-**acúmulo de calor** — resumido em graus-dia (GDD) — também governa o desenvolvimento do
-vetor e a incubação do vírus; por isso o estudo de caso do Capítulo 8 usa GDD como
-exposição principal e chuva como extensão.
+No calor, parte dos efeitos aparece rapidamente. Em algumas populações, também pode ocorrer deslocamento de mortalidade, conhecido como “efeito colheita”, em que um aumento de mortes durante ou após o episódio é seguido por mortalidade abaixo do esperado. Esse padrão é compatível com a antecipação de parte das mortes de pessoas muito vulneráveis. Sua ocorrência e magnitude variam, e ele não deve ser presumido como explicação para todas as mortes associadas ao calor. Por isso, a avaliação precisa considerar tanto o período do evento quanto as semanas seguintes. [OMS/OMM — Ondas de calor e saúde](https://cdn.who.int/media/docs/default-source/climate-change/heat-waves-and-health---guidance-on-warning-system-development.pdf)
 
-Na fumaça, o efeito respiratório pode aparecer no mesmo dia ou em poucos dias, enquanto o
-efeito acumulado de uma temporada inteira sobre doenças crônicas leva meses para ser
-percebido.
+Na dengue, a defasagem pode envolver mudanças nos criadouros, o desenvolvimento dos mosquitos, a incubação do vírus no vetor e, após a picada infectante, a incubação na pessoa. Essas etapas ajudam a explicar por que alterações nas condições meteorológicas podem se associar a mudanças nos casos semanas ou meses depois. Entretanto, não se trata de uma sequência que obrigatoriamente começa a cada chuva; criadouros e mosquitos infectados podem já estar presentes. A temperatura influencia esses processos, mas não determina sozinha a transmissão. [OMS — Dengue](https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue)
 
-::: {.callout-important title="Importante"}
-Se o boletim de saúde do dia seguinte a uma onda de calor não mostra nada fora do normal,
-a conclusão errada é "não teve efeito". A conclusão mais adequada é "ainda não deu tempo
-de aparecer" — ou "o efeito apareceu com outro nome". Esse intervalo costuma ser ignorado
-quando clima e saúde são tratados como dois assuntos separados.
-:::
+Na exposição à fumaça, sintomas respiratórios e agravamentos de doenças preexistentes podem ocorrer rapidamente. Já os efeitos de exposições repetidas ou prolongadas exigem avaliações específicas e, geralmente, não existe um prazo único de “meses” para sua manifestação ou identificação. [EPA — Efeitos da fumaça na saúde](https://www.epa.gov/wildfires/wildland-fires-and-public-health-effects)
+
 
 ![Da exposição climática ao desfecho de saúde: o efeito chega com defasagem e de forma desigual entre grupos e territórios.](images/clima-saude-map.svg){fig-alt="Diagrama mostra uma exposição climática no tempo zero, uma seta pontilhada indicando dias ou semanas de defasagem e, à direita, o desfecho de saúde. Abaixo, uma faixa indica que vulnerabilidade biológica, social, territorial e institucional modifica o risco."}
 
@@ -266,6 +177,8 @@ países. Para dengue e eventos hidrometeorológicos no Brasil, [Lowe e colaborad
 urbanização combinam-se em janelas de risco. A [OMS](https://www.who.int/news-room/fact-sheets/detail/climate-change-heat-and-health)
 resume os mecanismos fisiológicos do calor e a importância de considerar grupos e
 defasagens.
+A relação não linear entre temperatura e transmissão de dengue, Zika e chikungunya é
+examinada por [Mordecai e colaboradores (2017)](https://pubmed.ncbi.nlm.nih.gov/28448507/).
 :::
 
 ## Quem sente primeiro e quem sente mais forte
@@ -692,6 +605,16 @@ codificados como "calor" subestima o problema.
 - Ministério do Meio Ambiente e Mudança do Clima. *Mudança do clima e Plano Clima*.
   [Página oficial](https://www.gov.br/mma/pt-br/assuntos/mudanca-do-clima).
 
+- Organização Mundial da Saúde (OMS) e Organização Meteorológica Mundial (OMM).
+  *Heatwaves and Health: Guidance on Warning-System Development*.
+  [Guia](https://cdn.who.int/media/docs/default-source/climate-change/heat-waves-and-health---guidance-on-warning-system-development.pdf).
+- Organização Mundial da Saúde (OMS). *Dengue and severe dengue*.
+  [Página informativa](https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue).
+- Ministério da Saúde. *Leptospirose*.
+  [Página oficial](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/l/leptospirose/leptospirose).
+- United States Environmental Protection Agency (EPA). *Wildland Fires and Public Health Effects*.
+  [Página institucional](https://www.epa.gov/wildfires/wildland-fires-and-public-health-effects).
+
 **Literatura científica**
 
 - EBI, K. L.; HESS, J. J.; WATKISS, P. Health risks and costs of climate variability and
@@ -716,6 +639,9 @@ codificados como "calor" subestima o problema.
 - MARENGO, J. A. et al. Changes in climate and land use over the Amazon region: current
   and future variability and trends. *Frontiers in Earth Science*, v. 6, art. 228, 2018.
   [DOI](https://doi.org/10.3389/feart.2018.00228).
+- MORDECAI, E. A. et al. Detecting the impact of temperature on transmission of Zika,
+  dengue, and chikungunya using mechanistic models. 2017.
+  [Registro no PubMed](https://pubmed.ncbi.nlm.nih.gov/28448507/).
 - NOBRE, C. A. et al. Land-use and climate change risks in the Amazon and the need of a
   novel sustainable development paradigm. *Proceedings of the National Academy of
   Sciences*, v. 113, n. 39, p. 10759–10768, 2016.

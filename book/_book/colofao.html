@@ -161,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Por que isso importa: clima, saúde e o que os dados escondem</span></a>
+  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -283,14 +283,14 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="uma-publicação-do-ecossistema-climasus" class="level2">
 <h2 class="anchored" data-anchor-id="uma-publicação-do-ecossistema-climasus">Uma publicação do ecossistema climaSUS</h2>
-<p>O <strong>climasus+ Studio</strong> é um estúdio visual para montar e executar análises de saúde, clima e ambiente do DATASUS, encadeando as funções do pacote <a href="https://github.com/ByMaxAnjos/climasus4r">climasus4r</a> como um Pipeline — sem precisar saber programar. O motor de análise já vem embutido no aplicativo.</p>
-<p>Este guia é material de formação da rede. Reúne os conceitos de clima e saúde, o passo a passo das Etapas, os Modelos de vigilância e os critérios para usar resultados com responsabilidade.</p>
+<p>O <strong>climasus+ Studio</strong> é um estúdio visual para montar e executar análises de saúde, clima e ambiente do DATASUS, encadeando as funções do pacote <a href="https://github.com/ByMaxAnjos/climasus4r">climasus4r</a> como um Pipeline, sem precisar saber programar. O motor de análise já vem embutido no aplicativo.</p>
+<p>Este guia reúne os conceitos na área de clima e saúde, o passo a passo das etapas de preparação, integração e análise, os Modelos de vigilância e Pequisa, realçando os critérios para usar os resultados com responsabilidade.</p>
 <div class="support">
 <h2 class="anchored">Realização e apoio</h2>
 <p>Desenvolvimento articulado ao <strong>Centro de Clima de Saúde de Rondônia</strong>, à <strong>Fiocruz Rondônia</strong> e ao <strong>INCT-CONEXAO</strong>, no âmbito do ecossistema climaSUS.</p>
 <div class="support-logos" aria-label="Logos institucionais">
-<a href="https://github.com/ByMaxAnjos/climasus-plus"><img src="images/brand/climasus.png" alt="climasus+ Studio"></a>
-<a href="https://www.gov.br/cnpq/"><img src="images/brand/inct-conexao.png" class="inct" alt="INCT-CONEXAO"></a>
+<a href="https://climasus.github.io/"><img src="images/brand/climasus.png" alt="climasus+ Studio"></a>
+<a href="https://inct-conexao.com.br/"><img src="images/brand/inct-conexao.png" class="inct" alt="INCT-CONEXAO"></a>
 <a href="https://www.fiocruz.br/"><img src="images/brand/fiocruz-rondonia.png" alt="Fiocruz Rondônia"></a>
 <a href="https://www.gov.br/cnpq/"><img src="images/brand/cnpq.png" alt="CNPq"></a>
 <a href="https://www.ufjf.br/"><img src="images/brand/ufjf.png" alt="UFJF"></a>
@@ -311,7 +311,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><strong>Título</strong></td>
-<td>climasus+ Studio: guia prático sobre clima, saúde e Amazônia</td>
+<td>climasus+ Studio: guia prático sobre clima, saúde, ambiente e território</td>
 </tr>
 <tr class="even">
 <td><strong>Edição</strong></td>
@@ -323,7 +323,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><strong>Equipe</strong></td>
-<td>Sergio Lins de Carvalho · Marlon Resende Faria · Thauã Menezes · Andrey Araújo · Nathalia A. Franqlin</td>
+<td>Sergio Lins de Carvalho · Marlon Resende Faria · Thauã Menezes · Andrey Araújo · Nathalia A. Franqlin · Cecília Cassab</td>
 </tr>
 <tr class="odd">
 <td><strong>Instituições</strong></td>
@@ -331,7 +331,7 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td><strong>Software</strong></td>
-<td>climasus+ Studio v1.1.0-beta.2 · climasus4r</td>
+<td>climasus+ Studio v1.1.0-beta.2 · climasus4r v.1.0.0</td>
 </tr>
 <tr class="odd">
 <td><strong>Licença do software</strong></td>
@@ -339,29 +339,6 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-</section>
-<section id="o-que-mudou-nesta-edição" class="level2">
-<h2 class="anchored" data-anchor-id="o-que-mudou-nesta-edição">O que mudou nesta edição</h2>
-<p>Esta edição foi conferida contra o catálogo e o código do Studio em <strong>22 de outubro de 2026</strong>. As mudanças editoriais e de conteúdo em relação à versão anterior são:</p>
-<ul>
-<li>Catálogo confirmado em <strong>80 funções</strong>: 15 na Preparação, 33 na Integração e 32 na Análise &amp; Modelagem.</li>
-<li>A Etapa Integração passa a documentar as funções de censo e vínculo espacial <strong><code>sus_census_join</code></strong>, <strong><code>sus_census_select</code></strong> e <strong><code>sus_spatial_join</code></strong>, além de <strong><code>sus_grid_plot</code></strong>.</li>
-<li><strong><code>sus_data_import</code></strong>: o parâmetro <code>month</code> é obrigatório para sistemas mensais (SIH, CNES e SIA) e aceita <code>1</code>, <code>1:12</code> ou combinações como <code>c(1, 4, 6)</code>.</li>
-<li><strong><code>sus_climate_inmet</code></strong>: o padrão de <code>parallel</code> passou a ser <code>FALSE</code>; <code>TRUE</code> explícito continua permitido.</li>
-<li><strong><code>sus_data_plot_aggregate_ts</code></strong>: o padrão de <code>plot_type</code> passou a ser <code>epidemic</code>, preservando as demais opções.</li>
-<li>Nova identidade visual: capa, aberturas de parte, paleta amazônica, tipografia editorial e fotografias do acervo Fiocruz Imagens.</li>
-</ul>
-<p>Atualização de <strong>28 de outubro de 2026</strong> (Studio v1.1.0-beta.2, instaladores refeitos):</p>
-<ul>
-<li>Nova barra superior: o menu <strong>Arquivo</strong> reúne Salvar projeto, Abrir projeto e Importar dados; <strong>Limpar</strong> fica ao lado de Pipelines; logotipos das instituições no canto direito.</li>
-<li>O botão <strong>Executar até aqui</strong> de cada Nó roda só aquele Passo e os anteriores sem Resultado; <strong>Executar</strong> continua rodando tudo.</li>
-<li>O Tutorial <strong>Mortalidade Respiratória — SP 2014-2019</strong> passou a ter o selo <strong>Guiado</strong> no menu Modelos.</li>
-<li>Nova função <strong>Preencher falhas nos dados do INMET</strong> (<code>sus_climate_fill_inmet</code>), na Integração: completa valores ausentes das estações com XGBoost, antes de cruzar o clima com a saúde.</li>
-<li><strong><code>sus_data_import</code></strong>: <code>region</code> começa vazio (<code>NULL</code>) e é opcional.</li>
-<li><strong><code>sus_data_filter_cid</code></strong>: a ajuda de <code>icd_codes</code> lista os formatos aceitos (código, lista, faixa, capítulo e categoria).</li>
-<li>Mapas interativos passaram a usar o mapa-base <strong>OpenFreeMap</strong>, com seletor de cinco estilos.</li>
-</ul>
-<p>Os itens acima foram verificados por leitura do catálogo (<code>src/catalog/functions.json</code>) e do código do motor; não substituem um teste de execução em cada sistema operacional.</p>
 </section>
 <section id="fotografias" class="level2">
 <h2 class="anchored" data-anchor-id="fotografias">Fotografias</h2>
@@ -382,38 +359,20 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="mapas">Mapas</h2>
 <p>O fundo dos mapas interativos é fornecido pelo <strong>OpenFreeMap</strong>, e o aplicativo exibe a atribuição exigida em cada mapa: © OpenFreeMap · © OpenMapTiles · Dados do OpenStreetMap (<a href="https://openfreemap.org" class="uri">https://openfreemap.org</a>).</p>
 </section>
-<section id="tipografia-e-identidade" class="level2">
-<h2 class="anchored" data-anchor-id="tipografia-e-identidade">Tipografia e identidade</h2>
-<p>A identidade do guia traduz o encontro entre floresta, água e saúde:</p>
-<ul>
-<li><strong>Fraunces</strong> — capa impressa. Uma serifa de display, usada apenas na imagem de capa.</li>
-<li><strong>Petrona</strong> — títulos, texto corrido e citações. Uma serifa editorial, usada em pesos 400 a 700.</li>
-<li><strong>Archivo</strong> — interface, legendas, rótulos e dados. Uma grotesca de desenho latino-americano.</li>
-<li><strong>IBM Plex Mono</strong> — código, parâmetros e nomes de funções.</li>
-</ul>
-<p>A paleta combina a tinta da floresta (<code>#0B2420</code>), o verde do rio (<code>#0E7C6B</code>), a água (<code>#2DD4BF</code>), o ocre da terra (<code>#D99A2B</code>) e o papel (<code>#F7F4EC</code>). O motivo de contorno topográfico e a linha de rio aparecem como elementos de navegação, não como ornamento.</p>
-<div class="palette" aria-label="Paleta do guia">
-<span style="background:#0B2420;color:#F7F4EC">#0B2420</span>
-<span style="background:#0E7C6B;color:#F7F4EC">#0E7C6B</span>
-<span style="background:#2DD4BF;color:#0B2420">#2DD4BF</span>
-<span style="background:#D99A2B;color:#0B2420">#D99A2B</span>
-<span style="background:#F7F4EC;color:#0B2420">#F7F4EC</span>
-</div>
-</section>
 <section id="como-citar" class="level2">
 <h2 class="anchored" data-anchor-id="como-citar">Como citar</h2>
 <p>Para citar o guia:</p>
 <blockquote class="blockquote">
-<p>ANJOS, Max. <strong>climasus+ Studio: guia prático sobre clima, saúde e Amazônia</strong>. 1. ed.&nbsp;2026. Disponível em: <a href="https://github.com/ByMaxAnjos/climasus-plus" class="uri">https://github.com/ByMaxAnjos/climasus-plus</a>.</p>
+<p>ANJOS, Max. <strong>climasus+ Studio: guia prático sobre clima, saúde, ambiente e território</strong>. 1. ed.&nbsp;2026. Disponível em: <a href="https://github.com/ByMaxAnjos/climasus-plus" class="uri">https://github.com/ByMaxAnjos/climasus-plus</a>.</p>
 </blockquote>
-<p>Para citar o software, use os metadados de <a href="https://github.com/ByMaxAnjos/climasus-plus/blob/main/CITATION.cff"><code>CITATION.cff</code></a>:</p>
+<p>E também,</p>
 <blockquote class="blockquote">
-<p>Anjos, M. (2026). <em>climasus+ Studio</em> (v1.1.0-beta.2) [Software]. GitHub. <a href="https://github.com/ByMaxAnjos/climasus-plus" class="uri">https://github.com/ByMaxAnjos/climasus-plus</a></p>
+<p>Anjos et al.&nbsp;(2026). climasus4r: An R Package for Reproducible Climate-Health Data Integration and Epidemiological Analysis. Journal of Open Source Software (em revisão) <a href="https://github.com/openjournals/joss-reviews/issues/11423" class="uri">https://github.com/openjournals/joss-reviews/issues/11423</a>.</p>
 </blockquote>
 </section>
 <section id="licença-e-reuso" class="level2">
 <h2 class="anchored" data-anchor-id="licença-e-reuso">Licença e reuso</h2>
-<p>O código do climasus+ Studio é distribuído sob licença <strong>MIT</strong>. Este guia é material educativo: o texto e os diagramas podem ser reutilizados em contextos não comerciais, com atribuição à rede climaSUS e citação desta edição. As <strong>fotografias</strong> mantêm a licença <strong>by-nc</strong> do Fiocruz Imagens e exigem crédito ao autor e ao acervo; consulte os <a href="https://www.fiocruzimagens.fiocruz.br/s/fiocruzimagens/page/licencas">termos de uso</a> antes de reutilizá-las.</p>
+<p>O código do climasus+ Studio é distribuído sob licença <strong>MIT</strong>. Este guia é material educativo: o texto e os diagramas podem ser reutilizados em contextos não comerciais, com atribuição à projeto climaSUS e citação desta edição. As <strong>fotografias</strong> mantêm a licença <strong>by-nc</strong> do Fiocruz Imagens e exigem crédito ao autor e ao acervo; consulte os <a href="https://www.fiocruzimagens.fiocruz.br/s/fiocruzimagens/page/licencas">termos de uso</a> antes de reutilizá-las.</p>
 </section>
 <section id="como-contribuir" class="level2">
 <h2 class="anchored" data-anchor-id="como-contribuir">Como contribuir</h2>
@@ -421,7 +380,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><a href="https://github.com/ByMaxAnjos/climasus-plus/issues" class="uri">https://github.com/ByMaxAnjos/climasus-plus/issues</a></li>
 </ul>
-<p>O guia é um documento vivo: ele acompanha a evolução do catálogo, do motor e da interface do Studio.</p>
+<p>Desejamos uma ótima experiência com o climasus+ Studio e agradecemos sua contribuição para melhorar este guia e o software.</p>
 
 
 </section>
