@@ -36,6 +36,7 @@ book:
     footer: "Uma realização do ecossistema climaSUS<br><strong>Apoio: INCT-CONEXAO</strong>"
   chapters:
     - index.qmd
+    - colofao.qmd
     - part-1-fundamentos.qmd
     - 00-clima-saude.qmd
     - 01-conhecendo-o-studio.qmd
@@ -54,7 +55,6 @@ book:
     - 10-caso-hospitalizacoes-frio.qmd
     - 11-glossario.qmd
     - 12-parametros-avancados.qmd
-    - colofao.qmd
 
 format:
   html:
