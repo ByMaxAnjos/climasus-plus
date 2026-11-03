@@ -42,9 +42,14 @@
      "Pessoa01",
      "Pessoa13",
      "ResponsavelRenda",
-     "ResponsavelRendaSexo"
+     "ResponsavelRendaSexo",
+     "Pessoas",
+     "Domicilio",
+     "Entorno",
+     "Indigenas",
+     "Quilombolas"
     ],
-    "doc": "Character string. Relevant only when `dataset = \"tracts\"`.\n  Selects which censobr tract table to download. Options: `\"Basico\"` (default),\n  `\"Domicilio01\"`, `\"Domicilio02\"`, `\"DomicilioRenda\"`,\n  `\"Pessoa01\"` through `\"Pessoa13\"`,\n  `\"ResponsavelRenda\"`, `\"ResponsavelRendaSexo\"`.\n  See `censobr::read_tracts()` for full variable listings per table."
+    "doc": "Character string. Relevant only when `dataset = \"tracts\"`.\n  Selects which censobr tract table to download; the name is validated by\n  `censobr::read_tracts()`. Census 2010 options: `\"Basico\"` (default),\n  `\"Domicilio01\"`, `\"Domicilio02\"`, `\"DomicilioRenda\"`,\n  `\"Pessoa01\"` through `\"Pessoa13\"`, `\"ResponsavelRenda\"`,\n  `\"ResponsavelRendaSexo\"`. Census 2022 options: `\"Basico\"`, `\"Pessoas\"`,\n  `\"Dom"
    },
    {
     "name": "year",
@@ -52,7 +57,7 @@
     "required": false,
     "type": "number",
     "options": [],
-    "doc": "Integer specifying census year. Options: `2010` (default) or `2000`.\n  Note: Dataset availability varies by year."
+    "doc": "Integer specifying census year. Options: `2010` (default), `2000`\n  or `2022` (tracts only in some tables). Note: dataset availability varies by year."
    },
    {
     "name": "census_vars",
@@ -88,6 +93,25 @@
     "type": "text",
     "options": [],
     "doc": "Character string specifying the column in df containing the **6 or 7-digit IBGE municipality code**. If `NULL`, detects common SUS patterns (e.g., `code_muni`)."
+   },
+   {
+    "name": "join_level",
+    "default": "c(\"muni\", \"tract\")",
+    "required": false,
+    "type": "enum",
+    "options": [
+     "muni",
+     "tract"
+    ],
+    "doc": "Character. `\"muni\"` (default): microdata/tracts are\n  aggregated to municipality and joined by municipality code. `\"tract\"`:\n  only valid with `dataset = \"tracts\"`; `df` is a table of census tracts\n  (e.g. an `sf` of setores) and the censobr tract table is joined by tract\n  code, with raw censobr column names, no aggregation and no suffix."
+   },
+   {
+    "name": "join_tract_col",
+    "default": "NULL",
+    "required": false,
+    "type": "text",
+    "options": [],
+    "doc": "Character. Column of `df` holding the 15-digit tract\n  code when `join_level = \"tract\"`. If `NULL`, auto-detects `code_tract` or\n  `CD_SETOR`."
    },
    {
     "name": "use_cache",
@@ -521,7 +545,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Detect coldwaves using multiple standard methodologies",
-  "description": "Applies seven coldwave detection methods (WHO, WMO, INMET, ECF, UTCI, WBGT,\nHI) to a `climasus_df` at stage `\"climate\"` produced by\n`sus_climate_inmet()`, `sus_climate_fill_gap()`, or\n`sus_climate_compute_indicators()`. Aggregates hourly data to daily scale,\ncomputes smoothed historical percentile thresholds from a reference baseline,\nidentifies coldwave days and discrete events per method, and returns a named\nlist with events, daily-flag, and annual-summary tables — all carrying\n`sus_meta` at stage `\"climate\"` / type `\"coldwaves\"`.",
+  "description": "Applies seven coldwave detection methods (WHO, WMO, INMET, ECF, UTCI, WBGT,\nHI) to a `climasus_df` at stage `\"climate\"` produced by\n`sus_climate_inmet()`, `sus_climate_fill_inmet()`, or\n`sus_climate_compute_indicators()`. Aggregates hourly data to daily scale,\ncomputes smoothed historical percentile thresholds from a reference baseline,\nidentifies coldwave days and discrete events per method, and returns a named\nlist with events, daily-flag, and annual-summary tables — all carrying\n`sus_meta` at stage `\"climate\"` / type `\"coldwaves\"`.",
   "args": [
    {
     "name": "df",
@@ -534,7 +558,7 @@
      "filled",
      "indicators"
     ],
-    "doc": "A `climasus_df` at stage `\"climate\"` with type `\"inmet\"`,\n  `\"filled\"`, or `\"indicators\"`. Produced by `sus_climate_inmet()`,\n  `sus_climate_fill_gap()`, or `sus_climate_compute_indicators()`. Must\n  contain columns `date` and `station_code`. Temperature columns\n  `tair_max_c`, `tair_min_c`, `tair_dry_bulb_c` are required for WHO/WMO/\n  INMET/ECF; `utci_c`, `wbgt_c`, `hi_c` are required for UTCI/W"
+    "doc": "A `climasus_df` at stage `\"climate\"` with type `\"inmet\"`,\n  `\"filled\"`, or `\"indicators\"`. Produced by `sus_climate_inmet()`,\n  `sus_climate_fill_inmet()`, or `sus_climate_compute_indicators()`. Must\n  contain columns `date` and `station_code`. Temperature columns\n  `tair_max_c`, `tair_min_c`, `tair_dry_bulb_c` are required for WHO/WMO/\n  INMET/ECF; `utci_c`, `wbgt_c`, `hi_c` are required for UTCI"
    },
    {
     "name": "method",
@@ -614,7 +638,7 @@
   "stage": "integracao",
   "family": "climate",
   "title": "Detect heatwaves using multiple standard methodologies",
-  "description": "Applies seven heatwave detection methods (WHO, WMO, INMET, EHF, UTCI, WBGT,\nHI) to a `climasus_df` at stage `\"climate\"` produced by\n`sus_climate_inmet()`, `sus_climate_fill_gap()`, or\n`sus_climate_compute_indicators()`. Aggregates hourly data to daily scale,\ncomputes smoothed historical percentile thresholds from a reference baseline,\nidentifies heatwave days and discrete events per method, and returns a named\nlist with event, daily-flag, and annual-summary tables — all carrying\n`sus_meta` at stage `\"climate\"` / type `\"heatwaves\"`.",
+  "description": "Applies seven heatwave detection methods (WHO, WMO, INMET, EHF, UTCI, WBGT,\nHI) to a `climasus_df` at stage `\"climate\"` produced by\n`sus_climate_inmet()`, `sus_climate_fill_inmet()`, or\n`sus_climate_compute_indicators()`. Aggregates hourly data to daily scale,\ncomputes smoothed historical percentile thresholds from a reference baseline,\nidentifies heatwave days and discrete events per method, and returns a named\nlist with event, daily-flag, and annual-summary tables — all carrying\n`sus_meta` at stage `\"climate\"` / type `\"heatwaves\"`.",
   "args": [
    {
     "name": "df",
@@ -627,7 +651,7 @@
      "filled",
      "indicators"
     ],
-    "doc": "A `climasus_df` at stage `\"climate\"` with type `\"inmet\"`,\n  `\"filled\"`, or `\"indicators\"`. Produced by `sus_climate_inmet()`,\n  `sus_climate_fill_gap()`, or `sus_climate_compute_indicators()`. Must\n  contain columns `date` and `station_code`. Temperature columns\n  `tair_max_c`, `tair_min_c`, `tair_dry_bulb_c` are required for WHO/WMO/\n  INMET/EHF; `utci_c`, `wbgt_c`, `hi_c` are required for UTCI/W"
+    "doc": "A `climasus_df` at stage `\"climate\"` with type `\"inmet\"`,\n  `\"filled\"`, or `\"indicators\"`. Produced by `sus_climate_inmet()`,\n  `sus_climate_fill_inmet()`, or `sus_climate_compute_indicators()`. Must\n  contain columns `date` and `station_code`. Temperature columns\n  `tair_max_c`, `tair_min_c`, `tair_dry_bulb_c` are required for WHO/WMO/\n  INMET/EHF; `utci_c`, `wbgt_c`, `hi_c` are required for UTCI"
    },
    {
     "name": "method",
@@ -1578,7 +1602,7 @@
   "name": "sus_climate_plot_fill",
   "stage": "integracao",
   "family": "plot",
-  "title": "Visualise time-series gap-filling from sus_climate_fill()",
+  "title": "Visualise time-series gap-filling from sus_climate_fill_inmet()",
   "description": "Unified visualisation for gap-filling outputs of the `climasus4r` pipeline.\nAutomatically detects **production mode** (filled tibble) vs **evaluation\nmode** (list with `data` and `metrics` components) and renders appropriate\ninteractive (plotly) or static (ggplot2) plots plus DT metric tables.\n\n**Production mode** displays:\n\\itemize{\n  \\item Time-series of observed (with gaps) vs imputed series.\n  \\item Imputed segments as distinct markers.  Consecutive imputed blocks are\n        connected by a dotted line; isolated single points appear as dots only.\n  \\item Interactive range-slider with zoom presets (plotly only).\n}\n\n**Evaluation mode** displays a 2×2 diagnostic dashboard:\n\\itemize{\n  \\item Observed vs Predicted scatter with 1:1 reference line.\n  \\item Residual distribution histogram.\n  \\item Residuals over time (temporal-autocorrelation diagnostic).\n  \\item Residuals vs observed (heteroscedasticity diagnostic).\n}",
   "args": [
    {
@@ -1587,7 +1611,7 @@
     "required": true,
     "type": "text",
     "options": [],
-    "doc": "Output of `sus_climate_fill()`. In production mode this is a\n  `<climasus_df>` tibble; in evaluation mode it is the named list returned by\n  `sus_climate_fill(evaluation = TRUE)`."
+    "doc": "Output of `sus_climate_fill_inmet()`. In production mode this is a\n  `<climasus_df>` tibble; in evaluation mode it is the named list returned by\n  `sus_climate_fill_inmet(evaluation = TRUE)`."
    },
    {
     "name": "df_original",
@@ -2695,6 +2719,14 @@
     "type": "boolean",
     "options": [],
     "doc": "Logical. If TRUE, ignores cache and re-downloads \n  everything. Useful when you suspect cached data is corrupted or outdated."
+   },
+   {
+    "name": "filter_residence_uf",
+    "default": "TRUE",
+    "required": false,
+    "type": "boolean",
+    "options": [],
+    "doc": "Logical. For state-level systems (SIM, SIH, SIA,\n  SINASC), keep only records whose municipality code belongs to the\n  requested `uf` (default `TRUE`). Set to `FALSE` to keep every record in\n  the state file, e.g. SIH admissions of patients living in another state.\n  Needed to build residence-based national series, where an admission in\n  one state must be assigned to the patient's state of reside"
    },
    {
     "name": "parallel",
@@ -4636,7 +4668,7 @@
   "stage": "integracao",
   "family": "grid",
   "title": "Import GHAP High-Resolution Pollution Data for Brazilian Municipalities",
-  "description": "`sus_grid_pollution_ghap()` downloads, crops, spatially aggregates, and\ncaches GHAP (GlobalHighAirPollutants) raster data to Brazilian\nmunicipalities. No API key is required.\n\nGHAP provides AI-generated, seamless ground-level air pollutant fields at\n1 km (PM2.5, CO) and 10 km (O3) resolution. Files are downloaded as NetCDF\nfrom Zenodo, cropped to Brazil, aggregated with area-weighted extraction,\nand the result is stored as a Parquet cache for fast subsequent access.\n\nAvailable pollutants and temporal coverage:\n\\itemize{\n  \\item **PM2.5** (`\"pm25\"`) -- daily, monthly & annual, 2017-2022, 1 km, \\eqn{\\mu g/m^3}\n  \\item **O3** (`\"o3\"`) -- annual only, 2000-2020, 10 km, ppb\n  \\item **CO** (`\"co\"`) -- annual only, 2019-2022, 1 km, mg/m\\eqn{^3}\n  \\item **NO2** (`\"no2\"`) -- data not yet publicly released\n}\n\nWhen `municipalities` is provided the function returns a `climasus_df` at\n`stage = \"climate\"`, `type = \"pollution_ghap\"`, compatible with\n[sus_climate_anomaly()], [sus_climate_aggregate()], and [sus_mod_dlnm()].",
+  "description": "`sus_grid_pollution_ghap()` downloads, crops, spatially aggregates, and\ncaches GHAP (GlobalHighAirPollutants) raster data to Brazilian\nmunicipalities. No API key is required.\n\nGHAP provides AI-generated, seamless ground-level air pollutant fields at\n1 km (PM2.5, CO) and 10 km (O3) resolution. Files are downloaded as NetCDF\nfrom Zenodo, cropped to Brazil, aggregated with area-weighted extraction,\nand the result is stored as a Parquet cache for fast subsequent access.\n\nAvailable pollutants and temporal coverage:\n\\itemize{\n  \\item **PM2.5** (`\"pm25\"`) -- annual only (V2), 2000-2022, 1 km, \\eqn{\\mu g/m^3}\n  \\item **O3** (`\"o3\"`) -- annual only, 2000-2020, 10 km, ppb\n  \\item **CO** (`\"co\"`) -- annual only, 2019-2022, 1 km, mg/m\\eqn{^3}\n  \\item **NO2** (`\"no2\"`) -- data not yet publicly released\n}\n\nWhen `municipalities` is provided the function returns a `climasus_df` at\n`stage = \"climate\"`, `type = \"pollution_ghap\"`, compatible with\n[sus_climate_anomaly()], [sus_climate_aggregate()], and [sus_mod_dlnm()].",
   "args": [
    {
     "name": "pollutants",
@@ -4661,7 +4693,7 @@
      "monthly",
      "annual"
     ],
-    "doc": "Character. Temporal aggregation of source files.\n  One of `\"daily\"`, `\"monthly\"`, or `\"annual\"`. Default: `\"monthly\"`.\n  \\itemize{\n    \\item `\"daily\"` -- available for PM2.5 only (2017-2022). Each monthly\n      ZIP (~3 GB) is downloaded, extracted to a temp directory, each daily\n      NetCDF is aggregated, and the result is cached as Parquet. Subsequent\n      calls read from Parquet without re-ext"
+    "doc": "Character. Temporal aggregation of source files.\n  One of `\"daily\"`, `\"monthly\"`, or `\"annual\"`. Default: `\"monthly\"`.\n  \\itemize{\n    \\item `\"daily\"` -- no longer served by Zenodo for any pollutant; falls\n      back to `\"annual\"`. (Legacy PM2.5 behavior: each monthly\n      ZIP (~3 GB) is downloaded, extracted to a temp directory, each daily\n      NetCDF is aggregated, and the result is cached as "
    },
    {
     "name": "years",
@@ -4669,7 +4701,7 @@
     "required": false,
     "type": "text",
     "options": [],
-    "doc": "Integer vector. Years to download. Availability depends on\n  pollutant and resolution:\n  \\itemize{\n    \\item PM2.5 daily, monthly & annual: 2017-2022\n    \\item O3 annual: 2000-2020\n    \\item CO annual: 2019-2022\n  }\n  `NULL` (default) returns all available years for the selected pollutant."
+    "doc": "Integer vector. Years to download. Availability depends on\n  pollutant and resolution:\n  \\itemize{\n    \\item PM2.5 annual: 2000-2022\n    \\item O3 annual: 2000-2020\n    \\item CO annual: 2019-2022\n  }\n  `NULL` (default) returns all available years for the selected pollutant."
    },
    {
     "name": "months",
@@ -8354,9 +8386,17 @@
     "name": "category",
     "default": "NULL",
     "required": false,
-    "type": "text",
-    "options": [],
-    "doc": "Optional character vector to filter by category. Use `NULL`\n  (default) to return all."
+    "type": "enum",
+    "options": [
+     "demographic",
+     "socioeconomic",
+     "mortality",
+     "morbidity",
+     "maternal_child",
+     "health_resources",
+     "heat_vulnerability"
+    ],
+    "doc": "Optional character vector to filter by category (e.g.\n  `\"demographic\"`, `\"socioeconomic\"`, `\"mortality\"`, `\"morbidity\"`,\n  `\"maternal_child\"`, `\"health_resources\"`, `\"heat_vulnerability\"`). Use\n  `NULL` (default) to return all."
    }
   ]
  },
