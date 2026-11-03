@@ -181,388 +181,453 @@ A relação não linear entre temperatura e transmissão de dengue, Zika e chiku
 examinada por [Mordecai e colaboradores (2017)](https://pubmed.ncbi.nlm.nih.gov/28448507/).
 :::
 
-## Quem sente primeiro e quem sente mais forte
+## O impacto é desigual
 
-O mesmo evento não afeta todo mundo do mesmo jeito. Dois bairros da mesma cidade podem
-receber a mesma onda de calor e registrar números muito diferentes de atendimento — e a
-diferença raramente está só na temperatura medida.
+O mesmo evento não impacta todas as pessoas da mesma maneira. Dois bairros da mesma cidade podem passar pela mesma onda de calor e apresentar efeitos diferentes sobre a saúde. Essas diferenças dependem da exposição, das características da população, das condições de vida e do acesso à proteção e ao cuidado. Isso tem um nome: vulnerabilidade. 
 
-A vulnerabilidade tem quatro camadas que se somam:
+Para entender a vulnerabilidade nesse contexto, considere a interação de quatro dimensões inter-relacionadas:
 
-- **Biológica:** idosos regulam temperatura com menos eficiência, sentem menos sede e têm
-  mais doenças crônicas de base; crianças pequenas têm vias aéreas menores, respiram mais
-  rápido por unidade de peso e têm sistema imunológico em maturação; gestantes e pessoas
-  com doença renal, cardíaca ou respiratória também têm risco aumentado.
-- **Social:** quem trabalha ao ar livre, depende do rio para se deslocar, tem menos acesso
-  a água potável ou não pode faltar ao trabalho para buscar atendimento chega mais exposto
-  e mais tarde ao serviço de saúde. Renda, escolaridade, racismo e violência institucional
-  — barreiras no atendimento — moldam esse caminho.
-- **Territorial:** moradia sem ventilação vira forno; bairro sem drenagem acumula água;
-  ausência de arborização eleva a temperatura; proximidade de queimadas ou de vias de
-  tráfego intenso aumenta a exposição à fumaça e à poluição. Na Amazônia, o tempo de barco
-  até a unidade de saúde também é território.
-- **Institucional:** município sem equipe de vigilância completa, sem sala de situação,
-  sem plano de contingência ou com hospital de referência a centenas de quilômetros tem
-  menos capacidade de responder.
+- **Biológica:** pessoas idosas podem apresentar menor capacidade de regular a temperatura corporal e menor percepção de sede, além de maior frequência de doenças crônicas. Gestantes, crianças pequenas e pessoas com doenças cardíacas, renais ou respiratórias também podem apresentar maior risco, dependendo da exposição e do grau de severidade do evento. No caso da fumaça, crianças merecem atenção porque seus pulmões estão em desenvolvimento e elas inalam proporcionalmente mais ar por unidade de massa corporal.
+- **Social:** condições de trabalho, renda, escolaridade e acesso à água e à informação influenciam as possibilidades de proteção. Quem trabalha ao ar livre pode ficar mais exposto ao calor; quem não consegue interromper o trabalho ou pagar pelo transporte pode enfrentar dificuldades para buscar atendimento. Desigualdades e discriminação também podem limitar o acesso a recursos e serviços.
+- **Territorial:** as características da moradia e do entorno influenciam a exposição climática. Coberturas sem isolamento térmico, pouca sombra e ventilação inadequada podem agravar o calor dentro das casas. A drenagem insuficiente pode favorecer alagamentos, enquanto a proximidade de fontes de emissão pode aumentar a exposição à poluição atmosférica. 
+- **Institucional:** equipes, infraestrutura, vigilância, planejamento e articulação entre serviços condicionam a capacidade de prevenir danos e responder aos eventos. Falta de profissionais, interrupções no abastecimento e dificuldades de transporte ou encaminhamento podem comprometer a continuidade da assistência.
 
-Essas camadas não competem entre si. Elas se somam. Um idoso que mora em casa de zinco,
-num bairro sem área verde, com a unidade de saúde fechada no fim de semana, acumula
-riscos que nenhuma das camadas explica sozinha.
+Portanto, a vulnerabilidade não se limita às características individuais, ela também depende das condições sociais, do território e da capacidade de proteção e resposta. Identificar grupos em maior risco deve orientar medidas concretas para reduzir a exposição, remover barreiras ao cuidado e fortalecer os serviços de atendimento. 
 
-Na Amazônia, populações ribeirinhas, indígenas e quilombolas acumulam, com frequência,
-maior exposição e menor acesso a serviços — não por características culturais, mas por
-desigualdades históricas de território e infraestrutura.
-
-Por isso, **vulnerabilidade não é um atributo da pessoa; é a relação entre a pessoa, o
-lugar e a capacidade de resposta**. Dizer que um grupo é "mais vulnerável" não é apenas
-uma constatação biológica. É, sobretudo, uma constatação social, territorial e
-institucional — e, portanto, uma questão de decisão pública.
-
-::: {.callout-tip title="Dica"}
-A mesma onda de calor pode atingir toda a cidade, mas o risco não se distribui de forma
-igual. Em geral, ele acompanha desigualdades já conhecidas pela gestão: moradia,
-saneamento, renda, trabalho e acesso ao cuidado. Se o mapa de risco coincide com o mapa da
-desigualdade, não é coincidência.
-:::
 
 ::: {.fonte role="note" aria-label="Base científica"}
-O IPCC (AR6, Grupo de Trabalho II, capítulo 7) trata vulnerabilidade como combinação de
-sensibilidade, exposição e capacidade adaptativa, e não como característica individual.
-O [Observatório de Clima e Saúde da Fiocruz](https://climaesaude.icict.fiocruz.br/)
-documenta como condições de moradia, saneamento e território modulam o efeito do clima
-sobre a saúde no Brasil. A [Política Nacional de Vigilância em Saúde (Resolução CNS nº
-588/2018)](https://www.gov.br/conselho-nacional-de-saude/pt-br/atos-normativos/resolucoes/2018/resolucao-no-588.pdf) determina que a
-vigilância atue sobre determinantes sociais e ambientais, e não apenas sobre casos
-notificados.
+O [IPCC (AR6, Grupo de Trabalho II, capítulo 7)](https://www.ipcc.ch/report/ar6/wg2/chapter/chapter-7/)
+descreve a vulnerabilidade como dependente de características individuais e de condições
+sociais, econômicas e institucionais. Exposição e vulnerabilidade são componentes
+distintos do risco. O [Sumário para Formuladores de Políticas do AR6](https://www.ipcc.ch/report/ar6/wg2/chapter/summary-for-policymakers/)
+destaca como desigualdades, marginalização e acesso limitado a serviços básicos ampliam
+a vulnerabilidade, inclusive entre povos indígenas e comunidades locais.
+
+A [OMS — riscos climáticos para gestantes, crianças e pessoas idosas](https://www.who.int/news/item/05-06-2024-experts-warn-of-serious-health-impacts-from-climate-change-for-pregnant-women--children--and-older-people)
+apresenta fatores fisiológicos e riscos específicos desses grupos. O guia
+[Wildfire Smoke: A Guide for Public Health Officials](https://www.airnow.gov/sites/default/files/2021-09/wildfire-smoke-guide.pdf)
+explica a suscetibilidade das crianças à fumaça, incluindo o desenvolvimento pulmonar e
+a maior quantidade de ar inalada em relação à massa corporal.
+
+No Brasil, o [Observatório de Clima e Saúde da Fiocruz](https://climaesaude.icict.fiocruz.br/)
+é uma fonte complementar para acompanhar as relações entre clima, ambiente e saúde.
+A [Política Nacional de Vigilância em Saúde (Resolução CNS nº 588/2018)](https://www.gov.br/conselho-nacional-de-saude/pt-br/atos-normativos/resolucoes/2018/resolucao-no-588.pdf)
+orienta a atuação sobre determinantes e condicionantes da saúde, considerando o
+território e a redução de vulnerabilidades e riscos.
 :::
 
-## Como descrever uma exposição climática
+## Como descrever uma exposição climática e ambiental
 
-Antes de cruzar clima e saúde, defina o que está sendo medido. "Calor" pode significar
-temperatura máxima, temperatura média, sensação térmica, duração de uma onda de calor ou
-distância em relação à normal climatológica. "Chuva" pode significar acumulado em 24
-horas, em sete dias ou no mês. "Fumaça" pode ser representada por focos de calor
-detectados por satélite ou pela concentração estimada de material particulado. Essas
-medidas não são intercambiáveis.
+Antes de relacionar clima e saúde, defina o que será medido, em qual população e em que
+intervalo de tempo. Temperatura máxima, temperatura média, índice de calor e duração de
+uma onda de calor descrevem aspectos diferentes da exposição. Da mesma forma, chuva
+acumulada em 24 horas não equivale ao total de um mês.
 
-| Palavra | Pode significar | O que muda na interpretação |
+Para estudar fumaça, é necessário distinguir a ocorrência de fogo da presença de
+poluentes no ar. **Focos de calor detectados por satélite não medem a concentração de
+fumaça nem a exposição da população.** A concentração de material particulado fino pode
+ser medida por instrumentos ou estimada por modelos, mas sua atribuição às queimadas
+exige informações adicionais sobre as fontes e o transporte dos poluentes.
+
+| Dimensão | Medidas possíveis | Cuidados na interpretação |
 |---|---|---|
-| **Calor** | Temperatura máxima, média, sensação térmica, percentil, duração | Uma média pode esconder picos; um percentil local é mais comparável entre regiões |
-| **Chuva** | Acumulado em 24 h, 7 dias, 30 dias, anomalia, índice padronizado | Chuva intensa em pouco tempo produz enchente; chuva acumulada produz criadouro |
-| **Fumaça** | Focos de calor, material particulado fino (MP2,5), espessura óptica de aerossóis (medida de quanto a fumaça bloqueia a luz) | Foco de calor não é área queimada; concentração não é exposição individual |
-| **Clima** | Estação meteorológica, grade interpolada, reanálise | Estação mede um ponto; grade estima uma área com incerteza |
+| **Calor** | Temperaturas máxima, mínima e média; índice de calor; intensidade e duração de ondas de calor | Médias podem ocultar picos e noites quentes. Percentis expressam a posição na distribuição local, mas não garantem riscos equivalentes entre regiões |
+| **Chuva** | Acumulados em 24 horas, 7 dias ou 30 dias; anomalias; índices padronizados | Os efeitos dependem da intensidade, da duração, das condições anteriores e do território. Chuva não implica necessariamente inundação ou aumento de vetores |
+| **Poluição do ar** | Concentração de material particulado fino (MP2,5), medida ou estimada; profundidade óptica de aerossóis (AOD) | MP2,5 pode ter várias fontes. AOD descreve propriedades ópticas dos aerossóis na coluna atmosférica e não equivale à concentração de MP2,5 junto ao solo |
+| **Atividade de fogo** | Focos ativos e área queimada | São indicadores diferentes entre si e não substituem medidas de qualidade do ar |
 
-Uma estação mede condições em um ponto. Uma grade — incluindo uma **reanálise**, que
-combina observações e modelos para estimar o clima em uma grade regular — estima condições
-em uma área, com incerteza. O valor atribuído a um município é uma aproximação da
-exposição da população e pode esconder diferenças entre bairros, moradias e locais de
-trabalho. Na Amazônia, esse problema é ampliado pelo tamanho dos municípios: alguns têm
-área maior que a de Portugal, com dezenas de comunidades distribuídas por rios e estradas.
+Também é preciso distinguir a variável de sua **fonte de dados**. Uma estação registra
+condições no local de instalação. Produtos em grade representam estimativas em pontos
+ou células, conforme sua definição. Uma **reanálise** combina observações e modelos por
+assimilação de dados para reconstruir condições atmosféricas passadas. Sua resolução e
+suas incertezas precisam ser consideradas na análise.
 
-Três cuidados evitam conclusões erradas:
+Um valor atribuído ao município aproxima as condições ambientais às quais sua população
+pode estar exposta, mas pode ocultar diferenças entre bairros, comunidades, moradias e
+locais de trabalho. Em municípios extensos, a escolha entre média territorial, ponderação
+pela população ou estimativa para áreas habitadas pode mudar a interpretação.
 
-- **Dado faltante não é zero.** Estação sem registro não significa ausência de calor;
-  município sem notificação não significa ausência de dengue.
-- **Média municipal não é exposição individual.** Ela serve para comparar territórios,
-  não para dizer o que aconteceu com cada pessoa.
-- **Fonte, resolução, unidade, período, agregação e lacunas precisam ser registrados.**
-  Sem isso, duas análises podem usar a mesma palavra para exposições diferentes.
+Três cuidados são essenciais:
 
-::: {.callout-note title="Nota"}
-Uma **normal climatológica** é uma referência histórica, não uma previsão e não um limiar
-universal de perigo. Ao classificar um extremo, informe o período de referência e o
-critério usado para definir o limiar. O INMET e a literatura epidemiológica não usam
-necessariamente o mesmo critério de "onda de calor"; um critério frequente em estudos de
-saúde é o percentil 95 da temperatura para cada local — o valor que só é ultrapassado em
-5% dos dias — por dois ou mais dias consecutivos. Outros métodos usam percentis
-diferentes; o importante é declarar o critério e o período de referência. Por isso, o
-critério deve ser declarado antes da análise.
+- **Dado faltante não é zero.** Ausência de registro meteorológico não significa ausência
+  do fenômeno. Nos dados de saúde, diferencie ausência de informação, zero registrado e
+  possível subnotificação.
+- **Média municipal não é exposição individual.** Ela pode apoiar análises populacionais,
+  mas não informa, sozinha, quanto cada pessoa esteve exposta.
+- **Documente a medida.** Registre fonte e versão dos dados, variável, unidade, resolução
+  espacial e temporal, período, método de agregação e tratamento das lacunas. Informe
+  também as defasagens consideradas entre exposição e desfecho.
+
+::: {.callout-note title="Referência climática e limiar de risco"}
+Uma **normal climatológica padrão** resume condições de um período de 30 anos. Ela não é
+uma previsão meteorológica nem um limiar universal de perigo à saúde.
+
+Ao definir uma onda de calor para uma análise, declare a variável, o período de referência,
+o limiar e o número mínimo de dias consecutivos. Um critério possível é temperatura
+acima do percentil 95 local por pelo menos dois dias consecutivos. Esse é um exemplo de
+regra operacional, não uma definição universal. O percentil 95 corresponde ao valor
+abaixo do qual se encontram aproximadamente 95% das observações do conjunto de referência.
+A escolha deve ser justificada e, quando pertinente, comparada com critérios alternativos.
 :::
 
 ::: {.fonte role="note" aria-label="Base científica"}
-As normas sobre normais climatológicas e monitoramento de seca são da
-[OMM](https://wmo.int/topics/drought); no Brasil, os dados de referência são do
-[INMET](https://www.gov.br/inmet/pt-br). Os focos de calor e as áreas queimadas são
-monitorados pelo [Instituto Nacional de Pesquisas Espaciais
-(INPE)](https://terrabrasilis.dpi.inpe.br/queimadas/). A classificação da poluição do ar
-exterior e do material particulado como carcinogênicos para humanos (Grupo 1) está na
-monografia 109 da [Agência Internacional para Pesquisa em Câncer
-(IARC)](https://publications.iarc.who.int/Book-And-Report-Series/Iarc-Monographs-On-The-Identification-Of-Carcinogenic-Hazards-To-Humans/Outdoor-Air-Pollution-2015).
+A [OMM — WMO Climatological Normals](https://community.wmo.int/site/knowledge-hub/programmes-and-initiatives/climate-services/wmo-climatological-normals)
+define as normais climatológicas padrão. O [ECMWF — Fact sheet: Reanalysis](https://www.ecmwf.int/en/about/media-centre/focus/2023/fact-sheet-reanalysis)
+explica a combinação de observações e modelos. A [NASA — Aerosols: Tiny Particles, Big Impact](https://science.nasa.gov/earth/earth-observatory/aerosols/)
+descreve a profundidade óptica dos aerossóis; o [material de formação da NASA sobre qualidade do ar](https://appliedsciences.nasa.gov/sites/default/files/2020-11/InsideLookAQ_Part2_Final.pdf)
+distingue a coluna atmosférica da concentração próxima à superfície. O
+[INPE — Perguntas frequentes do Programa Queimadas](https://www.terrabrasilis.dpi.inpe.br/queimadas/portal/pages/secao_informacoes/faq/index.html)
+explica os produtos de monitoramento do fogo e da fumaça. Diferentes definições de ondas
+de calor foram comparadas por [Silveira e colaboradores (2023)](https://doi.org/10.1016/j.ijheh.2022.114109).
 :::
 
 ## Recortes: calor, fumaça, chuva e seca
 
-Os quatro recortes abaixo não esgotam o tema. Eles mostram como o mesmo raciocínio muda
-de acordo com o perigo, o território e o desfecho. A Amazônia é o fio condutor, mas cada
-bloco indica onde o padrão se repete em outras regiões.
+Os recortes abaixo mostram como a análise muda conforme a exposição, o território e o
+desfecho. A Amazônia é o fio condutor, mas os mecanismos e cuidados metodológicos também
+são relevantes para outras regiões.
 
 ### Calor e frio
 
-O calor extremo não é privilégio do Sudeste. Em Manaus e em cidades do interior da
-Amazônia, a combinação de temperatura alta com umidade elevada reduz a eficiência da
-sudorese e aumenta a sensação de calor. O corpo tem mais dificuldade de perder calor, o
-coração trabalha mais e os rins sofrem com a desidratação. Idosos, crianças, gestantes,
-trabalhadores ao ar livre e pessoas com doença cardiovascular ou renal são os primeiros a
-sentir.
+Temperaturas elevadas podem afetar a saúde em diferentes regiões do Brasil. Na Amazônia,
+a combinação de calor e umidade elevada pode dificultar a evaporação do suor e, assim,
+a perda de calor pelo corpo. A exposição intensa pode causar sobrecarga cardiovascular,
+desidratação e lesão renal. Pessoas idosas, crianças pequenas, gestantes, trabalhadores
+ao ar livre e pessoas com doenças preexistentes podem apresentar maior risco, dependendo
+das condições de exposição e proteção.
 
-Estudo sobre ondas de calor na Amazônia brasileira encontrou associação entre calor e
-aumento de mortalidade, com variação por causa de morte, subgrupo populacional e
-características da onda. A intensidade da onda pesou mais que a duração — o que reforça
-que não basta contar dias de calor; é preciso medir o quanto o calor passou do padrão
-local.
+O estudo de Silveira e colaboradores sobre a Amazônia brasileira encontrou associação
+entre ondas de calor e maior mortalidade por causas não externas e doenças cardiovasculares.
+Na análise realizada, a intensidade teve maior importância que a duração para o risco
+estimado. Esse resultado se refere às localidades, ao período e às definições avaliadas;
+não estabelece uma regra universal de que a duração seja menos importante.
 
-O frio também tem face amazônica. As incursões de ar polar, conhecidas na região como
-**friagem**, derrubam a temperatura por alguns dias, sobretudo no sul da Amazônia, e
-podem aumentar internações respiratórias e cardiovasculares em populações com moradia sem
-isolamento térmico. É um perigo menos frequente, mas não desprezível.
+Incursões de ar frio de origem polar também atingem a Amazônia, produzindo episódios
+conhecidos como **friagem**. A avaliação de seus impactos deve considerar a queda de
+temperatura, sua duração, as condições das moradias e a população exposta. Atribuir um
+aumento local de internações a esses episódios exige análise dos dados de saúde e de
+outros fatores que variam no tempo.
+
+::: {.fonte role="note" aria-label="Base científica"}
+A [OMS — Heat and health](https://www.who.int/news-room/fact-sheets/detail/climate-change-heat-and-health)
+descreve os efeitos do calor e os grupos de maior risco. Os resultados específicos da
+Amazônia são de [Silveira e colaboradores (2023)](https://doi.org/10.1016/j.ijheh.2022.114109).
+O [INMET — Panorama geral das condições meteorológicas de 2016](https://portal.inmet.gov.br/uploads/notastecnicas/Panorama-Geral-2016-Brasil.pdf)
+documenta episódios de friagem associados à entrada de massas de ar frio.
+:::
 
 ### Fumaça e qualidade do ar
 
-Na temporada de queimadas, a fumaça lança material particulado fino (MP2,5; partículas com
-até 2,5 micrômetros de diâmetro) na atmosfera. Essas partículas são pequenas o suficiente
-para penetrar nos alvéolos pulmonares; parte delas pode alcançar a corrente sanguínea. A
-exposição está associada a crises de asma, bronquite, pneumonia, agravamento de doença
-pulmonar obstrutiva crônica e aumento de eventos cardiovasculares.
+A queima de vegetação emite gases e partículas, incluindo **material particulado fino
+(MP2,5)**, formado por partículas com diâmetro aerodinâmico de até 2,5 micrômetros. Essas
+partículas podem atingir regiões profundas dos pulmões. A exposição à fumaça está
+associada a sintomas respiratórios, exacerbações de asma e outras doenças pulmonares e
+aumento da procura por atendimento. Também pode afetar o sistema cardiovascular.
 
-Crianças pequenas são especialmente afetadas porque têm vias aéreas menores e respiram
-mais rápido. Idosos, gestantes e pessoas com doença respiratória ou cardíaca prévia também
-fazem parte do grupo de maior risco. O efeito pode aparecer no mesmo dia ou em poucos
-dias — diferente da dengue, que leva semanas.
+Crianças merecem atenção porque seus pulmões estão em desenvolvimento e elas inalam
+proporcionalmente mais ar em relação à massa corporal. Pessoas idosas, gestantes e pessoas
+com doenças respiratórias ou cardíacas também podem apresentar maior risco. Os efeitos
+agudos podem ocorrer durante a exposição ou nos dias seguintes; isso não exclui possíveis
+consequências de exposições repetidas ou prolongadas.
 
 Dois pontos técnicos evitam confusão:
 
-- **Foco de calor não é o mesmo que área queimada.** O satélite detecta anomalias
-  térmicas; uma queimada pequena e intensa pode gerar foco sem produzir uma grande
-  cicatriz visível, e uma área queimada pode ter poucos focos no momento da passagem.
-- **A fumaça não respeita fronteira municipal.** Ela viaja por centenas de quilômetros e
-  pode afetar cidades que não têm queimada no seu território.
+- **Foco ativo não é área queimada.** A detecção depende do sensor, do horário de passagem
+  e das condições de observação. A contagem de focos não corresponde diretamente ao
+  número de incêndios nem à extensão queimada.
+- **A fumaça atravessa fronteiras municipais.** O transporte atmosférico pode levar
+  poluentes a locais distantes das fontes. Por isso, a ausência de focos dentro do
+  município não demonstra ausência de exposição.
 
-A queimada amazônica não é, em geral, um evento natural isolado. Ela está ligada a uso do
-solo, desmatamento e manejo agrícola. Tratar apenas o incêndio, sem tratar a origem, é
-apagar o sintoma.
+Na Amazônia, o uso do fogo está relacionado a atividades humanas e à transformação do
+território. A prevenção precisa considerar tanto as fontes de emissão quanto a proteção
+das populações expostas, inclusive fora das áreas onde ocorrem as queimadas.
+
+::: {.fonte role="note" aria-label="Base científica"}
+A [EPA — Wildland Fires and Public Health Effects](https://www.epa.gov/wildfires/wildland-fires-and-public-health-effects)
+e o [guia Wildfire Smoke](https://www.airnow.gov/sites/default/files/2021-09/wildfire-smoke-guide.pdf)
+sintetizam os efeitos da fumaça e os grupos de maior risco. No sul da Amazônia,
+[Machin e colaboradores (2019)](https://doi.org/10.1590/1414-431X20188130)
+analisaram a associação entre concentrações estimadas de MP2,5 e internações respiratórias
+de pessoas idosas. As limitações das detecções por satélite e o transporte da fumaça são
+explicados pelo [INPE](https://www.terrabrasilis.dpi.inpe.br/queimadas/portal/pages/secao_informacoes/faq/index.html).
+:::
 
 ### Chuva, enchente e vetores
 
-A chuva intensa pode produzir enchente, deslizamento, contaminação da água e aumento de
-doenças transmitidas por água e alimentos. Em áreas urbanas sem drenagem, a água parada
-permanece por dias e cria condições para mosquitos.
+Chuvas intensas podem contribuir para inundações, deslizamentos e contaminação da água,
+conforme as condições do terreno, da drenagem e do saneamento. Esses eventos podem causar
+lesões, interromper serviços e ampliar o risco de doenças transmitidas pela água.
 
-Mas a relação entre chuva e dengue não é automática. O *Aedes aegypti* prefere água limpa
-acumulada em recipientes domésticos; o *Anopheles darlingi*, principal vetor da
-malária na Amazônia, tem ecologia diferente, ligada a coleções de água com vegetação e
-sombra. A mesma chuva não produz os mesmos mosquitos. Temperatura, saneamento, imunidade
-pregressa da população e qualidade da notificação também modulam o efeito.
+A relação entre chuva e doenças transmitidas por mosquitos depende da espécie e do
+ambiente. O *Aedes aegypti* utiliza frequentemente recipientes com água no ambiente
+urbano e doméstico; a prevenção deve abranger os recipientes capazes de acumular água,
+sem depender apenas de sua aparência de limpeza. Já o *Anopheles darlingi*, principal
+vetor da malária no Brasil, apresenta ecologia distinta, frequentemente associada a
+coleções de água de baixo fluxo, com características que variam entre localidades.
 
-No Brasil, quase todos os casos autóctones de malária concentram-se na Amazônia Legal. A
-doença não é apenas um problema de área rural distante: ela acompanha o deslocamento de
-pessoas, a ocupação do território, o garimpo e as mudanças ambientais. Confundir malária
-com dengue — ou tratar as duas como "doença de chuva" — leva a resposta errada.
+Chuva, temperatura, condições dos criadouros, presença de pessoas infectadas e imunidade
+populacional influenciam a transmissão. Acesso ao diagnóstico e qualidade da notificação,
+por sua vez, influenciam os casos observados nos sistemas de informação. Essas duas
+questões precisam ser distinguidas na interpretação dos resultados.
+
+A transmissão de malária no Brasil concentra-se na região amazônica. Mobilidade,
+atividades econômicas, alterações ambientais e acesso ao diagnóstico e ao tratamento
+fazem parte da análise. Dengue e malária exigem estratégias específicas, de acordo com
+seus agentes, vetores e contextos de transmissão.
+
+::: {.fonte role="note" aria-label="Base científica"}
+O Ministério da Saúde descreve as características do [Aedes aegypti](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti)
+e os mecanismos de transmissão e prevenção da [malária](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/m/malaria).
+[Lowe e colaboradores (2021)](https://doi.org/10.1016/S2542-5196(20)30292-8)
+analisam as relações entre extremos hidrometeorológicos, urbanização e risco de dengue no Brasil.
+:::
 
 ### Seca, rios e isolamento
 
-Na Amazônia, a seca hidrológica produz efeitos de saúde próprios, que não dependem de
-enchente, calor extremo ou fumaça. Quando o rio baixa, o transporte de vacinas,
-medicamentos, insumos e equipes fica comprometido. Comunidades ficam isoladas;
-tratamentos são interrompidos; a água de beber fica mais escassa e mais contaminada; a
-produção de alimentos cai.
+A seca hidrológica pode comprometer a navegação e o transporte de vacinas, medicamentos,
+insumos e equipes. Conforme a intensidade do evento e a infraestrutura disponível,
+comunidades podem enfrentar isolamento, interrupção de tratamentos e dificuldades de
+acesso à água e aos alimentos. Esses impactos podem ocorrer em conjunto com calor e
+fumaça, mas também precisam ser avaliados por seus mecanismos próprios.
 
-O isolamento, nesse contexto, é um desfecho de saúde. Não aparece no SIM como causa de
-morte, mas aparece como atraso no diagnóstico, interrupção de diálise, parto sem
-assistência e vacinação não realizada.
+O isolamento é uma condição que pode comprometer o acesso à saúde. Para acompanhar suas
+consequências, podem ser usados indicadores como tempo de deslocamento, consultas e
+procedimentos adiados, interrupções de tratamento e atividades de vacinação não realizadas.
+Esses indicadores complementam os registros de adoecimento e mortalidade.
 
-A relação entre seca e malária não é uniforme. Em alguns contextos, a redução do nível
-dos rios e a formação de poças nas margens podem favorecer criadouros; em outros, a seca
-pode reduzir a disponibilidade de água e a densidade do vetor. O que vale para um trecho
-do rio pode não valer para outro. Por isso, a análise precisa ser local e declarar o
-mecanismo esperado.
-
-::: {.callout-important title="Dois erros que distorcem a leitura"}
-**1. Confundir associação com causa (confundimento).** Um município com mais chuva pode ter mais dengue
-porque também tem mais calor, menos saneamento ou melhor notificação. A chuva pode ser
-parte da explicação, não a explicação inteira.
-
-**2. Cometer erro de interpretação ecológica (erro ecológico).** Um padrão agregado por município ou por semana não garante
-que cada pessoa exposta vai adoecer. Dizer "a cidade teve mais casos" é diferente de dizer
-"esta pessoa vai ter dengue". O padrão coletivo serve para priorizar onde e quando agir;
-não substitui a avaliação clínica de um caso individual.
-:::
+Não se deve pressupor que a seca sempre aumente a malária. A análise local precisa
+considerar as alterações nos criadouros, a exposição da população, a mobilidade e as
+condições de vigilância e assistência.
 
 ::: {.fonte role="note" aria-label="Base científica"}
-Para calor e mortalidade na Amazônia, ver [Silveira e colaboradores
-(2023)](https://doi.org/10.1016/j.ijheh.2022.114109). Para material particulado e
-internações respiratórias de idosos no sul da Amazônia, ver [Machin e colaboradores
-(2019)](https://doi.org/10.1590/1414-431X20188130). Para a combinação de chuva,
-temperatura e urbanização no risco de dengue no Brasil, ver [Lowe e colaboradores
-(2021)](https://doi.org/10.1016/S2542-5196(20)30292-8). Dados de focos de calor estão no
-[INPE](https://terrabrasilis.dpi.inpe.br/queimadas/); o cenário epidemiológico da malária e
-da dengue no país é atualizado pelo [Ministério da Saúde](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/m/malaria)
-e pelo [InfoDengue](https://info.dengue.mat.br/).
+O [Plano Distrital de Saúde Indígena de Porto Velho 2024–2027](https://www.gov.br/saude/pt-br/composicao/sesai/planos-distritais-2024-2027/plano-distrital-porto-velho/%40%40download/file)
+descreve dificuldades de acesso fluvial durante a redução dos níveis dos rios. A
+[OMS — Famine and health](https://www.who.int/health-topics/drought/famine-and-health)
+apresenta consequências das secas para a saúde, a nutrição e o bem-estar.
+:::
+
+::: {.callout-important title="Dois erros que distorcem a interpretação"}
+**1. Interpretar uma associação como prova de causalidade.** Uma associação observada
+pode refletir um efeito causal, mas também confundimento, vieses ou acaso. Há
+**confundimento** quando outros fatores relacionados à exposição e ao desfecho distorcem
+a associação estimada, conforme a estrutura causal considerada. Diferenças na detecção
+e notificação dos casos também podem afetar os resultados, sem serem necessariamente
+confundimento. A interpretação exige uma pergunta clara, um desenho adequado e avaliação
+dessas possíveis explicações.
+
+**2. Inferir relações individuais a partir de resultados agregados — falácia ecológica.**
+Uma associação entre chuva e incidência de dengue por município não demonstra que os
+indivíduos mais expostos à chuva foram aqueles que adoeceram. Análises agregadas podem
+apoiar decisões populacionais, mas não permitem transferir automaticamente suas conclusões
+para cada pessoa.
+
+O [CDC — Analyzing and Interpreting Data](https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html)
+discute associação, causalidade, confundimento e vieses. O
+[glossário da OMS sobre indicadores](https://cdn.who.int/media/docs/default-source/documents/ddi/indicatorworkinggroup/glossary_of_terms_june-2024.pdf)
+define a falácia ecológica.
 :::
 
 ## A oportunidade de saúde: co-benefícios
 
-A resposta ao clima não produz apenas custos. Ela pode gerar benefícios imediatos para a
-saúde — os chamados **co-benefícios**. Transporte ativo reduz emissões e aumenta atividade
-física. Ar mais limpo reduz crises de asma. Moradia com ventilação e isolamento adequados
-reduz internações por calor e frio. Áreas verdes reduzem a temperatura local. Alimentação
-saudável e produção local reduzem a insegurança alimentar.
+Ações de mitigação e adaptação podem gerar **co-benefícios para a saúde**. Substituir
+viagens motorizadas por caminhada ou bicicleta, quando há condições de segurança e
+acessibilidade, pode reduzir emissões e ampliar a atividade física. Reduzir a poluição
+do ar beneficia a saúde respiratória e cardiovascular. Melhorias nas moradias e ampliação
+de áreas verdes podem reduzir a exposição ao calor, conforme o projeto e o contexto.
 
-Na Amazônia, manter a floresta em pé é também uma decisão de saúde: a floresta regula
-chuva, influencia a qualidade do ar e reduz a exposição a zoonoses associadas à ocupação
-de borda florestal. **Adaptação** é reduzir o risco do que já está acontecendo;
-**mitigação** é reduzir as emissões que intensificam o problema. Uma não substitui a
-outra. Isso significa que política climática e política de saúde podem compartilhar
-instrumentos.
+Na Amazônia, conservar a floresta contribui para a regulação climática e a manutenção dos
+ecossistemas. Seus efeitos sobre doenças infecciosas dependem dos agentes, dos vetores e
+das formas de ocupação e contato; não se deve afirmar que a conservação reduza
+uniformemente todas as zoonoses.
 
-Ao comparar medidas, registre quatro pontos: o benefício esperado, quem será beneficiado,
-quem pode ficar de fora e como o resultado será acompanhado. Uma medida que reduz a
-temperatura média de um bairro nobre, mas não do bairro mais quente, não reduz
-desigualdade — apenas melhora a média.
+**Adaptação** envolve ajustes aos efeitos atuais ou esperados do clima para reduzir danos.
+**Mitigação** envolve reduzir emissões de gases de efeito estufa ou ampliar sua remoção da
+atmosfera. As duas podem ser articuladas com políticas de saúde, habitação, transporte,
+energia e alimentação.
 
-Também é preciso distinguir uma **estimativa observacional** de uma **avaliação de impacto
-de política**. A primeira descreve associação entre exposição e desfecho; a segunda tenta
-identificar o efeito causal de uma intervenção. As duas são úteis, mas respondem a
-perguntas diferentes.
+Ao comparar medidas, registre o benefício esperado, quem será beneficiado, quem poderá
+ficar de fora e como os resultados serão acompanhados. Melhorar a média de uma cidade
+não garante redução das desigualdades entre seus territórios.
+
+Também é preciso distinguir a identificação de associações da avaliação dos efeitos de
+uma política. Uma análise observacional pode ter objetivo descritivo ou causal. Para
+estimar o efeito de uma intervenção, é necessário justificar como se representa o que
+teria ocorrido sem ela, declarar as hipóteses utilizadas e avaliar possíveis vieses.
 
 ::: {.fonte role="note" aria-label="Base científica"}
-O conceito de co-benefícios e a relação entre resposta climática e saúde são discutidos
-em [Ebi, Hess e Watkiss (2017)](https://www.ncbi.nlm.nih.gov/books/NBK525226/), no
-capítulo sobre riscos e custos da variabilidade e da mudança do clima. O [Lancet
-Countdown](https://lancetcountdown.org/) acompanha indicadores de saúde e clima no Brasil
-e no mundo, incluindo exposição a calor, poluição do ar, adaptação do setor saúde e
-co-benefícios de medidas de mitigação. As diretrizes de adaptação do setor saúde estão no
-[Ministério da Saúde](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/e/emergencias-climaticas)
-e no [Plano Clima](https://www.gov.br/mma/pt-br/assuntos/mudanca-do-clima).
+[Ebi, Hess e Watkiss (2017)](https://www.ncbi.nlm.nih.gov/books/NBK525226/)
+discutem riscos, custos e benefícios de respostas à variabilidade e à mudança do clima.
+O [IPCC, AR6, Grupo de Trabalho II, capítulo 7](https://www.ipcc.ch/report/ar6/wg2/chapter/chapter-7/)
+examina adaptação e co-benefícios para a saúde. O [Lancet Countdown](https://lancetcountdown.org/)
+acompanha indicadores sobre saúde e mudanças climáticas.
 :::
 
 ## Comunicação para ação
 
-Resultado técnico não protege ninguém se não chega a quem precisa decidir e agir. A
-comunicação de risco precisa ser curta, repetida e emitida por fontes reconhecidas no
-território. Explique o risco sem alarmismo, indique uma conduta possível e informe onde
-buscar cuidado.
+A comunicação de risco deve ajudar as pessoas e os serviços a tomar decisões. Para isso,
+precisa ser clara, oportuna, acessível e coerente com os recursos disponíveis. Explique o
+risco, indique medidas viáveis de proteção e informe onde e como buscar ajuda.
 
-Quando houver incerteza, diga o que se sabe, o que ainda não se sabe e qual medida
-preventiva é razoável enquanto a informação é aprimorada. Não prometa certeza que o dado
-não tem. Não apresente projeção como destino inevitável.
+Quando houver incerteza, apresente o que se sabe, as limitações do conhecimento e as razões
+para a orientação adotada. Atualize as mensagens quando surgirem novas informações.
+Comunicar também envolve ouvir dúvidas, reconhecer barreiras e construir respostas com
+as comunidades.
 
 Três princípios ajudam:
 
-- **Alerta sem resposta possível aumenta a descrença.** Se a mensagem manda evacuar e não
-  há abrigo, ou manda procurar o posto e o posto está fechado, a próxima mensagem será
-  ignorada.
-- **A fonte importa.** Em áreas ribeirinhas e rurais, rádio, agente comunitário de saúde,
-  agente de endemias, liderança comunitária e escola chegam onde o aplicativo não chega.
-  Não substitua o contato humano por uma tela.
-- **Não culpe a população.** A pessoa pode adotar cuidados, mas é a gestão que organiza
-  serviços, informação, infraestrutura e proteção social. Comunicar risco é explicar
-  responsabilidades institucionais, não transferir culpa.
+- **Vincule o alerta à capacidade de resposta.** Orientações para evacuar ou procurar
+  atendimento precisam ser acompanhadas de informações sobre abrigo, transporte e
+  serviços disponíveis. Recomendações inviáveis podem comprometer a confiança.
+- **Use canais adequados ao território.** Rádio, agentes de saúde, lideranças comunitárias,
+  escolas e meios digitais podem ser combinados conforme o acesso e as preferências da
+  população, considerando idiomas e necessidades de acessibilidade.
+- **Explique as responsabilidades.** Cuidados individuais devem ser acompanhados de ações
+  públicas de proteção, infraestrutura e assistência. A comunicação deve evitar culpar
+  as pessoas por condições que elas não conseguem modificar sozinhas.
 
 ::: {.fonte role="note" aria-label="Base científica"}
-As orientações de comunicação de risco e de preparação para emergências em saúde estão no
-[guia do Ministério da Saúde para profissionais de saúde](https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/guias-e-manuais/2026/mudancas-climaticas-para-profissionais-de-saude-guia-de-bolso.pdf)
-e nas diretrizes da [OMS para mudança do clima e saúde](https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health).
-A [Política Nacional de Vigilância em Saúde](https://www.gov.br/conselho-nacional-de-saude/pt-br/atos-normativos/resolucoes/2018/resolucao-no-588.pdf)
-inclui a comunicação e a mobilização social como componentes da resposta.
+As [diretrizes da OMS para comunicação de risco em emergências de saúde pública](https://www.who.int/publications/b/31390)
+tratam de confiança, participação comunitária, canais de comunicação e preparação dos
+serviços. A [Política Nacional de Vigilância em Saúde](https://www.gov.br/conselho-nacional-de-saude/pt-br/atos-normativos/resolucoes/2018/resolucao-no-588.pdf)
+inclui comunicação, participação social e atuação territorial entre seus componentes.
 :::
 
 ## De observação a ação
 
-Até aqui, cada recorte foi contado como uma história separada: uma onda de calor, uma
-temporada de fumaça, uma chuva, uma seca. Mas o padrão que atravessa os quatro é sempre o
-mesmo: um perigo climático, uma defasagem, um grupo mais exposto e com menos capacidade de
-resposta, que sente o efeito primeiro e mais forte. E, quase sempre, um registro de saúde
-que não menciona o clima.
+Calor, fumaça, chuva e seca atuam por mecanismos diferentes, mas sua análise exige
+perguntas comuns: qual foi a exposição, quem esteve exposto, quando o efeito pode ocorrer
+e quais condições ampliam ou reduzem o risco? A contribuição ambiental nem sempre é
+identificada explicitamente nos registros de saúde.
 
-Descrever esse padrão uma vez, para um evento específico, é possível com um boletim
-climático em uma mão e um boletim epidemiológico na outra. O problema é fazer isso de
-forma **repetível**: para o próximo evento, no próximo município, com o próximo agravo,
-sem recomeçar a análise do zero e sem juntar planilhas manualmente.
+Boletins meteorológicos e epidemiológicos ajudam a reconhecer situações de risco. Para
+acompanhar esses padrões ao longo do tempo, é necessário integrar dados de maneira
+consistente e documentada.
 
-As peças existem, mas estão separadas:
+As fontes incluem:
 
-- **Saúde:** SIM (óbitos), Sistema de Informações Hospitalares do Sistema Único de Saúde
-  (SIH/SUS), SINAN (notificações), e-SUS APS (registros da atenção primária) e Sistema de
-  Informação de Vigilância Epidemiológica da Malária (SIVEP-Malária).
-- **Clima e ambiente:** estações do INMET, grades de reanálise e satélite, focos de calor
-  do INPE, monitoramento de seca do Centro Nacional de Monitoramento e Alertas de
-  Desastres Naturais (CEMADEN).
-- **Território:** malha municipal, população, saneamento, renda e condições de moradia.
+- **Saúde:** Sistema de Informações sobre Mortalidade (SIM), Sistema de Informações
+  Hospitalares do SUS (SIH/SUS), Sistema de Informação de Agravos de Notificação (SINAN),
+  registros da atenção primária e Sistema de Informação de Vigilância Epidemiológica da
+  Malária (SIVEP-Malária).
+- **Clima e ambiente:** estações meteorológicas, reanálises, produtos de satélite,
+  monitoramento de qualidade do ar, focos ativos, áreas queimadas e indicadores de seca.
+- **Território e população:** limites territoriais, distribuição populacional, moradia,
+  saneamento, renda e acesso aos serviços.
 
-O que falta, com frequência, não é apenas o dado: é o método que coloca essas bases na
-mesma unidade de tempo e de território, com documentação suficiente para que outra equipe
-consiga repetir e auditar o caminho. No SUS, essa rotina é atribuição da vigilância em
-saúde, que deve articular dados, território e resposta assistencial.
+A integração exige compatibilizar unidades espaciais e temporais, avaliar a qualidade dos
+dados e documentar decisões. Contagens de casos precisam ser interpretadas considerando
+a população, a cobertura dos serviços e os processos de notificação. As análises também
+precisam considerar sazonalidade, tendências e defasagens, conforme a pergunta investigada.
 
-É nesse ponto que a observação precisa virar rotina de trabalho. Para passar de
-"percebemos que isso aconteceu" para "sabemos quando isso costuma acontecer, para quem e
-com antecedência suficiente para preparar uma resposta", a equipe precisa analisar esses
-dados em conjunto, com método documentado e repetível. É isso que o restante deste guia
-ensina — e os mesmos passos valem para qualquer município brasileiro. O que muda são as
-fontes, as perguntas e a combinação de vulnerabilidades.
+O objetivo é construir uma rotina que permita reconhecer mudanças no risco e orientar a
+resposta. Uma associação retrospectiva, porém, não garante capacidade de previsão. Para
+usar um modelo como alerta, é necessário avaliar seu desempenho com dados que não foram
+usados em seu ajuste e definir como a informação acionará medidas concretas.
+
+O restante deste guia apresenta métodos para organizar e analisar essas informações. Sua
+aplicação deve respeitar as características dos dados, da população e da rede de saúde de
+cada território.
 
 ## Em cinco frases
 
-- O clima não age sozinho: ele empurra um corpo já vulnerável, num território já desigual,
-  para mais perto do adoecimento.
-- O efeito quase nunca aparece no mesmo dia; cada agravo tem uma defasagem própria.
-- O registro de saúde raramente diz "clima": ele diz infarto, diarreia, dengue, asma.
-- A vulnerabilidade é biológica, social, territorial e institucional — e, por isso, é
-  assunto de decisão pública.
-- Para antecipar o problema, é preciso juntar saúde, clima e território com método
-  documentado e repetível.
+- O risco à saúde depende da interação entre perigo, exposição e vulnerabilidade.
+- Os efeitos podem ocorrer no mesmo dia ou depois; o intervalo varia conforme o mecanismo
+  e o desfecho.
+- A contribuição do clima e do ambiente pode não estar explícita nos registros de saúde.
+- Características individuais, condições sociais, território e capacidade de resposta
+  influenciam quem sofre os maiores impactos.
+- Integrar dados com método e transformar resultados em ações são tarefas complementares.
 
 ::: {.callout-note collapse="true"}
 ## Verifique se ficou
 
-**1. Por que um caso de dengue pode aparecer semanas depois de uma chuva forte, e não no
-dia seguinte?**
+**1. Por que mudanças nos casos de dengue podem aparecer semanas ou meses depois de uma chuva?**
 
-Porque existe uma defasagem entre a exposição climática e o desfecho, e essa defasagem tem
-duração diferente para cada tipo de exposição. Na dengue, a água precisa acumular, a larva
-precisa se desenvolver, o mosquito precisa picar uma pessoa infectada, o vírus precisa
-incubar no mosquito e a pessoa precisa adoecer e ser atendida. Esse ciclo leva semanas.
-Esperar o efeito no dia seguinte leva à conclusão errada de que "não teve efeito".
+Porque alterações nos criadouros, no desenvolvimento dos mosquitos e na transmissão
+podem ocorrer ao longo do tempo. A incubação e o intervalo até o atendimento ou a
+notificação também influenciam os registros. Não é uma sequência que recomeça a cada
+chuva: vetores e transmissão podem já estar presentes, e o efeito varia conforme o contexto.
 
-**2. Dois bairros recebem a mesma onda de calor. Por que um pode ter muito mais
-atendimentos de emergência que o outro?**
+**2. Dois bairros passam pela mesma onda de calor. Por que podem registrar números diferentes de atendimentos?**
 
-Porque a vulnerabilidade não é só biológica. Moradia, ventilação, arborização, acesso a
-água, renda, trabalho e distância até o serviço de saúde variam de bairro para bairro e
-ampliam ou reduzem o efeito da mesma exposição. A temperatura média da cidade não captura
-essas diferenças.
+Porque a exposição efetiva, a população e as condições de proteção variam. Moradia,
+sombra, acesso à água, trabalho e doenças preexistentes podem influenciar o adoecimento.
+Tamanho da população, acesso aos serviços e qualidade dos registros também afetam a
+comparação. Menos atendimentos não significa necessariamente menos adoecimento.
 
-**3. Qual a diferença entre "uma onda de calor de 5 dias" e "o clima está esquentando"?**
+**3. Qual é a diferença entre uma onda de calor de cinco dias e uma mudança no clima?**
 
-A onda de calor é um evento de **tempo**: pontual, com começo e fim, que pede resposta de
-curto prazo (alerta, plantão reforçado, abrigo). "O clima está esquentando" descreve uma
-mudança de padrão de longo prazo, que pede planejamento estrutural (adaptação urbana,
-redesenho da rede de saúde, revisão de protocolos). Confundir os dois relógios leva a
-decisões equivocadas.
+A onda de calor é um evento meteorológico delimitado no tempo. Uma mudança no clima é
+identificada em alterações persistentes nos padrões e na variabilidade das condições
+atmosféricas. Um episódio isolado não demonstra essa mudança; tendências de longo prazo
+exigem análise de séries históricas.
 
-**4. Um município com mais chuva registrou mais casos de dengue no mesmo período. Isso
-significa que qualquer pessoa exposta a uma poça de água vai desenvolver dengue?**
+**4. Uma associação entre chuva e dengue por município prova que a chuva causou os casos?**
 
-Não. Existem dois erros possíveis aqui. O primeiro é confundir associação com causa: o
-município pode ter mais dengue por causa de temperatura, saneamento, imunidade da
-população ou qualidade da notificação. O segundo é o **erro de interpretação ecológica**
-(erro ecológico): um padrão
-agregado por município não garante o que acontecerá com cada pessoa. O padrão coletivo
-serve para decidir onde e quando agir; não substitui a avaliação clínica individual.
+Não. É necessário avaliar o mecanismo, a sequência temporal, outros fatores relevantes e
+possíveis vieses. Além disso, uma associação agregada não demonstra quais indivíduos
+estiveram expostos ou adoeceram. A transmissão ocorre pela picada de mosquitos infectados,
+e não pelo contato com a chuva ou com uma poça de água.
 
-**5. Por que um óbito causado por calor raramente aparece como "morte por calor" no
-sistema de saúde?**
+**5. Por que contar apenas óbitos com menção explícita ao calor pode subestimar seu impacto?**
 
-Porque o SIM registra a causa básica segundo a Classificação Internacional de Doenças
-(CID-10). O calor raramente é codificado como causa; o que aparece é a consequência —
-infarto, insuficiência cardíaca, insuficiência renal, agravamento de doença respiratória.
-Além disso, o efeito pode ocorrer dias depois da exposição. Por isso, contar apenas óbitos
-codificados como "calor" subestima o problema.
+Porque o calor pode contribuir para o agravamento de doenças sem que essa contribuição
+seja reconhecida e registrada na declaração de óbito. O SIM reúne informações sobre
+causas declaradas, não apenas a causa básica. Análises epidemiológicas de temperatura e
+mortalidade podem complementar esses registros, mas suas estimativas populacionais não
+identificam automaticamente quais mortes individuais foram causadas pelo calor.
+
+O [manual do SIM — Ministério da Saúde/DATASUS](https://www.sim.saude.pr.gov.br/ajuda/help_sim.pdf)
+descreve a consulta a causas básicas e múltiplas. A
+[documentação técnica da EPA sobre mortes relacionadas ao calor](https://www.epa.gov/system/files/documents/2024-06/heat-deaths_documentation.pdf)
+discute limitações dos registros e a identificação da contribuição do calor.
 :::
 
 ## Referências
 
 **Fontes institucionais e políticas**
+
+- OMM (WMO). *WMO Climatological Normals*.
+  [Documento](https://community.wmo.int/site/knowledge-hub/programmes-and-initiatives/climate-services/wmo-climatological-normals).
+- ECMWF. *Fact sheet: Reanalysis*. 2023.
+  [Documento](https://www.ecmwf.int/en/about/media-centre/focus/2023/fact-sheet-reanalysis).
+- NASA. *Aerosols: Tiny Particles, Big Impact*.
+  [Documento](https://science.nasa.gov/earth/earth-observatory/aerosols/).
+- NASA, Applied Remote Sensing Training Program (ARSET). Material de formação sobre qualidade do ar: AOD e MP2,5.
+  [Documento](https://appliedsciences.nasa.gov/sites/default/files/2020-11/InsideLookAQ_Part2_Final.pdf).
+- INPE. *Perguntas frequentes — Programa Queimadas*.
+  [Documento](https://www.terrabrasilis.dpi.inpe.br/queimadas/portal/pages/secao_informacoes/faq/index.html).
+- INMET. *Panorama geral das condições meteorológicas de 2016*.
+  [Documento](https://portal.inmet.gov.br/uploads/notastecnicas/Panorama-Geral-2016-Brasil.pdf).
+- Ministério da Saúde. *Aedes aegypti*.
+  [Documento](https://www.gov.br/saude/pt-br/assuntos/saude-de-a-a-z/a/aedes-aegypti).
+- Ministério da Saúde, SESAI. *Plano Distrital de Saúde Indígena de Porto Velho 2024–2027*.
+  [Documento](https://www.gov.br/saude/pt-br/composicao/sesai/planos-distritais-2024-2027/plano-distrital-porto-velho/%40%40download/file).
+- Organização Mundial da Saúde (OMS). *Famine and health*.
+  [Documento](https://www.who.int/health-topics/drought/famine-and-health).
+- Organização Mundial da Saúde (OMS). *Communicating risk in public health emergencies*.
+  [Documento](https://www.who.int/publications/b/31390).
+- CDC. *Analyzing and Interpreting Data*. CDC Field Epidemiology Manual.
+  [Documento](https://www.cdc.gov/field-epi-manual/php/chapters/analyze-interpret-data.html).
+- Organização Mundial da Saúde (OMS). *Glossary of terms*. Junho de 2024. Verbete: Ecological fallacy.
+  [Documento](https://cdn.who.int/media/docs/default-source/documents/ddi/indicatorworkinggroup/glossary_of_terms_june-2024.pdf).
+- Ministério da Saúde/DATASUS. *Sistema de Informação sobre Mortalidade: ajuda do sistema*.
+  [Documento](https://www.sim.saude.pr.gov.br/ajuda/help_sim.pdf).
+- United States Environmental Protection Agency (EPA). *Technical Documentation: Heat-Related Deaths*. 2024.
+  [Documento](https://www.epa.gov/system/files/documents/2024-06/heat-deaths_documentation.pdf).
+
+- IPCC. *Health, Wellbeing and the Changing Structure of Communities*. In: *Climate
+  Change 2022: Impacts, Adaptation and Vulnerability*. Capítulo 7.
+  [Texto](https://www.ipcc.ch/report/ar6/wg2/chapter/chapter-7/).
+- IPCC. *Summary for Policymakers*. In: *Climate Change 2022: Impacts, Adaptation and
+  Vulnerability*.
+  [Texto](https://www.ipcc.ch/report/ar6/wg2/chapter/summary-for-policymakers/).
+- Organização Mundial da Saúde (OMS). *Experts warn of serious health impacts from
+  climate change for pregnant women, children, and older people*. 5 jun. 2024.
+  [Comunicado](https://www.who.int/news/item/05-06-2024-experts-warn-of-serious-health-impacts-from-climate-change-for-pregnant-women--children--and-older-people).
+- *Wildfire Smoke: A Guide for Public Health Officials*.
+  [Guia disponível no AirNow](https://www.airnow.gov/sites/default/files/2021-09/wildfire-smoke-guide.pdf).
 
 - IPCC. *Climate Change 2022: Impacts, Adaptation and Vulnerability*. Contribuição do
   Grupo de Trabalho II ao Sexto Relatório de Avaliação. [Relatório
