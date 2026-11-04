@@ -10,7 +10,7 @@ toc: false
   <div class="part-number">III</div>
   <div class="part-kicker">Parte três · vigilância e gestão</div>
   <h1>Decidir com evidência</h1>
-  <p class="part-standfirst">Para quem decide: carregar Modelos prontos, ler resultados com critério e transformar evidência em prioridade de saúde pública. A pergunta de gestão vem antes do modelo.</p>
+  <p class="part-standfirst">Para quem decide: carregar Modelos prontos, ler resultados com critério e avaliar evidências e definir prioridades de saúde pública. A pergunta de gestão vem antes do modelo.</p>
   <ul class="part-list">
     <li><a href="04-modelos-vigilancia.html"><span class="part-ch">04</span> Monte um Pipeline com os Modelos prontos</a></li>
     <li><a href="05-da-evidencia-a-acao.html"><span class="part-ch">05</span> Da evidência à ação: critérios para decidir no SUS</a></li>
@@ -24,7 +24,7 @@ toc: false
 ```
 
 ::: {.pdf-only}
-Para quem decide: carregar Modelos prontos, ler resultados com critério e transformar evidência em prioridade de saúde pública. A pergunta de gestão vem antes do modelo.
+Para quem decide: carregar Modelos prontos, ler resultados com critério e avaliar evidências e definir prioridades de saúde pública. A pergunta de gestão vem antes do modelo.
 
 ![Menino tembé na Aldeia Turé Mariquita, Tomé-Açu (PA), 2009. Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens.](images/photos/amazonia-crianca-floresta.jpg)
 :::

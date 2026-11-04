@@ -274,8 +274,8 @@ sus_mod_plot_af(af, type = "bar")
 :::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
-Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os
-Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a
+Parâmetros, notas e o modo de uso. Não incorpora os dados, o cache, os Resultados nem os Artefatos. Caminhos locais
+podem permanecer nos Parâmetros; a versão do Studio precisa ser registrada separadamente. Ao compartilhar, envie também a
 fonte e o período dos dados, a versão do Studio/`climasus4r` e, se possível, o checksum do
 arquivo analítico. A biblioteca completa está no
 [Capítulo 12](12-parametros-avancados.qmd#biblioteca-de-pipelines).

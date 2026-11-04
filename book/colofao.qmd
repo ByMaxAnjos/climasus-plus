@@ -7,9 +7,9 @@ toc: false
 
 ## Uma publicação do ecossistema climaSUS
 
-O **climasus+ Studio** é um estúdio visual para montar e executar análises de saúde, clima e ambiente do DATASUS, encadeando as funções do pacote [climasus4r](https://github.com/ByMaxAnjos/climasus4r) como um Pipeline, sem precisar saber programar. O motor de análise já vem embutido no aplicativo.
+O **climasus+ Studio** é um estúdio visual para montar e executar análises com dados de saúde do DATASUS e dados de clima e ambiente de outras fontes, encadeando as funções do pacote [climasus4r](https://github.com/ByMaxAnjos/climasus4r) como um Pipeline, sem precisar saber programar. O motor de análise já vem embutido no aplicativo.
 
-Este guia reúne os conceitos na área de clima e saúde, o passo a passo das etapas de preparação, integração e análise, os Modelos de vigilância e Pequisa, realçando os critérios para usar os resultados com responsabilidade.
+Este guia reúne os conceitos na área de clima e saúde, o passo a passo das etapas de preparação, integração e análise, os Modelos de vigilância e pesquisa, realçando os critérios para usar os resultados com responsabilidade.
 
 ```{=html}
 <div class="support">
@@ -81,14 +81,14 @@ Para citar o guia:
 
 > ANJOS, Max. **climasus+ Studio: guia prático sobre clima, saúde, ambiente e território**. 1. ed. 2026. Disponível em: <https://github.com/ByMaxAnjos/climasus-plus>.
 
-E também,
+Para citar o pacote e acompanhar sua avaliação:
 
-> Anjos et al. (2026). climasus4r: An R Package for Reproducible Climate-Health Data Integration and Epidemiological Analysis. Journal of Open
-Source Software (em revisão) <https://github.com/openjournals/joss-reviews/issues/11423>.
+> Anjos et al. (2026). climasus4r: An R Package for Reproducible Climate-Health Data Integration and Epidemiological Analysis. submissão ao Journal of Open
+Source Software (consulte a situação no processo de revisão) <https://github.com/openjournals/joss-reviews/issues/11423>.
 
 ## Licença e reuso
 
-O código do climasus+ Studio é distribuído sob licença **MIT**. Este guia é material educativo: o texto e os diagramas podem ser reutilizados em contextos não comerciais, com atribuição à projeto climaSUS e citação desta edição. As **fotografias** mantêm a licença **by-nc** do Fiocruz Imagens e exigem crédito ao autor e ao acervo; consulte os [termos de uso](https://www.fiocruzimagens.fiocruz.br/s/fiocruzimagens/page/licencas) antes de reutilizá-las.
+O código do climasus+ Studio é distribuído sob licença **MIT**. Este guia é material educativo: o texto e os diagramas podem ser reutilizados em contextos não comerciais, com atribuição ao projeto climaSUS e citação desta edição. As **fotografias** mantêm a licença **by-nc** do Fiocruz Imagens e exigem crédito ao autor e ao acervo; consulte os [termos de uso](https://www.fiocruzimagens.fiocruz.br/s/fiocruzimagens/page/licencas) antes de reutilizá-las.
 
 ## Como contribuir
 

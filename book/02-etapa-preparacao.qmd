@@ -12,18 +12,14 @@ trabalho.
 
 ## Por que a Preparação vem primeiro
 
-Dados de saúde brutos do DATASUS quase nunca chegam prontos para análise. Um arquivo
-recém-importado do SIM, do SINAN ou do SIH costuma trazer nomes de município com
-acentuação corrompida, colunas com nomes técnicos que mudam de ano para ano, e milhões
-de registros de causas e faixas etárias que não têm nada a ver com a pergunta que você
-quer responder. Antes de cruzar esses dados com clima ou território — o assunto do
-Capítulo 3 — é preciso deixá-los limpos, padronizados e recortados para o que importa.
+Dados dos sistemas de saúde precisam ser avaliados antes da análise. Conforme a fonte e
+o período, podem existir diferenças de nomes de colunas, codificação de caracteres,
+campos incompletos e critérios de registro. Também é necessário selecionar o desfecho,
+a população e as datas compatíveis com a pergunta.
 
-É esse o papel da Etapa **Preparação**: é sempre a primeira grande Etapa de qualquer
-Pipeline no climasus+ Studio. Sem dados de saúde limpos e padronizados, nenhuma Etapa
-seguinte funciona direito — um **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) (Capítulo 3) que recebe uma série
-de saúde com encoding quebrado ou datas fora de padrão não consegue cruzar
-saúde com clima corretamente.
+A Etapa **Preparação** organiza essas decisões. Ela costuma iniciar os Pipelines que
+partem de registros brutos; análises que começam com uma base já preparada devem conferir
+sua documentação e qualidade antes de prosseguir.
 
 ::: {.callout-tip}
 ## Por que isso importa para quem gerencia, não só para quem programa
@@ -48,9 +44,8 @@ lógicas, cada uma respondendo a uma pergunta diferente:
 **(b) Limpar e padronizar** — corrigir o que vem torto antes de qualquer recorte.
 
 - **Corrigir acentuação e caracteres** (`sus_data_clean_encoding`) — varre colunas de texto e corrige problemas de codificação
-  de caracteres (por exemplo, "São Paulo" que chega como "Sao Paulo" ou com símbolos
-  incorretos).
-- **Padronizar nomes e valores** (`sus_data_standardize`) — padroniza nomes de coluna e valores categóricos, para garantir
+  de caracteres (por exemplo, "São Paulo" que chega com caracteres corrompidos).
+- **Padronizar nomes e valores** (`sus_data_standardize`) — padroniza nomes de coluna e valores categóricos, para favorecer
   consistência entre diferentes anos e versões dos sistemas de origem.
 - **Verificar qualidade da série temporal** (`sus_data_ts_quality`) — avalia a qualidade de séries diárias de eventos de saúde por
   município e sinaliza completude e problemas estruturais.
@@ -131,35 +126,35 @@ Os demais Parâmetros podem ficar no padrão enquanto você estiver aprendendo o
 
 2. **Padronizar / corrigir encoding** — Funções **Corrigir acentuação e caracteres** (`sus_data_clean_encoding`) e depois
    **Padronizar nomes e valores** (`sus_data_standardize`). Não há parâmetro que o leitor precise decidir aqui — é
-   correção automática — mas o Resultado muda de "tabela suja" para "tabela com nomes de
-   coluna e valores categóricos consistentes", condição para qualquer filtro funcionar
-   corretamente.
+   transformação automatizada —, mas é necessário conferir nomes, tipos e categorias
+   no Resultado. A execução sem erro não garante que todos os problemas da base tenham
+   sido corrigidos.
 
 3. **Filtrar por CID** — Função **Filtrar por CID-10 ou grupo de doença** (`sus_data_filter_cid`). Parâmetro-chave:
    `disease_group = "respiratory"` (grupo de causas respiratórias, códigos que começam
    com a letra J na CID-10). O Resultado passa de "todos os óbitos" para "só os óbitos
    respiratórios".
 
-4. **Filtrar por demografia** — Função **Filtrar por características demográficas** (`sus_data_filter_demographics`). Parâmetro-chave:
-   `age_range = c(0, 5)`, isolando o recorte pediátrico. O Resultado agora é "óbitos
-   respiratórios em menores de 5 anos" — o mesmo recorte usado no arco ec-01 do
-   catálogo.
+4. **Criar variáveis e filtrar por demografia** — execute **Criar variáveis derivadas**
+   (`sus_data_create_variables`) antes de **Filtrar por características demográficas**
+   (`sus_data_filter_demographics`), para disponibilizar a idade em anos. O exemplo
+   histórico usa `age_range = c(0, 5)`. Na implementação consultada, ambos os limites
+   são inclusivos: esse filtro não equivale a idade estritamente menor que 5 anos.
+   Para esse último recorte, confira a variável de idade e aplique explicitamente
+   `idade < 5` na preparação; não altere apenas o rótulo dos resultados.
 
-5. **Criar variáveis e agregar** — Função **Criar variáveis derivadas** (`sus_data_create_variables`) (parâmetro
-   `create_age_groups = TRUE`, com `age_breaks` definindo os cortes de faixa etária) e,
-   em seguida, **Agregar dados em série temporal** (`sus_data_aggregate`) com
-   `time_unit = "week"`, `group_by` municipal e `complete_dates = TRUE`. O Resultado
-   deixa de ser uma lista de registros individuais e passa a ser uma série temporal
-   semanal por município — a forma que a Etapa Integração (Capítulo 3) espera receber.
-   Semanas são uma resolução melhor que meses para desfechos respiratórios agudos; use
-   `month` apenas para análises de tendência de longo prazo.
+5. **Agregar** — use **Agregar dados em série temporal** (`sus_data_aggregate`) com
+   `time_unit = "week"`, agrupamento municipal e `complete_dates = TRUE`. Confira se
+   os períodos acrescentados representam zeros de ocorrência, e não falhas de cobertura.
+   A agregação semanal é uma escolha deste exercício. Séries diárias preservam variações
+   agudas; séries semanais ou mensais respondem a outras escalas e exigem defasagens
+   compatíveis.
 
 6. **Relatório de qualidade** — Função **Gerar relatório de qualidade dos dados** (`sus_data_quality_report`). Não recorta nem
    transforma nada; produz um Resultado de texto em seções, com base no histórico de
    Passos já aplicados no Pipeline.
 
-Ao final, o Pipeline tem 6 blocos de trabalho (8 Funções, quando limpeza e padronização
-são contadas separadamente), cada Passo como um Nó no grafo — trocar a ordem entre filtro
+Ao final, o exercício reúne seis grupos de operações e oito Funções, cada Passo como um Nó no grafo — trocar a ordem entre filtro
 e agregação, por exemplo, mudaria o resultado: agregar antes de filtrar contaria óbitos
 que você não quer incluir.
 
@@ -224,5 +219,5 @@ antes dela?**
 Vem a Etapa Integração (Capítulo 3), que cruza a série de saúde já preparada com dados
 climáticos e socioeconômicos. Se a série de saúde ainda tiver encoding quebrado, datas
 fora de padrão ou registros que não deveriam estar no recorte, o cruzamento com clima
-sai errado — a Integração confia que a Preparação já entregou uma série confiável.
+pode ficar incorreto. A qualidade precisa ser conferida também após as junções.
 :::

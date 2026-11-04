@@ -12,7 +12,7 @@ Hoje, analisar essas séries em conjunto quase sempre depende de alguém que sai
 O climasus+ Studio foi criado para reduzir essa dependência. O objetivo principal é permitir que uma equipe consiga **montar e executar análises de clima e saúde sem precisar começar pelo código**. Isso importa de formas diferentes para quem vai ler este guia:
 
 - Para o **gestor público**, significa autonomia — poder investigar uma pergunta própria sem abrir um chamado para "o time de dados" e esperar semanas.
-- Para o **acadêmico**, significa reprodutibilidade e rastreabilidade — outra pessoa pode abrir o mesmo Pipeline depois e ver quais Passos, com quais Parâmetros, geraram aquele número.
+- Para o **acadêmico**, favorece reprodutibilidade e rastreabilidade — outra pessoa pode abrir o mesmo Pipeline depois e ver quais Passos, com quais Parâmetros, geraram aquele número.
 - Para a **comunidade em geral**, significa poder entender — e até questionar — o que se diz sobre o próprio território, porque o caminho até o Resultado fica documentado.
 
 Para cumprir esse objetivo, o Studio organiza o trabalho em quatro conceitos: Função, Passo, Nó e Pipeline. Eles aparecem na interface e serão usados em todo o guia.
@@ -67,7 +67,7 @@ O catálogo do Studio tem **80 ações**. Para facilitar a escolha, elas são ag
 
 - **Preparação** (15 Funções) — organiza os dados de saúde brutos: importar, corrigir, filtrar, agregar.
 - **Integração** (33 Funções) — cruza esses dados de saúde já preparados com clima, ambiente e território.
-- **Análise & Modelagem** (32 Funções) — transforma tudo isso em evidência estatística: existe um efeito real, ou é ruído?
+- **Análise & Modelagem** (32 Funções) — transforma tudo isso em evidência estatística: qual associação é estimada, com que incerteza e sob quais pressupostos?
 
 Essa divisão segue a ordem de trabalho. Primeiro os dados de saúde precisam ser preparados; depois podem ser integrados a clima, ambiente e território; só então faz sentido aplicar modelos estatísticos. Cada Etapa tem uma cor na Biblioteca, o que ajuda a reconhecer a função de cada Nó em um Pipeline montado.
 
@@ -159,18 +159,19 @@ Toda essa montagem visual — arrastar Funções, preencher Parâmetros, ver Res
 — adaptado de ADR 0001, a decisão de arquitetura que mantém o executor do Studio invisível para quem usa a ferramenta.
 :::
 
-Essa é uma decisão deliberada, não uma limitação do Studio. Se em algum momento alguém perguntar "isso roda alguma linguagem de programação por baixo?", a resposta alinhada ao Studio não é explicar qual — é reforçar que você não precisa saber disso para montar e executar um Pipeline. Você monta Passos, liga Nós, aperta **Executar**, e o Motor cuida do resto.
-
-::: {.callout-tip title="Dica"}
-Ao explicar o Studio para outra pessoa, evite detalhar o que roda "por dentro" do Motor. O valor dessa decisão está justamente em manter essa camada invisível — quem usa o Studio trabalha só com Função, Passo, Nó e Pipeline, nunca com a linguagem de programação que os executa.
-:::
+O Motor executa os Passos configurados no Pipeline. Para o uso cotidiano, basta conhecer
+as entradas, os Parâmetros e os Resultados. Quem precisar auditar ou executar a análise
+em outro ambiente pode consultar o código exportado e a documentação técnica. A interface
+simplifica a operação, mas a interpretação continua exigindo critérios metodológicos.
 
 ::: {.callout-note collapse="true"}
 ## Verifique se ficou
 
-**1. Uma colega pergunta "isso está rodando alguma linguagem de programação nos bastidores?". Qual é a resposta mais alinhada ao Studio?**
+**1. É preciso programar para executar um Pipeline no Studio?**
 
-A resposta alinhada ao Studio é: "O Motor cuida da execução; você monta o Pipeline." A pessoa que usa a ferramenta não precisa saber qual mecanismo executa os Passos. Nomear a linguagem ou o mecanismo interno desloca a conversa para uma camada que o Studio mantém fora da experiência principal.
+Não. A montagem e a execução podem ser feitas pela interface. Para revisar métodos,
+reproduzir a análise em outro ambiente ou investigar problemas, o código exportado e a
+documentação técnica oferecem informações adicionais.
 
 **2. O que vira um Nó no grafo?**
 

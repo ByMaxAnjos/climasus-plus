@@ -1,6 +1,6 @@
 ---
 title: "Estudo de caso: dengue e graus-dia"
-subtitle: "Capítulo 08 · Estudos de casos"
+subtitle: "Capítulo 08 · Estudos de caso"
 ---
 
 No recorte de chuva, enchente e vetores do Capítulo 0, retomado na Etapa Integração
@@ -105,7 +105,7 @@ O filtro municipal é feito no script de replicação; o template do catálogo i
 **Snapshot:** `data/ec02/analytic.parquet` (MD5 `89f86931dd8e77e36bc3ed2fd2bd5eff`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec02/codebook.csv`.
 **Avisos do Motor (snapshot):** dispersão **95,6** (alta) e autocorrelação residual
-(Ljung-Box p = 0).
+(Ljung-Box p < 0,001; valor arredondado a zero no arquivo).
 **Replicação:** dispersão 7,55 (Recife) e 15,46 (Fortaleza); Ljung-Box p < 0,001.
 
 ## Resultados
@@ -133,7 +133,7 @@ regional, não a transmissão de um município específico.
 | RR no p99 vs MMT | — | 0,49 (0,08–2,82) | 3,57 (0,97–13,14) |
 | RR no p01 vs MMT | — | 2,15 (0,48–9,68) | 10,56 (3,71–30,08) |
 | Dispersão | 95,6 | 7,55 | 15,46 |
-| Autocorrelação residual | p = 0 | p < 0,001 | p < 0,001 |
+| Autocorrelação residual | p < 0,001 | p < 0,001 | p < 0,001 |
 
 **Como ler — com muita cautela:** nenhuma das duas cidades produz uma curva interpretável.
 Em Recife, o MMT cai no p29, o RR no p90 é 1,07 (IC 0,32–3,64) e o no p01 sobe a 2,15; em
@@ -277,8 +277,8 @@ sus_mod_plot_dlnm(ajuste)
 :::
 
 **O que o `.json` preserva — e o que não preserva.** O arquivo guarda Passos, ordem,
-Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os
-Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a
+Parâmetros, notas e o modo de uso. Não incorpora os dados, o cache, os Resultados nem os Artefatos. Caminhos locais
+podem permanecer nos Parâmetros; a versão do Studio precisa ser registrada separadamente. Ao compartilhar, envie também a
 fonte e o período dos dados, a versão do Studio/`climasus4r` e, se possível, o checksum do
 arquivo analítico. A biblioteca completa está no
 [Capítulo 12](12-parametros-avancados.qmd#biblioteca-de-pipelines).

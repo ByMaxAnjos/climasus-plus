@@ -10,7 +10,7 @@ toc: false
   <div class="part-number">IV</div>
   <div class="part-kicker">Parte quatro · pesquisa avançada</div>
   <h1>Estimar com método</h1>
-  <p class="part-standfirst">Para quem quer estimar: DLNM, desenhos quase-experimentais, modelos espaciais e aprendizado de máquina, com os parâmetros à vista e as limitações declaradas. A referência rápida de Parâmetros fica ao final do guia, junto ao Glossário.</p>
+  <p class="part-standfirst">Para quem quer estimar: DLNM, desenhos quase-experimentais, modelos espaciais e aprendizado de máquina, com parâmetros, pressupostos e limitações documentados. A referência rápida de Parâmetros fica ao final do guia, junto ao Glossário.</p>
   <ul class="part-list">
     <li><a href="06-etapa-analise-modelagem.html"><span class="part-ch">06</span> Análise &amp; Modelagem: do padrão à evidência estatística <span class="part-count">· 32 funções</span></a></li>
   </ul>
@@ -23,7 +23,7 @@ toc: false
 ```
 
 ::: {.pdf-only}
-Para quem quer estimar: DLNM, desenhos quase-experimentais, modelos espaciais e aprendizado de máquina, com os parâmetros à vista e as limitações declaradas. A referência rápida de Parâmetros fica ao final do guia, junto ao Glossário.
+Para quem quer estimar: DLNM, desenhos quase-experimentais, modelos espaciais e aprendizado de máquina, com parâmetros, pressupostos e limitações documentados. A referência rápida de Parâmetros fica ao final do guia, junto ao Glossário.
 
 ![Pesquisa científica com o mosquito Aedes aegypti, vetor de arboviroses como a dengue. Foto: Vinícius Marinho | Acervo Fiocruz Imagens.](images/photos/pesquisa-laboratorio.jpg)
 :::

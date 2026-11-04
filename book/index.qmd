@@ -1,6 +1,6 @@
 ---
 title: "climasus+ Studio"
-subtitle: "Guia prático sobre clima e saúde "
+subtitle: "Guia prático sobre clima e saúde"
 number-sections: false
 toc: false
 ---
@@ -29,17 +29,17 @@ toc: false
 
 ## Para quem é este guia
 
-Este guia introduz noções básicas sobre **clima e saúde** por meio do **climasus+ Studio**, um software que permite montar e executar análises que cruzam dados de saúde, clima, ambiente e território — sem precisar programar. O studio foi elaborado para três públicos:
+Este guia introduz noções básicas sobre **clima e saúde** por meio do **climasus+ Studio**, um software que permite montar e executar análises que cruzam dados de saúde, clima, ambiente e território — sem precisar programar. O Studio foi elaborado para três públicos:
 
 ```{=html}
 <div class="publico">
 <div class="publico-item">
 <h3>Gestores públicos</h3>
-<p>Precisam decidir políticas de saúde informadas por risco climático e querem autonomia para consultar dados sem depender de um analista para cada pergunta.</p>
+<p>Precisam decidir políticas de saúde informadas por risco climático e querem autonomia para consultar dados com apoio técnico proporcional à complexidade da pergunta.</p>
 </div>
 <div class="publico-item">
 <h3>Acadêmicos e pesquisadores</h3>
-<p>Precisam de rigor metodológico e reprodutibilidade nas análises que produzem, por exemplo modelos de defesagem não linear distrbiuída (DLNM - Distributed Lag Non-linear Models em inglês).</p>
+<p>Precisam de rigor metodológico e reprodutibilidade nas análises que produzem, por exemplo modelos de defasagem não linear distribuída (DLNM, do inglês <em>Distributed Lag Non-linear Models</em>).</p>
 </div>
 <div class="publico-item">
 <h3>Comunidade em geral</h3>
@@ -111,8 +111,8 @@ O Studio usa o pacote R [climasus4r](https://bymaxanjos.github.io/climasus4r/) c
 <figcaption>Na floresta, o dado tem endereço. Aldeia Turé Mariquita, Tomé-Açu (PA), 2009. Foto: João Roberto Ripper | Acervo João Roberto Ripper / Fiocruz Imagens.</figcaption>
 </figure>
 <div class="editorial-copy">
-<h2>Da e para Amazônia</h2>
-A Amazônia aparece como território destaque, onde clima, floresta, água e saúde se apresentam juntos, e onde a distância entre uma série de dados e o posto de saúde é concreta. O conteúdo, porém, é nacional: os mesmos conceitos e as mesmas funções do Studio valem para qualquer município brasileiro.</p>
+<h2>Da Amazônia e para a Amazônia</h2>
+<p>A Amazônia aparece como território de destaque, onde clima, floresta, água e saúde se apresentam juntos, e onde a distância entre uma série de dados e o posto de saúde é concreta. O conteúdo, porém, é nacional: os conceitos e as funções podem ser adaptados a diferentes municípios brasileiros, conforme a disponibilidade e a qualidade dos dados.</p>
 </div>
 </div>
 ```
@@ -122,9 +122,9 @@ A Amazônia aparece como território destaque, onde clima, floresta, água e sa�
 
 Um guia visual para montar análises de saúde, clima e território no climasus+ Studio — sem precisar programar.
 
-## Da e para Amazônia
+## Da Amazônia e para a Amazônia
 
-A Amazônia aparece como território destaque, onde clima, floresta, água e saúde se apresentam juntos, e onde a distância entre uma série de dados e o posto de saúde é concreta. O conteúdo, porém, é nacional: os mesmos conceitos e as mesmas funções do Studio valem para qualquer município brasileiro.
+A Amazônia aparece como território de destaque, onde clima, floresta, água e saúde se apresentam juntos, e onde a distância entre uma série de dados e o posto de saúde é concreta. O conteúdo, porém, é nacional: os conceitos e as funções podem ser adaptados a diferentes municípios brasileiros, conforme a disponibilidade e a qualidade dos dados.
 
 ## Realização e apoio
 
