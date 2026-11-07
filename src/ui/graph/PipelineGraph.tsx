@@ -147,6 +147,7 @@ function GraphInner() {
               {t('prepSequenceUseSinan', lang)}
             </button>
           </div>
+          <p className="prep-recipe-help">{t('prepSequenceHelp', lang)}</p>
         </section>
       </div>
     )

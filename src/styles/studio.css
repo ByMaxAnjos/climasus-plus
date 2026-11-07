@@ -1964,8 +1964,11 @@ body { font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "cv11" 1, "ss03" 1; 
 .prep-recipe-actions { align-items: center; gap: 16px; margin-top: 6px; }
 .prep-recipe-alt { border: 0; padding: 0; background: none; font: inherit; font-size: 12.5px; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .prep-recipe-alt:hover { color: var(--text-primary); }
-.prep-recipe-actions .btn-primary { background: transparent; color: var(--accent-ink); border: 1px solid color-mix(in srgb, var(--accent-ink) 50%, transparent); }
-.prep-recipe-actions .btn-primary:hover { background: color-mix(in srgb, var(--accent-ink) 10%, transparent); }
+/* first-run call to action: the main way to start, so it is a filled, full-size button (like Executar) */
+.prep-recipe-actions .btn-primary { background: var(--env-500); color: var(--text-on-accent); border-color: transparent; padding: 9px 18px; font-size: 14px; font-weight: 600; border-radius: 8px; }
+.prep-recipe-actions .btn-primary:hover { background: var(--env-600, var(--env-500)); filter: brightness(1.08); }
+.prep-recipe-actions .btn-primary:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+.prep-recipe-help { margin: 2px 0 0; font-size: 12.5px; color: var(--text-muted); }
 
 /* brand: [climaSUS badge] + Studio; institution logos sit straight on the bar — in the dark theme their
    dark ink is flipped to light (invert + hue-rotate keeps the reds/greens recognisable) */

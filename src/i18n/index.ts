@@ -12,9 +12,9 @@ const dict: Dict = {
   },
   pipeline: { pt: 'Pipeline', en: 'Pipeline', es: 'Pipeline' },
   emptyPipeline: {
-    pt: 'Nada aqui ainda. Arraste uma função da biblioteca para cá ou comece pela preparação padrão.',
-    en: 'Nothing here yet. Drag a function from the library, or start from the standard preparation.',
-    es: 'Nada aquí todavía. Arrastre una función de la biblioteca o empiece por la preparación estándar.',
+    pt: 'Nada aqui ainda. Clique em “Adicionar estas 7 etapas” abaixo para começar, ou arraste uma função da biblioteca para cá.',
+    en: 'Nothing here yet. Click “Add these 7 steps” below to get started, or drag a function from the library.',
+    es: 'Nada aquí todavía. Haga clic en “Agregar estas 7 etapas” abajo para empezar, o arrastre una función de la biblioteca.',
   },
   emptyPipelineChooseMode: {
     pt: 'Antes de começar, escolha o modo de uso: Vigilância ou Pesquisa.',
@@ -37,9 +37,14 @@ const dict: Dict = {
     es: 'no aplica al SINAN',
   },
   prepSequenceUse: {
-    pt: 'Adicionar estas 7 etapas',
-    en: 'Add these 7 steps',
-    es: 'Agregar estas 7 etapas',
+    pt: '＋ Adicionar estas 7 etapas',
+    en: '＋ Add these 7 steps',
+    es: '＋ Agregar estas 7 etapas',
+  },
+  prepSequenceHelp: {
+    pt: 'Um clique monta o pipeline. Depois, ajuste cada etapa e aperte Executar.',
+    en: 'One click builds the pipeline. Then adjust each step and press Run.',
+    es: 'Un clic arma el pipeline. Luego ajuste cada etapa y presione Ejecutar.',
   },
   prepSequenceUseSinan: {
     pt: 'Dados do SINAN? Use sem o filtro CID',
