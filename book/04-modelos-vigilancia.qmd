@@ -1,5 +1,5 @@
 ---
-title: "Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão"
+title: "Vigilância e gestão: monte um Pipeline com os Modelos prontos"
 subtitle: "Capítulo 04 · Vigilância e gestão"
 ---
 
@@ -16,10 +16,10 @@ primeiro Resultado sem escrever uma única linha de código.
 
 | Modelo | Pergunta de vigilância | Território e período | Passos |
 |---|---|---|---|
-| Mortalidade respiratória pediátrica e temperatura | Crianças menores de 5 anos têm mais óbitos respiratórios em dias de temperatura extrema? | Sudeste (SP, RJ, MG, ES), 2015-2019 | 14 |
-| Dengue e graus-dia | O acúmulo de calor favorável ao vetor antecipa alta de casos de dengue? | CE, PE, BA e MA, 2015-2019 | 12 |
-| Mortalidade cardiovascular em idosos e ondas de calor | Ondas de calor aumentam óbitos cardiovasculares em idosos? | São Paulo, 2010-2019 | 16 |
-| Hospitalizações respiratórias e frio | Um evento de frio muda o nível de internações respiratórias? | Porto Alegre (RS), 2010-2019 | 13 |
+| Mortalidade respiratória pediátrica e temperatura | Crianças menores de 5 anos têm mais óbitos respiratórios em dias de temperatura extrema? | Sudeste (SP, RJ, MG, ES), 2015–2019 | 14 |
+| Dengue e graus-dia | O acúmulo de calor favorável ao vetor antecipa alta de casos de dengue? | CE, PE, BA e MA, 2015–2019 | 12 |
+| Mortalidade cardiovascular em idosos e ondas de calor | Ondas de calor aumentam óbitos cardiovasculares em idosos? | SP (estado no snapshot; capital na replicação), 2010–2019 | 16 |
+| Hospitalizações respiratórias e frio | Um evento de frio muda o nível de internações respiratórias? | Porto Alegre (RS), 2010–2019 | 13 |
 
 Os territórios da tabela são exemplos nacionais, não um limite do método. Para aplicar à
 Amazônia, ajuste UF ou região, período e fonte climática; em municípios com pouca cobertura
@@ -31,7 +31,7 @@ previsões nem achados generalizáveis para outros territórios.
 
 | Modelo | Resultado principal no snapshot | Leitura |
 |---|---|---|
-| Respiratório pediátrico | RR 0,97 (0,78–1,21); AF total -29,1% | Sem associação estável; AF negativa não interpretável como carga |
+| Respiratório pediátrico | RR 0,97 (0,78–1,21); AF total −29,1% | Sem associação estável; AF negativa não interpretável como carga |
 | Dengue/GDD | RR 0,71 (0,53–0,96); dispersão 95,6; lag no limite | Modelo instável; não concluir proteção nem pico em 84 dias |
 | Cardiovascular/calor | AF calor 2,12%; frio 2,25%; total 4,36% | Carga modesta, dominada pelo frio; cautela com MMT/poluição |
 | Hospitalizações/frio | RR de nível 0,62 (0,58–0,66) | Queda, não aumento; não concluir que frio protege |
@@ -42,7 +42,7 @@ a associação esperada, e o guia mostra o que fazer quando isso acontece.
 ::: {.callout-tip}
 ## Como carregar um Modelo
 No botão **Pipelines** da barra superior, busque pelo nome do Modelo (por exemplo, "dengue")
-e clique em **Carregar**. Todos os Passos entram de uma vez no Pipeline, já ligados na ordem
+e clique em **Carregar no Pipeline**. Todos os Passos entram de uma vez no Pipeline, já ligados na ordem
 correta — você não precisa montar nó por nó.
 :::
 
@@ -61,7 +61,7 @@ correta — você não precisa montar nó por nó.
 11. **Juntar saúde e clima na mesma tabela** — cria defasagens de 0–21 dias para temperatura e umidade.
 12. **Estimar o risco ligado ao clima** — DLNM com ajuste para umidade (`rh_mean_porc_lag0`) e tendência de 2 graus de liberdade por ano.
 13. **Ver a curva de risco** — gráfico exposição-defasagem-risco.
-14. **Calcular quantos casos são por causa do clima** — fração e número atribuível.
+14. **Calcular quantos casos são atribuíveis ao clima** — fração e número atribuível.
 
 ![Modelo "Mortalidade respiratória pediátrica e temperatura" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-respiratorio.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 14 passos do modelo de mortalidade respiratória pediátrica, em linguagem simples."}
 
@@ -109,7 +109,7 @@ interpretação e a gestão de vetores.
 12. **Visualizar ondas de calor** — ramo descritivo, não um regressor do modelo.
 13. **Juntar saúde e clima** — defasagens de 0–21 dias da temperatura.
 14. **Estimar o risco ligado ao clima** — DLNM sobre a série diária; a referência padrão é a mediana e deve ser substituída por MMT para carga atribuível.
-15. **Calcular quantos casos são por causa do clima**
+15. **Calcular quantos casos são atribuíveis ao clima**
 16. **Ver o gráfico de casos atribuíveis** — pronto para apresentar.
 
 ![Modelo "Mortalidade cardiovascular em idosos e ondas de calor" carregado no Pipeline, em Modo Vigilância e gestão.](images/screenshots/studio-modelo-cardio-calor.png){fig-alt="Captura do Pipeline do climasus+ Studio com os 16 passos do modelo de mortalidade cardiovascular e ondas de calor, em linguagem simples."}

@@ -5,7 +5,7 @@ subtitle: "Capítulo 01 · Fundamentos"
 
 ## O problema que o Studio resolve
 
-O Capítulo 0 terminou com uma constatação prática e com um recorte explícito: a Amazônia é o ponto de partida, mas o método vale para todo o Brasil. Para agir sobre clima e saúde, não basta descrever calor, chuva ou fumaça de um lado e atendimentos de saúde do outro. É preciso analisar as duas séries em conjunto, com método documentado e possibilidade de repetição. É nessa passagem — da observação separada para a análise integrada — que muitas equipes encontram dificuldade.
+Para agir sobre clima e saúde, não basta descrever calor, chuva ou fumaça de um lado e atendimentos de saúde do outro. É preciso analisar as duas séries em conjunto, com método documentado e possibilidade de repetição. É nessa passagem — da observação separada para a análise integrada — que muitas equipes encontram dificuldade. Este guia toma a Amazônia como ponto de partida, mas o método vale para todo o Brasil.
 
 Hoje, analisar essas séries em conjunto quase sempre depende de alguém que saiba programar. Um gestor de saúde tem uma pergunta — "os atendimentos respiratórios sobem depois de queimadas na nossa região?" — e precisa esperar um analista ou pesquisador montar uma análise. Se a pergunta muda — outro município, outro recorte de idade, outro período — parte do trabalho precisa ser refeita. Quando o método fica concentrado em uma pessoa, a equipe também perde capacidade de continuidade.
 
@@ -50,13 +50,13 @@ Uma análise raramente termina em um único Passo. O resultado depende da sequê
 Em resumo: você escolhe uma **Função** na Biblioteca, preenche seus Parâmetros e cria um **Passo**; esse Passo aparece na tela como um **Nó**; a sequência de Nós ligados forma o **Pipeline**.
 
 ::: {.callout-important title="Importante"}
-Função e Passo não são a mesma coisa. Função é a definição disponível na Biblioteca. Passo é o uso dessa Função dentro de um Pipeline, com Parâmetros preenchidos. A mesma Função pode gerar vários Passos diferentes.
+Função e Passo não são equivalentes. Função é a definição disponível na Biblioteca. Passo é o uso dessa Função em um Pipeline, com Parâmetros preenchidos. A mesma Função pode gerar vários Passos diferentes.
 :::
 
 ::: {.callout-tip title="Reprodutibilidade desde o primeiro Passo"}
 Todo Pipeline pode ser salvo como um projeto `.climasus.json` (**Arquivo → Salvar projeto**)
 e reaberto por outra pessoa (**Arquivo → Abrir projeto**). O arquivo guarda Passos, ordem e
-Parâmetros — não os dados nem os Resultados. A biblioteca de pipelines deste guia está em
+Parâmetros — não os dados nem os Resultados. A biblioteca de Pipelines deste guia está em
 [`pipeline/`](pipeline/README.md) e é apresentada no
 [Capítulo 12](12-parametros-avancados.qmd#biblioteca-de-pipelines).
 :::
@@ -87,8 +87,8 @@ Todos os controles gerais do Studio ficam na barra superior. O **logotipo do cli
 |---|---|
 | **Executar** | Roda o Pipeline inteiro, do primeiro ao último Passo. |
 | **Parar** | Interrompe uma execução em andamento. |
-| **Modelos** | Abre a lista de Pipelines prontos. O Tutorial **Mortalidade Respiratória — SP 2014-2019** vem em primeiro lugar, com o selo **Guiado**: funciona sem internet e explica cada Passo na tela. |
-| **Pipelines** | Abre o Centro de Pipelines. |
+| **Modelos** | Abre a lista de Pipelines prontos. O Tutorial **Mortalidade Respiratória — SP 2014-2019** aparece com o selo **Guiado**: funciona sem internet e explica cada Passo na tela. |
+| **Pipelines** | Abre o Centro de Pipelines, que lista os Modelos disponíveis por categoria. |
 | **Limpar** | Remove todos os Passos do Pipeline atual. |
 | **Desfazer / Refazer** | Volta ou repete a última alteração no Pipeline. |
 | **Arquivo** | Reúne **Salvar projeto**, **Abrir projeto** e **Importar dados** (um arquivo seu, em vez de dados do DATASUS). |
@@ -112,7 +112,7 @@ A diferença é direta: Resultado é o que você interpreta dentro do Studio; Ar
 
 ![Painel de Resultados: prévia tabular produzida por um Passo executado, com dimensões do objeto, tempo de execução e botões de exportação.](images/screenshots/studio-resultado.png){fig-alt="Captura do painel Resultados do climasus+ Studio mostrando uma tabela agregada, dimensões do resultado, tempo de execução e botões CSV, XLSX, Parquet e Console."}
 
-## Modelo, Tutorial e Centro de Pipelines: três jeitos de começar
+## Modelo e Tutorial: dois jeitos de começar
 
 Ninguém precisa montar um Pipeline sempre do zero. O Studio oferece dois caminhos bem diferentes para começar mais rápido, e é importante não confundi-los.
 
@@ -122,11 +122,11 @@ Ninguém precisa montar um Pipeline sempre do zero. O Studio oferece dois caminh
 **Tutorial**
 : Uma experiência guiada, com explicações na tela durante a montagem de um Pipeline. O Tutorial orienta cada escolha; o Modelo entrega um Pipeline inicial para edição livre.
 
-Se você já sabe o que quer analisar e quer economizar tempo de montagem, carregue um Modelo. Se está aprendendo a lógica do Studio, siga um Tutorial. No menu **Modelos**, o Tutorial guiado **Mortalidade Respiratória — SP 2014-2019** traz o selo **Guiado**: é o melhor ponto de partida para quem abre o Studio pela primeira vez, porque usa dados que já vêm com o aplicativo e funciona sem internet.
+Se você já sabe o que quer analisar e quer economizar tempo de montagem, carregue um Modelo. Se está aprendendo a lógica do Studio, siga um Tutorial. No menu **Modelos**, o Tutorial guiado **Mortalidade Respiratória — SP 2014–2019** traz o selo **Guiado**: é o melhor ponto de partida para quem abre o Studio pela primeira vez, porque usa dados que já vêm com o aplicativo e funciona sem internet.
 
-Os dois ficam no **Centro de Pipelines**, o painel que lista Modelos e atalhos para Tutoriais. Um Modelo da Etapa Preparação, por exemplo, pode baixar dados do DATASUS para um estado e um período e deixar o Pipeline pronto para as próximas Funções de limpeza. Quando chegar a hora de montar uma análise, o ponto inicial pode estar ali.
+Os Modelos ficam no **Centro de Pipelines**; o Tutorial guiado é iniciado pelo menu **Modelos**. Um Modelo da Etapa Preparação, por exemplo, pode baixar dados do DATASUS para um estado e um período e deixar o Pipeline pronto para as próximas Funções de limpeza. Quando chegar a hora de montar uma análise, o ponto inicial pode estar ali.
 
-## Modo de uso: Vigilância e Gestão ou Pesquisa Avançada
+## Modo de uso: Vigilância e gestão ou Pesquisa avançada
 
 Antes de montar o primeiro Pipeline de um projeto, o Studio pergunta: "qual é o seu objetivo neste projeto?" e oferece dois Modos de uso. Os dois modos compartilham os mesmos dados, projetos e Resultados — só muda o nível de liberdade, a linguagem e a exigência metodológica em primeiro plano. Você pode trocar de modo a qualquer momento, sem perder nada do que já montou.
 

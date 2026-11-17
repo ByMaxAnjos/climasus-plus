@@ -1,9 +1,9 @@
 ---
 title: "Etapa Integração: clima, saúde e território na mesma análise"
-subtitle: "Capítulo 03 · Etapas do pipeline"
+subtitle: "Capítulo 03 · Etapas do Pipeline"
 ---
 
-No Capítulo 0 apresentamos a ideia de que os efeitos das exposições climáticas podem ser imediatos ou apresentar
+Os efeitos das exposições climáticas podem ser imediatos ou apresentar
 **defasagem** — o calor de hoje pode virar internação em poucos dias, a chuva de
 uma semana pode virar caso de dengue semanas depois. Até aqui, no Capítulo 2, você
 aprendeu a deixar uma série de saúde limpa, recortada e agregada. Falta uma peça: essa
@@ -18,8 +18,7 @@ estações.
 
 Este capítulo mantém a régua operacional do Capítulo 2, mas inclui decisões
 metodológicas: qual fonte de clima usar, qual defasagem escolher. Essas escolhas
-reaparecem como Parâmetros concretos de uma Função, as mesmas
-ideias que o Capítulo 0 apresentou de forma leiga.
+reaparecem como Parâmetros concretos de uma Função.
 
 ## Por que juntar clima, saúde e território
 
@@ -125,7 +124,7 @@ duas decisões centrais:
   `week`, `month`, `quarter`, `year`, `season`).
 
 A decisão mais importante, porém, é `temporal_strategy` — o Parâmetro que formaliza a
-defasagem apresentada de forma leiga no Capítulo 0. Ele responde à pergunta "quantos
+defasagem entre exposição e desfecho. Ele responde à pergunta "quantos
 dias entre a exposição climática e o desfecho de saúde eu quero considerar, e de que
 jeito?". O catálogo oferece dez estratégias; as mais usadas no guia são:
 
@@ -156,13 +155,13 @@ registro da soma ou média utilizada.
 **Colunas de histórico diário associadas a um desfecho semanal não são automaticamente
 incorretas:** um DLNM pode receber uma matriz de históricos com resolução própria.
 Entretanto, é preciso definir a âncora temporal de cada contagem semanal e demonstrar o
-que cada coluna representa. Elas não equivalem a defasagens de médias semanais. Os casos
-7 e 8 comparam essas construções e suas limitações.
+que cada coluna representa. Elas não equivalem a defasagens de médias semanais. Os
+Capítulos 7 e 8 comparam essas construções e suas limitações.
 
 ## Exercício guiado: saúde + clima + território em um só Pipeline
 
-Vamos continuar o arco de **dengue e clima** (`ec-02-dengue-clima`) aberto no recorte de
-chuva, enchente e vetores do Capítulo 0. A exposição principal do Modelo é **graus-dia
+Vamos continuar o arco de **dengue e clima** (`ec-02-dengue-clima`) ligado ao tema de
+chuva, enchente e vetores. A exposição principal do Modelo é **graus-dia
 (GDD)**, como hipótese de representação do acúmulo térmico relevante ao vetor; chuva acumulada e umidade entram como extensão. O Modelo de catálogo
 `clima-aggregate-exposicao` traz o esqueleto desse cruzamento — uma série de saúde diária
 ou semanal, estações INMET e defasagens de 0 a 21 dias — e pode ser carregado no Centro de
@@ -203,7 +202,7 @@ leitura epidemiológica do Resultado.
 
 3. **Trazer o território** — use **Calcular indicadores socioeconômicos e de saúde**
    (`sus_socio_compute_indicators`) para gerar indicadores como saneamento e renda a
-   partir dos dados já ligados ao território dos municípios em estudo. O template de
+   partir dos dados já ligados ao território dos municípios em estudo. O Modelo de
    integração não inclui esse passo; ele é uma extensão.
 
 4. **Integrar** — Função **Cruzar dados de saúde e clima** (`sus_climate_aggregate`).

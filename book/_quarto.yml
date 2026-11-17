@@ -12,7 +12,7 @@ book:
   title: "climasus+ Studio"
   subtitle: "Guia prático sobre clima, saúde e Amazônia"
   author: "Max Anjos · ecossistema climaSUS"
-  date: "2026-10-25"
+  date: "2026-11"
   language: pt
   description: "Guia prático do climasus+ Studio para gestores públicos, acadêmicos e comunidade: do dado à decisão em clima e saúde, com ênfase na Amazônia."
   cover-image: images/brand/capa-guia.jpg
@@ -38,7 +38,6 @@ book:
     - index.qmd
     - colofao.qmd
     - part-1-fundamentos.qmd
-    - 00-clima-saude.qmd
     - 01-conhecendo-o-studio.qmd
     - part-2-pipeline.qmd
     - 02-etapa-preparacao.qmd
@@ -55,6 +54,7 @@ book:
     - 10-caso-hospitalizacoes-frio.qmd
     - 11-glossario.qmd
     - 12-parametros-avancados.qmd
+    - 13-referencias.qmd
 
 format:
   html:

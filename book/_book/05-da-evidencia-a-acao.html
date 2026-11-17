@@ -167,17 +167,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do Pipeline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -192,12 +187,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Vigilância e gestão</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -207,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Pesquisa avançada</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -242,12 +237,17 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário do climasus+ Studio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-referencias.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referências</span></a>
   </div>
 </li>
     </ul>
@@ -452,7 +452,7 @@ Os números a seguir são didáticos
 </tr>
 </tbody>
 </table>
-<p>A conta de ausência é simples: 8 ÷ 100 × 100 = <strong>8%</strong>. Esse percentual, sozinho, não diz se a série serve para o estudo: oito dias ausentes durante o evento extremo podem comprometer mais a análise do que oito dias dispersos. Confira onde estão as lacunas e registre como foram tratadas. Uma data que não aparece na tabela não deve ser preenchida com zero sem verificar a cobertura do registro.</p>
+<p>A conta de ausência é simples: 8 ÷ 100 = 0,08, ou <strong>8%</strong>. Esse percentual, sozinho, não diz se a série serve para o estudo: oito dias ausentes durante o evento extremo podem comprometer mais a análise do que oito dias dispersos. Confira onde estão as lacunas e registre como foram tratadas. Uma data que não aparece na tabela não deve ser preenchida com zero sem verificar a cobertura do registro.</p>
 </section>
 <section id="terceiro-o-que-as-estatísticas-resumem" class="level3">
 <h3 class="anchored" data-anchor-id="terceiro-o-que-as-estatísticas-resumem">Terceiro: o que as estatísticas resumem?</h3>
@@ -692,7 +692,7 @@ Os números a seguir são didáticos
 <li><strong>Leia a incerteza</strong> e procure resultados que mudam quando os pressupostos mudam.</li>
 <li><strong>Confronte com a realidade local</strong>: equipes de vigilância, atenção primária, assistência, defesa civil e comunidade.</li>
 <li><strong>Defina a ação, o responsável, o prazo e o indicador de acompanhamento</strong>.</li>
-<li><strong>Salve o projeto e exporte o <code>.R</code></strong> para manter a análise auditável.</li>
+<li><strong>Salve o projeto e exporte o código</strong> para manter a análise auditável.</li>
 </ol>
 </section>
 <section id="modelo-de-ficha-para-decisão" class="level2">
@@ -1204,13 +1204,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./04-modelos-vigilancia.html" class="pagination-link" aria-label="Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></span>
+      <a href="./04-modelos-vigilancia.html" class="pagination-link" aria-label="Vigilância e gestão: monte um Pipeline com os Modelos prontos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./part-4-pesquisador.html" class="pagination-link" aria-label="Parte IV · Módulo Pesquisador">
-        <span class="nav-page-text"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./part-4-pesquisador.html" class="pagination-link" aria-label="Parte IV · Pesquisa avançada">
+        <span class="nav-page-text"><span class="chapter-title">Parte IV · Pesquisa avançada</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

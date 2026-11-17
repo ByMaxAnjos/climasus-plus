@@ -1,4 +1,6 @@
 > **Nota de edição (outubro de 2026).** Este roteiro é o plano editorial que orientou a primeira versão do guia. A edição atual tem nova identidade visual (capa, aberturas de parte, paleta amazônica) e atualizações de catálogo. Para a estrutura publicada, ver `README.md` e `_quarto.yml`; para o histórico de mudanças, ver `colofao.qmd`. O conteúdo abaixo permanece como referência de tom, público e recorte de cada capítulo.
+>
+> **Atualização de novembro de 2026.** O antigo Capítulo 0 (`00-clima-saude.qmd`) foi incorporado ao Capítulo 1; as referências ao "Capítulo 0" abaixo são históricas. O catálogo passou a ter 80 Funções (15 de Preparação, 33 de Integração e 32 de Análise & Modelagem).
 
 # Roteiro-mestre — "climasus+ Studio: guia prático sobre clima e saúde para gestores públicos, acadêmicos e comunidade"
 
@@ -30,8 +32,8 @@
   Cada capítulo deve citar suas fontes primárias (CONTEXT.md, ADR 0001) quando
   vocabulário/regra estiver em jogo, do mesmo jeito que a Lição 1 faz.
 - **Números reais do catálogo** (`src/catalog/functions.json`, confirmado por contagem):
-  Preparação = 15 Funções, Integração = 32 Funções, Análise & Modelagem = 32 Funções.
-  O book apresenta três Etapas e 79 ações no fluxo atual. Recalcular esses números
+  Preparação = 15 Funções, Integração = 33 Funções, Análise & Modelagem = 32 Funções.
+  O book apresenta três Etapas e 80 ações no fluxo atual. Recalcular esses números
   quando o catálogo mudar; não manter referências a organizações antigas do catálogo.
 - **Casos/Modelos de catálogo disponíveis** (`src/pipelines/templates.ts`, categoria
   `caso`): `ec-01-respiratorio-pediatrico`, `ec-02-dengue-clima`,

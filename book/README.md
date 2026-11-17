@@ -64,7 +64,7 @@ book/
 ├── part-3-gestor.qmd
 ├── part-4-pesquisador.qmd
 ├── part-5-casos.qmd
-├── 00-clima-saude.qmd ...   # capítulos
+├── 01-conhecendo-o-studio.qmd ...   # capítulos
 ├── colofao.qmd              # ficha técnica, créditos, licença
 ├── theme/
 │   ├── guide.scss           # fonte do design system (editar aqui)
@@ -146,8 +146,8 @@ nesse tamanho e salve o JPG; em seguida rode `bash scripts/build-all.sh`.
 
 ```bash
 cd book
-bash scripts/build-pdf.sh      # PDF desenhado, 69 páginas
-python3 scripts/build-docx.py  # DOCX editável, 71 páginas
+bash scripts/build-pdf.sh      # PDF desenhado
+python3 scripts/build-docx.py  # DOCX editável
 ```
 
 O `build-pdf.sh` usa Chrome headless e `pdfunite` (ou `pypdf`) e não depende de
@@ -166,7 +166,8 @@ LaTeX. O `format.pdf` do Quarto/XeLaTeX continua como fallback de texto.
 
 ## Conteúdo e verificação
 
-O texto foi auditado contra o catálogo em 22/10/2026 e atualizado em 25/10/2026:
+O texto foi auditado contra o catálogo em 22/10/2026, atualizado em 25/10/2026 e revisado
+para publicação em 17/11/2026:
 
 - 80 funções: 15 Preparação, 33 Integração, 32 Análise & Modelagem.
 - Integração documenta `sus_census_join`, `sus_census_select`,
@@ -177,6 +178,10 @@ O texto foi auditado contra o catálogo em 22/10/2026 e atualizado em 25/10/2026
 - Os quatro Modelos de caso foram atualizados: dengue com **graus-dia (GDD, base 11 °C)**,
   respiratório pediátrico **semanal** com umidade, hospitalizações de frio em **Porto
   Alegre** (série única) e cardiovascular com **baseline fixo** e nota sobre MMT.
+- Os projetos `.climasus.json` e os espelhos em `pipeline/R/` dos quatro casos foram
+  sincronizados com os Modelos do aplicativo, incluindo a etapa **Preencher falhas nos
+  dados do INMET** (`sus_climate_fill_inmet`).
+- O capítulo 13 reúne as referências citadas no guia.
 - As capturas de tela dos pipelines de dengue, respiratório, frio, cardio, integração,
   preparação e modelagem foram regeradas a partir do app.
 

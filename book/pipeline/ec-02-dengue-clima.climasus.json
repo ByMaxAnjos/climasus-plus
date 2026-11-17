@@ -51,10 +51,17 @@
       }
     },
     {
+      "id": "dengue-fill",
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "\"tair_dry_bulb_c\""
+      }
+    },
+    {
       "id": "dengue-gdd",
       "fn": "sus_climate_compute_indicators",
       "values": {
-        "df": "@step:dengue-inmet",
+        "df": "@step:dengue-fill",
         "indicators": "gdd",
         "custom_thresholds": "list(gdd_base = 11, gdd_upper = 35)"
       }

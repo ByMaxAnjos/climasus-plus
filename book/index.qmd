@@ -1,6 +1,6 @@
 ---
 title: "climasus+ Studio"
-subtitle: "Guia prático sobre clima e saúde"
+subtitle: "Guia prático sobre clima, saúde e Amazônia"
 number-sections: false
 toc: false
 ---
@@ -8,15 +8,15 @@ toc: false
 ```{=html}
 <div class="hero">
 <div class="hero-copy">
-<div class="hero-kicker">Guia prático · clima e saúde </div>
+<div class="hero-kicker">Guia prático · clima, saúde e Amazônia</div>
 <h1>Do dado à <em>decisão</em> em saúde</h1>
-<p class="hero-sub">Um guia visual para montar análises de saúde, clima e território no climasus+ Studio - sem precisar programar.</p>
+<p class="hero-sub">Um guia visual para montar análises de saúde, clima e território no climasus+ Studio — sem precisar programar.</p>
 <div class="hero-meta">
 <span>1ª edição · 2026</span>
 <span>Gestores · academia · comunidade</span>
 </div>
 <div class="hero-actions">
-<a class="btn-hero primary" href="00-clima-saude.html">Ler o guia</a>
+<a class="btn-hero primary" href="01-conhecendo-o-studio.html">Ler o guia</a>
 <a class="btn-hero" href="#sumario">Ver o sumário</a>
 </div>
 </div>
@@ -57,24 +57,24 @@ Este guia prático está organizado em cinco partes:
 <a class="sumario-item" href="part-1-fundamentos.html">
 <span class="sumario-num">I</span>
 <span class="sumario-title">Fundamentos</span>
-<span class="sumario-desc">Por que e quando clima e saúde se encontram, como o efeito aparece com defasagem e qual novidade que o Studio oferece.</span>
-<span class="sumario-meta">2 capítulos</span>
+<span class="sumario-desc">O problema que o Studio resolve e o modelo mental que organiza todo o guia: Função, Passo, Nó e Pipeline.</span>
+<span class="sumario-meta">1 capítulo</span>
 </a>
 <a class="sumario-item" href="part-2-pipeline.html">
 <span class="sumario-num">II</span>
-<span class="sumario-title">Etapas do pipeline</span>
+<span class="sumario-title">Etapas do Pipeline</span>
 <span class="sumario-desc">Funções do Studio, preparação, integração e análises de dados de saúde, clima e território.</span>
 <span class="sumario-meta">2 capítulos</span>
 </a>
 <a class="sumario-item" href="part-3-gestor.html">
 <span class="sumario-num">III</span>
-<span class="sumario-title">Módulo Gestor</span>
-<span class="sumario-desc">Modelos de pipelines prontos, leitura de estatísticas e critérios para gerar evidência baseada em dados.</span>
+<span class="sumario-title">Vigilância e gestão</span>
+<span class="sumario-desc">Modelos de Pipelines prontos, leitura de estatísticas e critérios para gerar evidência baseada em dados.</span>
 <span class="sumario-meta">2 capítulos</span>
 </a>
 <a class="sumario-item" href="part-4-pesquisador.html">
 <span class="sumario-num">IV</span>
-<span class="sumario-title">Módulo Pesquisador</span>
+<span class="sumario-title">Pesquisa avançada</span>
 <span class="sumario-desc">Análise &amp; Modelagem, do DLNM aos modelos espaciais.</span>
 <span class="sumario-meta">1 capítulo</span>
 </a>
@@ -97,11 +97,17 @@ Este guia prático está organizado em cinco partes:
 <span class="sumario-desc">Referência rápida dos parâmetros que mais mudam a pergunta, a interpretação e a reprodutibilidade.</span>
 <span class="sumario-meta">consulta</span>
 </a>
+<a class="sumario-item" href="13-referencias.html">
+<span class="sumario-num">—</span>
+<span class="sumario-title">Referências</span>
+<span class="sumario-desc">Obras citadas no guia, com links para acesso e verificação.</span>
+<span class="sumario-meta">consulta</span>
+</a>
 </div>
 ```
 
 ::: {.callout-tip title="Dica"}
-O Studio usa o pacote R [climasus4r](https://bymaxanjos.github.io/climasus4r/) como "Motor" que executa as análises internamente. O foco é aprender a formular uma pergunta, montar um Pipeline, verificar os dados, interpretar limites e transformar evidência em ação pública.
+O Studio usa o pacote R [climasus4r](https://bymaxanjos.github.io/climasus4r/) por trás do "Motor" que executa as análises internamente. O foco é aprender a formular uma pergunta, montar um Pipeline, verificar os dados, interpretar limites e transformar evidência em ação pública.
 :::
 
 ```{=html}
@@ -135,10 +141,10 @@ O climasus+ Studio é parte do ecossistema [climaSUS](https://climasus.github.io
 <div class="support">
 <h2>Realização e apoio</h2>
 <p>O climasus+ Studio é parte do ecossistema climaSUS e do Centro de Clima de Saúde de Rondônia, com desenvolvimento articulado à Fiocruz Rondônia e ao INCT-CONEXAO. O guia prático reúne conceitos de clima e saúde, o passo a passo do Pipeline (conjunto de etapas) e critérios para uso responsável dos resultados.</p>
-<p class="support-links"><a href="https://github.com/ByMaxAnjos/climasus-plus#baixar-beta">Baixar o Studio Mac, Windows e Linux</a> · <a href="https://github.com/ByMaxAnjos/climasus-plus">Repositório no GitHub</a></p>
+<p class="support-links"><a href="https://github.com/ByMaxAnjos/climasus-plus#baixar-beta">Baixar o Studio para Mac, Windows e Linux</a> · <a href="https://github.com/ByMaxAnjos/climasus-plus">Repositório no GitHub</a></p>
 <div class="support-logos" aria-label="Logos institucionais">
 <a href="https://github.com/ByMaxAnjos/climasus-plus"><img src="images/brand/climasus.png" alt="climasus+ Studio"></a>
-<a href="https://www.gov.br/cnpq/"><img src="images/brand/inct-conexao.png" class="inct" alt="INCT-CONEXAO"></a>
+<a href="https://inct-conexao.com.br/"><img src="images/brand/inct-conexao.png" class="inct" alt="INCT-CONEXAO"></a>
 <a href="https://www.fiocruz.br/"><img src="images/brand/fiocruz-rondonia.png" alt="Fiocruz Rondônia"></a>
 <a href="https://www.gov.br/cnpq/"><img src="images/brand/cnpq.png" alt="CNPq"></a>
 <a href="https://www.ufjf.br/"><img src="images/brand/ufjf.png" alt="UFJF"></a>

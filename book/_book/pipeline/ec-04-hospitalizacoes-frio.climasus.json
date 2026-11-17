@@ -57,6 +57,13 @@
       }
     },
     {
+      "id": "frio-fill",
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "c(\"tair_dry_bulb_c\", \"tair_max_c\", \"tair_min_c\")"
+      }
+    },
+    {
       "fn": "sus_climate_compute_coldwaves",
       "values": {
         "method": "WHO",

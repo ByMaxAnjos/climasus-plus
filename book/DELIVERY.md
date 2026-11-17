@@ -1,11 +1,11 @@
 # Entrega — guia prático reformatado
 
-**Data:** 22 de outubro de 2026  
+**Data:** 17 de novembro de 2026  
 **Branch:** `team/guia-pratico`  
 **Pasta:** `book/`  
 **Prévia:** `book/_book/index.html` (gerada por `quarto render --to html`)  
-**PDF:** `book/_book/climasus-studio-guia-pratico.pdf` (69 páginas)  
-**DOCX:** `book/_book/climasus-studio-guia-pratico.docx` (71 páginas)
+**PDF:** `book/_book/climasus-studio-guia-pratico.pdf` (95 páginas)  
+**DOCX:** `book/_book/climasus-studio-guia-pratico.docx`
 
 ## O que foi feito
 
@@ -26,9 +26,14 @@
   “pipeline como rio”; novo divisor de rio e contorno topográfico.
 - Tabelas largas com rolagem horizontal; callouts, figuras, quizzes e glossário
   restilizados; barra de progresso de leitura e foco acessível.
-- Conteúdo auditado em 22/10/2026: 79 funções (15/32/32); funções de censo e
+- Conteúdo auditado em 17/11/2026: 80 funções (15/33/32); funções de censo e
   vínculo espacial documentadas na Integração; `month` obrigatório em SIH/CNES/SIA;
   `parallel = FALSE` no INMET; `plot_type = "epidemic"` como padrão.
+- Revisão para publicação: capítulo 0 incorporado ao capítulo 1; capítulo 13 de
+  referências; nomenclatura dos Modos de uso alinhada ao aplicativo; projetos
+  `.climasus.json` e espelhos em R dos quatro casos sincronizados com os Modelos do
+  Studio (incluindo `sus_climate_fill_inmet`); links internos e chamadas de interface
+  conferidos.
 - PDF desenhado com capa em página inteira, sumário, aberturas de parte e
   páginas de leitura (Chrome/Playwright sobre `print-cover.html` + `print-body.html`).
 - DOCX editável com capa, aberturas de parte em imagem, tipografia Georgia/Calibri,

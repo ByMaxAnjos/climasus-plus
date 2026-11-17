@@ -31,6 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./13-referencias.html" rel="next">
 <link href="./11-glossario.html" rel="prev">
 <link href="./images/brand/favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -169,17 +170,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do Pipeline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -194,12 +190,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Vigilância e gestão</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -209,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Pesquisa avançada</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -244,12 +240,17 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário do climasus+ Studio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-referencias.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referências</span></a>
   </div>
 </li>
     </ul>
@@ -270,7 +271,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#três-parâmetros-que-costumam-gerar-dúvida" id="toc-três-parâmetros-que-costumam-gerar-dúvida" class="nav-link" data-scroll-target="#três-parâmetros-que-costumam-gerar-dúvida">Três parâmetros que costumam gerar dúvida</a></li>
   <li><a href="#preservar-e-compartilhar-uma-análise" id="toc-preservar-e-compartilhar-uma-análise" class="nav-link" data-scroll-target="#preservar-e-compartilhar-uma-análise">Preservar e compartilhar uma análise</a>
   <ul class="collapse">
-  <li><a href="#biblioteca-de-pipelines" id="toc-biblioteca-de-pipelines" class="nav-link" data-scroll-target="#biblioteca-de-pipelines">Biblioteca de pipelines do guia</a></li>
+  <li><a href="#biblioteca-de-pipelines" id="toc-biblioteca-de-pipelines" class="nav-link" data-scroll-target="#biblioteca-de-pipelines">Biblioteca de Pipelines do guia</a></li>
   </ul></li>
   <li><a href="#regra-prática" id="toc-regra-prática" class="nav-link" data-scroll-target="#regra-prática">Regra prática</a></li>
   </ul>
@@ -420,36 +421,42 @@ Como ler as tabelas
 <td>Quando a exposição precisa ser GDD (Aedes: <code>gdd_base = 11</code>, <code>gdd_upper = 35</code>), UTCI, WBGT ou outro índice.</td>
 </tr>
 <tr class="even">
+<td><strong>Detectar ondas de calor/frio</strong> (<code>sus_climate_compute_heatwaves</code>, <code>sus_climate_compute_coldwaves</code>)</td>
+<td><code>method</code>, <code>percentile</code>, <code>baseline_start</code>, <code>baseline_end</code>, <code>min_duration</code></td>
+<td>Definição, limiar, período de referência e duração mínima do evento.</td>
+<td>Sempre que a conclusão depender de uma definição de onda; use baseline fixo e teste mais de um método.</td>
+</tr>
+<tr class="odd">
 <td><strong>Importar chuva por satélite (CHIRPS)</strong> (<code>sus_grid_chirps</code>)</td>
 <td><code>resolution</code>, <code>years</code>, <code>months</code>, <code>municipalities</code>, <code>agg_fun</code>, <code>use_cache</code></td>
 <td>Chuva em grade por período, resolução, território e forma de agregação.</td>
 <td>Quando a área tem baixa cobertura de estações ou muitos municípios. Para dengue, use <code>resolution = "daily"</code>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Importar focos de queimadas</strong> (<code>sus_grid_fires</code>)</td>
 <td><code>years</code>, <code>months</code>, <code>uf</code>, <code>bbox</code>, <code>source</code>, <code>municipalities</code>, <code>biome</code></td>
 <td>Período, território, fonte e recorte ambiental dos focos de calor.</td>
 <td>Em estudos de fumaça, queimadas ou exposição ambiental aguda.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Importar poluição do ar</strong> (<code>sus_grid_pollution_cams</code>, <code>sus_grid_pollution_ghap</code>, <code>sus_grid_pollution_merra2</code>)</td>
 <td><code>pollutants</code>, <code>years</code>, <code>municipalities</code>, <code>resolution</code>, <code>metric</code>, <code>use_cache</code></td>
 <td>Poluente, período, território e resolução. GHAP tem <code>municipalities</code> e ~1 km; CAMS é mais grosseira e não tem agregação municipal.</td>
-<td>Quando o desfecho pode responder à qualidade do ar, não só ao clima. Para PM2.5 municipal, prefira GHAP.</td>
+<td>Quando o desfecho pode responder à qualidade do ar, não só ao clima. Para MP2,5 municipal, prefira GHAP.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Juntar dados ambientais por município</strong> (<code>sus_grid_join</code>)</td>
 <td><code>by</code>, <code>type_out</code></td>
 <td>Chaves usadas para unir ambiente e saúde.</td>
 <td>Quando os dados ambientais têm escala anual, mensal ou diária diferente da saúde.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Calcular indicadores socioeconômicos e de saúde</strong> (<code>sus_socio_compute_indicators</code>)</td>
 <td><code>indicators</code>, <code>col_mapping</code>, <code>confidence_level</code>, <code>add_ci</code></td>
 <td>Quais indicadores de território entram na análise e se terão intervalos de incerteza.</td>
 <td>Quando vulnerabilidade, saneamento, renda ou estrutura demográfica podem confundir o efeito climático.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>)</td>
 <td><code>climate_var</code>, <code>time_unit</code>, <code>temporal_strategy</code>, <code>lag_days</code>, <code>window_days</code>, <code>offset_days</code>, <code>temp_base</code></td>
 <td>Exposição climática, escala temporal e defasagem.</td>
@@ -477,72 +484,66 @@ Como ler as tabelas
 </thead>
 <tbody>
 <tr class="odd">
-<td><strong>Detectar ondas de calor/frio</strong> (<code>sus_climate_compute_heatwaves</code>, <code>sus_climate_compute_coldwaves</code>)</td>
-<td><code>method</code>, <code>percentile</code>, <code>baseline_start</code>, <code>baseline_end</code>, <code>min_duration</code></td>
-<td>Definição, limiar, período de referência e duração mínima do evento.</td>
-<td>Sempre que a conclusão depender de uma definição de onda; use baseline fixo e teste mais de um método.</td>
-</tr>
-<tr class="even">
 <td><strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>)</td>
 <td><code>outcome_col</code>, <code>climate_col</code>, <code>lag_max</code>, <code>covariates</code>, <code>argvar</code>, <code>arglag</code>, <code>dof_per_year</code>, <code>ref_value</code>, <code>family</code></td>
 <td>Desfecho, exposição, forma da relação exposição-defasagem, tendência e referência.</td>
 <td>Em estudos de temperatura, chuva, GDD ou poluição com efeito distribuído no tempo. Use <code>ref_value</code>/MMT para carga atribuível; <code>family = "negbin"</code> é redirecionado para quasi-Poisson com aviso.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Visualizar resultados do DLNM</strong> (<code>sus_mod_plot_dlnm</code>)</td>
 <td><code>type</code>, <code>output_type</code>, <code>exposure_at</code>, <code>lags_at</code>, <code>interactive</code></td>
 <td>Qual parte do modelo será mostrada e em que formato.</td>
 <td>Quando a comunicação precisar destacar curva geral, defasagem ou superfície 3D.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Calcular fração atribuível</strong> (<code>sus_mod_af</code>)</td>
 <td><code>threshold</code>, <code>range</code>, <code>pred_at</code>, <code>by</code>, <code>nsim</code>, <code>alpha</code></td>
 <td>Faixa de exposição atribuída, estratificação e incerteza da estimativa.</td>
 <td>Quando a pergunta for “quanto da carga pode ser atribuída ao clima?”.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Estimar excesso de óbitos</strong> (<code>sus_mod_excess</code>)</td>
 <td><code>method</code>, <code>control_period</code>, <code>study_period</code>, <code>date_col</code>, <code>outcome_col</code></td>
 <td>Linha de base esperada, período de comparação e excesso observado.</td>
 <td>Em eventos extremos, surtos ou períodos de crise.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Combinar DLNM entre cidades</strong> (<code>sus_mod_pool</code>)</td>
 <td><code>fits</code>, <code>method</code>, <code>city_labels</code></td>
 <td>Como estimativas locais viram estimativa combinada.</td>
 <td>Quando o estudo inclui vários municípios ou estratos.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Explicar diferenças entre cidades</strong> (<code>sus_mod_metaregression</code>)</td>
 <td><code>covariates</code>, <code>fits</code>, <code>standardize</code></td>
 <td>Quais características territoriais explicam heterogeneidade.</td>
 <td>Quando o efeito varia muito entre cidades.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Comparar sensibilidade entre grupos</strong> (<code>sus_mod_sensitivity</code>)</td>
 <td><code>fits</code>, <code>hot_percentile</code>, <code>cold_percentile</code>, <code>stratum_labels</code>, <code>alpha</code></td>
 <td>Cenários alternativos de limiar e estratos.</td>
 <td>Sempre que a conclusão depender de limiar, grupo etário ou método.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Avaliar impacto com série interrompida</strong> (<code>sus_mod_its</code>)</td>
 <td><code>interruption_dates</code>, <code>outcome_col</code>, <code>date_col</code>, <code>harmonics</code>, <code>family</code>, <code>covariates</code></td>
 <td>Evento/intervenção e estrutura temporal do modelo.</td>
 <td>Em avaliação de alerta, política pública, pandemia ou evento definido no tempo.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Analisar com case-crossover</strong> (<code>sus_mod_casecrossover</code>)</td>
 <td><code>outcome_col</code>, <code>exposure_col</code>, <code>covariates</code>, <code>stratum</code>, <code>lag</code>, <code>method</code>, <code>family</code></td>
 <td>Como cada caso é comparado com seus períodos de controle.</td>
 <td>Em exposições agudas com séries mais curtas.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Modelar risco espacial ou espaço-temporal</strong></td>
 <td><code>W</code>/<code>neighbors</code>, <code>time_col</code>, <code>covariates</code>, <code>offset</code>, <code>family</code></td>
 <td>Dependência entre municípios, tempo, covariáveis e denominador.</td>
 <td>Quando a pergunta inclui onde o risco se concentra ou como muda no espaço-tempo. Use uma linha por município e <code>offset</code> de expected counts/população.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Prever desfechos com machine learning</strong> (<code>sus_mod_ml</code>)</td>
 <td><code>outcome_col</code>, <code>feature_cols</code>, <code>id_col</code>, <code>objective</code>, <code>nfold</code>, <code>max_depth</code></td>
 <td>Alvo, preditores, validação e complexidade do modelo.</td>
@@ -633,20 +634,20 @@ Como ler as tabelas
 <td>Compartilhe junto a fonte dos dados, período, filtros e versão do Studio.</td>
 </tr>
 <tr class="even">
-<td><strong>Exportar <code>.R</code></strong></td>
+<td><strong>Exportar código</strong></td>
 <td>O código equivalente ao Pipeline.</td>
 <td>Revise o código e registre as dependências antes de executar fora do Studio.</td>
 </tr>
 <tr class="odd">
-<td><strong>Exportar resultado</strong></td>
-<td>Tabelas, gráficos, mapas ou outros artefatos.</td>
+<td><strong>Baixar Resultado</strong> (CSV, XLSX, Parquet, PNG, SVG, GeoTIFF)</td>
+<td>Tabelas, gráficos, mapas ou outros artefatos produzidos por um Passo.</td>
 <td>Mantenha o arquivo original e a descrição dos critérios usados.</td>
 </tr>
 </tbody>
 </table>
 <p>Salvar um arquivo não torna o resultado automaticamente reproduzível: dados externos podem mudar, caminhos locais podem deixar de existir e métodos estatísticos exigem revisão. Para uma decisão pública, anexe a ficha metodológica e as limitações.</p>
 <section id="biblioteca-de-pipelines" class="level3">
-<h3 class="anchored" data-anchor-id="biblioteca-de-pipelines">Biblioteca de pipelines do guia</h3>
+<h3 class="anchored" data-anchor-id="biblioteca-de-pipelines">Biblioteca de Pipelines do guia</h3>
 <p>Todos os pipelines descritos neste guia estão em <a href="pipeline/README.md"><code>pipeline/</code></a> como projetos <code>.climasus.json</code>, com um espelho em R em <code>pipeline/R/</code>. O projeto é o grafo exato — Passos, ordem e Parâmetros —; o <code>.R</code> é a mesma cadeia em código.</p>
 <table class="caption-top table">
 <thead>
@@ -685,25 +686,25 @@ Como ler as tabelas
 <tr class="odd">
 <td><a href="pipeline/ec-01-respiratorio-pediatrico.climasus.json"><code>ec-01-respiratorio-pediatrico.climasus.json</code></a></td>
 <td>Cap. 7</td>
-<td>13</td>
+<td>14</td>
 <td><a href="pipeline/R/ec-01-respiratorio-pediatrico.R"><code>R</code></a></td>
 </tr>
 <tr class="even">
 <td><a href="pipeline/ec-02-dengue-clima.climasus.json"><code>ec-02-dengue-clima.climasus.json</code></a></td>
 <td>Cap. 8</td>
-<td>11</td>
+<td>12</td>
 <td><a href="pipeline/R/ec-02-dengue-clima.R"><code>R</code></a></td>
 </tr>
 <tr class="odd">
 <td><a href="pipeline/ec-03-cardio-idosos-calor.climasus.json"><code>ec-03-cardio-idosos-calor.climasus.json</code></a></td>
 <td>Cap. 9</td>
-<td>15</td>
+<td>16</td>
 <td><a href="pipeline/R/ec-03-cardio-idosos-calor.R"><code>R</code></a></td>
 </tr>
 <tr class="even">
 <td><a href="pipeline/ec-04-hospitalizacoes-frio.climasus.json"><code>ec-04-hospitalizacoes-frio.climasus.json</code></a></td>
 <td>Cap. 10</td>
-<td>12</td>
+<td>13</td>
 <td><a href="pipeline/R/ec-04-hospitalizacoes-frio.R"><code>R</code></a></td>
 </tr>
 <tr class="odd">
@@ -727,7 +728,7 @@ Como ler as tabelas
 </tbody>
 </table>
 <p><strong>Abrir um projeto.</strong> Baixe o <code>.climasus.json</code> e use <strong>Arquivo → Abrir projeto</strong>. O Studio restaura o grafo; confira UF, período, CID e exposição antes de executar. Para salvar o seu, use <strong>Arquivo → Salvar projeto</strong>: o arquivo guarda Passos, ordem, Parâmetros, notas, idioma, tema e modo de uso.</p>
-<p><strong>O que o <code>.json</code> não guarda.</strong> Dados, cache, Resultados, Artefatos, caminhos absolutos e a versão do Studio. Um projeto que abre não é, por si só, uma análise reproduzível: ele é o <strong>mapa do caminho</strong>. A proveniência dos dados e a versão do ambiente precisam acompanhar o arquivo.</p>
+<p><strong>O que o <code>.json</code> não guarda.</strong> Dados, cache, Resultados, Artefatos e a versão do Studio. Caminhos locais podem permanecer nos Parâmetros (por exemplo, o caminho de um arquivo importado), por isso não os trate como portáveis entre computadores. Um projeto que abre não é, por si só, uma análise reproduzível: ele é o <strong>mapa do caminho</strong>. A proveniência dos dados e a versão do ambiente precisam acompanhar o arquivo.</p>
 <p><strong>Ficha de proveniência.</strong> Ao compartilhar um projeto, anexe:</p>
 <table class="caption-top table">
 <thead>
@@ -759,7 +760,7 @@ Como ler as tabelas
 </tr>
 </tbody>
 </table>
-<p><strong>Código R.</strong> O comando <strong>Exportar <code>.R</code></strong> gera o equivalente ao Pipeline; os arquivos em <code>pipeline/R/</code> são o mesmo espelho, prontos para copiar. Use-os quando a análise precisa ser versionada em Git, revisada por outra pessoa ou executada fora da interface.</p>
+<p><strong>Código R.</strong> O comando <strong>Exportar código</strong> gera o equivalente ao Pipeline; os arquivos em <code>pipeline/R/</code> são o mesmo espelho, prontos para copiar. Use-os quando a análise precisa ser versionada em Git, revisada por outra pessoa ou executada fora da interface.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Regra de ouro">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1209,11 +1210,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./11-glossario.html" class="pagination-link" aria-label="Glossário formal do curso">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Glossário formal do curso</span></span>
+      <a href="./11-glossario.html" class="pagination-link" aria-label="Glossário do climasus+ Studio">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Glossário do climasus+ Studio</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./13-referencias.html" class="pagination-link" aria-label="Referências">
+        <span class="nav-page-text"><span class="chapter-title">Referências</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

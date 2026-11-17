@@ -3,7 +3,7 @@ title: "Estudo de caso: mortalidade respiratória pediátrica e temperatura"
 subtitle: "Capítulo 07 · Estudos de caso"
 ---
 
-No recorte de fumaça e qualidade do ar do Capítulo 0, apresentamos a ideia de que fumaça
+A fumaça
 de queimada e má qualidade do ar podem se transformar em crise respiratória — com crianças
 pequenas entre os grupos mais vulneráveis. Este capítulo retoma o desfecho respiratório
 pediátrico em uma sequência completa, usando a temperatura como exposição principal e a
@@ -14,14 +14,14 @@ querem ver um Pipeline inteiro montado, sem interrupção entre Etapas. O capít
 uma lição de **poder e unidade de análise**: o resultado correto deste recorte é “não
 estimável”, e a replicação mostra por quê.
 
-## O pipeline completo, etapa por etapa
+## O Pipeline completo, etapa por etapa
 
 Recorte: óbitos por causas respiratórias (CID-10, capítulo J) em crianças menores de 5
-anos, no Sudeste (SP, RJ, MG, ES), 2015-2019, contra a temperatura do ar registrada pelas
+anos, no Sudeste (SP, RJ, MG, ES), 2015–2019, contra a temperatura do ar registrada pelas
 estações do INMET. O Modelo de catálogo `ec-01-respiratorio-pediatrico` traz este
 Pipeline pronto para carregar no Centro de Pipelines.
 
-O snapshot usa o Sudeste para manter continuidade com o caso ec-01; a replicação
+O snapshot usa o Sudeste para manter continuidade com o exercício do Capítulo 2; a replicação
 cidade-específica usa a capital paulista, porque a agregação regional não corresponde a
 nenhuma exposição real. O mesmo Pipeline se aplica à Amazônia, onde a exposição principal
 pode ser MP2,5 ou fumaça e a série climática deve vir de grade; a lógica de Preparação,
@@ -85,7 +85,7 @@ uma cidade. A exposição é a média das exposições municipais, e as 21 colun
 A701 (Mirante), reconstruiu a temperatura semanal a partir da série diária e criou
 defasagens em **semanas** (0–3). Série de 259 semanas e **757 óbitos**; modelo semanal com
 temperatura (ns, 3 df), umidade da semana e 10 df de tendência. O filtro municipal é feito
-no script de replicação, antes do modelo; o template do catálogo importa as UFs inteiras.
+no script de replicação, antes do modelo; o Modelo do catálogo importa as UFs inteiras.
 
 **Snapshot:** `data/ec01/analytic.parquet` (MD5 `ebeb29b507eaff67a7cd051ccf7337a1`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec01/codebook.csv`.
@@ -142,15 +142,15 @@ mínimo como “temperatura segura” individual.
 
 | Componente | Snapshot (Sudeste) | Replicação (cidade) |
 |---|---:|---:|
-| Total | -29,1% (-50,7 a -12,3) | 41,6% (28,7–50,4)* |
-| Calor | -12,2% (-20,7 a -5,7) | 44,2%* |
-| Frio | -16,8% (-29,8 a -6,2) | -2,5%* |
+| Total | −29,1% (−50,7 a −12,3) | 41,6% (28,7–50,4)* |
+| Calor | −12,2% (−20,7 a −5,7) | 44,2%* |
+| Frio | −16,8% (−29,8 a −6,2) | −2,5%* |
 
 \* AF não interpretável: MMT na borda (p10), curva invertida e apenas 757 eventos. O número
 não deve ser citado como carga.
 
 **Como ler — e por que este resultado não vira manchete:** a AF do snapshot saiu
-**negativa** (-29,1%); a da replicação saiu **positiva, mas igualmente inválida** (41,6%).
+**negativa** (−29,1%); a da replicação saiu **positiva, mas igualmente inválida** (41,6%).
 Nos dois casos, a conta não é interpretável como carga atribuível. Quando a AF é negativa ou
 quando a curva não estabiliza, o correto é **não reportar** um percentual de óbitos
 atribuíveis e voltar ao desenho: unidade de análise, unidade do lag, poder, referência e
@@ -189,7 +189,7 @@ precisam entrar. Sem isso, o resultado nulo do snapshot não deve ser interpreta
 | Pergunta | Snapshot (Sudeste) | Replicação (cidade) |
 |---|---|---|
 | A temperatura no p75 se associa a mais óbitos? | Não; RR 0,97 (0,78–1,21) | Não estimável |
-| Qual é a fração atribuível? | Negativa (-29,1%) | 41,6%, mas inválida |
+| Qual é a fração atribuível? | Negativa (−29,1%) | 41,6%, mas inválida |
 | O modelo está bem especificado? | Não; autocorrelação e dispersão 1,68 | Não; MMT na borda e curva invertida |
 | Qual é a conclusão? | Não usar a AF | **Não estimável com 757 eventos** |
 | O que fazer? | Revisar o desenho | Pool multicidade + lags semanais |
@@ -211,13 +211,13 @@ medida por MP2,5 ou focos de calor, e o modelo precisa lidar com a sazonalidade 
 Sem essa extensão e sem pooling, a temperatura sozinha não sustenta uma conclusão de carga.
 
 Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
-automatizada semanal com dados atualizados — use **Arquivo → Salvar projeto** e **Exportar `.R`**,
+automatizada semanal com dados atualizados — use **Arquivo → Salvar projeto** e **Exportar código**,
 registrando fontes, filtros, versões, referência e limitações.
 
 ## Reproduzir
 
 ::: {.callout-note title="Reprodutibilidade"}
-**Abrir no Studio.** Baixe [`ec-01-respiratorio-pediatrico.climasus.json`](pipeline/ec-01-respiratorio-pediatrico.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 13 Passos, a ordem e os Parâmetros descritos neste capítulo.
+**Abrir no Studio.** Baixe [`ec-01-respiratorio-pediatrico.climasus.json`](pipeline/ec-01-respiratorio-pediatrico.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 14 Passos, a ordem e os Parâmetros descritos neste capítulo.
 
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-01-respiratorio-pediatrico.R`](pipeline/R/ec-01-respiratorio-pediatrico.R). A replicação cidade-específica que mostra por que este recorte não é estimável está em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
@@ -248,6 +248,10 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima <- sus_climate_inmet(years = 2015:2019, uf = c("SP", "RJ", "MG", "ES"))
+clima <- sus_climate_fill_inmet(
+  clima,
+  target_var = c("tair_dry_bulb_c", "rh_mean_porc")
+)
 
 integrado <- sus_climate_aggregate(
   health_data = saude,

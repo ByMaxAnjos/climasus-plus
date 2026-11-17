@@ -1,5 +1,5 @@
 ---
-title: "Glossário formal do curso"
+title: "Glossário do climasus+ Studio"
 subtitle: "Capítulo 11 · Referência"
 ---
 
@@ -7,12 +7,12 @@ Este glossário reúne, em prosa contínua e com exemplos de uso correto e incor
 vocabulário oficial do climasus+ Studio apresentado ao longo dos capítulos anteriores. Ele
 não substitui o `CONTEXT.md` como fonte de autoridade — é uma adaptação didática,
 preparada para consulta rápida enquanto você lê ou revisa qualquer capítulo
-deste guia. Os primeiros termos seguem a organização do Capítulo 1: o pipeline e suas
+deste guia. Os primeiros termos seguem a organização do Capítulo 1: o Pipeline e suas
 partes, execução, organização e edição. Em seguida, o glossário amplia os conceitos de
 clima e saúde usados nos capítulos de Preparação, Integração, Análise & Modelagem e nos
 estudos de caso.
 
-## O pipeline e suas partes
+## O Pipeline e suas partes
 
 Uma **Função** é a definição de uma operação do catálogo — por exemplo,
 **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) — exibida na Biblioteca.
@@ -37,20 +37,20 @@ idiomas da interface (PT, EN, ES). Diga "monte o Pipeline com estes cinco Passos
 "fluxo", "grafo", "canvas" ou "workflow".
 
 Um **Projeto** é um Pipeline serializado em disco (arquivo `.climasus.json`, com Funções
-e Parâmetros). Projeto e Pipeline são a mesma coisa — "Projeto" é só o nome que se dá ao
-arquivo salvo. Diga "salve o Projeto antes de fechar o Studio"; evite "salve o
-workspace" ou "salve a sessão".
+e Parâmetros, além de idioma, tema e Modo de uso). Em outras palavras, "Projeto" é o nome
+que se dá ao arquivo salvo de um Pipeline. Diga "salve o Projeto antes de fechar o Studio";
+evite "salve o workspace" ou "salve a sessão".
 
 ## Execução
 
 O **Motor** é o componente que executa o Pipeline e devolve Resultados. É deliberadamente
-um detalhe interno: a UI nunca revela que ele roda R — nunca diga "Motor R", "engine",
-"R" ou "servidor" olhando para o leitor ou usuário. Essa é a orientação da ADR 0001,
+um detalhe interno: a interface nunca revela que ele roda R. Não use "Motor R", "engine",
+"R" ou "servidor" ao falar com o usuário. Essa é a orientação da ADR 0001,
 já apresentada no Capítulo 1: "isso roda R?" é uma pergunta legítima de curiosidade
-técnica, mas a resposta correta reforça que o usuário não precisa saber — nunca
-formaliza ou nomeia R. Diga "o Motor está processando o Pipeline"; evite "o R está
-rodando" ou "o engine travou". Quando o Motor está indisponível, a UI degrada para
-exportar código — isso é um recurso avançado, não o discurso padrão do Studio.
+técnica, mas a resposta correta reforça que o usuário não precisa saber — a linguagem de
+programação não é nomeada. Diga "o Motor está processando o Pipeline"; evite "o R está
+rodando" ou "o engine travou". Quando o Motor está indisponível, a UI permite
+exportar o código — isso é um recurso avançado, não o discurso padrão do Studio.
 
 Um **Resultado** é a saída de um Passo executado, com um tipo (tabela, gráfico, mapa,
 texto) — é o termo canônico, voltado ao usuário, para o que aparece no Nó e no painel de
@@ -162,9 +162,9 @@ ser interpretado com cuidado: foco detectado não mede sozinho a concentração 
 cada pessoa.
 
 **Poluição do ar** é a presença de contaminantes atmosféricos em níveis potencialmente
-prejudiciais à saúde, como material particulado fino (PM2.5), ozônio, dióxido de nitrogênio
+prejudiciais à saúde, como material particulado fino (MP2,5), ozônio, dióxido de nitrogênio
 e outros poluentes. Em clima e saúde, a poluição pode ser exposição principal ou mediadora
-entre evento ambiental e desfecho, por exemplo entre queimadas e internações respiratórias.
+entre evento ambiental e desfecho, por exemplo, entre queimadas e internações respiratórias.
 
 Uma **estação meteorológica** mede variáveis climáticas em um ponto específico do
 território. Ela é valiosa quando está bem localizada em relação à população estudada, mas
@@ -183,7 +183,7 @@ mas não deve ser tratada como observação pura; é uma estimativa modelada.
 **Território** é mais que localização geográfica. No guia, o termo inclui infraestrutura,
 renda, saneamento, acesso a serviços, composição etária e outras características que
 modificam o efeito do clima sobre a saúde. Dois municípios podem ter a mesma exposição
-climática e riscos muito diferentes por causa do território.
+climática e riscos muito diferentes pelo território.
 
 ## Saúde pública e epidemiologia
 

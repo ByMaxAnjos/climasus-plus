@@ -11,8 +11,8 @@ levantar hipótese e comunicar um problema, mas não mostra, isoladamente, se o 
 Responder a essa pergunta — **há evidência de efeito ou apenas variação estatística?** — é o
 trabalho da Etapa **Análise & Modelagem**.
 
-Este capítulo mantém a régua operacional dos Capítulos 2 e 3: público principal é
-acadêmico e gestor técnico, quem vai efetivamente ajustar um modelo. Quem quer só
+Este capítulo mantém a régua operacional dos Capítulos 2 e 3. O público principal é o
+acadêmico e o gestor técnico que vão efetivamente ajustar um modelo. Quem quer só
 entender o panorama pode ler a seção de grupos de Funções e pular direto para o resumo
 do fim do capítulo.
 
@@ -22,7 +22,7 @@ Uma série integrada mostra clima e saúde na mesma linha do tempo — mas séri
 têm tendência sazonal própria (mais casos respiratórios no inverno, por exemplo,
 independentemente do clima daquele ano específico), têm dias da semana com padrões diferentes,
 e têm ruído aleatório dia a dia. Sem um modelo estatístico que separe esses componentes,
-é fácil atribuir ao clima um padrão que na verdade é sazonalidade, tendência de longo
+é fácil atribuir ao clima um padrão que, na verdade, é sazonalidade, tendência de longo
 prazo, ou coincidência de amostra pequena. A Etapa Análise & Modelagem existe para fazer
 essa separação com método explícito — reportando, dependendo do método, um intervalo de
 confiança (a faixa plausível de valores do efeito, não um número único), um valor-p ou
@@ -34,8 +34,8 @@ nela.
 
 ## As 32 Funções da Análise & Modelagem, em 6 grupos
 
-A Biblioteca reúne 32 ações na Etapa Análise & Modelagem — a maior das três Etapas —
-organizadas em seis famílias. Cada uma responde a um tipo diferente de pergunta:
+A Biblioteca reúne 32 ações na Etapa Análise & Modelagem — a Etapa com maior exigência
+metodológica —, organizadas em seis famílias. Cada uma responde a um tipo diferente de pergunta:
 
 **(a) Núcleo temporal (defasagem e desfecho agregado)** — a família mais usada para a
 pergunta "quanto do desfecho de saúde é explicado pelo clima, considerando a defasagem?".
@@ -72,7 +72,7 @@ série interrompida serve para avaliar se uma intervenção pontual mudou o desf
 que não é explicado só pelo acaso?
 
 - **Construir vizinhança entre municípios** (`sus_mod_spatial_weights`) — monta a matriz de vizinhança entre municípios, pré-requisito
-  para todas as demais Funções deste grupo.
+  para as demais Funções deste grupo.
 - **Mapear risco com Bayes espacial (CAR/BYM)** (`sus_mod_spatial_bayes`) — Modelo Bayesiano espacial (CAR/BYM) com covariáveis
   climáticas; suaviza taxas por município com a informação dos vizinhos. Exige **uma linha
   por município** e, para modelar risco em vez de contagem, um `offset` de expected
@@ -138,15 +138,15 @@ prioridade, sem entrar no detalhe estatístico dos outros grupos.
 
 ## Função-chave da Etapa: Modelar risco com DLNM
 **Modelar risco com DLNM** (`sus_mod_dlnm`) ajusta um **Modelo de Defasagem Não Linear Distribuída** (DLNM) — o método
-mais usado na literatura de clima e saúde para responder à pergunta apresentada no
-Capítulo 0: o efeito de uma variável climática sobre um
+mais usado na literatura de clima e saúde para responder a uma questão central:
+o efeito de uma variável climática sobre um
 desfecho de saúde não é instantâneo nem constante, ele se distribui ao longo de vários
 dias depois da exposição, e essa distribuição pode ter formato não linear (por exemplo,
 tanto calor extremo quanto frio extremo aumentam o risco, com o meio-termo sendo mais
 seguro).
 
 O Modelo recebe a série integrada (Capítulo 3) e exige duas decisões centrais, que
-formalizam estatisticamente a "defasagem" do Capítulo 0:
+formalizam estatisticamente a "defasagem":
 
 - **A forma da relação exposição-resposta** — como o risco muda com o nível da variável
   climática (por exemplo, uma curva em U para temperatura, em que tanto frio quanto
@@ -231,7 +231,7 @@ de exposição ao calor extremo não tivesse ocorrido.
 ## Exercício guiado: do calor extremo à fração atribuível
 
 Vamos retomar o arco de **doença cardiovascular em idosos e ondas de calor**
-(`ec-03-cardio-idosos-calor`) aberto no recorte de calor e frio do Capítulo 0. É um caso frequente
+(`ec-03-cardio-idosos-calor`), ligado ao tema de calor e frio. É um caso frequente
 de uso do núcleo temporal: efeito agudo, mesmo-dia a poucos dias de defasagem, um único
 Modelo DLNM já é suficiente para responder à pergunta de gestão. O Modelo de catálogo
 `mod-dlnm` traz o esqueleto deste exercício e pode ser carregado no Centro de Pipelines
@@ -280,8 +280,8 @@ Se o estudo cobrir mais de uma cidade, o próximo Passo depois de **Modelar risc
 em cada cidade é **Combinar DLNM entre cidades** (`sus_mod_pool`), para combinar as estimativas — e, se o efeito variar muito
 entre cidades, **Explicar diferenças entre cidades** (`sus_mod_metaregression`) ajuda a entender por quê (renda, latitude,
 acesso a ar-condicionado, por exemplo). O Modelo de catálogo
-`ec-03-cardio-idosos-calor` retoma esse cruzamento em um estudo de caso completo, no
-módulo dedicado aos estudos aplicados.
+`ec-03-cardio-idosos-calor` retoma esse cruzamento em um estudo de caso completo, na
+Parte V (Estudos de caso).
 
 ## Cuidado: um bom Modelo ainda não sai do Studio sozinho
 
@@ -293,7 +293,7 @@ que outros fatores não foram medidos) e continua sujeita à mesma cautela de se
 associação, mesmo bem modelada estatisticamente, não é prova de causa isolada; é a
 melhor explicação que os dados e o Modelo sustentam até que surja evidência que a
 contradiga. O Resultado permanece no Pipeline do Studio. Para preservar o trabalho, use
-**Arquivo → Salvar projeto**, que registra nós e parâmetros, e **Exportar `.R`**, que gera o código
+**Arquivo → Salvar projeto**, que registra nós e parâmetros, e **Exportar código**, que gera o código
 equivalente para revisão ou execução em outro ambiente. Esses arquivos não substituem a
 avaliação metodológica nem garantem que fontes externas, versões de dados e dependências
 permaneçam iguais.

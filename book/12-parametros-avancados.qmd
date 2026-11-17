@@ -42,9 +42,10 @@ que momento vale sair do padrão.
 | **Importar dados das estações do INMET** (`sus_climate_inmet`) | `years`, `uf`, `station_code`, `parallel` | Período, estado, estações meteorológicas e execução em paralelo. | Quando houver estação conhecida ou necessidade de restringir a área de estudo. `parallel` é desempenho: o padrão é `FALSE`; use `TRUE` explícito só se o ambiente suportar. |
 | **Preencher falhas nos dados do INMET** (`sus_climate_fill_inmet`) | `target_var`, `quality_threshold`, `run_evaluation`, `gap_percentage`, `keep_features` | Qual variável preencher, o limite de falhas por estação (padrão 40%) e se o método é só testado em vez de aplicado. | Sempre que a série tiver lacunas. Use `run_evaluation = TRUE` primeiro; com `keep_features = FALSE` a coluna `is_imputed` marca o que foi estimado. |
 | **Calcular índices de conforto térmico** (`sus_climate_compute_indicators`) | `indicators`, `region`, `custom_thresholds`, `apply_validity_mask` | Indicadores bioclimáticos e, para dengue, GDD (`gdd_c`) com base/teto configuráveis. | Quando a exposição precisa ser GDD (Aedes: `gdd_base = 11`, `gdd_upper = 35`), UTCI, WBGT ou outro índice. |
+| **Detectar ondas de calor/frio** (`sus_climate_compute_heatwaves`, `sus_climate_compute_coldwaves`) | `method`, `percentile`, `baseline_start`, `baseline_end`, `min_duration` | Definição, limiar, período de referência e duração mínima do evento. | Sempre que a conclusão depender de uma definição de onda; use baseline fixo e teste mais de um método. |
 | **Importar chuva por satélite (CHIRPS)** (`sus_grid_chirps`) | `resolution`, `years`, `months`, `municipalities`, `agg_fun`, `use_cache` | Chuva em grade por período, resolução, território e forma de agregação. | Quando a área tem baixa cobertura de estações ou muitos municípios. Para dengue, use `resolution = "daily"`. |
 | **Importar focos de queimadas** (`sus_grid_fires`) | `years`, `months`, `uf`, `bbox`, `source`, `municipalities`, `biome` | Período, território, fonte e recorte ambiental dos focos de calor. | Em estudos de fumaça, queimadas ou exposição ambiental aguda. |
-| **Importar poluição do ar** (`sus_grid_pollution_cams`, `sus_grid_pollution_ghap`, `sus_grid_pollution_merra2`) | `pollutants`, `years`, `municipalities`, `resolution`, `metric`, `use_cache` | Poluente, período, território e resolução. GHAP tem `municipalities` e ~1 km; CAMS é mais grosseira e não tem agregação municipal. | Quando o desfecho pode responder à qualidade do ar, não só ao clima. Para PM2.5 municipal, prefira GHAP. |
+| **Importar poluição do ar** (`sus_grid_pollution_cams`, `sus_grid_pollution_ghap`, `sus_grid_pollution_merra2`) | `pollutants`, `years`, `municipalities`, `resolution`, `metric`, `use_cache` | Poluente, período, território e resolução. GHAP tem `municipalities` e ~1 km; CAMS é mais grosseira e não tem agregação municipal. | Quando o desfecho pode responder à qualidade do ar, não só ao clima. Para MP2,5 municipal, prefira GHAP. |
 | **Juntar dados ambientais por município** (`sus_grid_join`) | `by`, `type_out` | Chaves usadas para unir ambiente e saúde. | Quando os dados ambientais têm escala anual, mensal ou diária diferente da saúde. |
 | **Calcular indicadores socioeconômicos e de saúde** (`sus_socio_compute_indicators`) | `indicators`, `col_mapping`, `confidence_level`, `add_ci` | Quais indicadores de território entram na análise e se terão intervalos de incerteza. | Quando vulnerabilidade, saneamento, renda ou estrutura demográfica podem confundir o efeito climático. |
 | **Cruzar dados de saúde e clima** (`sus_climate_aggregate`) | `climate_var`, `time_unit`, `temporal_strategy`, `lag_days`, `window_days`, `offset_days`, `temp_base` | Exposição climática, escala temporal e defasagem. | Sempre que a pergunta envolver exposição acumulada, efeito atrasado ou comparação entre estratégias temporais. Use `lag_days` com `distributed_lag` e `temp_base` com `degree_days`. |
@@ -53,7 +54,6 @@ que momento vale sair do padrão.
 
 | Função | Parâmetros principais | O que controlam | Quando ajustar |
 |---|---|---|---|
-| **Detectar ondas de calor/frio** (`sus_climate_compute_heatwaves`, `sus_climate_compute_coldwaves`) | `method`, `percentile`, `baseline_start`, `baseline_end`, `min_duration` | Definição, limiar, período de referência e duração mínima do evento. | Sempre que a conclusão depender de uma definição de onda; use baseline fixo e teste mais de um método. |
 | **Modelar risco com DLNM** (`sus_mod_dlnm`) | `outcome_col`, `climate_col`, `lag_max`, `covariates`, `argvar`, `arglag`, `dof_per_year`, `ref_value`, `family` | Desfecho, exposição, forma da relação exposição-defasagem, tendência e referência. | Em estudos de temperatura, chuva, GDD ou poluição com efeito distribuído no tempo. Use `ref_value`/MMT para carga atribuível; `family = "negbin"` é redirecionado para quasi-Poisson com aviso. |
 | **Visualizar resultados do DLNM** (`sus_mod_plot_dlnm`) | `type`, `output_type`, `exposure_at`, `lags_at`, `interactive` | Qual parte do modelo será mostrada e em que formato. | Quando a comunicação precisar destacar curva geral, defasagem ou superfície 3D. |
 | **Calcular fração atribuível** (`sus_mod_af`) | `threshold`, `range`, `pred_at`, `by`, `nsim`, `alpha` | Faixa de exposição atribuída, estratificação e incerteza da estimativa. | Quando a pergunta for "quanto da carga pode ser atribuída ao clima?". |
@@ -94,14 +94,14 @@ Ao terminar, use os comandos disponíveis na interface:
 | Comando | O que preserva | Boa prática |
 |---|---|---|
 | **Arquivo → Salvar projeto** | Nós, ordem e parâmetros do Pipeline em `.climasus.json`. | Compartilhe junto a fonte dos dados, período, filtros e versão do Studio. |
-| **Exportar `.R`** | O código equivalente ao Pipeline. | Revise o código e registre as dependências antes de executar fora do Studio. |
-| **Exportar resultado** | Tabelas, gráficos, mapas ou outros artefatos. | Mantenha o arquivo original e a descrição dos critérios usados. |
+| **Exportar código** | O código equivalente ao Pipeline. | Revise o código e registre as dependências antes de executar fora do Studio. |
+| **Baixar Resultado** (CSV, XLSX, Parquet, PNG, SVG, GeoTIFF) | Tabelas, gráficos, mapas ou outros artefatos produzidos por um Passo. | Mantenha o arquivo original e a descrição dos critérios usados. |
 
 Salvar um arquivo não torna o resultado automaticamente reproduzível: dados externos
 podem mudar, caminhos locais podem deixar de existir e métodos estatísticos exigem
 revisão. Para uma decisão pública, anexe a ficha metodológica e as limitações.
 
-### Biblioteca de pipelines do guia {#biblioteca-de-pipelines}
+### Biblioteca de Pipelines do guia {#biblioteca-de-pipelines}
 
 Todos os pipelines descritos neste guia estão em [`pipeline/`](pipeline/README.md) como projetos
 `.climasus.json`, com um espelho em R em `pipeline/R/`. O projeto é o grafo
@@ -113,10 +113,10 @@ exato — Passos, ordem e Parâmetros —; o `.R` é a mesma cadeia em código.
 | [`pipeline-preparacao-basica.climasus.json`](pipeline/pipeline-preparacao-basica.climasus.json) | Cap. 2 | 7 | [`R`](pipeline/R/00-preparacao.R) |
 | [`clima-aggregate-exposicao.climasus.json`](pipeline/clima-aggregate-exposicao.climasus.json) | Cap. 3 | 6 | [`R`](pipeline/R/01-integracao.R) |
 | [`mod-dlnm.climasus.json`](pipeline/mod-dlnm.climasus.json) | Cap. 6 | 5 | [`R`](pipeline/R/02-modelagem.R) |
-| [`ec-01-respiratorio-pediatrico.climasus.json`](pipeline/ec-01-respiratorio-pediatrico.climasus.json) | Cap. 7 | 13 | [`R`](pipeline/R/ec-01-respiratorio-pediatrico.R) |
-| [`ec-02-dengue-clima.climasus.json`](pipeline/ec-02-dengue-clima.climasus.json) | Cap. 8 | 11 | [`R`](pipeline/R/ec-02-dengue-clima.R) |
-| [`ec-03-cardio-idosos-calor.climasus.json`](pipeline/ec-03-cardio-idosos-calor.climasus.json) | Cap. 9 | 15 | [`R`](pipeline/R/ec-03-cardio-idosos-calor.R) |
-| [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) | Cap. 10 | 12 | [`R`](pipeline/R/ec-04-hospitalizacoes-frio.R) |
+| [`ec-01-respiratorio-pediatrico.climasus.json`](pipeline/ec-01-respiratorio-pediatrico.climasus.json) | Cap. 7 | 14 | [`R`](pipeline/R/ec-01-respiratorio-pediatrico.R) |
+| [`ec-02-dengue-clima.climasus.json`](pipeline/ec-02-dengue-clima.climasus.json) | Cap. 8 | 12 | [`R`](pipeline/R/ec-02-dengue-clima.R) |
+| [`ec-03-cardio-idosos-calor.climasus.json`](pipeline/ec-03-cardio-idosos-calor.climasus.json) | Cap. 9 | 16 | [`R`](pipeline/R/ec-03-cardio-idosos-calor.R) |
+| [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) | Cap. 10 | 13 | [`R`](pipeline/R/ec-04-hospitalizacoes-frio.R) |
 | [`tematico-ondas-calor.climasus.json`](pipeline/tematico-ondas-calor.climasus.json) | Cap. 9 | 5 | [`R`](pipeline/R/tematico-ondas-calor.R) |
 | [`tematico-ondas-frio.climasus.json`](pipeline/tematico-ondas-frio.climasus.json) | Cap. 10 | 5 | [`R`](pipeline/R/tematico-ondas-frio.R) |
 | [`pipeline-qualidade-visualizacao.climasus.json`](pipeline/pipeline-qualidade-visualizacao.climasus.json) | Cap. 2 | 5 | [`R`](pipeline/R/qualidade-visualizacao.R) |
@@ -126,10 +126,11 @@ restaura o grafo; confira UF, período, CID e exposição antes de executar. Par
 use **Arquivo → Salvar projeto**: o arquivo guarda Passos, ordem, Parâmetros, notas, idioma,
 tema e modo de uso.
 
-**O que o `.json` não guarda.** Dados, cache, Resultados, Artefatos, caminhos absolutos e a
-versão do Studio. Um projeto que abre não é, por si só, uma análise reproduzível: ele é o
-**mapa do caminho**. A proveniência dos dados e a versão do ambiente precisam acompanhar o
-arquivo.
+**O que o `.json` não guarda.** Dados, cache, Resultados, Artefatos e a versão do Studio.
+Caminhos locais podem permanecer nos Parâmetros (por exemplo, o caminho de um arquivo
+importado), por isso não os trate como portáveis entre computadores. Um projeto que abre
+não é, por si só, uma análise reproduzível: ele é o **mapa do caminho**. A proveniência dos
+dados e a versão do ambiente precisam acompanhar o arquivo.
 
 **Ficha de proveniência.** Ao compartilhar um projeto, anexe:
 
@@ -141,7 +142,7 @@ arquivo.
 | Método | referência (MMT ou mediana), defasagem, covariáveis |
 | Limitações | o que o desenho não cobre |
 
-**Código R.** O comando **Exportar `.R`** gera o equivalente ao Pipeline; os arquivos em
+**Código R.** O comando **Exportar código** gera o equivalente ao Pipeline; os arquivos em
 `pipeline/R/` são o mesmo espelho, prontos para copiar. Use-os quando a
 análise precisa ser versionada em Git, revisada por outra pessoa ou executada fora da
 interface.

@@ -1,9 +1,9 @@
 ---
 title: "Etapa Preparação: dados de saúde prontos antes de tudo"
-subtitle: "Capítulo 02 · Etapas do pipeline"
+subtitle: "Capítulo 02 · Etapas do Pipeline"
 ---
 
-A partir deste capítulo o guia assume que você quer *fazer*, não só entender. Se seu
+A partir deste capítulo, o guia assume que você quer *fazer*, não só entender. Se seu
 interesse é só acompanhar o panorama sem montar nada, pode ler a introdução de cada
 seção e pular direto para o resumo "Verifique se ficou" no final — a lógica geral
 continua acessível sem executar um único Passo. Mas se você é gestor técnico ou
@@ -92,8 +92,8 @@ doença, e vice-versa.
 
 ## Exercício guiado: da importação ao relatório de qualidade
 
-Vamos retomar o tema do **respiratório pediátrico** apresentado no recorte de fumaça e
-qualidade do ar do Capítulo 0: óbitos por causas respiratórias em crianças, um dos temas
+Vamos retomar o tema do **respiratório pediátrico**, ligado à fumaça e à
+qualidade do ar: óbitos por causas respiratórias em crianças, um dos temas
 mais sensíveis a queimadas e má qualidade do ar. O exemplo usa uma UF do Sudeste para manter continuidade com o caso
 ec-01; o mesmo Pipeline se aplica a qualquer UF — inclusive Amazonas, Pará, Rondônia ou
 Acre —, mudando `uf` e, quando necessário, a fonte climática. O Modelo de catálogo
@@ -126,7 +126,7 @@ Os demais Parâmetros podem ficar no padrão enquanto você estiver aprendendo o
 
 2. **Padronizar / corrigir encoding** — Funções **Corrigir acentuação e caracteres** (`sus_data_clean_encoding`) e depois
    **Padronizar nomes e valores** (`sus_data_standardize`). Não há parâmetro que o leitor precise decidir aqui — é
-   transformação automatizada —, mas é necessário conferir nomes, tipos e categorias
+   transformação automatizada — mas é necessário conferir nomes, tipos e categorias
    no Resultado. A execução sem erro não garante que todos os problemas da base tenham
    sido corrigidos.
 
@@ -139,7 +139,7 @@ Os demais Parâmetros podem ficar no padrão enquanto você estiver aprendendo o
    (`sus_data_create_variables`) antes de **Filtrar por características demográficas**
    (`sus_data_filter_demographics`), para disponibilizar a idade em anos. O exemplo
    histórico usa `age_range = c(0, 5)`. Na implementação consultada, ambos os limites
-   são inclusivos: esse filtro não equivale a idade estritamente menor que 5 anos.
+   são inclusivos: esse filtro não equivale à idade estritamente menor que 5 anos.
    Para esse último recorte, confira a variável de idade e aplique explicitamente
    `idade < 5` na preparação; não altere apenas o rótulo dos resultados.
 
@@ -154,7 +154,7 @@ Os demais Parâmetros podem ficar no padrão enquanto você estiver aprendendo o
    transforma nada; produz um Resultado de texto em seções, com base no histórico de
    Passos já aplicados no Pipeline.
 
-Ao final, o exercício reúne seis grupos de operações e oito Funções, cada Passo como um Nó no grafo — trocar a ordem entre filtro
+Ao final, o exercício reúne seis grupos de operações e oito Funções, com cada Passo como um Nó no grafo — trocar a ordem entre filtro
 e agregação, por exemplo, mudaria o resultado: agregar antes de filtrar contaria óbitos
 que você não quer incluir.
 

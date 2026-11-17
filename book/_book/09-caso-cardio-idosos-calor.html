@@ -204,17 +204,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do Pipeline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,12 +224,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Vigilância e gestão</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -244,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Pesquisa avançada</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -279,12 +274,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário do climasus+ Studio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-referencias.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referências</span></a>
   </div>
 </li>
     </ul>
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#o-pipeline-completo-etapa-por-etapa" id="toc-o-pipeline-completo-etapa-por-etapa" class="nav-link active" data-scroll-target="#o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</a></li>
+  <li><a href="#o-pipeline-completo-etapa-por-etapa" id="toc-o-pipeline-completo-etapa-por-etapa" class="nav-link active" data-scroll-target="#o-pipeline-completo-etapa-por-etapa">O Pipeline completo, etapa por etapa</a></li>
   <li><a href="#dados-usados" id="toc-dados-usados" class="nav-link" data-scroll-target="#dados-usados">Dados usados</a></li>
   <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">Resultados</a>
   <ul class="collapse">
@@ -339,10 +339,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>No recorte de calor e frio do Capítulo 0, usado como exemplo principal da Etapa Análise &amp; Modelagem (Capítulo 6), apresentamos o arco de calor extremo e doença cardiovascular em idosos — um caso de efeito agudo, com defasagem curta. Este capítulo acompanha o recorte do dado bruto do SIM-DO à carga atribuível ao calor <strong>e ao frio</strong>. Público principal: acadêmico e gestor técnico responsável por planos de contingência para ondas de calor. O exemplo usa a capital paulista; o snapshot original agregou o Estado inteiro, e a replicação cidade-específica corrige essa unidade de análise. O mesmo Pipeline vale para a Amazônia, com as adaptações de exposição descritas adiante.</p>
+<p>Como exemplo principal da Etapa Análise &amp; Modelagem (Capítulo 6), apresentamos o arco de calor extremo e doença cardiovascular em idosos — um caso de efeito agudo, com defasagem curta. Este capítulo acompanha o caso do dado bruto do SIM-DO à carga atribuível ao calor <strong>e ao frio</strong>. Público principal: acadêmico e gestor técnico responsável por planos de contingência para ondas de calor. O exemplo usa a capital paulista; o snapshot original agregou o Estado inteiro, e a replicação cidade-específica corrige essa unidade de análise. O mesmo Pipeline vale para a Amazônia, com as adaptações de exposição descritas adiante.</p>
 <section id="o-pipeline-completo-etapa-por-etapa" class="level2">
-<h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
-<p>Recorte: óbitos cardiovasculares (CID-10, capítulo I) em idosos (60 anos ou mais) no município de São Paulo (código 355030), 2010-2019, contra a temperatura das estações INMET. O Modelo de catálogo <code>ec-03-cardio-idosos-calor</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
+<h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O Pipeline completo, etapa por etapa</h2>
+<p>Recorte: óbitos cardiovasculares (CID-10, capítulo I) em idosos (60 anos ou mais) no município de São Paulo (código 355030), 2010–2019, contra a temperatura das estações INMET. O Modelo de catálogo <code>ec-03-cardio-idosos-calor</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
 <p>Em Manaus e em outras cidades amazônicas, o mesmo desenho se aplica, mas a exposição deve considerar calor úmido — por exemplo, WBGT ou UTCI, índices que combinam temperatura, umidade e ventilação — e a definição de onda de calor precisa ser revista; temperatura do ar isolada pode subestimar o risco.</p>
 <p><a href="images/arco-ec03.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec03.svg" class="img-fluid" alt="Arco do caso ec-03 em quatro etapas — preparação no SIM-DO para idosos, integração com ondas de calor de São Paulo, modelagem DLNM de efeito agudo e impacto com fração e número atribuível. À direita, a ficha do estudo; abaixo, a série de óbitos diários com pico durante a onda de calor e déficit posterior por efeito colheita."></a></p>
 <p><strong>Preparação</strong></p>
@@ -366,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p><strong>Análise &amp; Modelagem</strong></p>
 <ol start="14" type="1">
-<li><strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>) — ajusta o Modelo DLNM sobre a série diária, com <code>outcome_col</code> apontando para a contagem de óbitos. O template usa a mediana da temperatura como referência; a replicação usa o <strong>MMT estimado</strong> (23,1 °C) e reporta as caudas p99 (calor) e p01 (frio).</li>
+<li><strong>Modelar risco com DLNM</strong> (<code>sus_mod_dlnm</code>) — ajusta o Modelo DLNM sobre a série diária, com <code>outcome_col</code> apontando para a contagem de óbitos. O Modelo usa a mediana da temperatura como referência; a replicação usa o <strong>MMT estimado</strong> (23,1 °C) e reporta as caudas p99 (calor) e p01 (frio).</li>
 <li><strong>Calcular fração atribuível</strong> (<code>sus_mod_af</code>) — calcula a fração e o número atribuível ao calor extremo, usando o limiar de referência definido no modelo.</li>
 <li><strong>Visualizar fração atribuível</strong> (<code>sus_mod_plot_af</code>) — Resultado gráfico/tabela pronto para comunicação.</li>
 </ol>
@@ -375,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="dados-usados">Dados usados</h2>
 <p><strong>Fonte:</strong> SIM-DO (DATASUS), óbitos por causas cardiovasculares (CID-10 capítulo I) em pessoas de 60 anos ou mais, em São Paulo, 2010–2019.</p>
 <p><strong>O que o snapshot fez:</strong> o Pipeline importou a UF <code>SP</code> e não filtrou o município. Como <code>sus_mod_dlnm()</code> agrega todas as linhas por data, o modelo do snapshot é uma série <strong>estadual</strong>: 645 municípios, 659.351 óbitos e 3.631 dias após as defasagens. O capítulo chamava isso de “São Paulo”, mas o número não descreve a capital.</p>
-<p><strong>O que a replicação fez:</strong> filtrou o município de São Paulo (código 355030) e usou a estação A701 (Mirante), com 99% de cobertura diária em 2010–2019. Série de 3.636 dias e <strong>184.893 óbitos</strong> cardiovasculares em 60+. Modelo diário com dia da semana, feriados, 7 df/ano de tendência, defasagem 0–21 dias e referência no <strong>MMT</strong>. O filtro municipal é feito no script de replicação; o template do catálogo importa a UF inteira.</p>
+<p><strong>O que a replicação fez:</strong> filtrou o município de São Paulo (código 355030) e usou a estação A701 (Mirante), com 99% de cobertura diária em 2010–2019. Série de 3.636 dias e <strong>184.893 óbitos</strong> cardiovasculares em 60+. Modelo diário com dia da semana, feriados, 7 df/ano de tendência, defasagem 0–21 dias e referência no <strong>MMT</strong>. O filtro municipal é feito no script de replicação; o Modelo do catálogo importa a UF inteira.</p>
 <p><strong>Snapshot:</strong> <code>data/ec03/analytic.parquet</code> (MD5 <code>0ee2a03b96da684eeaff0a4a32442d26</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec03/codebook.csv</code>. <strong>Avisos do Motor (snapshot):</strong> dispersão 1,25 (adequada) e autocorrelação residual (Ljung-Box p &lt; 0,001); o baseline de 2010–2015 tem apenas cinco anos. <strong>Replicação:</strong> dispersão 1,08; Ljung-Box p = 0,014.</p>
 </section>
 <section id="resultados" class="level2">
@@ -385,10 +385,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-ec03-serie" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec03-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec03/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;17.1: Série de óbitos cardiovasculares em idosos no Estado de São Paulo, 2010–2019 (snapshot)."><img src="images/results/ec03/serie.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec03/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;16.1: Série de óbitos cardiovasculares em idosos no Estado de São Paulo, 2010–2019 (snapshot)."><img src="images/results/ec03/serie.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec03-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;17.1: Série de óbitos cardiovasculares em idosos no Estado de São Paulo, 2010–2019 (snapshot).
+Figura&nbsp;16.1: Série de óbitos cardiovasculares em idosos no Estado de São Paulo, 2010–2019 (snapshot).
 </figcaption>
 </figure>
 </div>
@@ -399,10 +399,10 @@ Figura&nbsp;17.1: Série de óbitos cardiovasculares em idosos no Estado de São
 <div id="fig-ec03-ondas" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec03-ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec03/ondas_calor.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;17.2: Dias de onda de calor por ano na estação A701 (São Paulo - Mirante)."><img src="images/results/ec03/ondas_calor.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec03/ondas_calor.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;16.2: Dias de onda de calor por ano na estação A701 (São Paulo–Mirante)."><img src="images/results/ec03/ondas_calor.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec03-ondas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;17.2: Dias de onda de calor por ano na estação A701 (São Paulo - Mirante).
+Figura&nbsp;16.2: Dias de onda de calor por ano na estação A701 (São Paulo–Mirante).
 </figcaption>
 </figure>
 </div>
@@ -475,10 +475,10 @@ Figura&nbsp;17.2: Dias de onda de calor por ano na estação A701 (São Paulo - 
 <div id="fig-ec03-dlnm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec03-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec03/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;17.3: Curva exposição-resposta cumulativa do snapshot (referência mediana); a replicação mantém a forma em U, com MMT em 23,1 °C."><img src="images/results/ec03/dlnm_overall.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec03/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;16.3: Curva exposição-resposta cumulativa do snapshot (referência mediana); a replicação mantém a forma em U, com MMT em 23,1 °C."><img src="images/results/ec03/dlnm_overall.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec03-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;17.3: Curva exposição-resposta cumulativa do snapshot (referência mediana); a replicação mantém a forma em U, com MMT em 23,1 °C.
+Figura&nbsp;16.3: Curva exposição-resposta cumulativa do snapshot (referência mediana); a replicação mantém a forma em U, com MMT em 23,1 °C.
 </figcaption>
 </figure>
 </div>
@@ -530,7 +530,7 @@ Figura&nbsp;17.3: Curva exposição-resposta cumulativa do snapshot (referência
 <li><strong>O p75 não serve para decidir</strong>: 24,3 °C está perto do MMT; um RR de 0,98 nesse ponto não significa que o calor protege.</li>
 <li><strong>O snapshot estadual não é a cidade</strong>: a agregação de 645 municípios, a ausência de dia da semana e a referência na mediana produziam uma AF de calor de 2,12% que não se reproduz na capital.</li>
 </ol>
-<p>O que ainda limita a conclusão: o modelo não ajusta poluição do ar (PM2,5/O3), não estratifica por sexo ou causa específica, usa uma única estação para representar a cidade e tem autocorrelação residual moderada (p = 0,014). A AF é uma estimativa populacional, não uma contagem individual. A definição de onda de calor (WHO, p90) é descritiva e não entra como regressor; para uma pergunta sobre dias de onda, é preciso um modelo com indicador binário ou análise de excesso.</p>
+<p>O que ainda limita a conclusão: o modelo não ajusta poluição do ar (MP2,5/O3), não estratifica por sexo ou causa específica, usa uma única estação para representar a cidade e tem autocorrelação residual moderada (p = 0,014). A AF é uma estimativa populacional, não uma contagem individual. A definição de onda de calor (WHO, p90) é descritiva e não entra como regressor; para uma pergunta sobre dias de onda, é preciso um modelo com indicador binário ou análise de excesso.</p>
 </section>
 <section id="numeros-ec03" class="level2">
 <h2 class="anchored" data-anchor-id="numeros-ec03">O que os números mostram</h2>
@@ -576,13 +576,13 @@ Figura&nbsp;17.3: Curva exposição-resposta cumulativa do snapshot (referência
 </tbody>
 </table>
 <p><strong>O que não podemos concluir:</strong> que o calor “protege” porque o RR no p75 é menor que 1; que a AF de calor seja 1,1% para cada pessoa; que os dias de onda de calor, isoladamente, expliquem toda a carga. A AF integra a cauda acima do MMT; o RR no p75 é apenas um ponto da curva. Também não podemos transferir o número para Manaus sem rever a exposição (calor úmido, WBGT/UTCI) e a definição de onda.</p>
-<p><strong>Antes de concluir:</strong> teste outra definição de onda de calor, considere PM2,5/O3 e estratifique por sexo e causa. A autocorrelação residual (p = 0,014) indica que a incerteza pode estar levemente subestimada.</p>
+<p><strong>Antes de concluir:</strong> teste outra definição de onda de calor, considere MP2,5/O3 e estratifique por sexo e causa. A autocorrelação residual (p = 0,014) indica que a incerteza pode estar levemente subestimada.</p>
 </section>
 <section id="o-que-isso-significa-para-ação" class="level2">
 <h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
 <p>A carga estimada é <strong>7,9%</strong> dos óbitos cardiovasculares em idosos no período, com <strong>6,8%</strong> atribuíveis ao frio e <strong>1,1%</strong> ao calor. Isso não justifica um plano de contingência dimensionado apenas pelo calor: no recorte de São Paulo, o frio também pesa — e mais. A ação responsável é usar as duas componentes, adotar o MMT como referência, testar as definições de onda e considerar poluição do ar antes de transformar a AF em meta de programa.</p>
 <p>Em Manaus e em outras cidades amazônicas, o plano deve considerar calor úmido e noites quentes; só a temperatura máxima diurna pode subestimar o risco. A mesma cautela vale para o frio: friagem e moradias sem isolamento térmico não aparecem na temperatura média da cidade.</p>
-<p>Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução automatizada a cada nova temporada de calor — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, sempre registrando fontes, versões e limitações.</p>
+<p>Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução automatizada a cada nova temporada de calor — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar código</strong>, sempre registrando fontes, versões e limitações.</p>
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
@@ -596,7 +596,7 @@ Reprodutibilidade
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-03-cardio-idosos-calor.climasus.json"><code>ec-03-cardio-idosos-calor.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 15 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
+<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-03-cardio-idosos-calor.climasus.json"><code>ec-03-cardio-idosos-calor.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 16 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
 <p><strong>Copiar em R.</strong> O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em <a href="pipeline/R/ec-03-cardio-idosos-calor.R"><code>pipeline/R/ec-03-cardio-idosos-calor.R</code></a>. Os números corrigidos deste capítulo (cidade de São Paulo, MMT, DOW/feriados) vêm da replicação em <code>book/scripts/90-replicacao/01-fit-replicacao.R</code>.</p>
 </div>
 </div>
@@ -622,36 +622,40 @@ Reprodutibilidade
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>saude <span class="ot">&lt;-</span> <span class="fu">sus_spatial_join</span>(dados)</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_inmet</span>(<span class="at">years =</span> <span class="dv">2010</span><span class="sc">:</span><span class="dv">2019</span>, <span class="at">uf =</span> <span class="st">"SP"</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ondas <span class="ot">&lt;-</span> <span class="fu">sus_climate_compute_heatwaves</span>(</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  clima,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"WHO"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">percentile =</span> <span class="dv">90</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_start =</span> <span class="st">"2010-01-01"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_end =</span> <span class="st">"2015-12-31"</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_climate_plot_heatwaves</span>(ondas, <span class="at">interactive =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>integrado <span class="ot">&lt;-</span> <span class="fu">sus_climate_aggregate</span>(</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">health_data =</span> saude,</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_data =</span> clima,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_var =</span> <span class="st">"tair_dry_bulb_c"</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporal_strategy =</span> <span class="st">"distributed_lag"</span>,</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">lag_days =</span> <span class="dv">21</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">sus_mod_dlnm</span>(</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  integrado,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_obitos"</span>,</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_col =</span> <span class="st">"tair_dry_bulb_c"</span>,</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">dof_per_year =</span> <span class="dv">4</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_dlnm</span>(ajuste, <span class="at">type =</span> <span class="st">"overall"</span>)</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>af <span class="ot">&lt;-</span> <span class="fu">sus_mod_af</span>(ajuste, <span class="at">nsim =</span> <span class="dv">200</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_af</span>(af, <span class="at">type =</span> <span class="st">"bar"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_fill_inmet</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  clima,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_var =</span> <span class="fu">c</span>(<span class="st">"tair_dry_bulb_c"</span>, <span class="st">"tair_max_c"</span>, <span class="st">"tair_min_c"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>ondas <span class="ot">&lt;-</span> <span class="fu">sus_climate_compute_heatwaves</span>(</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  clima,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"WHO"</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">percentile =</span> <span class="dv">90</span>,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_start =</span> <span class="st">"2010-01-01"</span>,</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">baseline_end =</span> <span class="st">"2015-12-31"</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_climate_plot_heatwaves</span>(ondas, <span class="at">interactive =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>integrado <span class="ot">&lt;-</span> <span class="fu">sus_climate_aggregate</span>(</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">health_data =</span> saude,</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_data =</span> clima,</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_var =</span> <span class="st">"tair_dry_bulb_c"</span>,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporal_strategy =</span> <span class="st">"distributed_lag"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="at">lag_days =</span> <span class="dv">21</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">sus_mod_dlnm</span>(</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>  integrado,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_obitos"</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_col =</span> <span class="st">"tair_dry_bulb_c"</span>,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>  <span class="at">dof_per_year =</span> <span class="dv">4</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_dlnm</span>(ajuste, <span class="at">type =</span> <span class="st">"overall"</span>)</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>af <span class="ot">&lt;-</span> <span class="fu">sus_mod_af</span>(ajuste, <span class="at">nsim =</span> <span class="dv">200</span>)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_af</span>(af, <span class="at">type =</span> <span class="st">"bar"</span>)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
+<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não incorpora os dados, o cache, os Resultados nem os Artefatos. Caminhos locais podem permanecer nos Parâmetros; a versão do Studio precisa ser registrada separadamente. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

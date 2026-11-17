@@ -1,0 +1,61 @@
+---
+title: "Referências"
+subtitle: "Capítulo 13 · Referência"
+---
+
+Esta seção reúne as obras e os documentos citados ao longo do guia. Os links levam à
+publicação original, ao DOI ou à página institucional de onde o conteúdo foi consultado.
+
+## Software, dados e documentação técnica
+
+- ANJOS, Max et al. **climasus4r: An R Package for Reproducible Climate-Health Data
+  Integration and Epidemiological Analysis**. Submissão ao *Journal of Open Source
+  Software*. Disponível em: <https://github.com/openjournals/joss-reviews/issues/11423>.
+- CLIMASUS+ STUDIO. **ADR 0001 — Motor R invisível**. Decisão de arquitetura do projeto.
+  Disponível em: <https://github.com/ByMaxAnjos/climasus-plus/blob/main/docs/adr/0001-motor-r-invisivel.md>.
+- BRASIL. Ministério da Saúde. **DATASUS — Departamento de Informática do SUS**.
+  Disponível em: <https://datasus.saude.gov.br/>.
+
+## Literatura científica
+
+- EBI, Kristie L.; HESS, Jeremy J.; WATKISS, Paul. Health risks and costs of climate
+  variability and change. In: MOCK, Charles N. et al. (ed.). **Injury Prevention and
+  Environmental Health**. 3. ed. Washington: World Bank, 2017. cap. 8.
+  DOI: <https://doi.org/10.1596/978-1-4648-0522-6_ch8>.
+- GASPARRINI, Antonio et al. Mortality risk attributable to high and low ambient
+  temperature: a multicountry observational study. **The Lancet**, v. 386, n. 9991,
+  p. 369–375, 2015. DOI: <https://doi.org/10.1016/S0140-6736(14)62114-0>.
+- LOPES, Rafael et al. Ambient temperature and dengue hospitalization in Brazil: a 10-year
+  period case time series analysis. **Environmental Epidemiology**, v. 9, n. 1, e360, 2024.
+  DOI: <https://doi.org/10.1097/EE9.0000000000000360>.
+- LOWE, Rachel et al. Combined effects of hydrometeorological hazards and urbanisation on
+  dengue risk in Brazil: a spatiotemporal modelling study. **The Lancet Planetary Health**,
+  v. 5, n. 4, p. e209–e219, 2021.
+  DOI: <https://doi.org/10.1016/S2542-5196(20)30292-8>.
+- REQUIA, Weeberb J.; VICEDO-CABRERA, Ana M.; DE SCHRIJVER, Eric; AMINI, Heresh. Low ambient
+  temperature and hospitalization for cardiorespiratory diseases in Brazil.
+  **Environmental Research**, v. 231, art. 116231, 2023.
+  DOI: <https://doi.org/10.1016/j.envres.2023.116231>.
+- SANTOS, Débora Aparecida da Silva; SOUZA, Amaury de. The effects of hot and cold
+  temperatures on hospital admissions for respiratory diseases in Campo Grande, MS, Brazil.
+  **Gaia Scientia**, v. 13, n. 4, 2019. Disponível em:
+  <https://periodicos.ufpb.br/index.php/gaia/article/view/29715>.
+- SON, Ji-Young; GOUVEIA, Nelson; BRAVO, Mercedes A.; FREITAS, Clarice Umbelino de;
+  BELL, Michelle L. The impact of temperature on mortality in a subtropical city: effects
+  of cold, heat, and heat waves in São Paulo, Brazil. **International Journal of
+  Biometeorology**, v. 60, n. 1, p. 113–121, 2016.
+  DOI: <https://doi.org/10.1007/s00484-015-1009-7>.
+
+## Documentos institucionais e políticas públicas
+
+- BRASIL. Ministério da Saúde. **Mudanças climáticas para profissionais de saúde: guia de
+  bolso**. 2. ed. rev. Brasília, 2026. Disponível em:
+  <https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/guias-e-manuais/2026/mudancas-climaticas-para-profissionais-de-saude-guia-de-bolso.pdf>.
+- BRASIL. Ministério do Meio Ambiente e Mudança do Clima. **Plano Clima**. Disponível em:
+  <https://www.gov.br/mma/pt-br/composicao/smc/plano-clima>.
+- LANCET COUNTDOWN. **Tracking progress on health and climate change**. Disponível em:
+  <https://lancetcountdown.org/>.
+- ORGANIZAÇÃO MUNDIAL DA SAÚDE (OMS); ORGANIZAÇÃO METEOROLÓGICA MUNDIAL (OMM).
+  **Heatwaves and Health: Guidance on Warning-System Development**. Genebra: OMS/OMM.
+  Disponível em:
+  <https://cdn.who.int/media/docs/default-source/climate-change/heat-waves-and-health---guidance-on-warning-system-development.pdf>.

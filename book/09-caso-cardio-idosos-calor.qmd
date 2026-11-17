@@ -3,19 +3,19 @@ title: "Estudo de caso: mortalidade cardiovascular em idosos e ondas de calor"
 subtitle: "Capítulo 09 · Estudos de caso"
 ---
 
-No recorte de calor e frio do Capítulo 0, usado como exemplo principal da Etapa Análise &
+Como exemplo principal da Etapa Análise &
 Modelagem (Capítulo 6), apresentamos o arco de calor extremo e doença cardiovascular em
-idosos — um caso de efeito agudo, com defasagem curta. Este capítulo acompanha o recorte
+idosos — um caso de efeito agudo, com defasagem curta. Este capítulo acompanha o caso
 do dado bruto do SIM-DO à carga atribuível ao calor **e ao frio**. Público
 principal: acadêmico e gestor técnico responsável por planos de contingência para ondas
 de calor. O exemplo usa a capital paulista; o snapshot original agregou o Estado inteiro,
 e a replicação cidade-específica corrige essa unidade de análise. O mesmo Pipeline vale
 para a Amazônia, com as adaptações de exposição descritas adiante.
 
-## O pipeline completo, etapa por etapa
+## O Pipeline completo, etapa por etapa
 
 Recorte: óbitos cardiovasculares (CID-10, capítulo I) em idosos (60 anos ou mais) no
-município de São Paulo (código 355030), 2010-2019, contra a temperatura das estações
+município de São Paulo (código 355030), 2010–2019, contra a temperatura das estações
 INMET. O Modelo de catálogo `ec-03-cardio-idosos-calor` traz este Pipeline pronto para
 carregar no Centro de Pipelines.
 
@@ -61,7 +61,7 @@ ar isolada pode subestimar o risco.
 **Análise & Modelagem**
 
 14. **Modelar risco com DLNM** (`sus_mod_dlnm`) — ajusta o Modelo DLNM sobre a série diária,
-    com `outcome_col` apontando para a contagem de óbitos. O template usa a mediana da
+    com `outcome_col` apontando para a contagem de óbitos. O Modelo usa a mediana da
     temperatura como referência; a replicação usa o **MMT estimado** (23,1 °C) e reporta as
     caudas p99 (calor) e p01 (frio).
 15. **Calcular fração atribuível** (`sus_mod_af`) — calcula a fração e o número atribuível
@@ -82,7 +82,7 @@ chamava isso de “São Paulo”, mas o número não descreve a capital.
 estação A701 (Mirante), com 99% de cobertura diária em 2010–2019. Série de 3.636 dias e
 **184.893 óbitos** cardiovasculares em 60+. Modelo diário com dia da semana, feriados,
 7 df/ano de tendência, defasagem 0–21 dias e referência no **MMT**. O filtro municipal é
-feito no script de replicação; o template do catálogo importa a UF inteira.
+feito no script de replicação; o Modelo do catálogo importa a UF inteira.
 
 **Snapshot:** `data/ec03/analytic.parquet` (MD5 `0ee2a03b96da684eeaff0a4a32442d26`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec03/codebook.csv`.
@@ -102,7 +102,7 @@ snapshot estadual; a réplica cidade-específica está na tabela adiante.
 
 ### Ondas de calor detectadas
 
-![Dias de onda de calor por ano na estação A701 (São Paulo - Mirante).](images/results/ec03/ondas_calor.png){#fig-ec03-ondas}
+![Dias de onda de calor por ano na estação A701 (São Paulo–Mirante).](images/results/ec03/ondas_calor.png){#fig-ec03-ondas}
 
 **Como ler:** as barras são os dias classificados como onda de calor (WHO, percentil 90,
 baseline 2010–2015) em uma estação de referência. A detecção é **descritiva**; o DLNM
@@ -168,7 +168,7 @@ O resultado corrigido sustenta três afirmações e desfaz uma leitura errada:
     da semana e a referência na mediana produziam uma AF de calor de 2,12% que não se
     reproduz na capital.
 
-O que ainda limita a conclusão: o modelo não ajusta poluição do ar (PM2,5/O3), não
+O que ainda limita a conclusão: o modelo não ajusta poluição do ar (MP2,5/O3), não
 estratifica por sexo ou causa específica, usa uma única estação para representar a cidade e
 tem autocorrelação residual moderada (p = 0,014). A AF é uma estimativa populacional, não
 uma contagem individual. A definição de onda de calor (WHO, p90) é descritiva e não entra
@@ -191,7 +191,7 @@ expliquem toda a carga. A AF integra a cauda acima do MMT; o RR no p75 é apenas
 curva. Também não podemos transferir o número para Manaus sem rever a exposição (calor
 úmido, WBGT/UTCI) e a definição de onda.
 
-**Antes de concluir:** teste outra definição de onda de calor, considere PM2,5/O3 e
+**Antes de concluir:** teste outra definição de onda de calor, considere MP2,5/O3 e
 estratifique por sexo e causa. A autocorrelação residual (p = 0,014) indica que a incerteza
 pode estar levemente subestimada.
 
@@ -208,13 +208,13 @@ quentes; só a temperatura máxima diurna pode subestimar o risco. A mesma caute
 frio: friagem e moradias sem isolamento térmico não aparecem na temperatura média da cidade.
 
 Para levar este Pipeline além do Studio — relatório técnico, publicação, ou execução
-automatizada a cada nova temporada de calor — use **Arquivo → Salvar projeto** e **Exportar `.R`**,
+automatizada a cada nova temporada de calor — use **Arquivo → Salvar projeto** e **Exportar código**,
 sempre registrando fontes, versões e limitações.
 
 ## Reproduzir
 
 ::: {.callout-note title="Reprodutibilidade"}
-**Abrir no Studio.** Baixe [`ec-03-cardio-idosos-calor.climasus.json`](pipeline/ec-03-cardio-idosos-calor.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 15 Passos, a ordem e os Parâmetros descritos neste capítulo.
+**Abrir no Studio.** Baixe [`ec-03-cardio-idosos-calor.climasus.json`](pipeline/ec-03-cardio-idosos-calor.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 16 Passos, a ordem e os Parâmetros descritos neste capítulo.
 
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-03-cardio-idosos-calor.R`](pipeline/R/ec-03-cardio-idosos-calor.R). Os números corrigidos deste capítulo (cidade de São Paulo, MMT, DOW/feriados) vêm da replicação em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
@@ -242,6 +242,10 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima <- sus_climate_inmet(years = 2010:2019, uf = "SP")
+clima <- sus_climate_fill_inmet(
+  clima,
+  target_var = c("tair_dry_bulb_c", "tair_max_c", "tair_min_c")
+)
 
 ondas <- sus_climate_compute_heatwaves(
   clima,

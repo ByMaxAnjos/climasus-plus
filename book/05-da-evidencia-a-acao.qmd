@@ -73,7 +73,7 @@ Imagine uma série diária de um município, com 100 dias previstos para anális
 | Dias sem exposição | 8 | Faltam dados em 8% do calendário. |
 | Dias com zero evento e registro confirmado | 12 | Zero é um valor observado, diferente de informação ausente. |
 
-A conta de ausência é simples: 8 ÷ 100 × 100 = **8%**. Esse percentual, sozinho, não
+A conta de ausência é simples: 8 ÷ 100 = 0,08, ou **8%**. Esse percentual, sozinho, não
 diz se a série serve para o estudo: oito dias ausentes durante o evento extremo podem
 comprometer mais a análise do que oito dias dispersos. Confira onde estão as lacunas e
 registre como foram tratadas. Uma data que não aparece na tabela não deve ser
@@ -272,7 +272,7 @@ Antes de interpretar:
 5. **Leia a incerteza** e procure resultados que mudam quando os pressupostos mudam.
 6. **Confronte com a realidade local**: equipes de vigilância, atenção primária, assistência, defesa civil e comunidade.
 7. **Defina a ação, o responsável, o prazo e o indicador de acompanhamento**.
-8. **Salve o projeto e exporte o `.R`** para manter a análise auditável.
+8. **Salve o projeto e exporte o código** para manter a análise auditável.
 
 ## Modelo de ficha para decisão
 

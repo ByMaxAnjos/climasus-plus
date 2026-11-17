@@ -65,10 +65,17 @@
       }
     },
     {
+      "id": "resp-fill",
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "c(\"tair_dry_bulb_c\", \"rh_mean_porc\")"
+      }
+    },
+    {
       "fn": "sus_climate_aggregate",
       "values": {
         "health_data": "@step:resp-spatial",
-        "climate_data": "@step:resp-inmet",
+        "climate_data": "@step:resp-fill",
         "climate_var": "all",
         "temporal_strategy": "distributed_lag",
         "lag_days": "21"

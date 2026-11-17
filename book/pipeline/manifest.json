@@ -24,7 +24,7 @@
     "file": "clima-aggregate-exposicao.climasus.json",
     "title": "Exposição aguda saúde × clima (lag distribuído)",
     "chapter": "Cap. 3",
-    "description": "Saúde preparada + estações INMET + agregación com defasagens; opcionalmente preenche falhas.",
+    "description": "Saúde preparada + estações INMET + agregação com defasagens; opcionalmente preenche falhas.",
     "mode": "pesquisa",
     "steps": 6,
     "r": "pipeline/R/01-integracao.R"
@@ -46,7 +46,7 @@
     "chapter": "Cap. 7",
     "description": "SIM-DO respiratório <5a no Sudeste (2015–2019), INMET, DLNM e AF.",
     "mode": "pesquisa",
-    "steps": 13,
+    "steps": 14,
     "r": "pipeline/R/ec-01-respiratorio-pediatrico.R"
   },
   {
@@ -56,7 +56,7 @@
     "chapter": "Cap. 8",
     "description": "SINAN dengue em CE/PE/BA/MA (2015–2019), GDD base 11 °C, DLNM e curva.",
     "mode": "pesquisa",
-    "steps": 11,
+    "steps": 12,
     "r": "pipeline/R/ec-02-dengue-clima.R"
   },
   {
@@ -66,7 +66,7 @@
     "chapter": "Cap. 9",
     "description": "SIM-DO cardiovascular 60+ em São Paulo (2010–2019), ondas de calor, DLNM e AF.",
     "mode": "pesquisa",
-    "steps": 15,
+    "steps": 16,
     "r": "pipeline/R/ec-03-cardio-idosos-calor.R"
   },
   {
@@ -76,7 +76,7 @@
     "chapter": "Cap. 10",
     "description": "SIH-RD J09–J18 em Porto Alegre (2010–2019), ondas de frio e ITS com o evento de 2011-07-03.",
     "mode": "pesquisa",
-    "steps": 12,
+    "steps": 13,
     "r": "pipeline/R/ec-04-hospitalizacoes-frio.R"
   },
   {

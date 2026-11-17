@@ -18,7 +18,6 @@ BOOK = ROOT / "_book"
 ORDER = [
     ("index", "frontmatter"),
     ("part-1-fundamentos", "part"),
-    ("00-clima-saude", "chapter"),
     ("01-conhecendo-o-studio", "chapter"),
     ("part-2-pipeline", "part"),
     ("02-etapa-preparacao", "chapter"),
@@ -35,6 +34,7 @@ ORDER = [
     ("10-caso-hospitalizacoes-frio", "chapter"),
     ("11-glossario", "chapter"),
     ("12-parametros-avancados", "chapter"),
+    ("13-referencias", "chapter"),
     ("colofao", "chapter"),
 ]
 

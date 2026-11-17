@@ -22,6 +22,10 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima <- sus_climate_inmet(years = 2015:2019, uf = c("SP", "RJ", "MG", "ES"))
+clima <- sus_climate_fill_inmet(
+  clima,
+  target_var = c("tair_dry_bulb_c", "rh_mean_porc")
+)
 
 integrado <- sus_climate_aggregate(
   health_data = saude,

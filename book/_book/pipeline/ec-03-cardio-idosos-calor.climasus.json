@@ -65,10 +65,17 @@
       }
     },
     {
+      "id": "cardio-fill",
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "c(\"tair_dry_bulb_c\", \"tair_max_c\", \"tair_min_c\")"
+      }
+    },
+    {
       "id": "cardio-heatwave",
       "fn": "sus_climate_compute_heatwaves",
       "values": {
-        "df": "@step:cardio-inmet",
+        "df": "@step:cardio-fill",
         "method": "WHO",
         "percentile": "90",
         "baseline_start": "\"2010-01-01\"",
@@ -85,7 +92,7 @@
       "fn": "sus_climate_aggregate",
       "values": {
         "health_data": "@step:cardio-spatial",
-        "climate_data": "@step:cardio-inmet",
+        "climate_data": "@step:cardio-fill",
         "time_unit": "day",
         "climate_var": "tair_dry_bulb_c",
         "temporal_strategy": "distributed_lag",

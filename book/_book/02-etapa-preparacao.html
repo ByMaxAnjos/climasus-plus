@@ -170,17 +170,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do Pipeline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -195,12 +190,12 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Vigilância e gestão</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -210,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Pesquisa avançada</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -245,12 +240,17 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário do climasus+ Studio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-referencias.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referências</span></a>
   </div>
 </li>
     </ul>
@@ -283,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Etapa Preparação: dados de saúde prontos antes de tudo</span></h1>
-<p class="subtitle lead">Capítulo 02 · Etapas do pipeline</p>
+<p class="subtitle lead">Capítulo 02 · Etapas do Pipeline</p>
 </div>
 
 
@@ -300,11 +300,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>A partir deste capítulo o guia assume que você quer <em>fazer</em>, não só entender. Se seu interesse é só acompanhar o panorama sem montar nada, pode ler a introdução de cada seção e pular direto para o resumo “Verifique se ficou” no final — a lógica geral continua acessível sem executar um único Passo. Mas se você é gestor técnico ou acadêmico com um Pipeline para montar, este capítulo mostra como começar a sequência de trabalho.</p>
+<p>A partir deste capítulo, o guia assume que você quer <em>fazer</em>, não só entender. Se seu interesse é só acompanhar o panorama sem montar nada, pode ler a introdução de cada seção e pular direto para o resumo “Verifique se ficou” no final — a lógica geral continua acessível sem executar um único Passo. Mas se você é gestor técnico ou acadêmico com um Pipeline para montar, este capítulo mostra como começar a sequência de trabalho.</p>
 <section id="por-que-a-preparação-vem-primeiro" class="level2">
 <h2 class="anchored" data-anchor-id="por-que-a-preparação-vem-primeiro">Por que a Preparação vem primeiro</h2>
-<p>Dados de saúde brutos do DATASUS quase nunca chegam prontos para análise. Um arquivo recém-importado do SIM, do SINAN ou do SIH costuma trazer nomes de município com acentuação corrompida, colunas com nomes técnicos que mudam de ano para ano, e milhões de registros de causas e faixas etárias que não têm nada a ver com a pergunta que você quer responder. Antes de cruzar esses dados com clima ou território — o assunto do Capítulo 3 — é preciso deixá-los limpos, padronizados e recortados para o que importa.</p>
-<p>É esse o papel da Etapa <strong>Preparação</strong>: é sempre a primeira grande Etapa de qualquer Pipeline no climasus+ Studio. Sem dados de saúde limpos e padronizados, nenhuma Etapa seguinte funciona direito — um <strong>Cruzar dados de saúde e clima</strong> (<code>sus_climate_aggregate</code>) (Capítulo 3) que recebe uma série de saúde com encoding quebrado ou datas fora de padrão não consegue cruzar saúde com clima corretamente.</p>
+<p>Dados dos sistemas de saúde precisam ser avaliados antes da análise. Conforme a fonte e o período, podem existir diferenças de nomes de colunas, codificação de caracteres, campos incompletos e critérios de registro. Também é necessário selecionar o desfecho, a população e as datas compatíveis com a pergunta.</p>
+<p>A Etapa <strong>Preparação</strong> organiza essas decisões. Ela costuma iniciar os Pipelines que partem de registros brutos; análises que começam com uma base já preparada devem conferir sua documentação e qualidade antes de prosseguir.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -329,8 +329,8 @@ Por que isso importa para quem gerencia, não só para quem programa
 </ul>
 <p><strong>(b) Limpar e padronizar</strong> — corrigir o que vem torto antes de qualquer recorte.</p>
 <ul>
-<li><strong>Corrigir acentuação e caracteres</strong> (<code>sus_data_clean_encoding</code>) — varre colunas de texto e corrige problemas de codificação de caracteres (por exemplo, “São Paulo” que chega como “Sao Paulo” ou com símbolos incorretos).</li>
-<li><strong>Padronizar nomes e valores</strong> (<code>sus_data_standardize</code>) — padroniza nomes de coluna e valores categóricos, para garantir consistência entre diferentes anos e versões dos sistemas de origem.</li>
+<li><strong>Corrigir acentuação e caracteres</strong> (<code>sus_data_clean_encoding</code>) — varre colunas de texto e corrige problemas de codificação de caracteres (por exemplo, “São Paulo” que chega com caracteres corrompidos).</li>
+<li><strong>Padronizar nomes e valores</strong> (<code>sus_data_standardize</code>) — padroniza nomes de coluna e valores categóricos, para favorecer consistência entre diferentes anos e versões dos sistemas de origem.</li>
 <li><strong>Verificar qualidade da série temporal</strong> (<code>sus_data_ts_quality</code>) — avalia a qualidade de séries diárias de eventos de saúde por município e sinaliza completude e problemas estruturais.</li>
 </ul>
 <p><strong>(c) Filtrar</strong> — recortar só o que interessa para a pergunta em mãos.</p>
@@ -363,7 +363,7 @@ Por que “filtrar por CID” e “filtrar por demografia” são Funções sepa
 </section>
 <section id="exercício-guiado-da-importação-ao-relatório-de-qualidade" class="level2">
 <h2 class="anchored" data-anchor-id="exercício-guiado-da-importação-ao-relatório-de-qualidade">Exercício guiado: da importação ao relatório de qualidade</h2>
-<p>Vamos retomar o tema do <strong>respiratório pediátrico</strong> apresentado no recorte de fumaça e qualidade do ar do Capítulo 0: óbitos por causas respiratórias em crianças, um dos temas mais sensíveis a queimadas e má qualidade do ar. O exemplo usa uma UF do Sudeste para manter continuidade com o caso ec-01; o mesmo Pipeline se aplica a qualquer UF — inclusive Amazonas, Pará, Rondônia ou Acre —, mudando <code>uf</code> e, quando necessário, a fonte climática. O Modelo de catálogo <code>pipeline-preparacao-basica</code> já traz o esqueleto dessa sequência — você pode carregá-lo no Centro de Pipelines para conferir, embora aqui a gente monte a versão completa, com o recorte demográfico que o Modelo básico não inclui.</p>
+<p>Vamos retomar o tema do <strong>respiratório pediátrico</strong>, ligado à fumaça e à qualidade do ar: óbitos por causas respiratórias em crianças, um dos temas mais sensíveis a queimadas e má qualidade do ar. O exemplo usa uma UF do Sudeste para manter continuidade com o caso ec-01; o mesmo Pipeline se aplica a qualquer UF — inclusive Amazonas, Pará, Rondônia ou Acre —, mudando <code>uf</code> e, quando necessário, a fonte climática. O Modelo de catálogo <code>pipeline-preparacao-basica</code> já traz o esqueleto dessa sequência — você pode carregá-lo no Centro de Pipelines para conferir, embora aqui a gente monte a versão completa, com o recorte demográfico que o Modelo básico não inclui.</p>
 <p><a href="images/pipeline-flow.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/pipeline-flow.svg" class="img-fluid" alt="Diagrama da Etapa Preparação em sete Passos: importar dados do DATASUS, corrigir encoding, padronizar nomes e tipos, filtrar por CID-10, criar variáveis, filtrar perfil demográfico e agregar em série semanal. Abaixo, o contraste entre registros individuais e a série semanal, as decisões que mudam a pergunta e a verificação de qualidade."></a></p>
 <p>O projeto deste Pipeline está em <a href="pipeline/pipeline-preparacao-basica.climasus.json"><code>pipeline/pipeline-preparacao-basica.climasus.json</code></a>, com o código em <a href="pipeline/R/00-preparacao.R"><code>pipeline/R/00-preparacao.R</code></a>.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -389,13 +389,13 @@ Parâmetros que merecem atenção
 <h3 class="anchored" data-anchor-id="passo-a-passo">Passo a passo</h3>
 <ol type="1">
 <li><p><strong>Importar</strong> — Função <strong>Importar dados do DATASUS</strong> (<code>sus_data_import</code>). Parâmetro-chave: <code>system = "SIM-DO"</code> (óbitos), <code>uf</code> com os estados de interesse (ex. <code>"SP"</code>) e <code>year</code> com o(s) ano(s) de interesse (ex. <code>2022</code>) — os três são obrigatórios. Para sistemas mensais (SIH, CNES e SIA), <code>month</code> também é obrigatório: use um mês (<code>1</code>), o ano inteiro (<code>1:12</code>) ou uma seleção como <code>c(1, 4, 6)</code>. O Resultado é uma tabela bruta de óbitos, ainda sem qualquer recorte.</p></li>
-<li><p><strong>Padronizar / corrigir encoding</strong> — Funções <strong>Corrigir acentuação e caracteres</strong> (<code>sus_data_clean_encoding</code>) e depois <strong>Padronizar nomes e valores</strong> (<code>sus_data_standardize</code>). Não há parâmetro que o leitor precise decidir aqui — é correção automática — mas o Resultado muda de “tabela suja” para “tabela com nomes de coluna e valores categóricos consistentes”, condição para qualquer filtro funcionar corretamente.</p></li>
+<li><p><strong>Padronizar / corrigir encoding</strong> — Funções <strong>Corrigir acentuação e caracteres</strong> (<code>sus_data_clean_encoding</code>) e depois <strong>Padronizar nomes e valores</strong> (<code>sus_data_standardize</code>). Não há parâmetro que o leitor precise decidir aqui — é transformação automatizada — mas é necessário conferir nomes, tipos e categorias no Resultado. A execução sem erro não garante que todos os problemas da base tenham sido corrigidos.</p></li>
 <li><p><strong>Filtrar por CID</strong> — Função <strong>Filtrar por CID-10 ou grupo de doença</strong> (<code>sus_data_filter_cid</code>). Parâmetro-chave: <code>disease_group = "respiratory"</code> (grupo de causas respiratórias, códigos que começam com a letra J na CID-10). O Resultado passa de “todos os óbitos” para “só os óbitos respiratórios”.</p></li>
-<li><p><strong>Filtrar por demografia</strong> — Função <strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>). Parâmetro-chave: <code>age_range = c(0, 5)</code>, isolando o recorte pediátrico. O Resultado agora é “óbitos respiratórios em menores de 5 anos” — o mesmo recorte usado no arco ec-01 do catálogo.</p></li>
-<li><p><strong>Criar variáveis e agregar</strong> — Função <strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) (parâmetro <code>create_age_groups = TRUE</code>, com <code>age_breaks</code> definindo os cortes de faixa etária) e, em seguida, <strong>Agregar dados em série temporal</strong> (<code>sus_data_aggregate</code>) com <code>time_unit = "week"</code>, <code>group_by</code> municipal e <code>complete_dates = TRUE</code>. O Resultado deixa de ser uma lista de registros individuais e passa a ser uma série temporal semanal por município — a forma que a Etapa Integração (Capítulo 3) espera receber. Semanas são uma resolução melhor que meses para desfechos respiratórios agudos; use <code>month</code> apenas para análises de tendência de longo prazo.</p></li>
+<li><p><strong>Criar variáveis e filtrar por demografia</strong> — execute <strong>Criar variáveis derivadas</strong> (<code>sus_data_create_variables</code>) antes de <strong>Filtrar por características demográficas</strong> (<code>sus_data_filter_demographics</code>), para disponibilizar a idade em anos. O exemplo histórico usa <code>age_range = c(0, 5)</code>. Na implementação consultada, ambos os limites são inclusivos: esse filtro não equivale à idade estritamente menor que 5 anos. Para esse último recorte, confira a variável de idade e aplique explicitamente <code>idade &lt; 5</code> na preparação; não altere apenas o rótulo dos resultados.</p></li>
+<li><p><strong>Agregar</strong> — use <strong>Agregar dados em série temporal</strong> (<code>sus_data_aggregate</code>) com <code>time_unit = "week"</code>, agrupamento municipal e <code>complete_dates = TRUE</code>. Confira se os períodos acrescentados representam zeros de ocorrência, e não falhas de cobertura. A agregação semanal é uma escolha deste exercício. Séries diárias preservam variações agudas; séries semanais ou mensais respondem a outras escalas e exigem defasagens compatíveis.</p></li>
 <li><p><strong>Relatório de qualidade</strong> — Função <strong>Gerar relatório de qualidade dos dados</strong> (<code>sus_data_quality_report</code>). Não recorta nem transforma nada; produz um Resultado de texto em seções, com base no histórico de Passos já aplicados no Pipeline.</p></li>
 </ol>
-<p>Ao final, o Pipeline tem 6 blocos de trabalho (8 Funções, quando limpeza e padronização são contadas separadamente), cada Passo como um Nó no grafo — trocar a ordem entre filtro e agregação, por exemplo, mudaria o resultado: agregar antes de filtrar contaria óbitos que você não quer incluir.</p>
+<p>Ao final, o exercício reúne seis grupos de operações e oito Funções, com cada Passo como um Nó no grafo — trocar a ordem entre filtro e agregação, por exemplo, mudaria o resultado: agregar antes de filtrar contaria óbitos que você não quer incluir.</p>
 </section>
 </section>
 <section id="como-ler-o-relatório-de-qualidade" class="level2">
@@ -438,7 +438,7 @@ Verifique se ficou
 <p><strong>2. O relatório de qualidade aponta um problema no recorte que você escolheu. Isso significa que o Pipeline não pode continuar?</strong></p>
 <p>Não. <strong>Gerar relatório de qualidade dos dados</strong> (<code>sus_data_quality_report</code>) é diagnóstico, não bloqueio — ele mostra o que vale conferir, mas quem decide se segue, ajusta o recorte ou investiga a causa é quem está montando o Pipeline.</p>
 <p><strong>3. Qual Etapa vem depois da Preparação, e por que os dados precisam estar “prontos” antes dela?</strong></p>
-<p>Vem a Etapa Integração (Capítulo 3), que cruza a série de saúde já preparada com dados climáticos e socioeconômicos. Se a série de saúde ainda tiver encoding quebrado, datas fora de padrão ou registros que não deveriam estar no recorte, o cruzamento com clima sai errado — a Integração confia que a Preparação já entregou uma série confiável.</p>
+<p>Vem a Etapa Integração (Capítulo 3), que cruza a série de saúde já preparada com dados climáticos e socioeconômicos. Se a série de saúde ainda tiver encoding quebrado, datas fora de padrão ou registros que não deveriam estar no recorte, o cruzamento com clima pode ficar incorreto. A qualidade precisa ser conferida também após as junções.</p>
 </div>
 </div>
 </div>
@@ -873,8 +873,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./part-2-pipeline.html" class="pagination-link" aria-label="Parte II · Etapas do pipeline">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Parte II · Etapas do pipeline</span></span>
+      <a href="./part-2-pipeline.html" class="pagination-link" aria-label="Parte II · Etapas do Pipeline">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Parte II · Etapas do Pipeline</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

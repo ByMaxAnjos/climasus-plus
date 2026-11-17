@@ -18,9 +18,13 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima_raw <- sus_climate_inmet(years = 2015:2019, uf = c("CE", "PE", "BA", "MA"))
+clima_filled <- sus_climate_fill_inmet(
+  clima_raw,
+  target_var = "tair_dry_bulb_c"
+)
 
 clima <- sus_climate_compute_indicators(
-  clima_raw,
+  clima_filled,
   indicators = "gdd",
   custom_thresholds = list(gdd_base = 11, gdd_upper = 35)
 )

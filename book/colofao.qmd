@@ -35,12 +35,12 @@ Desenvolvimento articulado ao **Centro de Clima de Saúde de Rondônia**, à **F
 
 | | |
 |---|---|
-| **Título** | climasus+ Studio: guia prático sobre clima, saúde, ambiente e território |
-| **Edição** | 1ª edição · outubro de 2026 |
+| **Título** | climasus+ Studio: guia prático sobre clima, saúde e Amazônia |
+| **Edição** | 1ª edição · novembro de 2026 |
 | **Coordenação e curadoria** | Max Anjos |
 | **Equipe** | Sergio Lins de Carvalho · Marlon Resende Faria · Thauã Menezes · Andrey Araújo · Nathalia A. Franqlin · Cecília Cassab |
 | **Instituições** | UFJF · Fiocruz Rondônia (CCSRO) · INCT-CONEXAO · UERJ · USP · UNESP · UNIR |
-| **Software** | climasus+ Studio v1.1.0-beta.2 · climasus4r v.1.0.0 |
+| **Software** | climasus+ Studio v1.1.0-beta.2 · climasus4r v1.0.1 |
 | **Licença do software** | MIT |
 
 
@@ -79,7 +79,7 @@ O fundo dos mapas interativos é fornecido pelo **OpenFreeMap**, e o aplicativo 
 
 Para citar o guia:
 
-> ANJOS, Max. **climasus+ Studio: guia prático sobre clima, saúde, ambiente e território**. 1. ed. 2026. Disponível em: <https://github.com/ByMaxAnjos/climasus-plus>.
+> ANJOS, Max. **climasus+ Studio: guia prático sobre clima, saúde e Amazônia**. 1. ed. 2026. Disponível em: <https://github.com/ByMaxAnjos/climasus-plus>.
 
 Para citar o pacote e acompanhar sua avaliação:
 

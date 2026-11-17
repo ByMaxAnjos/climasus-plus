@@ -1,5 +1,5 @@
 ---
-title: "Parte IV · Módulo Pesquisador"
+title: "Parte IV · Pesquisa avançada"
 number-sections: false
 toc: false
 ---

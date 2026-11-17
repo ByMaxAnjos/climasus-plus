@@ -19,6 +19,10 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima <- sus_climate_inmet(years = 2010:2019, uf = c("PR", "SC", "RS"))
+clima <- sus_climate_fill_inmet(
+  clima,
+  target_var = c("tair_dry_bulb_c", "tair_max_c", "tair_min_c")
+)
 
 frio <- sus_climate_compute_coldwaves(
   clima,

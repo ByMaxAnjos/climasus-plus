@@ -3,7 +3,7 @@ title: "Estudo de caso: dengue e graus-dia"
 subtitle: "Capítulo 08 · Estudos de caso"
 ---
 
-No recorte de chuva, enchente e vetores do Capítulo 0, retomado na Etapa Integração
+Na Etapa Integração
 (Capítulo 3), apresentamos o arco de dengue e clima. A pergunta central é: **quanto do
 risco de dengue acompanha o acúmulo de calor favorável ao vetor, e com que atraso?**
 Este capítulo fecha esse arco, do dado bruto do SINAN ao Modelo DLNM ajustado. A conclusão
@@ -14,7 +14,7 @@ snapshot usa quatro estados do Nordeste; a replicação testa Recife e Fortaleza
 separadamente. A mesma lógica vale para a Amazônia, onde a cobertura irregular de estações
 torna a checagem da distância estação–município ainda mais importante.
 
-## O pipeline completo, etapa por etapa
+## O Pipeline completo, etapa por etapa
 
 Recorte: casos notificados de dengue (SINAN) em **Ceará, Pernambuco, Bahia e Maranhão**,
 2015–2019, contra **graus-dia de desenvolvimento (GDD)** calculados a partir das
@@ -100,7 +100,7 @@ horária (a soma de 24 horas), não em °C·dia.
 217 semanas; 38.974 casos) e **Fortaleza** (A305; 225 semanas; 73.834 casos) —, com GDD
 semanal em °C·dia (soma de 7 dias) e defasagens em **semanas** (0–12). Modelo com mês,
 3 df de exposição e 3 df de defasagem. Também testou temperatura semanal no lugar do GDD.
-O filtro municipal é feito no script de replicação; o template do catálogo importa as UFs.
+O filtro municipal é feito no script de replicação; o Modelo do catálogo importa as UFs.
 
 **Snapshot:** `data/ec02/analytic.parquet` (MD5 `89f86931dd8e77e36bc3ed2fd2bd5eff`),
 gerado em 26/10/2026. Dicionário de variáveis: `data/ec02/codebook.csv`.
@@ -176,7 +176,7 @@ exposição mal-especificada e de escala errada. Três fatos se somam:
 A replicação em Recife e Fortaleza mostra que o problema não é específico de uma cidade.
 O desenho publicado que recupera o sinal (Lowe et al., 2021) usa **PDSI/chuva**, 558
 microrregiões e um modelo espaço-temporal bayesiano — não GDD em cidade única. Um desenho
-brasileiro de temperatura e internação por dengue (2024) encontra RR 3,47 no p95 com efeito
+brasileiro de temperatura e internação por dengue (Lopes et al., 2024) encontra RR 3,47 no p95 com efeito
 imediato (lag 0–2), mas em escala nacional e com desfecho de hospitalização, não de
 notificação.
 
@@ -217,13 +217,13 @@ O GDD não substitui a chuva. Em municípios com estação distante ou séries i
 combine GDD de estação com chuva de satélite diária e trate a distância
 estação–município como uma limitação explícita. Para levar este Pipeline além do Studio —
 relatório técnico, publicação ou execução automatizada a cada semana epidemiológica — use
-**Arquivo → Salvar projeto** e **Exportar `.R`**, registrando a semana epidemiológica, as fontes, a
+**Arquivo → Salvar projeto** e **Exportar código**, registrando a semana epidemiológica, as fontes, a
 distância das estações e os atrasos considerados.
 
 ## Reproduzir
 
 ::: {.callout-note title="Reprodutibilidade"}
-**Abrir no Studio.** Baixe [`ec-02-dengue-clima.climasus.json`](pipeline/ec-02-dengue-clima.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 11 Passos, a ordem e os Parâmetros descritos neste capítulo.
+**Abrir no Studio.** Baixe [`ec-02-dengue-clima.climasus.json`](pipeline/ec-02-dengue-clima.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 12 Passos, a ordem e os Parâmetros descritos neste capítulo.
 
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-02-dengue-clima.R`](pipeline/R/ec-02-dengue-clima.R). A replicação que mostra por que o GDD não é identificável em Recife e Fortaleza está em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
@@ -250,9 +250,13 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima_raw <- sus_climate_inmet(years = 2015:2019, uf = c("CE", "PE", "BA", "MA"))
+clima_filled <- sus_climate_fill_inmet(
+  clima_raw,
+  target_var = "tair_dry_bulb_c"
+)
 
 clima <- sus_climate_compute_indicators(
-  clima_raw,
+  clima_filled,
   indicators = "gdd",
   custom_thresholds = list(gdd_base = 11, gdd_upper = 35)
 )

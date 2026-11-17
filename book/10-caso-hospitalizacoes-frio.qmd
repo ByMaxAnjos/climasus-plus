@@ -3,20 +3,20 @@ title: "Estudo de caso: hospitalizações respiratórias e frio"
 subtitle: "Capítulo 10 · Estudos de caso"
 ---
 
-No recorte de calor e frio do Capítulo 0, apresentamos brevemente o outro lado do espectro
+Este capítulo trata do outro lado do espectro
 de temperatura: assim como o calor extremo, o frio extremo também tem efeito sobre a saúde
 respiratória, com relevância maior para regiões de clima mais frio ou de altitude — e, na
-Amazônia, para as incursões de ar polar conhecidas como friagem. Este capítulo acompanha
+Amazônia, para as incursões de ar polar conhecidas como friagem. Ele acompanha
 esse recorte em uma sequência completa, e é o único dos quatro estudos de caso que começa por um
 desenho quase-experimental (Capítulo 6); a replicação mostra por que o ITS, sozinho, não
 responde à pergunta e completa o caso com um DLNM. Público
 principal: acadêmico e gestor técnico responsável por planos de contingência para
 frio extremo.
 
-## O pipeline completo, etapa por etapa
+## O Pipeline completo, etapa por etapa
 
 Recorte: internações respiratórias (SIH, CID-10 `J09`-`J18`, pneumonias e influenza) em
-**Porto Alegre (RS)**, 2010-2019, contra ondas de frio detectadas para a região Sul a
+**Porto Alegre (RS)**, 2010–2019, contra ondas de frio detectadas para a região Sul a
 partir da temperatura das estações INMET. O Modelo de catálogo
 `ec-04-hospitalizacoes-frio` traz este Pipeline pronto para carregar no Centro de
 Pipelines. A série analisada é de **um único município**; a detecção de ondas de frio é
@@ -163,10 +163,10 @@ compatível com o recorte mais estreito (J09–J18), a cidade do Sul e o desenho
 única.
 
 **Comparação com a literatura.** O estudo nacional de frio e internações
-cardiorrespiratórias (Environ Res, 2023) estimou RR 1,07 (1,01–1,14) para respiratório e
+cardiorrespiratórias (Requia et al., 2023) estimou RR 1,07 (1,01–1,14) para respiratório e
 1,17 (1,07–1,27) para cardiovascular; em Campo Grande, o frio foi associado a RR 1,48
-(1,23–1,79) em idosos. A direção é consistente; a magnitude da réplica fica entre esses
-valores.
+(1,23–1,79) em idosos (Santos; Souza, 2019). A direção é consistente; a magnitude da réplica
+fica entre esses valores.
 
 ## Interpretando o resultado
 
@@ -223,17 +223,17 @@ ribeirinhas e a moradias sem isolamento térmico — mas somente depois de um re
 consistente e com a exposição adequada (temperatura mínima, duração do frio e umidade).
 
 Com este capítulo, os quatro estudos de caso do guia — respiratório, dengue, calor e frio —
-retomam os recortes de fumaça, chuva e calor/frio apresentados no Capítulo 0. O recorte de
-seca e isolamento, também apresentado lá, não tem estudo de caso próprio; a mesma sequência
+cobrem três temas: fumaça, chuva e calor/frio. Seca e
+isolamento não têm estudo de caso próprio; a mesma sequência
 de Preparação, Integração e Modelagem se aplica, com desfechos de água, alimentos, malária e
 continuidade do cuidado. Para levar qualquer um deles além do Studio — relatório técnico ou
-nova execução — use **Arquivo → Salvar projeto** e **Exportar `.R`**, registrando fontes, parâmetros e
+nova execução — use **Arquivo → Salvar projeto** e **Exportar código**, registrando fontes, parâmetros e
 limitações.
 
 ## Reproduzir
 
 ::: {.callout-note title="Reprodutibilidade"}
-**Abrir no Studio.** Baixe [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 12 Passos, a ordem e os Parâmetros descritos neste capítulo.
+**Abrir no Studio.** Baixe [`ec-04-hospitalizacoes-frio.climasus.json`](pipeline/ec-04-hospitalizacoes-frio.climasus.json) e use **Arquivo → Abrir projeto**. O projeto guarda os 13 Passos, a ordem e os Parâmetros descritos neste capítulo.
 
 **Copiar em R.** O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em [`pipeline/R/ec-04-hospitalizacoes-frio.R`](pipeline/R/ec-04-hospitalizacoes-frio.R). O DLNM e a sensibilidade de janela que sustentam a leitura corrigida estão em `book/scripts/90-replicacao/01-fit-replicacao.R`.
 :::
@@ -261,6 +261,10 @@ dados <- sus_data_import(
 
 saude <- sus_spatial_join(dados)
 clima <- sus_climate_inmet(years = 2010:2019, uf = c("PR", "SC", "RS"))
+clima <- sus_climate_fill_inmet(
+  clima,
+  target_var = c("tair_dry_bulb_c", "tair_max_c", "tair_min_c")
+)
 
 frio <- sus_climate_compute_coldwaves(
   clima,
@@ -296,7 +300,7 @@ arquivo analítico. A biblioteca completa está no
 **1. Por que este Pipeline usa Avaliar impacto com série interrompida (`sus_mod_its`) em
 vez de Modelar risco com DLNM (`sus_mod_dlnm`), diferente dos Capítulos 7 a 9?**
 
-Porque a pergunta do template é mais pontual — o efeito de **um evento de frio delimitado**
+Porque a pergunta do Modelo é mais pontual — o efeito de **um evento de frio delimitado**
 sobre o nível/tendência das internações. O ITS é o desenho indicado para essa pergunta, mas
 a replicação mostra que ele é frágil: o resultado muda de 0,62 para 0,87 com tendência/DOW
 corrigidos e para 1,01 na janela local. Sem tendência bem especificada e janela

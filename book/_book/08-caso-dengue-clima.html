@@ -204,17 +204,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00-clima-saude.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Clima e saúde: quando encontra e desencontra</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./01-conhecendo-o-studio.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Conhecendo o climasus+ Studio: como a análise se organiza</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do pipeline</span></a>
+  <a href="./part-2-pipeline.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte II · Etapas do Pipeline</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -229,12 +224,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Módulo Gestor</span></a>
+  <a href="./part-3-gestor.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte III · Vigilância e gestão</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Módulo Gestor: monte um Pipeline com os Modelos prontos de Vigilância e Gestão</span></a>
+  <a href="./04-modelos-vigilancia.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Vigilância e gestão: monte um Pipeline com os Modelos prontos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -244,7 +239,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Módulo Pesquisador</span></a>
+  <a href="./part-4-pesquisador.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Parte IV · Pesquisa avançada</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -279,12 +274,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário formal do curso</span></a>
+  <a href="./11-glossario.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Glossário do climasus+ Studio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./12-parametros-avancados.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referência rápida de Parâmetros</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-referencias.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Referências</span></a>
   </div>
 </li>
     </ul>
@@ -299,7 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#o-pipeline-completo-etapa-por-etapa" id="toc-o-pipeline-completo-etapa-por-etapa" class="nav-link active" data-scroll-target="#o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</a></li>
+  <li><a href="#o-pipeline-completo-etapa-por-etapa" id="toc-o-pipeline-completo-etapa-por-etapa" class="nav-link active" data-scroll-target="#o-pipeline-completo-etapa-por-etapa">O Pipeline completo, etapa por etapa</a></li>
   <li><a href="#dados-usados" id="toc-dados-usados" class="nav-link" data-scroll-target="#dados-usados">Dados usados</a></li>
   <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados">Resultados</a>
   <ul class="collapse">
@@ -320,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-title">Estudo de caso: dengue e graus-dia</span></h1>
-<p class="subtitle lead">Capítulo 08 · Estudos de casos</p>
+<p class="subtitle lead">Capítulo 08 · Estudos de caso</p>
 </div>
 
 
@@ -337,9 +337,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>No recorte de chuva, enchente e vetores do Capítulo 0, retomado na Etapa Integração (Capítulo 3), apresentamos o arco de dengue e clima. A pergunta central é: <strong>quanto do risco de dengue acompanha o acúmulo de calor favorável ao vetor, e com que atraso?</strong> Este capítulo fecha esse arco, do dado bruto do SINAN ao Modelo DLNM ajustado. A conclusão é tão importante quanto o método: em cidade única, o GDD <strong>não é identificável</strong> como exposição principal; a resposta exige chuva/PDSI e escala multicidade. Público principal: acadêmico e gestor técnico responsável por vigilância de arboviroses. O snapshot usa quatro estados do Nordeste; a replicação testa Recife e Fortaleza separadamente. A mesma lógica vale para a Amazônia, onde a cobertura irregular de estações torna a checagem da distância estação–município ainda mais importante.</p>
+<p>Na Etapa Integração (Capítulo 3), apresentamos o arco de dengue e clima. A pergunta central é: <strong>quanto do risco de dengue acompanha o acúmulo de calor favorável ao vetor, e com que atraso?</strong> Este capítulo fecha esse arco, do dado bruto do SINAN ao Modelo DLNM ajustado. A conclusão é tão importante quanto o método: em cidade única, o GDD <strong>não é identificável</strong> como exposição principal; a resposta exige chuva/PDSI e escala multicidade. Público principal: acadêmico e gestor técnico responsável por vigilância de arboviroses. O snapshot usa quatro estados do Nordeste; a replicação testa Recife e Fortaleza separadamente. A mesma lógica vale para a Amazônia, onde a cobertura irregular de estações torna a checagem da distância estação–município ainda mais importante.</p>
 <section id="o-pipeline-completo-etapa-por-etapa" class="level2">
-<h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O pipeline completo, etapa por etapa</h2>
+<h2 class="anchored" data-anchor-id="o-pipeline-completo-etapa-por-etapa">O Pipeline completo, etapa por etapa</h2>
 <p>Recorte: casos notificados de dengue (SINAN) em <strong>Ceará, Pernambuco, Bahia e Maranhão</strong>, 2015–2019, contra <strong>graus-dia de desenvolvimento (GDD)</strong> calculados a partir das estações INMET. O Modelo de catálogo <code>ec-02-dengue-clima</code> traz este Pipeline pronto para carregar no Centro de Pipelines.</p>
 <p><a href="images/arco-ec02.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/arco-ec02.svg" class="img-fluid" alt="Arco do caso ec-02 em quatro etapas — preparação no SINAN-DENGUE por semana epidemiológica, integração com graus-dia e chuva, modelagem DLNM com defasagem longa e gestão com janela de ação. À direita, a ficha do estudo; abaixo, a curva de acúmulo de graus-dia e a janela de transmissão."></a></p>
 <p><strong>Preparação</strong></p>
@@ -407,8 +407,8 @@ O que este Modelo não inclui
 <h2 class="anchored" data-anchor-id="dados-usados">Dados usados</h2>
 <p><strong>Fonte:</strong> SINAN-DENGUE (DATASUS), casos notificados em CE, PE, BA e MA, 2015–2019. <strong>Recorte:</strong> semana epidemiológica, data de primeiros sintomas, município de residência; GDD com base 11 °C e teto 35 °C, calculado a partir das estações INMET dos mesmos estados.</p>
 <p><strong>O que o snapshot fez:</strong> manteve 1.358 municípios e deixou <code>sus_mod_dlnm()</code> agregar tudo por semana. O modelo tem <strong>248 semanas e 638.616 casos</strong> — uma série regional. As colunas de defasagem são <strong>84 dias</strong> aplicados a um desfecho <strong>semanal</strong>, e o GDD está em unidade horária (a soma de 24 horas), não em °C·dia.</p>
-<p><strong>O que a replicação fez:</strong> testou duas cidades separadamente — <strong>Recife</strong> (estação A301; 217 semanas; 38.974 casos) e <strong>Fortaleza</strong> (A305; 225 semanas; 73.834 casos) —, com GDD semanal em °C·dia (soma de 7 dias) e defasagens em <strong>semanas</strong> (0–12). Modelo com mês, 3 df de exposição e 3 df de defasagem. Também testou temperatura semanal no lugar do GDD. O filtro municipal é feito no script de replicação; o template do catálogo importa as UFs.</p>
-<p><strong>Snapshot:</strong> <code>data/ec02/analytic.parquet</code> (MD5 <code>89f86931dd8e77e36bc3ed2fd2bd5eff</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec02/codebook.csv</code>. <strong>Avisos do Motor (snapshot):</strong> dispersão <strong>95,6</strong> (alta) e autocorrelação residual (Ljung-Box p = 0). <strong>Replicação:</strong> dispersão 7,55 (Recife) e 15,46 (Fortaleza); Ljung-Box p &lt; 0,001.</p>
+<p><strong>O que a replicação fez:</strong> testou duas cidades separadamente — <strong>Recife</strong> (estação A301; 217 semanas; 38.974 casos) e <strong>Fortaleza</strong> (A305; 225 semanas; 73.834 casos) —, com GDD semanal em °C·dia (soma de 7 dias) e defasagens em <strong>semanas</strong> (0–12). Modelo com mês, 3 df de exposição e 3 df de defasagem. Também testou temperatura semanal no lugar do GDD. O filtro municipal é feito no script de replicação; o Modelo do catálogo importa as UFs.</p>
+<p><strong>Snapshot:</strong> <code>data/ec02/analytic.parquet</code> (MD5 <code>89f86931dd8e77e36bc3ed2fd2bd5eff</code>), gerado em 26/10/2026. Dicionário de variáveis: <code>data/ec02/codebook.csv</code>. <strong>Avisos do Motor (snapshot):</strong> dispersão <strong>95,6</strong> (alta) e autocorrelação residual (Ljung-Box p &lt; 0,001; valor arredondado a zero no arquivo). <strong>Replicação:</strong> dispersão 7,55 (Recife) e 15,46 (Fortaleza); Ljung-Box p &lt; 0,001.</p>
 </section>
 <section id="resultados" class="level2">
 <h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
@@ -417,10 +417,10 @@ O que este Modelo não inclui
 <div id="fig-ec02-serie" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec02-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec02/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;16.1: Série semanal de casos de dengue nos quatro estados, 2015–2019 (snapshot)."><img src="images/results/ec02/serie.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec02/serie.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;15.1: Série semanal de casos de dengue nos quatro estados, 2015–2019 (snapshot)."><img src="images/results/ec02/serie.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec02-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;16.1: Série semanal de casos de dengue nos quatro estados, 2015–2019 (snapshot).
+Figura&nbsp;15.1: Série semanal de casos de dengue nos quatro estados, 2015–2019 (snapshot).
 </figcaption>
 </figure>
 </div>
@@ -506,7 +506,7 @@ Figura&nbsp;16.1: Série semanal de casos de dengue nos quatro estados, 2015–2
 </tr>
 <tr class="odd">
 <td>Autocorrelação residual</td>
-<td style="text-align: right;">p = 0</td>
+<td style="text-align: right;">p &lt; 0,001</td>
 <td style="text-align: right;">p &lt; 0,001</td>
 <td style="text-align: right;">p &lt; 0,001</td>
 </tr>
@@ -517,10 +517,10 @@ Figura&nbsp;16.1: Série semanal de casos de dengue nos quatro estados, 2015–2
 <div id="fig-ec02-dlnm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec02-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec02/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;16.2: Curva exposição-resposta cumulativa do snapshot para GDD e casos de dengue."><img src="images/results/ec02/dlnm_overall.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec02/dlnm_overall.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;15.2: Curva exposição-resposta cumulativa do snapshot para GDD e casos de dengue."><img src="images/results/ec02/dlnm_overall.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec02-dlnm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;16.2: Curva exposição-resposta cumulativa do snapshot para GDD e casos de dengue.
+Figura&nbsp;15.2: Curva exposição-resposta cumulativa do snapshot para GDD e casos de dengue.
 </figcaption>
 </figure>
 </div>
@@ -528,10 +528,10 @@ Figura&nbsp;16.2: Curva exposição-resposta cumulativa do snapshot para GDD e c
 <div id="fig-ec02-lag" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-ec02-lag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="images/results/ec02/dlnm_lag.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;16.3: Curva lag-resposta do snapshot para GDD no percentil 75."><img src="images/results/ec02/dlnm_lag.png" class="img-fluid figure-img"></a>
+<a href="images/results/ec02/dlnm_lag.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;15.3: Curva lag-resposta do snapshot para GDD no percentil 75."><img src="images/results/ec02/dlnm_lag.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ec02-lag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;16.3: Curva lag-resposta do snapshot para GDD no percentil 75.
+Figura&nbsp;15.3: Curva lag-resposta do snapshot para GDD no percentil 75.
 </figcaption>
 </figure>
 </div>
@@ -546,7 +546,7 @@ Figura&nbsp;16.3: Curva lag-resposta do snapshot para GDD no percentil 75.
 <li><strong>Quatro estados agregados</strong> misturam imunidade, sorotipo, transmissão e clima; a exposição média não representa nenhum território.</li>
 <li><strong>Em cidades tropicais, a temperatura é alta o ano todo.</strong> O GDD pode não ser o fator limitante: chuva, umidade, criadouros, imunidade e sorotipo dominam a sazonalidade.</li>
 </ol>
-<p>A replicação em Recife e Fortaleza mostra que o problema não é específico de uma cidade. O desenho publicado que recupera o sinal (Lowe et al., 2021) usa <strong>PDSI/chuva</strong>, 558 microrregiões e um modelo espaço-temporal bayesiano — não GDD em cidade única. Um desenho brasileiro de temperatura e internação por dengue (2024) encontra RR 3,47 no p95 com efeito imediato (lag 0–2), mas em escala nacional e com desfecho de hospitalização, não de notificação.</p>
+<p>A replicação em Recife e Fortaleza mostra que o problema não é específico de uma cidade. O desenho publicado que recupera o sinal (Lowe et al., 2021) usa <strong>PDSI/chuva</strong>, 558 microrregiões e um modelo espaço-temporal bayesiano — não GDD em cidade única. Um desenho brasileiro de temperatura e internação por dengue (Lopes et al., 2024) encontra RR 3,47 no p95 com efeito imediato (lag 0–2), mas em escala nacional e com desfecho de hospitalização, não de notificação.</p>
 <p>O caminho responsável é: (a) usar <strong>chuva/PDSI</strong> como exposição principal e GDD como covariável; (b) ajustar por município e combinar com <code>sus_mod_pool</code>, ou usar um modelo espaço-temporal; (c) incluir saneamento, imunidade e sorotipo; (d) não calcular AF de dengue com este desenho.</p>
 </section>
 <section id="numeros-ec02" class="level2">
@@ -598,7 +598,7 @@ Figura&nbsp;16.3: Curva lag-resposta do snapshot para GDD no percentil 75.
 <section id="o-que-isso-significa-para-ação" class="level2">
 <h2 class="anchored" data-anchor-id="o-que-isso-significa-para-ação">O que isso significa para ação</h2>
 <p>Este resultado <strong>não sustenta</strong> um limiar operacional de GDD para vigilância. A ação responsável é revisar o desenho antes de usar o número: chuva/PDSI como exposição principal, GDD como covariável, escala multicidade e controle de imunidade/sorotipo. Um resultado assim é útil porque mostra, com dados reais, por que a escolha da exposição e a escala de análise importam.</p>
-<p>O GDD não substitui a chuva. Em municípios com estação distante ou séries incompletas, combine GDD de estação com chuva de satélite diária e trate a distância estação–município como uma limitação explícita. Para levar este Pipeline além do Studio — relatório técnico, publicação ou execução automatizada a cada semana epidemiológica — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar <code>.R</code></strong>, registrando a semana epidemiológica, as fontes, a distância das estações e os atrasos considerados.</p>
+<p>O GDD não substitui a chuva. Em municípios com estação distante ou séries incompletas, combine GDD de estação com chuva de satélite diária e trate a distância estação–município como uma limitação explícita. Para levar este Pipeline além do Studio — relatório técnico, publicação ou execução automatizada a cada semana epidemiológica — use <strong>Arquivo → Salvar projeto</strong> e <strong>Exportar código</strong>, registrando a semana epidemiológica, as fontes, a distância das estações e os atrasos considerados.</p>
 </section>
 <section id="reproduzir" class="level2">
 <h2 class="anchored" data-anchor-id="reproduzir">Reproduzir</h2>
@@ -612,7 +612,7 @@ Reprodutibilidade
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-02-dengue-clima.climasus.json"><code>ec-02-dengue-clima.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 11 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
+<p><strong>Abrir no Studio.</strong> Baixe <a href="pipeline/ec-02-dengue-clima.climasus.json"><code>ec-02-dengue-clima.climasus.json</code></a> e use <strong>Arquivo → Abrir projeto</strong>. O projeto guarda os 12 Passos, a ordem e os Parâmetros descritos neste capítulo.</p>
 <p><strong>Copiar em R.</strong> O bloco abaixo é o espelho do mesmo Pipeline; a versão completa está em <a href="pipeline/R/ec-02-dengue-clima.R"><code>pipeline/R/ec-02-dengue-clima.R</code></a>. A replicação que mostra por que o GDD não é identificável em Recife e Fortaleza está em <code>book/scripts/90-replicacao/01-fit-replicacao.R</code>.</p>
 </div>
 </div>
@@ -637,31 +637,35 @@ Reprodutibilidade
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>saude <span class="ot">&lt;-</span> <span class="fu">sus_spatial_join</span>(dados)</span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>clima_raw <span class="ot">&lt;-</span> <span class="fu">sus_climate_inmet</span>(<span class="at">years =</span> <span class="dv">2015</span><span class="sc">:</span><span class="dv">2019</span>, <span class="at">uf =</span> <span class="fu">c</span>(<span class="st">"CE"</span>, <span class="st">"PE"</span>, <span class="st">"BA"</span>, <span class="st">"MA"</span>))</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_compute_indicators</span>(</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  clima_raw,</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">indicators =</span> <span class="st">"gdd"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">custom_thresholds =</span> <span class="fu">list</span>(<span class="at">gdd_base =</span> <span class="dv">11</span>, <span class="at">gdd_upper =</span> <span class="dv">35</span>)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>integrado <span class="ot">&lt;-</span> <span class="fu">sus_climate_aggregate</span>(</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">health_data =</span> saude,</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_data =</span> clima,</span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_var =</span> <span class="st">"gdd_c"</span>,</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporal_strategy =</span> <span class="st">"distributed_lag"</span>,</span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">lag_days =</span> <span class="dv">84</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">sus_mod_dlnm</span>(</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  integrado,</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_casos"</span>,</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_col =</span> <span class="st">"gdd_c"</span>,</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">dof_per_year =</span> <span class="dv">2</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_dlnm</span>(ajuste)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>clima_filled <span class="ot">&lt;-</span> <span class="fu">sus_climate_fill_inmet</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  clima_raw,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">target_var =</span> <span class="st">"tair_dry_bulb_c"</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>clima <span class="ot">&lt;-</span> <span class="fu">sus_climate_compute_indicators</span>(</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  clima_filled,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">indicators =</span> <span class="st">"gdd"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">custom_thresholds =</span> <span class="fu">list</span>(<span class="at">gdd_base =</span> <span class="dv">11</span>, <span class="at">gdd_upper =</span> <span class="dv">35</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>integrado <span class="ot">&lt;-</span> <span class="fu">sus_climate_aggregate</span>(</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">health_data =</span> saude,</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_data =</span> clima,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_var =</span> <span class="st">"gdd_c"</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">temporal_strategy =</span> <span class="st">"distributed_lag"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="at">lag_days =</span> <span class="dv">84</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>ajuste <span class="ot">&lt;-</span> <span class="fu">sus_mod_dlnm</span>(</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  integrado,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome_col =</span> <span class="st">"n_casos"</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  <span class="at">climate_col =</span> <span class="st">"gdd_c"</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">dof_per_year =</span> <span class="dv">2</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="fu">sus_mod_plot_dlnm</span>(ajuste)</span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não guarda os dados, o cache, os Resultados, os Artefatos, caminhos absolutos nem a versão do Studio. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
+<p><strong>O que o <code>.json</code> preserva — e o que não preserva.</strong> O arquivo guarda Passos, ordem, Parâmetros, notas e o modo de uso. Não incorpora os dados, o cache, os Resultados nem os Artefatos. Caminhos locais podem permanecer nos Parâmetros; a versão do Studio precisa ser registrada separadamente. Ao compartilhar, envie também a fonte e o período dos dados, a versão do Studio/<code>climasus4r</code> e, se possível, o checksum do arquivo analítico. A biblioteca completa está no <a href="./12-parametros-avancados.html#biblioteca-de-pipelines">Capítulo 12</a>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">

@@ -1,5 +1,5 @@
 ---
-title: "Parte II · Etapas do pipeline"
+title: "Parte II · Etapas do Pipeline"
 number-sections: false
 toc: false
 ---
@@ -9,7 +9,7 @@ toc: false
 <div class="part-copy">
   <div class="part-number">II</div>
   <div class="part-kicker">Parte dois · o método</div>
-  <h1>As etapas do pipeline</h1>
+  <h1>As etapas do Pipeline</h1>
   <p class="part-standfirst">Preparação e Integração organizam os dados de saúde e os relacionam ao clima e ao território, preparando a série para a modelagem. Cada Passo documenta uma decisão.</p>
   <ul class="part-list">
     <li><a href="02-etapa-preparacao.html"><span class="part-ch">02</span> Preparação: dados de saúde prontos antes de tudo <span class="part-count">· 15 funções</span></a></li>
