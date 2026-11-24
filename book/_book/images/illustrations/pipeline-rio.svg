@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 460" role="img" aria-labelledby="title desc" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="title">O pipeline como um rio: preparação, integração e análise</title>
+  <desc id="desc">Três trechos de um rio representam as etapas do pipeline: Preparação (15 funções), Integração (32 funções) e Análise &amp; Modelagem (32 funções), partindo dos dados de saúde e chegando à decisão.</desc>
+  <defs>
+    <linearGradient id="rio" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#A7F3E4"/>
+      <stop offset="0.45" stop-color="#2DD4BF"/>
+      <stop offset="0.75" stop-color="#0E7C6B"/>
+      <stop offset="1" stop-color="#0B2420"/>
+    </linearGradient>
+    <filter id="s" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0B2420" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="460" rx="26" fill="#F7F4EC"/>
+  <g opacity=".55">
+    <path d="M-20 80 C 180 40, 260 120, 430 84 S 700 34, 860 76 S 1150 130, 1420 74" fill="none" stroke="#D99A2B" stroke-opacity=".22" stroke-width="1.4"/>
+    <path d="M-20 392 C 190 352, 300 420, 470 390 S 760 340, 930 384 S 1180 430, 1420 380" fill="none" stroke="#0E7C6B" stroke-opacity=".18" stroke-width="1.4"/>
+    <path d="M-20 424 C 210 392, 330 448, 510 420 S 800 378, 980 414 S 1200 450, 1420 410" fill="none" stroke="#D99A2B" stroke-opacity=".14" stroke-width="1.2"/>
+  </g>
+  <text x="64" y="70" fill="#B7791F" font-size="18" font-weight="700" letter-spacing="3">O PIPELINE COMO UM RIO</text>
+  <text x="64" y="118" fill="#0B2420" font-size="40" font-weight="700">Da nascente à decisão</text>
+  <text x="64" y="152" fill="#5B6B64" font-size="19">Cada etapa transforma a água que chega da anterior — e documenta o que fez.</text>
+
+  <path d="M70 286 C 230 210, 330 352, 500 282 S 760 196, 920 278 S 1180 356, 1330 268" fill="none" stroke="url(#rio)" stroke-width="58" stroke-linecap="round" opacity=".92"/>
+  <path d="M70 286 C 230 210, 330 352, 500 282 S 760 196, 920 278 S 1180 356, 1330 268" fill="none" stroke="#F7F4EC" stroke-opacity=".35" stroke-width="2" stroke-dasharray="10 14"/>
+
+  <!-- nodes -->
+  <g filter="url(#s)">
+    <circle cx="150" cy="272" r="42" fill="#FFFFFF" stroke="#0E7C6B" stroke-width="3"/>
+    <text x="150" y="268" text-anchor="middle" fill="#0E7C6B" font-size="17" font-weight="700">15</text>
+    <text x="150" y="288" text-anchor="middle" fill="#5B6B64" font-size="11">funções</text>
+  </g>
+  <g filter="url(#s)">
+    <circle cx="590" cy="268" r="46" fill="#FFFFFF" stroke="#0E7C6B" stroke-width="3"/>
+    <text x="590" y="263" text-anchor="middle" fill="#0E7C6B" font-size="19" font-weight="700">32</text>
+    <text x="590" y="285" text-anchor="middle" fill="#5B6B64" font-size="11">funções</text>
+  </g>
+  <g filter="url(#s)">
+    <circle cx="1010" cy="278" r="46" fill="#FFFFFF" stroke="#0B2420" stroke-width="3"/>
+    <text x="1010" y="273" text-anchor="middle" fill="#0B2420" font-size="19" font-weight="700">32</text>
+    <text x="1010" y="295" text-anchor="middle" fill="#5B6B64" font-size="11">funções</text>
+  </g>
+
+  <!-- labels -->
+  <text x="150" y="364" text-anchor="middle" fill="#0B2420" font-size="20" font-weight="700">Preparação</text>
+  <text x="150" y="387" text-anchor="middle" fill="#5B6B64" font-size="14">dados de saúde limpos</text>
+  <text x="590" y="364" text-anchor="middle" fill="#0B2420" font-size="20" font-weight="700">Integração</text>
+  <text x="590" y="387" text-anchor="middle" fill="#5B6B64" font-size="14">clima, saúde e território</text>
+  <text x="1010" y="374" text-anchor="middle" fill="#0B2420" font-size="20" font-weight="700">Análise &amp; Modelagem</text>
+  <text x="1010" y="397" text-anchor="middle" fill="#5B6B64" font-size="14">evidência estatística</text>
+
+</svg>

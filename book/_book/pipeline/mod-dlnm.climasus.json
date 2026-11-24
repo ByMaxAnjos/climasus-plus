@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_data_read",
+      "values": {
+        "path": ""
+      },
+      "id": "step-01"
+    },
+    {
+      "id": "dlnm-fit",
+      "fn": "sus_mod_dlnm",
+      "values": {
+        "outcome_col": "n_obitos"
+      }
+    },
+    {
+      "fn": "sus_mod_plot_dlnm",
+      "values": {
+        "fit": "@step:dlnm-fit"
+      },
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_mod_af",
+      "values": {
+        "fit": "@step:dlnm-fit"
+      },
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_mod_plot_af",
+      "values": {},
+      "id": "step-04"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "pesquisa"
+}

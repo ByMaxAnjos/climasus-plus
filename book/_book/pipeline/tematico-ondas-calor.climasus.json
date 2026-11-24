@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 4,
+  "steps": [
+    {
+      "fn": "sus_climate_inmet",
+      "values": {
+        "years": "2010:2019",
+        "uf": "\"SP\""
+      },
+      "id": "step-01"
+    },
+    {
+      "fn": "sus_climate_fill_inmet",
+      "values": {
+        "target_var": "c(\"tair_dry_bulb_c\", \"tair_max_c\", \"tair_min_c\", \"rh_mean_porc\", \"ws_2_m_s\", \"sr_kj_m2\")"
+      },
+      "id": "step-02"
+    },
+    {
+      "fn": "sus_climate_compute_indicators",
+      "values": {},
+      "id": "step-03"
+    },
+    {
+      "fn": "sus_climate_compute_heatwaves",
+      "values": {
+        "method": "WHO",
+        "percentile": "90",
+        "baseline_start": "\"2010-01-01\"",
+        "baseline_end": "\"2015-12-31\""
+      },
+      "id": "step-04"
+    },
+    {
+      "fn": "sus_climate_plot_heatwaves",
+      "values": {},
+      "id": "step-05"
+    }
+  ],
+  "lang": "pt",
+  "theme": "light",
+  "mode": "vigilancia"
+}
